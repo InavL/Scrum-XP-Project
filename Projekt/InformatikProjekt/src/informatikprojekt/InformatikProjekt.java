@@ -16,6 +16,8 @@ public class InformatikProjekt {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        // kasfbkjsdvbk fsa
+        // nsdjk kj
     }
     
 }
