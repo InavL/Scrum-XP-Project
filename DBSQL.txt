@@ -7,6 +7,32 @@ create table if not exists kat1
 	KAT1_NAMN varchar(50) null
 );
 
+create table if not exists kat2
+(
+	KAT2_ID int not null
+		primary key,
+	KAT1_ID int not null,
+	KAT2_Namn varchar(50) null,
+	constraint kat2_ibfk_1
+		foreign key (KAT1_ID) references kat1 (KAT1_ID)
+);
+
+create index KAT1_ID
+	on kat2 (KAT1_ID);
+
+create table if not exists kat3
+(
+	KAT3_ID int not null
+		primary key,
+	KAT2_ID int not null,
+	KAT3_Namn varchar(50) null,
+	constraint kat3_ibfk_1
+		foreign key (KAT2_ID) references kat2 (KAT2_ID)
+);
+
+create index KAT2_ID
+	on kat3 (KAT2_ID);
+
 create table if not exists personer
 (
 	ID int not null
@@ -50,6 +76,57 @@ create table if not exists blogg_kategorier
 create index KAT1_ID
 	on blogg_kategorier (KAT1_ID);
 
+create table if not exists mail_notis
+(
+	ID int not null
+		primary key,
+	constraint mail_notis_ibfk_1
+		foreign key (ID) references personer (ID)
+);
+
+create table if not exists moten
+(
+	MID int not null
+		primary key,
+	MOTES_ADMIN int not null,
+	TYP_AV_MOTE varchar(100) null,
+	START_TID timestamp null,
+	SLUT_TID timestamp null,
+	constraint moten_ibfk_1
+		foreign key (MOTES_ADMIN) references personer (ID)
+);
+
+create index MOTES_ADMIN
+	on moten (MOTES_ADMIN);
+
+create table if not exists motes_forslag
+(
+	FORSLAGS_ID int not null
+		primary key,
+	MID int not null,
+	START_TID timestamp null,
+	SLUT_TID timestamp null,
+	constraint motes_forslag_ibfk_1
+		foreign key (MID) references moten (MID)
+);
+
+create index MID
+	on motes_forslag (MID);
+
+create table if not exists personer_deltar
+(
+	MID int not null,
+	ID int not null,
+	primary key (MID, ID),
+	constraint personer_deltar_ibfk_1
+		foreign key (MID) references moten (MID),
+	constraint personer_deltar_ibfk_2
+		foreign key (ID) references personer (ID)
+);
+
+create index ID
+	on personer_deltar (ID);
+
 create table if not exists sms_notis
 (
 	ID int not null
@@ -80,4 +157,89 @@ create table if not exists status
 
 create index SID
 	on status (SID);
+
+create table if not exists valda_mail_kat1
+(
+	ID int not null,
+	KAT1_ID int not null,
+	primary key (ID, KAT1_ID),
+	constraint valda_mail_kat1_ibfk_1
+		foreign key (ID) references mail_notis (ID),
+	constraint valda_mail_kat1_ibfk_2
+		foreign key (KAT1_ID) references kat1 (KAT1_ID)
+);
+
+create index KAT1_ID
+	on valda_mail_kat1 (KAT1_ID);
+
+create table if not exists valda_mail_kat2
+(
+	ID int not null,
+	KAT2_ID int not null,
+	primary key (ID, KAT2_ID),
+	constraint valda_mail_kat2_ibfk_1
+		foreign key (ID) references mail_notis (ID),
+	constraint valda_mail_kat2_ibfk_2
+		foreign key (KAT2_ID) references kat2 (KAT2_ID)
+);
+
+create index KAT2_ID
+	on valda_mail_kat2 (KAT2_ID);
+
+create table if not exists valda_mail_kat3
+(
+	ID int not null,
+	KAT3_ID int not null,
+	primary key (ID, KAT3_ID),
+	constraint valda_mail_kat3_ibfk_1
+		foreign key (ID) references mail_notis (ID),
+	constraint valda_mail_kat3_ibfk_2
+		foreign key (KAT3_ID) references kat3 (KAT3_ID)
+);
+
+create index KAT3_ID
+	on valda_mail_kat3 (KAT3_ID);
+
+create table if not exists valda_sms_kat1
+(
+	ID int not null,
+	KAT1_ID int not null,
+	primary key (ID, KAT1_ID),
+	constraint valda_sms_kat1_ibfk_1
+		foreign key (ID) references sms_notis (ID),
+	constraint valda_sms_kat1_ibfk_2
+		foreign key (KAT1_ID) references kat1 (KAT1_ID)
+);
+
+create index KAT1_ID
+	on valda_sms_kat1 (KAT1_ID);
+
+create table if not exists valda_sms_kat2
+(
+	ID int not null,
+	KAT2_ID int not null,
+	primary key (ID, KAT2_ID),
+	constraint valda_sms_kat2_ibfk_1
+		foreign key (ID) references sms_notis (ID),
+	constraint valda_sms_kat2_ibfk_2
+		foreign key (KAT2_ID) references kat2 (KAT2_ID)
+);
+
+create index KAT2_ID
+	on valda_sms_kat2 (KAT2_ID);
+
+create table if not exists valda_sms_kat3
+(
+	ID int not null,
+	KAT3_ID int not null,
+	primary key (ID, KAT3_ID),
+	constraint valda_sms_kat3_ibfk_1
+		foreign key (ID) references sms_notis (ID),
+	constraint valda_sms_kat3_ibfk_2
+		foreign key (KAT3_ID) references kat3 (KAT3_ID)
+);
+
+create index KAT3_ID
+	on valda_sms_kat3 (KAT3_ID);
+
 
