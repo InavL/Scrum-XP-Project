@@ -1,0 +1,83 @@
+create schema if not exists scrumprojekt collate utf8mb4_0900_ai_ci;
+
+create table if not exists kat1
+(
+	KAT1_ID int not null
+		primary key,
+	KAT1_NAMN varchar(50) null
+);
+
+create table if not exists personer
+(
+	ID int not null
+		primary key,
+	MAIL varchar(100) not null,
+	TELEFON int not null,
+	FNAMN varchar(50) not null,
+	ENAMN varchar(100) not null,
+	LOSENORD varchar(100) not null,
+	constraint PERSONER_MAIL_uindex
+		unique (MAIL),
+	constraint PERSONER_TELEFON_uindex
+		unique (TELEFON)
+);
+
+create table if not exists blogg
+(
+	BLOGGID int not null
+		primary key,
+	BLOGGSKRIBENT int not null,
+	TITEL varchar(80) null,
+	Datum date null,
+	constraint blogg_ibfk_1
+		foreign key (BLOGGSKRIBENT) references personer (ID)
+);
+
+create index BLOGGSKRIBENT
+	on blogg (BLOGGSKRIBENT);
+
+create table if not exists blogg_kategorier
+(
+	BLOGGID int not null,
+	KAT1_ID int not null,
+	primary key (BLOGGID, KAT1_ID),
+	constraint blogg_kategorier_ibfk_1
+		foreign key (BLOGGID) references blogg (BLOGGID),
+	constraint blogg_kategorier_ibfk_2
+		foreign key (KAT1_ID) references kat1 (KAT1_ID)
+);
+
+create index KAT1_ID
+	on blogg_kategorier (KAT1_ID);
+
+create table if not exists sms_notis
+(
+	ID int not null
+		primary key,
+	constraint sms_notis_ibfk_1
+		foreign key (ID) references personer (ID)
+);
+
+create table if not exists systemtillgang
+(
+	SID int not null
+		primary key,
+	BEHORIGHET varchar(50) not null,
+	constraint SYSTEMTILLGANG_BEHORIGHET_uindex
+		unique (BEHORIGHET)
+);
+
+create table if not exists status
+(
+	ID int not null,
+	SID int not null,
+	primary key (ID, SID),
+	constraint status_ibfk_1
+		foreign key (ID) references personer (ID),
+	constraint status_ibfk_2
+		foreign key (SID) references systemtillgang (SID)
+);
+
+create index SID
+	on status (SID);
+
