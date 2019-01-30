@@ -118,11 +118,11 @@ public class AdminJFrame extends javax.swing.JFrame {
     private void BtnHomepageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHomepageActionPerformed
         String chose = BoxAdminOrEmployee.getSelectedItem().toString();
         if(chose.equals("Employee")){
-            new HomePage();
+            new HomePage(idb);
             dispose();
         }
         else{
-            new HomePage();
+            new HomePage(idb);
             dispose();
         }
     }//GEN-LAST:event_BtnHomepageActionPerformed
