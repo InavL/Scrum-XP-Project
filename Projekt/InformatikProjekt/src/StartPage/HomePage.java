@@ -113,17 +113,17 @@ public class HomePage extends javax.swing.JFrame {
         
         String chose = BoxAdminOrEmployee.getSelectedItem().toString();
         
-        if(chose.equals("Employee")){
-            
-            HomePage homePage = new HomePage(idb);
-            dispose();
-            
-        } else{
-            
-            HomePage homePage = new HomePage(idb);
-            dispose();
-            
-        }
+//        if(chose.equals("Employee")){
+//            
+//            new HomePage(idb);
+//            dispose();
+//            
+//        } else{
+//            
+//            new HomePage(idb);
+//            dispose();
+//            
+//        }
     }//GEN-LAST:event_BtnHomepageActionPerformed
 
     /**
