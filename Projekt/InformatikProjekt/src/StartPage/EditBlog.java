@@ -9,12 +9,12 @@ package StartPage;
  *
  * @author krist
  */
-public class MainPage extends javax.swing.JFrame {
+public class EditBlog extends javax.swing.JFrame {
 
     /**
      * Creates new form ColorPage
      */
-    public MainPage() {
+    public EditBlog() {
         initComponents();
     }
 
@@ -30,14 +30,6 @@ public class MainPage extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        mMenybar = new javax.swing.JMenuBar();
-        mMainMenu = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        mBlog = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -74,33 +66,8 @@ public class MainPage extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 267, Short.MAX_VALUE))
+                .addGap(0, 293, Short.MAX_VALUE))
         );
-
-        mMainMenu.setText("Main menu");
-
-        jMenuItem4.setText("Log out");
-        mMainMenu.add(jMenuItem4);
-
-        jMenuItem5.setText("Exit");
-        mMainMenu.add(jMenuItem5);
-
-        mMenybar.add(mMainMenu);
-
-        mBlog.setText("Blog");
-
-        jMenuItem1.setText("Create blog");
-        mBlog.add(jMenuItem1);
-
-        jMenuItem2.setText("Edit blog");
-        mBlog.add(jMenuItem2);
-
-        jMenuItem3.setText("Remove blog");
-        mBlog.add(jMenuItem3);
-
-        mMenybar.add(mBlog);
-
-        setJMenuBar(mMenybar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,18 +83,12 @@ public class MainPage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+   
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JMenu mBlog;
-    private javax.swing.JMenu mMainMenu;
-    private javax.swing.JMenuBar mMenybar;
     // End of variables declaration//GEN-END:variables
 }
