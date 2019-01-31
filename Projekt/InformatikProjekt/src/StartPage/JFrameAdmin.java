@@ -11,12 +11,12 @@ import javax.swing.JOptionPane;
  *
  * @author sadeerbedan
  */
-public class AdminJFrame extends javax.swing.JFrame {
+public class JFrameAdmin extends javax.swing.JFrame {
 
     /**
      * Creates new form AdminJFrame
      */
-    public AdminJFrame() {
+    public JFrameAdmin() {
         initComponents();
     }
 
@@ -117,12 +117,12 @@ public class AdminJFrame extends javax.swing.JFrame {
 
     private void BtnHomepageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHomepageActionPerformed
         String chose = BoxAdminOrEmployee.getSelectedItem().toString();
-        if(chose.equals("Employee")){
+        if(chose.equals("A")){
             new HomePage();
             dispose();
         }
         else{
-            new HomePage();
+            new JFrameHomePage();
             dispose();
         }
     }//GEN-LAST:event_BtnHomepageActionPerformed
@@ -148,20 +148,21 @@ public class AdminJFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFrameAdmin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdminJFrame().setVisible(true);
+                new JFrameAdmin().setVisible(true);
             }
         });
     }

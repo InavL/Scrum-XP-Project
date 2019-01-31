@@ -121,11 +121,11 @@ public class HomePage extends javax.swing.JFrame {
     private void BtnHomepageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHomepageActionPerformed
         String chose = BoxAdminOrEmployee.getSelectedItem().toString();
         if(chose.equals("Employee")){
-            new HomePage();
+            new JFrameEmployeeHomePage();
             dispose();
         }
         else{
-            new HomePage();
+            new JFrameAdmin();
             dispose();
         }
     }//GEN-LAST:event_BtnHomepageActionPerformed
