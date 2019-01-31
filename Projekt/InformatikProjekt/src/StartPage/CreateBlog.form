@@ -162,7 +162,7 @@
                   <Component id="lblHeadeing" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="txtHeading" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="67" max="32767" attributes="0"/>
+                  <EmptySpace pref="93" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblTags" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="lblNewTag" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -319,6 +319,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Publish"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox3">
           <Properties>
