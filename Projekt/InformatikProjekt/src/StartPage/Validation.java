@@ -5,7 +5,7 @@ package StartPage;
  *
  * @author Sadeer
  */
-// metod som leta efter bokstäverna a-z, A-Z och åäö / ÅÄÖ, inga andra tecken tillåts
+// metod som leta efter bokstäverna a-z, A-Z och åäö / ÅÄÖ, inga andra tecken tillåts.
 public class Validation {
     
    
