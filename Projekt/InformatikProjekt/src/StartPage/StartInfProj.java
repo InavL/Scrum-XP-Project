@@ -23,6 +23,7 @@ public class StartInfProj {
         try {
             
             String file = new File("IP.FDB").getAbsolutePath();
+            System.out.println(file);
             idb = new InfDB (file);
             
         } catch (InfException ettUndantag) {
@@ -31,6 +32,8 @@ public class StartInfProj {
         }
 
         new HomePage(idb).setVisible(true);
+        new CreateBlog(idb).setVisible(true);
+        
     }
     
 }
