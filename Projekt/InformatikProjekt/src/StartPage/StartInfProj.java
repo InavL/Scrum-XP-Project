@@ -1,4 +1,4 @@
-+package StartPage;
+package StartPage;
 
 import java.io.File;
 import javax.swing.JOptionPane;
