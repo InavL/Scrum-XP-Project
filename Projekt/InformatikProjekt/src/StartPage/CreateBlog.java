@@ -8,6 +8,7 @@ package StartPage;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
+import oru.inf.InfException;
 
 /**
  *
@@ -277,38 +278,8 @@ public class CreateBlog extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-        private void kategori1()
-    {
-        try
-        {
-            String fraga = "select KAT1_NAMN from KAT1;";
-            ArrayList<String> allaKategorier1 = idb.fetchColumn(fraga);
-            for(String enKat : allaKategorier1)
-            {
-                cbxKat1.addItem(enKat);
-            }
-        }
-        catch(Exception ex)
-        {
-            JOptionPane.showMessageDialog(null, "Something went wrong.");
-        }
-    }
-             private void kategori2()
-    {
-        try
-        {
-            String fraga = "select KAT2_NAMN from KAT2;";
-            ArrayList<String> allaKategorier2 = idb.fetchColumn(fraga);
-            for(String enKat : allaKategorier2)
-            {
-                cbxKat2.addItem(enKat);
-            }
-        }
-        catch(Exception ex)
-        {
-            JOptionPane.showMessageDialog(null, "Something went wrong.");
-        }
-    }
+
+
                   private void kategori3()
     {
         try
@@ -330,7 +301,33 @@ public class CreateBlog extends javax.swing.JFrame {
         try
         {
                 String kat3 = cbxKat3.getSelectedItem().toString();
-                String hittaKat2 = "select KAT"
+                String hittaKat2 = "select KAT2_NAMN from KAT2 join KAT3 where KAT3_NAMN = '" + kat3 + "';";
+                 ArrayList<String> allaKategorier2 = idb.fetchColumn(hittaKat2);
+                 for(String enKat : allaKategorier2)
+                 {
+                     cbxKat2.addItem(enKat);
+                 }
+        }
+        catch(InfException ex)
+        {
+            JOptionPane.showMessageDialog(null, "Something went wrong.");
+        }
+    }
+                  private void hittaKat3()
+    {
+        try
+        {
+                String kat2 = cbxKat2.getSelectedItem().toString();
+                String hittaKat2 = "select KAT2_NAMN from KAT1 join KAT2 where KAT3_NAMN = '" + kat2 + "';";
+                 ArrayList<String> allaKategorier1 = idb.fetchColumn(hittaKat2);
+                 for(String enKat : allaKategorier1)
+                 {
+                     cbxKat1.addItem(enKat);
+                 }
+        }
+        catch(InfException ex)
+        {
+            JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
     private void txtHeadingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHeadingActionPerformed
@@ -343,9 +340,9 @@ public class CreateBlog extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         
-        String newTag = txtNewTag.getText();
-        String fraga = "update KAT1 set KAT"
-        idn.update()
+        //String newTag = txtNewTag.getText();
+        //String fraga = "update KAT1 set KAT"
+        //idn.update()
     }//GEN-LAST:event_btnAddActionPerformed
 
 
