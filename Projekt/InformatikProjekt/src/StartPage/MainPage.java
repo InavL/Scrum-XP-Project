@@ -5,16 +5,21 @@
  */
 package StartPage;
 
+import oru.inf.InfDB;
+
 /**
  *
  * @author krist
  */
 public class MainPage extends javax.swing.JFrame {
 
+    private InfDB idb;
+    
     /**
      * Creates new form ColorPage
+     * @param idb
      */
-    public MainPage() {
+    public MainPage(InfDB idb) {
         initComponents();
     }
 
