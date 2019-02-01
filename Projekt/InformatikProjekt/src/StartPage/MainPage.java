@@ -18,6 +18,7 @@ public class MainPage extends javax.swing.JFrame {
     private static InfDB idb;
     private MethodService methodService;
     private ClosableTabbedPane paneMainPageTabs;
+    private nyInloggning nyInloggning;
     private CreateBlogInternalFrame createBlogInternalFrame;
     private EditBlogInternalFrame editBlogInternalFrame;
     private RemoveBlogInternalFrame removeBlogInternalFrame;
@@ -101,6 +102,11 @@ public class MainPage extends javax.swing.JFrame {
         mainMenu.setText("Main menu");
 
         logOutMnuItm.setText("Log out");
+        logOutMnuItm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logOutMnuItmActionPerformed(evt);
+            }
+        });
         mainMenu.add(logOutMnuItm);
 
         closeWindowsMnuItm.setText("Close all windows");
@@ -251,6 +257,15 @@ public class MainPage extends javax.swing.JFrame {
         //Stänger alla fönster i applikationen förutom MainPage
         paneMainPageTabs.removeAll();
     }//GEN-LAST:event_closeWindowsMnuItmActionPerformed
+
+    private void logOutMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMnuItmActionPerformed
+        //Stänger applikationen och öppnar inloggningsfönstret
+        System.exit(1);
+        //Alternativt nästa kodrad
+        // mainPage.setVisible(false);
+        nyInloggning.setVisible(true);
+        
+    }//GEN-LAST:event_logOutMnuItmActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
