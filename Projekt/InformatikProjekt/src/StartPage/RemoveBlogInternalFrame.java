@@ -5,17 +5,24 @@
  */
 package StartPage;
 
+import oru.inf.InfDB;
+
 /**
  *
- * @author krist
+ * @author ellin
  */
-public class RemoveBlog extends javax.swing.JFrame {
+public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
+    
+    private static InfDB idb;
+    private MethodService methodService;
 
     /**
-     * Creates new form ColorPage
+     * Creates new form EditBlogInternalFrame
      */
-    public RemoveBlog() {
+    public RemoveBlogInternalFrame(InfDB idb) {
         initComponents();
+        this.idb = idb;
+        methodService = new MethodService(idb);
     }
 
     /**
@@ -31,8 +38,6 @@ public class RemoveBlog extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel2.setBackground(new java.awt.Color(51, 153, 255));
@@ -47,7 +52,7 @@ public class RemoveBlog extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(382, Short.MAX_VALUE))
+                .addContainerGap(733, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -66,7 +71,7 @@ public class RemoveBlog extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 293, Short.MAX_VALUE))
+                .addGap(0, 664, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
