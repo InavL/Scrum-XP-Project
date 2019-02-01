@@ -18,7 +18,7 @@ public class MainPage extends javax.swing.JFrame {
     private static InfDB idb;
     private MethodService methodService;
     private ClosableTabbedPane paneMainPageTabs;
-    private nyInloggning nyInloggning;
+    //private nyInloggning nyInloggning;
     private CreateBlogInternalFrame createBlogInternalFrame;
     private EditBlogInternalFrame editBlogInternalFrame;
     private ShowBlogInternalFrame removeBlogInternalFrame;
@@ -262,8 +262,8 @@ public class MainPage extends javax.swing.JFrame {
         //Stänger applikationen och öppnar inloggningsfönstret
         System.exit(1);
         //Alternativt nästa kodrad
-        // mainPage.setVisible(false);
-        nyInloggning.setVisible(true);
+        //mainPage.setVisible(false);
+        //nyInloggning.setVisible(true);
         
     }//GEN-LAST:event_logOutMnuItmActionPerformed
 
