@@ -5,6 +5,8 @@
  */
 package StartPage;
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 
 /**
@@ -21,6 +23,7 @@ public class CreateBlog extends javax.swing.JFrame {
         
         initComponents();
         this.idb = idb;
+        kategori1();
         
     }
 
@@ -267,12 +270,52 @@ public class CreateBlog extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void kategori1()
+        private void kategori1()
     {
         try
         {
-            ArrayList<String> allaKategorier1 = 
+            String fraga = "select KAT1_NAMN from KAT1;";
+            ArrayList<String> allaKategorier1 = idb.fetchColumn(fraga);
+            for(String enKat : allaKategorier1)
+            {
+                cbxKat1.addItem(enKat);
+            }
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, "Something went wrong.");
+        }
+    }
+             private void kategori2()
+    {
+        try
+        {
+            String fraga = "select KAT2_NAMN from KAT2;";
+            ArrayList<String> allaKategorier2 = idb.fetchColumn(fraga);
+            for(String enKat : allaKategorier2)
+            {
+                cbxKat2.addItem(enKat);
+            }
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, "Something went wrong.");
+        }
+    }
+                  private void kategori3()
+    {
+        try
+        {
+            String fraga = "select KAT3_NAMN from KAT3;";
+            ArrayList<String> allaKategorier3 = idb.fetchColumn(fraga);
+            for(String enKat : allaKategorier3)
+            {
+                cbxKat3.addItem(enKat);
+            }
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
     private void txtHeadingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHeadingActionPerformed
@@ -314,12 +357,13 @@ public class CreateBlog extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CreateBlog().setVisible(true);
-            }
-        });
+        //java.awt.EventQueue.invokeLater(new Runnable() {
+            //public void run() {
+                //new CreateBlog().setVisible(true);
+           // }
+        //});
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btbAddPicture;
