@@ -1,6 +1,10 @@
 
 package StartPage;
 
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Sadeer
@@ -44,7 +48,29 @@ public class Validation {
         return b;
         
     }
+    
+    //Kollar om textfältet har ett värde
+    public static boolean textfieldWithValue(JTextField tf) {
+        
+        boolean value = true;
+        
+        if(tf.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Textfältet är tomt!");
+            tf.requestFocus();
+            return false;
+        } 
+        return value;
+    }  
+    //Kollar om ett element har valts i en combobox
+    public static boolean elementSelectedInCombobox(JComboBox<String> enCombobox, String oneMessage) {
+        boolean elementSelected = true;
+        if(enCombobox.getSelectedIndex() <= 0) {
+            JOptionPane.showMessageDialog(null, oneMessage);
+            enCombobox.requestFocusInWindow();
+            return false;
+        }
+        return elementSelected;
+    }
       
-  
 }
     
