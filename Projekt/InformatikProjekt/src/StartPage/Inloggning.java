@@ -70,8 +70,8 @@ public class Inloggning extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-<<<<<<< HEAD
-=======
+
+
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         
         if (Validation.textfieldWithValue(tfMail) && Validation.pwdFieldHasValue(pwdLosen) == true) {
@@ -102,7 +102,7 @@ public class Inloggning extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
->>>>>>> bb1ed269b0796e5f6e4751bcd668331948e0ff00
+
     /**
      * @param args the command line arguments
      */
