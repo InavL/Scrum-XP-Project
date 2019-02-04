@@ -18,13 +18,13 @@ public class MainPage extends javax.swing.JFrame {
     private static InfDB idb;
     private MethodService methodService;
     private ClosableTabbedPane paneMainPageTabs;
-
-    private nyInloggning nyInloggning;
     private CreateBlogInternalFrame createBlogInternalFrame;
     private EditBlogInternalFrame editBlogInternalFrame;
-    //private RemoveBlogInternalFrame removeBlogInternalFrame;
+    private RemoveBlogInternalFrame removeBlogInternalFrame;
+        
     /**
-     * Creates new form MainPage
+     * Creates new form ColorPage
+     * @param idb
      */
     public MainPage(InfDB idb) {
         initComponents();
@@ -242,14 +242,14 @@ public class MainPage extends javax.swing.JFrame {
 
     private void removeBlogMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBlogMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-//        if(!tabExists("Remove blog")) {
-//            removeBlogInternalFrame = new ShowBlogInternalFrame(idb);
-//            openTab(removeBlogInternalFrame, "Remove blog");
-//        }       
-//        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-//        else{
-//            moveFocusToTab("Remove blog");
-//        }
+        if(!tabExists("Remove blog")) {
+            removeBlogInternalFrame = new RemoveBlogInternalFrame(idb);
+            openTab(removeBlogInternalFrame, "Remove blog");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
+            moveFocusToTab("Remove blog");
+        }
     }//GEN-LAST:event_removeBlogMnuItmActionPerformed
 
     private void closeWindowsMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeWindowsMnuItmActionPerformed
@@ -261,8 +261,7 @@ public class MainPage extends javax.swing.JFrame {
         //Stänger applikationen och öppnar inloggningsfönstret
         System.exit(1);
         //Alternativt nästa kodrad
-
-        
+        // mainPage.setVisible(false);
         
     }//GEN-LAST:event_logOutMnuItmActionPerformed
 
