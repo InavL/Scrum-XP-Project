@@ -6,8 +6,11 @@ import javax.swing.JOptionPane;
 <<<<<<< HEAD
 =======
 import javax.swing.JPasswordField;
+<<<<<<< HEAD
+=======
 import javax.swing.JTextArea;
 >>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
+>>>>>>> fdd0a75eb3cc89c68f19ff38c6c09194a9221951
 import javax.swing.JTextField;
 
 /**
@@ -70,19 +73,6 @@ public class Validation {
 =======
     }
     
-    //Kollar om textfältet har ett värde
-    public static boolean textareaWithValue(JTextArea ta) {
-
-        boolean value = true;
-
-        if (ta.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Textfältet är tomt!");
-            ta.requestFocus();
-            return false;
-        }
-        return value;
-    }
-    
     public static boolean pwdFieldHasValue(JPasswordField rutaAttValidera) { // kontrollerar ifall det finns något värde i ett passwordfält
         
         boolean resultat = true;
@@ -107,6 +97,9 @@ public class Validation {
         return elementSelected;
     }
 <<<<<<< HEAD
+}
+=======
+<<<<<<< HEAD
       
 }
     
@@ -117,3 +110,4 @@ public class Validation {
 
 
 >>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
+>>>>>>> fdd0a75eb3cc89c68f19ff38c6c09194a9221951

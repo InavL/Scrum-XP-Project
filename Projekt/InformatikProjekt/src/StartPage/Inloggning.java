@@ -15,7 +15,6 @@ public class Inloggning extends javax.swing.JFrame {
 
     /**
      * Creates new form Inlogging
-     * @param idb
      */
     public Inloggning(InfDB idb) {
         initComponents();
@@ -70,6 +69,8 @@ public class Inloggning extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< HEAD
+=======
 
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
@@ -103,6 +104,7 @@ public class Inloggning extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLoginActionPerformed
 
 
+>>>>>>> fdd0a75eb3cc89c68f19ff38c6c09194a9221951
     /**
      * @param args the command line arguments
      */

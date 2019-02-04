@@ -19,6 +19,14 @@ public class MainPage extends javax.swing.JFrame {
     private MethodService methodService;
     private ClosableTabbedPane paneMainPageTabs;
 <<<<<<< HEAD
+    //private nyInloggning nyInloggning;
+    private CreateBlogInternalFrame createBlogInternalFrame;
+    private EditBlogInternalFrame editBlogInternalFrame;
+    private ShowBlogInternalFrame removeBlogInternalFrame;
+    
+
+=======
+<<<<<<< HEAD
     private nyInloggning nyInloggning;
     private CreateBlogInternalFrame createBlogInternalFrame;
     private EditBlogInternalFrame editBlogInternalFrame;
@@ -31,9 +39,9 @@ public class MainPage extends javax.swing.JFrame {
     private RemoveBlogInternalFrame removeBlogInternalFrame;
         
 >>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
+>>>>>>> fdd0a75eb3cc89c68f19ff38c6c09194a9221951
     /**
-     * Creates new form ColorPage
-     * @param idb
+     * Creates new form MainPage
      */
     public MainPage(InfDB idb) {
         initComponents();
@@ -252,7 +260,7 @@ public class MainPage extends javax.swing.JFrame {
     private void removeBlogMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBlogMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Remove blog")) {
-            removeBlogInternalFrame = new RemoveBlogInternalFrame(idb);
+            removeBlogInternalFrame = new ShowBlogInternalFrame(idb);
             openTab(removeBlogInternalFrame, "Remove blog");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
@@ -270,12 +278,17 @@ public class MainPage extends javax.swing.JFrame {
         //Stänger applikationen och öppnar inloggningsfönstret
         System.exit(1);
         //Alternativt nästa kodrad
+<<<<<<< HEAD
+        //mainPage.setVisible(false);
+        //nyInloggning.setVisible(true);
+=======
         // mainPage.setVisible(false);
 <<<<<<< HEAD
         nyInloggning.setVisible(true);
 =======
         new Inloggning(idb).setVisible(true);
 >>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
+>>>>>>> fdd0a75eb3cc89c68f19ff38c6c09194a9221951
         
     }//GEN-LAST:event_logOutMnuItmActionPerformed
 
