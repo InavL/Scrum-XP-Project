@@ -5,6 +5,7 @@
  */
 package StartPage;
 
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
@@ -15,7 +16,8 @@ import oru.inf.InfDB;
  */
 public class CreateBlog extends javax.swing.JFrame {
 
-    private InfDB idb;
+    private static InfDB idb;
+    
     /**
      * Creates new form ColorPage
      */
@@ -272,6 +274,7 @@ public class CreateBlog extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
         private void kategori1()
     {
+        //Lägger in alla kategorier från kategori3 och lägger in i första comboboxen.
         try
         {
             String fraga = "select KAT1_NAMN from KAT1;";
@@ -288,6 +291,7 @@ public class CreateBlog extends javax.swing.JFrame {
     }
              private void kategori2()
     {
+        //Efter att man valt kateogri 3 så får man fram alla underliggade kategorier, vilket är kategorier 2.
         try
         {
             String fraga = "select KAT2_NAMN from KAT2;";
@@ -306,12 +310,22 @@ public class CreateBlog extends javax.swing.JFrame {
     {
         try
         {
+<<<<<<< HEAD
             String fraga = "select KAT3_NAMN from KAT3;";
             ArrayList<String> allaKategorier3 = idb.fetchColumn(fraga);
             for(String enKat : allaKategorier3)
             {
                 cbxKat3.addItem(enKat);
             }
+=======
+                String kat2 = cbxKat2.getSelectedItem().toString();
+                String hittaKat2 = "select KAT2_NAMN from KAT1 join KAT2 where KAT3_NAMN = '" + kat2 + "';";
+                ArrayList<String> allaKategorier1 = idb.fetchColumn(hittaKat2);
+                for(String enKat : allaKategorier1)
+                {
+                    cbxKat1.addItem(enKat);
+                }
+>>>>>>> 89e2d43884ee18b064b4a1d8bf9b80ba4a67b71d
         }
         catch(Exception ex)
         {
@@ -326,8 +340,17 @@ public class CreateBlog extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPublishActionPerformed
 
+<<<<<<< HEAD
 
 
+=======
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        
+        //String newTag = txtNewTag.getText();
+        //String fraga = "update KAT1 set KAT"
+        //idn.update()
+    }//GEN-LAST:event_btnAddActionPerformed
+>>>>>>> 89e2d43884ee18b064b4a1d8bf9b80ba4a67b71d
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btbAddPicture;
@@ -362,4 +385,10 @@ public class CreateBlog extends javax.swing.JFrame {
     private javax.swing.JTextField txtNewTag;
     private javax.swing.JTextArea txtText;
     // End of variables declaration//GEN-END:variables
+
+    //private static class InfExeception {
+
+        //public InfExeception() {
+        //}
+    //}
 }
