@@ -262,7 +262,6 @@ public class MainPage extends javax.swing.JFrame {
         System.exit(1);
         //Alternativt nästa kodrad
         // mainPage.setVisible(false);
-        new Inloggning(idb).setVisible(true);
         
     }//GEN-LAST:event_logOutMnuItmActionPerformed
 

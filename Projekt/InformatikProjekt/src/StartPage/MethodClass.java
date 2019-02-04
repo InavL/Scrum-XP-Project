@@ -1,6 +1,7 @@
 
 package StartPage;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
@@ -19,6 +20,12 @@ public class MethodClass {
         
         
     }
+    
+//    private Point getPlats() { // Används inte men ser till att en ny ruta som öppnas öppnas över den förra istället för uppe i vänstra hörnet av skärmen
+//        Point plats = new Point();
+//        plats = this.getLocation();
+//        return plats;
+//    }
     
         public static ArrayList<String> kategori1(String katNamn, String katTabell)
     {
