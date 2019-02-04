@@ -29,7 +29,7 @@ public class StartInfProj {
             idb = new InfDB (file);
             
         } catch (InfException ettUndantag) {
-            JOptionPane.showMessageDialog(null, "Databasen kunde inte anslutas!");
+            JOptionPane.showMessageDialog(null, "Error: Failed to establish connection to database. Woops.");
             System.out.println("Internt felmeddelande " + ettUndantag.getMessage());
         }
 
