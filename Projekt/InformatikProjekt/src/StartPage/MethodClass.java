@@ -31,8 +31,8 @@ public class MethodClass {
     {
         try
         {
-            System.out.println("fghjklöä");
-            String fraga = "Select '" + katNamn + "' from '" + katTabell + "';";
+       // String fraga = "Select KAT1_NAMN from KAT1";    
+        String fraga = "Select '" + katNamn + "' from '" + katTabell + "';";
             ArrayList<String> allaKategorier1 = idb.fetchColumn(fraga);
             return allaKategorier1;
         }
