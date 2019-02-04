@@ -20,10 +20,11 @@ public class LoginWindow extends javax.swing.JFrame {
     private static int behorighet;
     /**
      * Creates new form ColorPage
+     * @param idb
      */
     public LoginWindow(InfDB idb) {
         initComponents();
-        this.idb = idb;
+        LoginWindow.idb = idb;
     }
     
     public static int getID(){ // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
@@ -78,11 +79,14 @@ public class LoginWindow extends javax.swing.JFrame {
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
+        pwdPassword.setText("exempel");
+
         lblemail.setText("E-mail:");
 
         lblPassword.setText("Password:");
 
         txtEmail.setColumns(8);
+        txtEmail.setText("exempel@oru.se");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Please enter e-mail and password.");

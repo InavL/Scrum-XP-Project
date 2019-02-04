@@ -31,11 +31,7 @@ public class MethodClass {
     {
         try
         {
-<<<<<<< HEAD
             String fraga = "Select '" + katNamn + "' from '" + katTabell + "';";
-=======
-            String fraga = "select " + katNamn + " from " + katTabell;
->>>>>>> fdf97cc772cef9d9ebc208520de5265ab78cc0fe
             ArrayList<String> allaKategorier1 = idb.fetchColumn(fraga);
             return allaKategorier1;
         }

@@ -5,11 +5,7 @@
  */
 package StartPage;
 
-<<<<<<< HEAD
-import static StartPage.MethodClass.getComboBoxCategory;
-=======
 import java.io.File;
->>>>>>> fdf97cc772cef9d9ebc208520de5265ab78cc0fe
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
@@ -31,15 +27,10 @@ public class CreateBlog extends javax.swing.JFrame {
         initComponents();
         this.idb = idb;
 
-<<<<<<< HEAD
-       getComboBoxCategory("KAT1_NAMN", "KAT1", idb);
-=======
         kategori1();
 
 
         kategori3();
-
->>>>>>> fdf97cc772cef9d9ebc208520de5265ab78cc0fe
         
     }
 
