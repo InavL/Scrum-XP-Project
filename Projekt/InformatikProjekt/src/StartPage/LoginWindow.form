@@ -134,9 +134,6 @@
           </SubComponents>
         </Container>
         <Component class="javax.swing.JPasswordField" name="pwdPassword">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pwdPasswordActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblemail">
           <Properties>
