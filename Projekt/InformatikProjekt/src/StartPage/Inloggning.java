@@ -22,6 +22,7 @@ public class Inloggning extends javax.swing.JFrame {
     
     /**
      * Creates new form Inlogging
+     * @param idb
      */
     public Inloggning(InfDB idb) {
         initComponents();
@@ -114,15 +115,17 @@ public class Inloggning extends javax.swing.JFrame {
                 
                 String mail = txtMail.getText();
                 String pwd = String.valueOf(pwdLosen.getPassword());
-                String query = "SELECT LOSENORD from PERSONER where MAIL =" + mail;
+                String query = "SELECT LOSENORD from PERSONER where MAIL ='" + mail +"'";
                 String svar = idb.fetchSingle(query);
-                String queryBehorighet = "SELECT SID from PERSONER where MAIL =" + mail;
-                String svarBehorighet = idb.fetchSingle(queryBehorighet);
+                System.out.println(svar);
+                String svar1 = "admin";
+//                String queryBehorighet = "SELECT SID from PERSONER where MAIL ='" + mail + "'";
+//                String svarBehorighet = idb.fetchSingle(queryBehorighet);
                 
                 if (pwd.equals(svar)) {
                     new MainPage(idb).setVisible(true);
-                    int svBehorighet = Integer.parseInt(svarBehorighet);
-                    inloggad = svBehorighet;
+//                    int svBehorighet = Integer.parseInt(svarBehorighet);
+//                    inloggad = svBehorighet;
                     
                 } else {
                     JOptionPane.showMessageDialog(null, "Fel användarnamn och lösenordskombination.");
