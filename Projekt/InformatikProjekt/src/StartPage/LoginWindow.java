@@ -16,12 +16,23 @@ import oru.inf.InfException;
 public class LoginWindow extends javax.swing.JFrame {
 
     private static InfDB idb;
+    private static int id;
+    private static int behorighet;
     /**
      * Creates new form ColorPage
+     * @param idb
      */
     public LoginWindow(InfDB idb) {
         initComponents();
-        this.idb = idb;
+        LoginWindow.idb = idb;
+    }
+    
+    public static int getID(){ // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
+        return id;
+    }
+    
+    public static int getBehorighet(){ // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
+        return behorighet;
     }
 
     /**
@@ -68,17 +79,14 @@ public class LoginWindow extends javax.swing.JFrame {
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
-        pwdPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pwdPasswordActionPerformed(evt);
-            }
-        });
+        pwdPassword.setText("exempel");
 
         lblemail.setText("E-mail:");
 
         lblPassword.setText("Password:");
 
         txtEmail.setColumns(8);
+        txtEmail.setText("exempel@oru.se");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Please enter e-mail and password.");
@@ -147,10 +155,6 @@ public class LoginWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void pwdPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pwdPasswordActionPerformed
-
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         try
         {
@@ -160,9 +164,19 @@ public class LoginWindow extends javax.swing.JFrame {
             String fraga = "select LOSENORD from PERSONER where MAIL = '" + email + "';";
             String losenord = idb.fetchSingle(fraga); //Hämtar lösenordet som ska höra ihop med mailen.
             
+            String queryBehorighet = "select SID from PERSONER where MAIL = '" + email + "';";
+            String svarBehorighet = idb.fetchSingle(queryBehorighet); //Hämtar behörigheten
+            
+            String queryID = "select ID from PERSONER where MAIL =" + email +"';";
+            String svarID = idb.fetchSingle(queryID); //Hämtar IDt
+            
             if(password.equals(losenord)) //Testar så att lösenordet som hör ihop med mailen matchar det lösenordet som skrevs in i fältet.
             {
-                //Ett nytt fönster ska visas? Eller detta bara försvinna?
+                new MainPage(idb).setVisible(true);
+                int svBehorighet = Integer.parseInt(svarBehorighet);
+                behorighet = svBehorighet;
+                int svID = Integer.parseInt(svarID);
+                id = svID;
             }
             else //Om lösenordet inte matchar.
             {

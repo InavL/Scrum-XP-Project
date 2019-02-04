@@ -31,9 +31,7 @@ public class StartInfProj {
             System.out.println("Internt felmeddelande " + ettUndantag.getMessage());
         }
 
-//        new HomePage(idb).setVisible(true);
-       new CreateBlog(idb).setVisible(true);
-         // new Inloggning(idb).setVisible(true);
+        new LoginWindow(idb).setVisible(true);
         
     }
     
