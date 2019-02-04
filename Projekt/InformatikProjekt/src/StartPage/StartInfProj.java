@@ -32,6 +32,7 @@ public class StartInfProj {
         }
 
         new Inloggning(idb).setVisible(true);
+        new CreateBlog(idb).setVisible(true);
         
     }
     
