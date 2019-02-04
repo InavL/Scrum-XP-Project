@@ -5,6 +5,7 @@
  */
 package StartPage;
 
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
@@ -16,7 +17,8 @@ import oru.inf.InfException;
  */
 public class CreateBlog extends javax.swing.JFrame {
 
-    private InfDB idb;
+    private static InfDB idb;
+    
     /**
      * Creates new form ColorPage
      */
@@ -24,6 +26,7 @@ public class CreateBlog extends javax.swing.JFrame {
         
         initComponents();
         this.idb = idb;
+
         kategori3();
         
     }
@@ -282,6 +285,7 @@ public class CreateBlog extends javax.swing.JFrame {
 
                   private void kategori3()
     {
+        //Lägger in alla kategorier från kategori3 och lägger in i första comboboxen.
         try
         {
             String fraga = "select KAT3_NAMN from KAT3;";
@@ -298,6 +302,7 @@ public class CreateBlog extends javax.swing.JFrame {
     }
                   private void hittaKat2()
     {
+        //Efter att man valt kateogri 3 så får man fram alla underliggade kategorier, vilket är kategorier 2.
         try
         {
                 String kat3 = cbxKat3.getSelectedItem().toString();
@@ -319,11 +324,11 @@ public class CreateBlog extends javax.swing.JFrame {
         {
                 String kat2 = cbxKat2.getSelectedItem().toString();
                 String hittaKat2 = "select KAT2_NAMN from KAT1 join KAT2 where KAT3_NAMN = '" + kat2 + "';";
-                 ArrayList<String> allaKategorier1 = idb.fetchColumn(hittaKat2);
-                 for(String enKat : allaKategorier1)
-                 {
-                     cbxKat1.addItem(enKat);
-                 }
+                ArrayList<String> allaKategorier1 = idb.fetchColumn(hittaKat2);
+                for(String enKat : allaKategorier1)
+                {
+                    cbxKat1.addItem(enKat);
+                }
         }
         catch(InfException ex)
         {
@@ -344,9 +349,6 @@ public class CreateBlog extends javax.swing.JFrame {
         //String fraga = "update KAT1 set KAT"
         //idn.update()
     }//GEN-LAST:event_btnAddActionPerformed
-
-
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btbAddPicture;
@@ -381,4 +383,10 @@ public class CreateBlog extends javax.swing.JFrame {
     private javax.swing.JTextField txtNewTag;
     private javax.swing.JTextArea txtText;
     // End of variables declaration//GEN-END:variables
+
+    //private static class InfExeception {
+
+        //public InfExeception() {
+        //}
+    //}
 }
