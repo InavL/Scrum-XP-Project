@@ -28,7 +28,7 @@ public class MainPage extends javax.swing.JFrame {
      */
     public MainPage(InfDB idb) {
         initComponents();
-        this.setSize(800, 600);
+        this.setSize(1000, 800);
         this.idb = idb;
         //Instansierar ett nytt methodServiceobjekt
         methodService = new MethodService(idb);

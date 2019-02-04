@@ -36,6 +36,7 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
         mainPanel.setVisible(false);
         //Fyller listan med aktuella inlägg
         fillListWithPosts();
+        
     }
 
     /**
@@ -75,6 +76,7 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
         btnChooseThisPost = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(51, 153, 255));
 
@@ -97,8 +99,11 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 897, -1));
+
         cbPosts.setEditable(true);
         cbPosts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose a post" }));
+        jPanel1.add(cbPosts, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 131, 265, -1));
 
         textPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -207,7 +212,10 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
 
         mainPanel.addTab("Edit category", categoryPanel1);
 
+        jPanel1.add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 181, -1, -1));
+
         lblChoosepostToEdit.setText("Choose a post to edit");
+        jPanel1.add(lblChoosepostToEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 107, -1, -1));
 
         btnChooseThisPost.setText("Choose this post");
         btnChooseThisPost.addActionListener(new java.awt.event.ActionListener() {
@@ -215,37 +223,7 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
                 btnChooseThisPostActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 828, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblChoosepostToEdit)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cbPosts, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(btnChooseThisPost)))
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblChoosepostToEdit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbPosts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnChooseThisPost))
-                .addGap(26, 26, 26)
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(102, 102, 102))
-        );
+        jPanel1.add(btnChooseThisPost, new org.netbeans.lib.awtextra.AbsoluteConstraints(348, 130, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -301,12 +279,14 @@ private void fillListWithPosts(){
             //Lägger in värdena i de lokala variablerna
             String heading = tfHeading.getText();
             String text = taText.getText();
+            String titel = cbPosts.getSelectedItem().toString();
+            
             
             try {
+                String bloggID = idb.fetchSingle("SELECT bloggid FROM blogg  WHERE titel = \'" + titel + "\'");
                 //Uppdaterar blogginlägget med den nya titeln och texten
-                idb.update("UPDATE blog\n"
-                        + "SET titel = \'" + heading + "\', bloggpost = \'" + text + "\n"
-                        + "WHERE bloggid = " + blogID);
+                idb.update("UPDATE blogg SET titel = \'" + heading + "\', bloggpost = \'" + text + "\' WHERE bloggid = " + bloggID);
+                
                 lblChanges.setVisible(true);
                 
             } 
@@ -322,7 +302,7 @@ private void fillListWithPosts(){
         if (Validation.elementSelectedInCombobox(cbPosts, "Choose a post")) {  
             String titel = cbPosts.getSelectedItem().toString();
             try {
-             HashMap<String, String> postInfo = idb.fetchRow("SELECT bloggID, bloggpost FROM larare \n" +
+             HashMap<String, String> postInfo = idb.fetchRow("SELECT bloggID, bloggpost FROM blogg \n" +
                     "WHERE titel = \'" + titel + "\'");
              
              //Fyller i de hämtade värdena i textrutorna för blogginlägget
