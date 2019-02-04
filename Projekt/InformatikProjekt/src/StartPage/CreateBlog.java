@@ -25,17 +25,10 @@ public class CreateBlog extends javax.swing.JFrame {
         
         initComponents();
         this.idb = idb;
-<<<<<<< HEAD
-        kategori1();
-=======
-
         kategori1();
 
 
         kategori1();
-
->>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
-        
     }
 
     /**
@@ -298,7 +291,6 @@ public class CreateBlog extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
-<<<<<<< HEAD
              private void kategori2()
     {
         try
@@ -331,7 +323,6 @@ public class CreateBlog extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
-=======
                 // private void hittaKat2()
     //{
         //Efter att man valt kateogri 3 så får man fram alla underliggade kategorier, vilket är kategorier 2.
@@ -368,7 +359,6 @@ public class CreateBlog extends javax.swing.JFrame {
       //  }
     //}
 
->>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
     private void txtHeadingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHeadingActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHeadingActionPerformed
@@ -378,11 +368,6 @@ public class CreateBlog extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPublishActionPerformed
 
 
-
-
-<<<<<<< HEAD
-=======
-
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         
         //String newTag = txtNewTag.getText();
@@ -390,7 +375,6 @@ public class CreateBlog extends javax.swing.JFrame {
         //idn.update()
     }//GEN-LAST:event_btnAddActionPerformed
 
->>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btbAddPicture;
     private javax.swing.JButton btnAdd;
