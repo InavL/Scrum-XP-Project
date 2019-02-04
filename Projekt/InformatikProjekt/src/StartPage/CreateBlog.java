@@ -5,11 +5,9 @@
  */
 package StartPage;
 
-import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
-import oru.inf.InfException;
 
 /**
  *
