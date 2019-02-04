@@ -32,7 +32,6 @@ public class StartInfProj {
         }
 
         new LoginWindow(idb).setVisible(true);
-       // new CreateBlog(idb).setVisible(true);
     }
     
 }
