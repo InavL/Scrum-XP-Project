@@ -29,6 +29,8 @@ public class MainPage extends javax.swing.JFrame {
     public MainPage(InfDB idb) {
         initComponents();
         this.setSize(1000, 800);
+        //this.setLocationByPlatform(rootPaneCheckingEnabled);
+        this.setLocationRelativeTo(null);
         this.idb = idb;
         //Instansierar ett nytt methodServiceobjekt
         methodService = new MethodService(idb);
@@ -259,10 +261,9 @@ public class MainPage extends javax.swing.JFrame {
 
     private void logOutMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMnuItmActionPerformed
         //Stänger applikationen och öppnar inloggningsfönstret
-        System.exit(1);
-        //Alternativt nästa kodrad
-        // mainPage.setVisible(false);
-        
+        //System.exit(1);
+        this.dispose();
+        new LoginWindow(idb).setVisible(true);
     }//GEN-LAST:event_logOutMnuItmActionPerformed
 
 
