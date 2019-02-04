@@ -3,14 +3,7 @@ package StartPage;
 
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-<<<<<<< HEAD
-=======
 import javax.swing.JPasswordField;
-<<<<<<< HEAD
-=======
-import javax.swing.JTextArea;
->>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
->>>>>>> fdd0a75eb3cc89c68f19ff38c6c09194a9221951
 import javax.swing.JTextField;
 
 /**
@@ -68,24 +61,7 @@ public class Validation {
             return false;
         } 
         return value;
-<<<<<<< HEAD
     }  
-=======
-    }
-    
-    public static boolean pwdFieldHasValue(JPasswordField rutaAttValidera) { // kontrollerar ifall det finns något värde i ett passwordfält
-        
-        boolean resultat = true;
-
-        if (rutaAttValidera.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(null, "Lösenordsrutan är tom!");
-            resultat = false;
-        }
-
-        return resultat;
-    }
-
->>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
     //Kollar om ett element har valts i en combobox
     public static boolean elementSelectedInCombobox(JComboBox<String> enCombobox, String oneMessage) {
         boolean elementSelected = true;
@@ -96,18 +72,4 @@ public class Validation {
         }
         return elementSelected;
     }
-<<<<<<< HEAD
 }
-=======
-<<<<<<< HEAD
-      
-}
-    
-=======
-    
-    
-}
-
-
->>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
->>>>>>> fdd0a75eb3cc89c68f19ff38c6c09194a9221951
