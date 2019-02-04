@@ -25,12 +25,12 @@ public class CreateBlog extends javax.swing.JFrame {
         
         initComponents();
         this.idb = idb;
-<<<<<<< HEAD
+
         kategori1();
-=======
+
 
         kategori3();
->>>>>>> 1070d535e668d58e4748df95e32c642885375a0e
+
         
     }
 
@@ -315,14 +315,14 @@ public class CreateBlog extends javax.swing.JFrame {
     {
         try
         {
-<<<<<<< HEAD
+
             String fraga = "select KAT3_NAMN from KAT3;";
             ArrayList<String> allaKategorier3 = idb.fetchColumn(fraga);
             for(String enKat : allaKategorier3)
             {
                 cbxKat3.addItem(enKat);
             }
-=======
+
                 String kat2 = cbxKat2.getSelectedItem().toString();
                 String hittaKat2 = "select KAT2_NAMN from KAT1 join KAT2 where KAT3_NAMN = '" + kat2 + "';";
                 ArrayList<String> allaKategorier1 = idb.fetchColumn(hittaKat2);
@@ -330,7 +330,7 @@ public class CreateBlog extends javax.swing.JFrame {
                 {
                     cbxKat1.addItem(enKat);
                 }
->>>>>>> 89e2d43884ee18b064b4a1d8bf9b80ba4a67b71d
+
         }
         catch(Exception ex)
         {
@@ -345,17 +345,17 @@ public class CreateBlog extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPublishActionPerformed
 
-<<<<<<< HEAD
 
 
-=======
+
+
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         
         //String newTag = txtNewTag.getText();
         //String fraga = "update KAT1 set KAT"
         //idn.update()
     }//GEN-LAST:event_btnAddActionPerformed
->>>>>>> 89e2d43884ee18b064b4a1d8bf9b80ba4a67b71d
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btbAddPicture;

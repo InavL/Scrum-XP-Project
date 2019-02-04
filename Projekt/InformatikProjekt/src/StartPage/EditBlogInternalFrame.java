@@ -155,7 +155,7 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
 
         mainPanel.addTab("Edit text", textPanel);
 
-        lblDescription.setText("Choose categories to place your post in the right place");
+        lblDescription.setText("Choose categories to place your post in another place");
 
         lblSubSubcategory.setText("Sub-subcategory");
 
@@ -195,7 +195,7 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
                             .addComponent(lblMainCategory)
                             .addComponent(cbMainCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblDescription))
-                        .addContainerGap(517, Short.MAX_VALUE))))
+                        .addContainerGap(521, Short.MAX_VALUE))))
         );
         categoryPanelLayout.setVerticalGroup(
             categoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,17 +314,31 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
             catch (InfException ettUndantag) {
                 ettUndantag.getMessage();
                 JOptionPane.showMessageDialog(null, "Något gick fel.");
-            }
-            
-            
+            }         
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnChooseThisPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseThisPostActionPerformed
         //Kontrollerar att sökfältet inte är tomt.
-        if (Validation.elementSelectedInCombobox(cbPosts, "Choose a post")) {    
+        if (Validation.elementSelectedInCombobox(cbPosts, "Choose a post")) {  
+            String titel = cbPosts.getSelectedItem().toString();
+            try {
+             HashMap<String, String> postInfo = idb.fetchRow("SELECT bloggID, bloggpost FROM larare \n" +
+                    "WHERE titel = \'" + titel + "\'");
+             
+             //Fyller i de hämtade värdena i textrutorna för blogginlägget
+            tfHeading.setText(titel);
+            taText.setText(postInfo.get("BLOGGPOST"));
+            blogID = postInfo.get("bloggID");
             
+            //Gör panelen synlig
+            mainPanel.setVisible(true);
             
+            }
+            catch (InfException ettUndantag) {
+                ettUndantag.getMessage();
+                JOptionPane.showMessageDialog(null, "Något gick fel.");
+            } 
         }
     }//GEN-LAST:event_btnChooseThisPostActionPerformed
 

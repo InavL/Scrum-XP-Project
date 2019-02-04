@@ -259,7 +259,7 @@
                                       <Component id="cbMainCategory" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblDescription" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace pref="517" max="32767" attributes="0"/>
+                                  <EmptySpace pref="521" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -295,7 +295,7 @@
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="lblDescription">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Choose categories to place your post in the right place"/>
+                    <Property name="text" type="java.lang.String" value="Choose categories to place your post in another place"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblSubSubcategory">
