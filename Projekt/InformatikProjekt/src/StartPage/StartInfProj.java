@@ -17,6 +17,8 @@ public class StartInfProj {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
+        windowsStil();
 
         // Denna fil körs för att starta programmet.
         
@@ -27,12 +29,31 @@ public class StartInfProj {
             idb = new InfDB (file);
             
         } catch (InfException ettUndantag) {
-            JOptionPane.showMessageDialog(null, "Databasen kunde inte anslutas!");
+            JOptionPane.showMessageDialog(null, "Error: Failed to establish connection to database. Woops.");
             System.out.println("Internt felmeddelande " + ettUndantag.getMessage());
         }
 
-        //new LoginWindow(idb).setVisible(true);
-        new CreateBlog(idb).setVisible(true);
+        new LoginWindow(idb).setVisible(true);
+    }
+    
+    private static void windowsStil() {
+        // Innehåller designelement för Huvudfönstret
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Windows".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
     }
     
 }
