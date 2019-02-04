@@ -5,6 +5,7 @@
  */
 package StartPage;
 
+import static StartPage.MethodClass.getComboBoxCategory;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
@@ -16,6 +17,7 @@ import oru.inf.InfDB;
 public class CreateBlog extends javax.swing.JFrame {
 
     private static InfDB idb;
+   
     
     /**
      * Creates new form ColorPage
@@ -25,8 +27,8 @@ public class CreateBlog extends javax.swing.JFrame {
         initComponents();
         this.idb = idb;
 
-        kategori3();
-        //kategori1();
+       getComboBoxCategory("KAT1_NAMN", "KAT1", idb);
+        
     }
 
     /**

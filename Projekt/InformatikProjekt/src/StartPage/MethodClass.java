@@ -23,7 +23,7 @@ public class MethodClass {
     {
         try
         {
-            String fraga = "Select "+katNamn+" from '"+katTabell+"'";
+            String fraga = "Select '" + katNamn + "' from '" + katTabell + "';";
             ArrayList<String> allaKategorier1 = idb.fetchColumn(fraga);
             return allaKategorier1;
         }
