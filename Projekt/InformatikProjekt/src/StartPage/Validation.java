@@ -3,7 +3,6 @@ package StartPage;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
@@ -61,19 +60,6 @@ public class Validation {
         return value;
     }
     
-    //Kollar om textfältet har ett värde
-    public static boolean textareaWithValue(JTextArea ta) {
-
-        boolean value = true;
-
-        if (ta.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Textfältet är tomt!");
-            ta.requestFocus();
-            return false;
-        }
-        return value;
-    }
-    
     public static boolean pwdFieldHasValue(JPasswordField rutaAttValidera) { // kontrollerar ifall det finns något värde i ett passwordfält
         
         boolean resultat = true;
@@ -98,8 +84,4 @@ public class Validation {
         }
         return elementSelected;
     }
-    
-    
 }
-
-
