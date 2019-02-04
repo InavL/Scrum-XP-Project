@@ -307,7 +307,7 @@ public class CreateBlogNy extends javax.swing.JFrame {
         String heading = txtHeading.getText();
         String text = txtText.getText();
         
-        String fragaInsert = "Insert into "
+        //String fragaInsert = "Insert into "
     }//GEN-LAST:event_btnPublishActionPerformed
 
 

@@ -21,6 +21,7 @@ public class MainPage extends javax.swing.JFrame {
     private CreateBlogInternalFrame createBlogInternalFrame;
     private EditBlogInternalFrame editBlogInternalFrame;
     private RemoveBlogInternalFrame removeBlogInternalFrame;
+    private FeedBlogInternalFrame feedBlogInternalFrame;
         
     /**
      * Creates new form ColorPage
@@ -54,6 +55,7 @@ public class MainPage extends javax.swing.JFrame {
         closeWindowsMnuItm = new javax.swing.JMenuItem();
         exitMnuItm = new javax.swing.JMenuItem();
         blog = new javax.swing.JMenu();
+        blogFeedMnuItm = new javax.swing.JMenuItem();
         createBlogMnuItm = new javax.swing.JMenuItem();
         editBlogMnuItm = new javax.swing.JMenuItem();
         removeBlogMnuItm = new javax.swing.JMenuItem();
@@ -89,6 +91,14 @@ public class MainPage extends javax.swing.JFrame {
         superMenyBar.add(mainMenu);
 
         blog.setText("Blog");
+
+        blogFeedMnuItm.setText("Blog feed");
+        blogFeedMnuItm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blogFeedMnuItmActionPerformed(evt);
+            }
+        });
+        blog.add(blogFeedMnuItm);
 
         createBlogMnuItm.setText("Create blog");
         createBlogMnuItm.addActionListener(new java.awt.event.ActionListener() {
@@ -222,9 +232,22 @@ public class MainPage extends javax.swing.JFrame {
         
     }//GEN-LAST:event_logOutMnuItmActionPerformed
 
+    private void blogFeedMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blogFeedMnuItmActionPerformed
+        //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
+        if(!tabExists("Blog feed")) {
+            feedBlogInternalFrame = new FeedBlogInternalFrame(idb);
+            openTab(feedBlogInternalFrame, "Blog feed");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
+            moveFocusToTab("Blog feed");
+        }
+    }//GEN-LAST:event_blogFeedMnuItmActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu blog;
+    private javax.swing.JMenuItem blogFeedMnuItm;
     private javax.swing.JMenuItem closeWindowsMnuItm;
     private javax.swing.JMenuItem createBlogMnuItm;
     private javax.swing.JMenuItem editBlogMnuItm;

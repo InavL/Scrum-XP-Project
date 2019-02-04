@@ -5,13 +5,17 @@
  */
 package StartPage;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.JOptionPane;
 import oru.inf.InfDB;
+import oru.inf.InfException;
 
 /**
  *
  * @author ellin
  */
-public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
+public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     
     private static InfDB idb;
     private MethodService methodService;
@@ -19,10 +23,11 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public RemoveBlogInternalFrame(InfDB idb) {
+    public FeedBlogInternalFrame(InfDB idb) {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);
+        fillFeed();
     }
 
     /**
@@ -37,8 +42,12 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        taBlogFeed = new javax.swing.JTextArea();
+        btnUpdate = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(51, 153, 255));
 
@@ -52,7 +61,7 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(733, Short.MAX_VALUE))
+                .addContainerGap(729, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -61,24 +70,27 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 672, Short.MAX_VALUE))
-        );
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, -1));
+
+        taBlogFeed.setColumns(20);
+        taBlogFeed.setRows(5);
+        jScrollPane1.setViewportView(taBlogFeed);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 840, 406));
+
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 640, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 984, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -88,10 +100,43 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void fillFeed() {
+        //Tömmer textrutan från eventuell tidigare text.
+        taBlogFeed.setText("");
+
+        try {
+            //Hämtar titel och bloggpost och sorterar de i fallande ordning efter bloggID.
+            ArrayList<HashMap<String, String>> posts = idb.fetchRows("SELECT titel, bloggpost FROM blogg \n"
+                    + "ORDER BY bloggid DESC");
+            //Loopar igenom ArrayListen och hämtar titel och bloggpost för varje inlägg i ArrayListens HashMap.
+            for (int i = 0; i < posts.size(); i++) {
+                String titel = posts.get(i).get("TITEL");
+                String post = posts.get(i).get("BLOGGPOST");
+                
+                //Lägger till titel och bloggpost i textrutan.
+                taBlogFeed.append(titel + "\n");
+                taBlogFeed.append(post + "\n");
+                taBlogFeed.append("\n");
+            }
+        } catch (InfException oneException) {
+            oneException.getMessage();
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+        }
+    }
+    
+    
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // Uppdaterar flödet ifall ändringar har gjorts sedan man öppnade fönstret
+        fillFeed();
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea taBlogFeed;
     // End of variables declaration//GEN-END:variables
 }

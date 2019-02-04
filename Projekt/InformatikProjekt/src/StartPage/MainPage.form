@@ -40,6 +40,14 @@
             <Property name="text" type="java.lang.String" value="Blog"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="blogFeedMnuItm">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Blog feed"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="blogFeedMnuItmActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="createBlogMnuItm">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Create blog"/>
