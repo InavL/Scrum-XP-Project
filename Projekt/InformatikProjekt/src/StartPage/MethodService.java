@@ -6,12 +6,8 @@
 package StartPage;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.HashMap;
-import javax.swing.JComboBox;
 import javax.swing.JTabbedPane;
 import oru.inf.InfDB;
-import oru.inf.InfException;
 
 /**
  *
@@ -31,24 +27,6 @@ public class MethodService {
             oneTabbedPane.setBackgroundAt(i, Color.WHITE);
             oneTabbedPane.getComponentAt(i).setBackground(Color.WHITE);
         }
-    }
-    
-    public void fillComboboxAllCategory1(JComboBox<String> enCombobox) {
-        try {
-            //Hämtar en lista på namnen på alla kategori1 i databasen
-            ArrayList<HashMap<String, String>> categoryList = idb.fetchRows("SELECT kat1_ID FROM kat1");
-            //Loopar igenom listan och lägger till alla kategorier till kategorilistan
-            for (int i = 0; i < categoryList.size(); i++) {
-                String categoryName = categoryList.get(i).get("KAt1_ID");
-                enCombobox.addItem(categoryName);
-            } 
-        }
-        catch (InfException oneException) {
-            oneException.getMessage();
-        }
-        catch (NullPointerException anotherException) {
-            anotherException.getMessage();
-        }   
     }
     
 }
