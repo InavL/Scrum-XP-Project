@@ -5,6 +5,8 @@
  */
 package StartPage;
 
+import java.awt.Point;
+import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 import oru.inf.InfException;
@@ -18,6 +20,8 @@ public class LoginWindow extends javax.swing.JFrame {
     private static InfDB idb;
     private static int id;
     private static int behorighet;
+    private boolean usernameKlickad = false;
+    private boolean passwordKlickad = false;
     /**
      * Creates new form ColorPage
      * @param idb
@@ -25,6 +29,7 @@ public class LoginWindow extends javax.swing.JFrame {
     public LoginWindow(InfDB idb) {
         initComponents();
         this.idb = idb;
+        this.setLocationRelativeTo(null);
     }
     
     public static int getID(){ // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
@@ -79,11 +84,24 @@ public class LoginWindow extends javax.swing.JFrame {
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
+        pwdPassword.setText("Password");
+        pwdPassword.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                pwdPasswordFocusGained(evt);
+            }
+        });
+
         lblemail.setText("E-mail:");
 
         lblPassword.setText("Password:");
 
         txtEmail.setColumns(8);
+        txtEmail.setText("exempel@oru.se");
+        txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtEmailFocusGained(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Please enter e-mail and password.");
@@ -185,6 +203,20 @@ public class LoginWindow extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void txtEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusGained
+        if(usernameKlickad == false){
+            txtEmail.setText("");
+            usernameKlickad = true;
+        }
+    }//GEN-LAST:event_txtEmailFocusGained
+
+    private void pwdPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pwdPasswordFocusGained
+        if(passwordKlickad == false){
+            pwdPassword.setText("");
+            passwordKlickad = true;
+        }
+    }//GEN-LAST:event_pwdPasswordFocusGained
 
     /**
      * @param args the command line arguments

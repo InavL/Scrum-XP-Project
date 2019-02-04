@@ -134,6 +134,12 @@
           </SubComponents>
         </Container>
         <Component class="javax.swing.JPasswordField" name="pwdPassword">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Password"/>
+          </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="pwdPasswordFocusGained"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblemail">
           <Properties>
@@ -148,7 +154,11 @@
         <Component class="javax.swing.JTextField" name="txtEmail">
           <Properties>
             <Property name="columns" type="int" value="8"/>
+            <Property name="text" type="java.lang.String" value="exempel@oru.se"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtEmailFocusGained"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
