@@ -20,6 +20,7 @@ public class LoginWindow extends javax.swing.JFrame {
     private static int behorighet;
     /**
      * Creates new form ColorPage
+     * @param idb
      */
     public LoginWindow(InfDB idb) {
         initComponents();
@@ -162,8 +163,8 @@ public class LoginWindow extends javax.swing.JFrame {
             
             String queryBehorighet = "select SID from PERSONER where MAIL = '" + email + "';";
             String svarBehorighet = idb.fetchSingle(queryBehorighet); //Hämtar behörigheten
-            
-            String queryID = "select ID from PERSONER where MAIL =" + email +"';";
+             
+            String queryID = "select ID from PERSONER where MAIL ='" + email +"';";
             String svarID = idb.fetchSingle(queryID); //Hämtar IDt
             
             if(password.equals(losenord)) //Testar så att lösenordet som hör ihop med mailen matchar det lösenordet som skrevs in i fältet.
