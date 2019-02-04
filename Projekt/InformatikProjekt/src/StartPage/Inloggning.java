@@ -5,10 +5,7 @@
  */
 package StartPage;
 
-import java.awt.Point;
-import javax.swing.JOptionPane;
 import oru.inf.InfDB;
-import oru.inf.InfException;
 
 /**
  *
@@ -16,27 +13,12 @@ import oru.inf.InfException;
  */
 public class Inloggning extends javax.swing.JFrame {
 
-    private Point plats = new Point();
-    private final InfDB idb;
-    private static int inloggad = 0;
-    
     /**
      * Creates new form Inlogging
+     * @param idb
      */
     public Inloggning(InfDB idb) {
         initComponents();
-        
-        this.setLocationRelativeTo(null);
-        this.idb = idb;
-    }
-    
-    private Point getPlats() { // Används inte men ser till att en ny ruta som öppnas öppnas över den förra istället för uppe i vänstra hörnet av skärmen
-        plats = this.getLocation();
-        return plats;
-    }
-    
-    public static int getInloggad(){ // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
-        return inloggad;
     }
 
     /**
@@ -48,65 +30,48 @@ public class Inloggning extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pwdLosen = new javax.swing.JPasswordField();
-        tfMail = new javax.swing.JTextField();
-        btnLogin = new javax.swing.JButton();
-        txtMail = new javax.swing.JLabel();
-        txtLosen = new javax.swing.JLabel();
+        jPasswordField1 = new javax.swing.JPasswordField();
+        jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pwdLosen.setText("1234567890");
+        jPasswordField1.setText("jPasswordField1");
 
-        tfMail.setText("exempel@oru.se");
+        jTextField1.setText("jTextField1");
 
-        btnLogin.setText("Log in");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
-            }
-        });
-
-        txtMail.setText("E-mail");
-
-        txtLosen.setText("Password");
+        jButton1.setText("jButton1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tfMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pwdLosen, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtMail)
-                    .addComponent(txtLosen))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLogin)
-                .addContainerGap())
+                .addGap(229, 229, 229)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPasswordField1)
+                    .addComponent(jTextField1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(67, 67, 67))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(txtMail)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtLosen)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pwdLosen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLogin)
-                .addContainerGap())
+                .addContainerGap(174, Short.MAX_VALUE)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(58, 58, 58)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(163, 163, 163))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< HEAD
+=======
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         
         if (Validation.textfieldWithValue(tfMail) && Validation.pwdFieldHasValue(pwdLosen) == true) {
@@ -114,15 +79,17 @@ public class Inloggning extends javax.swing.JFrame {
                 
                 String mail = txtMail.getText();
                 String pwd = String.valueOf(pwdLosen.getPassword());
-                String query = "SELECT LOSENORD from PERSONER where MAIL =" + mail;
+                String query = "SELECT LOSENORD from PERSONER where MAIL ='" + mail +"'";
                 String svar = idb.fetchSingle(query);
-                String queryBehorighet = "SELECT SID from PERSONER where MAIL =" + mail;
-                String svarBehorighet = idb.fetchSingle(queryBehorighet);
+                System.out.println(svar);
+                String svar1 = "admin";
+//                String queryBehorighet = "SELECT SID from PERSONER where MAIL ='" + mail + "'";
+//                String svarBehorighet = idb.fetchSingle(queryBehorighet);
                 
                 if (pwd.equals(svar)) {
                     new MainPage(idb).setVisible(true);
-                    int svBehorighet = Integer.parseInt(svarBehorighet);
-                    inloggad = svBehorighet;
+//                    int svBehorighet = Integer.parseInt(svarBehorighet);
+//                    inloggad = svBehorighet;
                     
                 } else {
                     JOptionPane.showMessageDialog(null, "Fel användarnamn och lösenordskombination.");
@@ -135,16 +102,15 @@ public class Inloggning extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
+>>>>>>> bb1ed269b0796e5f6e4751bcd668331948e0ff00
     /**
      * @param args the command line arguments
      */
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLogin;
-    private javax.swing.JPasswordField pwdLosen;
-    private javax.swing.JTextField tfMail;
-    private javax.swing.JLabel txtLosen;
-    private javax.swing.JLabel txtMail;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
