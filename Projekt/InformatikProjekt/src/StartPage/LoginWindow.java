@@ -90,6 +90,11 @@ public class LoginWindow extends javax.swing.JFrame {
                 pwdPasswordFocusGained(evt);
             }
         });
+        pwdPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                pwdPasswordKeyPressed(evt);
+            }
+        });
 
         lblemail.setText("E-mail:");
 
@@ -100,6 +105,11 @@ public class LoginWindow extends javax.swing.JFrame {
         txtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtEmailFocusGained(evt);
+            }
+        });
+        txtEmail.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtEmailKeyPressed(evt);
             }
         });
 
@@ -217,6 +227,14 @@ public class LoginWindow extends javax.swing.JFrame {
             passwordKlickad = true;
         }
     }//GEN-LAST:event_pwdPasswordFocusGained
+
+    private void txtEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyPressed
+        this.getRootPane().setDefaultButton(btnLogin);
+    }//GEN-LAST:event_txtEmailKeyPressed
+
+    private void pwdPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwdPasswordKeyPressed
+        this.getRootPane().setDefaultButton(btnLogin);
+    }//GEN-LAST:event_pwdPasswordKeyPressed
 
     /**
      * @param args the command line arguments
