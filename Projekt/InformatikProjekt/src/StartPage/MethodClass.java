@@ -8,19 +8,17 @@ import oru.inf.InfDB;
 
 
 public class MethodClass {
-    private static InfDB idb;
+
     
     
-    
-    
-    public MethodClass(InfDB idb){
+    public MethodClass(){
         
     
         
         
     }
     
-        public static ArrayList<String> kategori1(String katNamn, String katTabell)
+        public static ArrayList<String> kategori1(String katNamn, String katTabell,InfDB idb)
     {
         try
         {
@@ -39,5 +37,6 @@ public class MethodClass {
             //String fraga =  "Select ID,FNAMN,ENAMN from PERSONE";
             //ArrayList<HashMap<String,String>> svar = idb.fetchRows(fraga);
         }
+
     
 }
