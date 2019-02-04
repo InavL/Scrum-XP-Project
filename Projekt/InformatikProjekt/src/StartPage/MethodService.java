@@ -22,7 +22,7 @@ public class MethodService {
 
     }
     
-    public void setDesign(JTabbedPane oneTabbedPane) {
+     public void setDesign(JTabbedPane oneTabbedPane) {
         for (int i = 0; i < oneTabbedPane.getTabCount(); i++) {
             oneTabbedPane.setBackgroundAt(i, Color.WHITE);
             oneTabbedPane.getComponentAt(i).setBackground(Color.WHITE);

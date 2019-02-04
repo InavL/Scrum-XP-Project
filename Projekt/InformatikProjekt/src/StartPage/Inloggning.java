@@ -69,6 +69,42 @@ public class Inloggning extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< HEAD
+=======
+
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        
+        if (Validation.textfieldWithValue(tfMail) && Validation.pwdFieldHasValue(pwdLosen) == true) {
+            try {
+                
+                String mail = txtMail.getText();
+                String pwd = String.valueOf(pwdLosen.getPassword());
+                String query = "SELECT LOSENORD from PERSONER where MAIL ='" + mail +"'";
+                String svar = idb.fetchSingle(query);
+                System.out.println(svar);
+                String svar1 = "admin";
+//                String queryBehorighet = "SELECT SID from PERSONER where MAIL ='" + mail + "'";
+//                String svarBehorighet = idb.fetchSingle(queryBehorighet);
+                
+                if (pwd.equals(svar)) {
+                    new MainPage(idb).setVisible(true);
+//                    int svBehorighet = Integer.parseInt(svarBehorighet);
+//                    inloggad = svBehorighet;
+                    
+                } else {
+                    JOptionPane.showMessageDialog(null, "Fel användarnamn och lösenordskombination.");
+                }
+                
+            } catch (InfException e) {
+                JOptionPane.showMessageDialog(null, "Kunde inte ansluta till databasen! Skrev du fel användarnamn och lösenordskombination?");
+                System.out.println("Internt felmeddelande " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+
+>>>>>>> fdd0a75eb3cc89c68f19ff38c6c09194a9221951
     /**
      * @param args the command line arguments
      */

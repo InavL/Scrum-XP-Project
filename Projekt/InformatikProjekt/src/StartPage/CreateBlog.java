@@ -26,8 +26,20 @@ public class CreateBlog extends javax.swing.JFrame {
         
         initComponents();
         this.idb = idb;
+<<<<<<< HEAD
+        kategori1();
+=======
 
+<<<<<<< HEAD
         kategori3();
+=======
+        kategori1();
+
+
+        kategori1();
+
+>>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
+>>>>>>> fdd0a75eb3cc89c68f19ff38c6c09194a9221951
         
     }
 
@@ -300,6 +312,40 @@ public class CreateBlog extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
+<<<<<<< HEAD
+             private void kategori2()
+    {
+        try
+        {
+            String fraga = "select KAT2_NAMN from KAT2;";
+            ArrayList<String> allaKategorier2 = idb.fetchColumn(fraga);
+            for(String enKat : allaKategorier2)
+            {
+                cbxKat2.addItem(enKat);
+            }
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, "Something went wrong.");
+        }
+    }
+                  private void kategori3()
+    {
+        try
+        {
+            String fraga = "select KAT3_NAMN from KAT3;";
+            ArrayList<String> allaKategorier3 = idb.fetchColumn(fraga);
+            for(String enKat : allaKategorier3)
+            {
+                cbxKat3.addItem(enKat);
+            }
+        }
+        catch(Exception ex)
+        {
+            JOptionPane.showMessageDialog(null, "Something went wrong.");
+        }
+    }
+=======
                 // private void hittaKat2()
     //{
         //Efter att man valt kateogri 3 så får man fram alla underliggade kategorier, vilket är kategorier 2.
@@ -335,6 +381,11 @@ public class CreateBlog extends javax.swing.JFrame {
        //     JOptionPane.showMessageDialog(null, "Something went wrong.");
       //  }
     //}
+<<<<<<< HEAD
+=======
+
+>>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
+>>>>>>> fdd0a75eb3cc89c68f19ff38c6c09194a9221951
     private void txtHeadingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHeadingActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHeadingActionPerformed
@@ -343,6 +394,15 @@ public class CreateBlog extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPublishActionPerformed
 
+<<<<<<< HEAD
+=======
+
+
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> fdd0a75eb3cc89c68f19ff38c6c09194a9221951
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         
         //String newTag = txtNewTag.getText();
@@ -350,6 +410,7 @@ public class CreateBlog extends javax.swing.JFrame {
         //idn.update()
     }//GEN-LAST:event_btnAddActionPerformed
 
+>>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btbAddPicture;
     private javax.swing.JButton btnAdd;
