@@ -18,10 +18,10 @@ public class MainPage extends javax.swing.JFrame {
     private static InfDB idb;
     private MethodService methodService;
     private ClosableTabbedPane paneMainPageTabs;
-    private nyInloggning nyInloggning;
+    //private nyInloggning nyInloggning;
     private CreateBlogInternalFrame createBlogInternalFrame;
     private EditBlogInternalFrame editBlogInternalFrame;
-    private RemoveBlogInternalFrame removeBlogInternalFrame;
+    private ShowBlogInternalFrame removeBlogInternalFrame;
     
 
     /**
@@ -244,7 +244,7 @@ public class MainPage extends javax.swing.JFrame {
     private void removeBlogMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBlogMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Remove blog")) {
-            removeBlogInternalFrame = new RemoveBlogInternalFrame(idb);
+            removeBlogInternalFrame = new ShowBlogInternalFrame(idb);
             openTab(removeBlogInternalFrame, "Remove blog");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
@@ -262,8 +262,8 @@ public class MainPage extends javax.swing.JFrame {
         //Stänger applikationen och öppnar inloggningsfönstret
         System.exit(1);
         //Alternativt nästa kodrad
-        // mainPage.setVisible(false);
-        nyInloggning.setVisible(true);
+        //mainPage.setVisible(false);
+        //nyInloggning.setVisible(true);
         
     }//GEN-LAST:event_logOutMnuItmActionPerformed
 

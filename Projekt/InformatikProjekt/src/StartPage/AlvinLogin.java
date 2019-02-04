@@ -12,7 +12,7 @@ import oru.inf.InfDB;
  *
  * @author InavL
  */
-public class nyInloggning extends javax.swing.JFrame {
+public class AlvinLogin extends javax.swing.JFrame {
 
     private Point plats = new Point();
     private final InfDB idb;
@@ -22,7 +22,7 @@ public class nyInloggning extends javax.swing.JFrame {
      * Creates new form nyInloggning
      * @param idb
      */
-    public nyInloggning(InfDB idb) {
+    public AlvinLogin(InfDB idb) {
         initComponents();
         
         this.setLocationRelativeTo(null);
