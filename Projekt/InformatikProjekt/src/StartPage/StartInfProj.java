@@ -34,6 +34,10 @@ public class StartInfProj {
 //        new HomePage(idb).setVisible(true);
        new CreateBlog(idb).setVisible(true);
          // new Inloggning(idb).setVisible(true);
+
+        new Inloggning(idb).setVisible(true);
+        new CreateBlog(idb).setVisible(true);
+
         
     }
     
