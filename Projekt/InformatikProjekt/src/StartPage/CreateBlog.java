@@ -25,12 +25,16 @@ public class CreateBlog extends javax.swing.JFrame {
         
         initComponents();
         this.idb = idb;
+<<<<<<< HEAD
+        kategori1();
+=======
 
         kategori1();
 
 
-        kategori3();
+        kategori1();
 
+>>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
         
     }
 
@@ -294,9 +298,9 @@ public class CreateBlog extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
+<<<<<<< HEAD
              private void kategori2()
     {
-        //Efter att man valt kateogri 3 så får man fram alla underliggade kategorier, vilket är kategorier 2.
         try
         {
             String fraga = "select KAT2_NAMN from KAT2;";
@@ -315,28 +319,56 @@ public class CreateBlog extends javax.swing.JFrame {
     {
         try
         {
-
             String fraga = "select KAT3_NAMN from KAT3;";
             ArrayList<String> allaKategorier3 = idb.fetchColumn(fraga);
             for(String enKat : allaKategorier3)
             {
                 cbxKat3.addItem(enKat);
             }
-
-                String kat2 = cbxKat2.getSelectedItem().toString();
-                String hittaKat2 = "select KAT2_NAMN from KAT1 join KAT2 where KAT3_NAMN = '" + kat2 + "';";
-                ArrayList<String> allaKategorier1 = idb.fetchColumn(hittaKat2);
-                for(String enKat : allaKategorier1)
-                {
-                    cbxKat1.addItem(enKat);
-                }
-
         }
         catch(Exception ex)
         {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
+=======
+                // private void hittaKat2()
+    //{
+        //Efter att man valt kateogri 3 så får man fram alla underliggade kategorier, vilket är kategorier 2.
+       // try
+       // {
+                //String kat3 = cbxKat3.getSelectedItem().toString();
+               // String hittaKat2 = "select KAT2_NAMN from KAT2 join KAT3 where KAT3_NAMN = '" + kat3 + "';";
+               //  ArrayList<String> allaKategorier2 = idb.fetchColumn(hittaKat2);
+               //  for(String enKat : allaKategorier2)
+               //  {
+               //      cbxKat2.addItem(enKat);
+               //  }
+       // }
+       // catch(InfException ex)
+        //{
+        //    JOptionPane.showMessageDialog(null, "Something went wrong.");
+       // }
+   // }
+                //  private void hittaKat1()
+    //{
+       // try
+       // {
+             //   String kat2 = cbxKat2.getSelectedItem().toString();
+             //   String hittaKat2 = "select KAT1_NAMN from KAT1 join KAT2 where KAT2_NAMN = '" + kat2 + "';";
+             //   ArrayList<String> allaKategorier1 = idb.fetchColumn(hittaKat2);
+             //   for(String enKat : allaKategorier1)
+             //   {
+              //      cbxKat1.addItem(enKat);
+              //  }
+      //  }
+       // catch(InfException ex)
+     //   {
+       //     JOptionPane.showMessageDialog(null, "Something went wrong.");
+      //  }
+    //}
+
+>>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
     private void txtHeadingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHeadingActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHeadingActionPerformed
@@ -348,6 +380,8 @@ public class CreateBlog extends javax.swing.JFrame {
 
 
 
+<<<<<<< HEAD
+=======
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         
@@ -356,6 +390,7 @@ public class CreateBlog extends javax.swing.JFrame {
         //idn.update()
     }//GEN-LAST:event_btnAddActionPerformed
 
+>>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btbAddPicture;
     private javax.swing.JButton btnAdd;
