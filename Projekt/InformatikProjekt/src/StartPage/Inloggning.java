@@ -5,6 +5,13 @@
  */
 package StartPage;
 
+
+
+
+
+
+
+
 import java.awt.Point;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
