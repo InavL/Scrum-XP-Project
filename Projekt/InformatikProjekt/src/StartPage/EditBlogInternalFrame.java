@@ -5,12 +5,7 @@
  */
 package StartPage;
 
-import com.jidesoft.swing.AutoCompletion;
-import java.util.ArrayList;
-import java.util.HashMap;
-import javax.swing.JOptionPane;
 import oru.inf.InfDB;
-import oru.inf.InfException;
 
 /**
  *
@@ -20,7 +15,6 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
     
     private static InfDB idb;
     private MethodService methodService;
-    private String blogID;
 
     /**
      * Creates new form EditBlogInternalFrame
@@ -29,13 +23,6 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);
-        blogID = null;
-        //Gör listan sökbar.
-        AutoCompletion editablePostList = new AutoCompletion(cbPosts);
-        //fillListWithPosts();
-        mainPanel.setVisible(false);
-        lblChanges.setVisible(false);
-        lblChanges1.setVisible(false);
     }
 
     /**
@@ -50,27 +37,6 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        cbPosts = new javax.swing.JComboBox<>();
-        mainPanel = new javax.swing.JTabbedPane();
-        textPanel = new javax.swing.JPanel();
-        btnSave = new javax.swing.JButton();
-        lblHeading = new javax.swing.JLabel();
-        tfHeading = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        taText = new javax.swing.JTextArea();
-        lblChanges = new javax.swing.JLabel();
-        categoryPanel = new javax.swing.JPanel();
-        lblDescription = new javax.swing.JLabel();
-        lblSubSubcategory = new javax.swing.JLabel();
-        cbMainCategory = new javax.swing.JComboBox<>();
-        lblMainCategory = new javax.swing.JLabel();
-        cbSubcategory = new javax.swing.JComboBox<>();
-        lblSubcategory = new javax.swing.JLabel();
-        cbSubSubcategory = new javax.swing.JComboBox<>();
-        btnSave2 = new javax.swing.JButton();
-        lblChanges1 = new javax.swing.JLabel();
-        lblChoosepostToEdit = new javax.swing.JLabel();
-        btnChooseThisPost = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -95,172 +61,17 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
-        cbPosts.setEditable(true);
-        cbPosts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose a post" }));
-
-        btnSave.setText("Save");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
-
-        lblHeading.setText("Heading");
-
-        tfHeading.setColumns(30);
-
-        taText.setColumns(20);
-        taText.setRows(5);
-        jScrollPane1.setViewportView(taText);
-
-        lblChanges.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblChanges.setText("Your changes have been saved!");
-
-        javax.swing.GroupLayout textPanelLayout = new javax.swing.GroupLayout(textPanel);
-        textPanel.setLayout(textPanelLayout);
-        textPanelLayout.setHorizontalGroup(
-            textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(textPanelLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(textPanelLayout.createSequentialGroup()
-                        .addGroup(textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1)
-                            .addGroup(textPanelLayout.createSequentialGroup()
-                                .addComponent(lblChanges)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnSave)))
-                        .addGap(49, 49, 49))
-                    .addGroup(textPanelLayout.createSequentialGroup()
-                        .addGroup(textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblHeading)
-                            .addComponent(tfHeading, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(536, Short.MAX_VALUE))))
-        );
-        textPanelLayout.setVerticalGroup(
-            textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, textPanelLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(lblHeading)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tfHeading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-                .addGroup(textPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSave)
-                    .addComponent(lblChanges))
-                .addGap(31, 31, 31))
-        );
-
-        mainPanel.addTab("Edit text", textPanel);
-
-        lblDescription.setText("Choose categories to place your post in the right place");
-
-        lblSubSubcategory.setText("Sub-subcategory");
-
-        cbMainCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose a category" }));
-
-        lblMainCategory.setText("Main category");
-
-        cbSubcategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose a category" }));
-
-        lblSubcategory.setText("Subcategory");
-
-        cbSubSubcategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose a category" }));
-
-        btnSave2.setText("Save");
-
-        lblChanges1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblChanges1.setText("Your changes have been saved!");
-
-        javax.swing.GroupLayout categoryPanelLayout = new javax.swing.GroupLayout(categoryPanel);
-        categoryPanel.setLayout(categoryPanelLayout);
-        categoryPanelLayout.setHorizontalGroup(
-            categoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(categoryPanelLayout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addGroup(categoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(categoryPanelLayout.createSequentialGroup()
-                        .addComponent(lblChanges1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSave2)
-                        .addGap(47, 47, 47))
-                    .addGroup(categoryPanelLayout.createSequentialGroup()
-                        .addGroup(categoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblSubSubcategory)
-                            .addComponent(cbSubSubcategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblSubcategory)
-                            .addComponent(cbSubcategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMainCategory)
-                            .addComponent(cbMainCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblDescription))
-                        .addContainerGap(517, Short.MAX_VALUE))))
-        );
-        categoryPanelLayout.setVerticalGroup(
-            categoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(categoryPanelLayout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(lblDescription)
-                .addGap(71, 71, 71)
-                .addComponent(lblMainCategory)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbMainCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(lblSubcategory)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbSubcategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
-                .addComponent(lblSubSubcategory)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbSubSubcategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
-                .addGroup(categoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSave2)
-                    .addComponent(lblChanges1))
-                .addGap(24, 24, 24))
-        );
-
-        mainPanel.addTab("Edit category", categoryPanel);
-
-        lblChoosepostToEdit.setText("Choose a post to edit");
-
-        btnChooseThisPost.setText("Choose this post");
-        btnChooseThisPost.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChooseThisPostActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 877, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblChoosepostToEdit)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cbPosts, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(btnChooseThisPost)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                .addComponent(lblChoosepostToEdit)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbPosts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnChooseThisPost))
-                .addGap(26, 26, 26)
-                .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56))
+                .addGap(0, 664, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -277,82 +88,10 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    //private void fillListWithPosts(){
-      //  try {
-        //    //Hämtar inläggen som användaren har skrivit
-          //  ArrayList<HashMap<String, String>> posts = idb.fetchRows("SELECT titel FROM blogg WHERE bloggskribent = \'" + personID + "\'");
-        //}
-        
-        //catch (InfException ettUndantag) {
-          //      ettUndantag.getMessage();
-            //    JOptionPane.showMessageDialog(null, "Något gick fel.");
-            //}
-        
-        
-        
-        
-    //}
-    
-    
-    
-    
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        //Uppdaterar inlägget
-        if (Validation.textfieldWithValue(tfHeading) && Validation.textareaWithValue(taText)) {
-            //Lägger in värdena i de lokala variablerna
-            String heading = tfHeading.getText();
-            String text = taText.getText();
-            
-            try {
-                //Uppdaterar blogginlägget med den nya titeln och texten
-                idb.update("UPDATE blog\n"
-                        + "SET titel = \'" + heading + "\', bloggpost = \'" + text + "\n"
-                        + "WHERE bloggid = " + blogID);
-                lblChanges.setVisible(true);
-                
-            } 
-            catch (InfException ettUndantag) {
-                ettUndantag.getMessage();
-                JOptionPane.showMessageDialog(null, "Något gick fel.");
-            }
-            
-            
-        }
-    }//GEN-LAST:event_btnSaveActionPerformed
-
-    private void btnChooseThisPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseThisPostActionPerformed
-        //Kontrollerar att sökfältet inte är tomt.
-        if (Validation.elementSelectedInCombobox(cbPosts, "Choose a post")) {    
-            
-            
-        }
-    }//GEN-LAST:event_btnChooseThisPostActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnChooseThisPost;
-    private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnSave2;
-    private javax.swing.JPanel categoryPanel;
-    private javax.swing.JComboBox<String> cbMainCategory;
-    private javax.swing.JComboBox<String> cbPosts;
-    private javax.swing.JComboBox<String> cbSubSubcategory;
-    private javax.swing.JComboBox<String> cbSubcategory;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblChanges;
-    private javax.swing.JLabel lblChanges1;
-    private javax.swing.JLabel lblChoosepostToEdit;
-    private javax.swing.JLabel lblDescription;
-    private javax.swing.JLabel lblHeading;
-    private javax.swing.JLabel lblMainCategory;
-    private javax.swing.JLabel lblSubSubcategory;
-    private javax.swing.JLabel lblSubcategory;
-    private javax.swing.JTabbedPane mainPanel;
-    private javax.swing.JTextArea taText;
-    private javax.swing.JPanel textPanel;
-    private javax.swing.JTextField tfHeading;
     // End of variables declaration//GEN-END:variables
 }
