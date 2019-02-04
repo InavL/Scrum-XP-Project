@@ -300,41 +300,41 @@ public class CreateBlog extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
-                  private void hittaKat2()
-    {
+                // private void hittaKat2()
+    //{
         //Efter att man valt kateogri 3 så får man fram alla underliggade kategorier, vilket är kategorier 2.
-        try
-        {
-                String kat3 = cbxKat3.getSelectedItem().toString();
-                String hittaKat2 = "select KAT2_NAMN from KAT2 join KAT3 where KAT3_NAMN = '" + kat3 + "';";
-                 ArrayList<String> allaKategorier2 = idb.fetchColumn(hittaKat2);
-                 for(String enKat : allaKategorier2)
-                 {
-                     cbxKat2.addItem(enKat);
-                 }
-        }
-        catch(InfException ex)
-        {
-            JOptionPane.showMessageDialog(null, "Something went wrong.");
-        }
-    }
-                  private void hittaKat3()
-    {
-        try
-        {
-                String kat2 = cbxKat2.getSelectedItem().toString();
-                String hittaKat2 = "select KAT2_NAMN from KAT1 join KAT2 where KAT3_NAMN = '" + kat2 + "';";
-                ArrayList<String> allaKategorier1 = idb.fetchColumn(hittaKat2);
-                for(String enKat : allaKategorier1)
-                {
-                    cbxKat1.addItem(enKat);
-                }
-        }
-        catch(InfException ex)
-        {
-            JOptionPane.showMessageDialog(null, "Something went wrong.");
-        }
-    }
+       // try
+       // {
+                //String kat3 = cbxKat3.getSelectedItem().toString();
+               // String hittaKat2 = "select KAT2_NAMN from KAT2 join KAT3 where KAT3_NAMN = '" + kat3 + "';";
+               //  ArrayList<String> allaKategorier2 = idb.fetchColumn(hittaKat2);
+               //  for(String enKat : allaKategorier2)
+               //  {
+               //      cbxKat2.addItem(enKat);
+               //  }
+       // }
+       // catch(InfException ex)
+        //{
+        //    JOptionPane.showMessageDialog(null, "Something went wrong.");
+       // }
+   // }
+                //  private void hittaKat1()
+    //{
+       // try
+       // {
+             //   String kat2 = cbxKat2.getSelectedItem().toString();
+             //   String hittaKat2 = "select KAT1_NAMN from KAT1 join KAT2 where KAT2_NAMN = '" + kat2 + "';";
+             //   ArrayList<String> allaKategorier1 = idb.fetchColumn(hittaKat2);
+             //   for(String enKat : allaKategorier1)
+             //   {
+              //      cbxKat1.addItem(enKat);
+              //  }
+      //  }
+       // catch(InfException ex)
+     //   {
+       //     JOptionPane.showMessageDialog(null, "Something went wrong.");
+      //  }
+    //}
     private void txtHeadingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHeadingActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHeadingActionPerformed
