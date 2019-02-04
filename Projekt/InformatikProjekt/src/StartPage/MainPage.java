@@ -18,14 +18,22 @@ public class MainPage extends javax.swing.JFrame {
     private static InfDB idb;
     private MethodService methodService;
     private ClosableTabbedPane paneMainPageTabs;
+<<<<<<< HEAD
     private nyInloggning nyInloggning;
     private CreateBlogInternalFrame createBlogInternalFrame;
     private EditBlogInternalFrame editBlogInternalFrame;
     private RemoveBlogInternalFrame removeBlogInternalFrame;
     
 
+=======
+    private CreateBlogInternalFrame createBlogInternalFrame;
+    private EditBlogInternalFrame editBlogInternalFrame;
+    private RemoveBlogInternalFrame removeBlogInternalFrame;
+        
+>>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
     /**
-     * Creates new form MainPage
+     * Creates new form ColorPage
+     * @param idb
      */
     public MainPage(InfDB idb) {
         initComponents();
@@ -263,7 +271,11 @@ public class MainPage extends javax.swing.JFrame {
         System.exit(1);
         //Alternativt nästa kodrad
         // mainPage.setVisible(false);
+<<<<<<< HEAD
         nyInloggning.setVisible(true);
+=======
+        new Inloggning(idb).setVisible(true);
+>>>>>>> 80701347930992dda05e41e06ea97423bba0eb6e
         
     }//GEN-LAST:event_logOutMnuItmActionPerformed
 
