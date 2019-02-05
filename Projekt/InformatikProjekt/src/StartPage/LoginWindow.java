@@ -5,8 +5,6 @@
  */
 package StartPage;
 
-import java.awt.Point;
-import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 import oru.inf.InfException;
@@ -202,6 +200,10 @@ public class LoginWindow extends javax.swing.JFrame {
                 behorighet = svBehorighet;
                 int svID = Integer.parseInt(svarID);
                 id = svID;
+                
+                txtEmail.setText("");
+                pwdPassword.setText("");
+                this.dispose();
             }
             else //Om lösenordet inte matchar.
             {

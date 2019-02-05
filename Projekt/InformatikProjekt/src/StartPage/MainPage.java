@@ -21,6 +21,7 @@ public class MainPage extends javax.swing.JFrame {
     private CreateBlogInternalFrame createBlogInternalFrame;
     private EditBlogInternalFrame editBlogInternalFrame;
     private RemoveBlogInternalFrame removeBlogInternalFrame;
+    private FeedBlogInternalFrame feedBlogInternalFrame;
         
     /**
      * Creates new form ColorPage
@@ -34,7 +35,8 @@ public class MainPage extends javax.swing.JFrame {
         methodService = new MethodService(idb);
         paneMainPageTabs = new ClosableTabbedPane();
         getContentPane().add(paneMainPageTabs);
-        methodService.setDesign(paneMainPageTabs);
+        //methodService.setDesign(paneMainPageTabs);
+        setMenuVisible(true);
         
     }
 
@@ -47,56 +49,18 @@ public class MainPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         superMenyBar = new javax.swing.JMenuBar();
         mainMenu = new javax.swing.JMenu();
         logOutMnuItm = new javax.swing.JMenuItem();
         closeWindowsMnuItm = new javax.swing.JMenuItem();
         exitMnuItm = new javax.swing.JMenuItem();
         blog = new javax.swing.JMenu();
+        blogFeedMnuItm = new javax.swing.JMenuItem();
         createBlogMnuItm = new javax.swing.JMenuItem();
         editBlogMnuItm = new javax.swing.JMenuItem();
         removeBlogMnuItm = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jPanel2.setBackground(new java.awt.Color(51, 153, 255));
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("Örebro universitet");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(749, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 42, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 674, Short.MAX_VALUE))
-        );
 
         mainMenu.setText("Main menu");
 
@@ -128,6 +92,14 @@ public class MainPage extends javax.swing.JFrame {
 
         blog.setText("Blog");
 
+        blogFeedMnuItm.setText("Blog feed");
+        blogFeedMnuItm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blogFeedMnuItmActionPerformed(evt);
+            }
+        });
+        blog.add(blogFeedMnuItm);
+
         createBlogMnuItm.setText("Create blog");
         createBlogMnuItm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,17 +127,6 @@ public class MainPage extends javax.swing.JFrame {
         superMenyBar.add(blog);
 
         setJMenuBar(superMenyBar);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -209,6 +170,13 @@ public class MainPage extends javax.swing.JFrame {
             }
         }
         return tabExists;
+    }
+    
+    private void setMenuVisible(boolean enBoolean) {
+        
+        
+        
+        
     }
     
     private void exitMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMnuItmActionPerformed
@@ -258,23 +226,32 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_closeWindowsMnuItmActionPerformed
 
     private void logOutMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMnuItmActionPerformed
-        //Stänger applikationen och öppnar inloggningsfönstret
+        //Stänger applikationen och får ej upp inloggningsfönstret
         System.exit(1);
-        //Alternativt nästa kodrad
-        // mainPage.setVisible(false);
+     
         
     }//GEN-LAST:event_logOutMnuItmActionPerformed
+
+    private void blogFeedMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blogFeedMnuItmActionPerformed
+        //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
+        if(!tabExists("Blog feed")) {
+            feedBlogInternalFrame = new FeedBlogInternalFrame(idb);
+            openTab(feedBlogInternalFrame, "Blog feed");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
+            moveFocusToTab("Blog feed");
+        }
+    }//GEN-LAST:event_blogFeedMnuItmActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu blog;
+    private javax.swing.JMenuItem blogFeedMnuItm;
     private javax.swing.JMenuItem closeWindowsMnuItm;
     private javax.swing.JMenuItem createBlogMnuItm;
     private javax.swing.JMenuItem editBlogMnuItm;
     private javax.swing.JMenuItem exitMnuItm;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JMenuItem logOutMnuItm;
     private javax.swing.JMenu mainMenu;
     private javax.swing.JMenuItem removeBlogMnuItm;
