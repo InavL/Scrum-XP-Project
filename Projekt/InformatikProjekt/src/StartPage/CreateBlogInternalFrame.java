@@ -271,7 +271,7 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         if (Validation.textfieldWithValue(tfHeading) && Validation.textareaWithValue(taText) && Validation.elementSelectedInCombobox(cbBranch, "Branch is not choosen, please select an option.")) {
             String titel = tfHeading.getText();
             String bloggpost = taText.getText();
-            int personID = LoginWindow.getID();
+            int personID = LoggedUser.getID();
             String namn = cbBranch.getSelectedItem().toString();
             
             Date datum=  new Date();
