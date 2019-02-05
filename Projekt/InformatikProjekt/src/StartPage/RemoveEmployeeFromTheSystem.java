@@ -86,7 +86,7 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
         });
 
         lblText.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
-        lblText.setText("Please enter the ID, firstname and lastname for the person that needs to be romved.");
+        lblText.setText("Please enter the ID, first name and last name for the person that needs to be romved.");
 
         btnRemove.setText("Remove");
         btnRemove.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +121,7 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(lblText)))
-                .addContainerGap(286, Short.MAX_VALUE))
+                .addContainerGap(274, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
