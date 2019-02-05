@@ -88,6 +88,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
 
         jLabelAccessType.setText("Access type:");
 
+        jTextFieldSureName.setText("Your last name");
         jTextFieldSureName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldSureNameActionPerformed(evt);
@@ -115,6 +116,8 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         });
 
         jLabelFirstName.setText("Firsname");
+
+        jTextFieldFirstName.setText("Your first name");
 
         jLabelPassword.setText("Password");
 
