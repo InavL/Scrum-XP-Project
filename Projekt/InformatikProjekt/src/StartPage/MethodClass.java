@@ -1,5 +1,6 @@
 package StartPage;
 
+import static StartPage.LoginWindow.getBehorighet;
 import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -36,10 +37,16 @@ public class MethodClass {
         return null;
 
     }
-
-    public static void Hamta() {
-        //String fraga =  "Select ID,FNAMN,ENAMN from PERSONE";
-        //ArrayList<HashMap<String,String>> svar = idb.fetchRows(fraga);
+    //Gör en check om personen som är inloggad om den har admin status eller inte.
+    public static boolean isAdmin(){
+        
+        int sid=getBehorighet();
+        System.out.println(sid);
+        if(sid<4){ 
+            return true;
+        }
+        return false;
     }
+    
 
 }
