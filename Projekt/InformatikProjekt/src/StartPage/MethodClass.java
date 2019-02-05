@@ -14,10 +14,20 @@ public class MethodClass {
 
     }
 
+    
+//    private Point getPlats() { // Används inte men ser till att en ny ruta som öppnas öppnas över den förra istället för uppe i vänstra hörnet av skärmen
+//        Point plats = new Point();
+//        plats = this.getLocation();
+//        return plats;
+//    }
+    
+      
+
     public static ArrayList<String> getComboBox(String katNamn, String katTabell, InfDB idb) {
         try {
             System.out.println("fghjklöä");
             String fraga = "Select '" + katNamn + "' from '" + katTabell + "';";
+
             ArrayList<String> allaKategorier1 = idb.fetchColumn(fraga);
             return allaKategorier1;
         } catch (Exception ex) {
