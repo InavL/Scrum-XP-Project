@@ -22,6 +22,7 @@ public class MainPage extends javax.swing.JFrame {
     private EditBlogInternalFrame editBlogInternalFrame;
     private RemoveBlogInternalFrame removeBlogInternalFrame;
     private FeedBlogInternalFrame feedBlogInternalFrame;
+    private ShowUserInformation showUserInformation;
     
         
     /**
@@ -50,6 +51,8 @@ public class MainPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         superMenyBar = new javax.swing.JMenuBar();
         mainMenu = new javax.swing.JMenu();
         logOutMnuItm = new javax.swing.JMenuItem();
@@ -60,17 +63,21 @@ public class MainPage extends javax.swing.JFrame {
         createBlogMnuItm = new javax.swing.JMenuItem();
         editBlogMnuItm = new javax.swing.JMenuItem();
         removeBlogMnuItm = new javax.swing.JMenuItem();
+        user = new javax.swing.JMenu();
+        userInformation = new javax.swing.JMenuItem();
+        addUser = new javax.swing.JMenuItem();
+        editUser = new javax.swing.JMenuItem();
+        removeUser = new javax.swing.JMenuItem();
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         mainMenu.setText("Main menu");
 
         logOutMnuItm.setText("Log out");
-        logOutMnuItm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logOutMnuItmActionPerformed(evt);
-            }
-        });
         mainMenu.add(logOutMnuItm);
 
         closeWindowsMnuItm.setText("Close all windows");
@@ -126,6 +133,32 @@ public class MainPage extends javax.swing.JFrame {
         blog.add(removeBlogMnuItm);
 
         superMenyBar.add(blog);
+
+        user.setText("User");
+
+        userInformation.setText("User information");
+        userInformation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userInformationActionPerformed(evt);
+            }
+        });
+        user.add(userInformation);
+
+        addUser.setText("Add user");
+        user.add(addUser);
+
+        editUser.setText("Edit user");
+        user.add(editUser);
+
+        removeUser.setText("Remove user");
+        removeUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeUserActionPerformed(evt);
+            }
+        });
+        user.add(removeUser);
+
+        superMenyBar.add(user);
 
         setJMenuBar(superMenyBar);
 
@@ -226,16 +259,6 @@ public class MainPage extends javax.swing.JFrame {
         paneMainPageTabs.removeAll();
     }//GEN-LAST:event_closeWindowsMnuItmActionPerformed
 
-    private void logOutMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMnuItmActionPerformed
-        //Stänger applikationen och får ej upp inloggningsfönstret
-        
-        
-        
-        
-     
-        
-    }//GEN-LAST:event_logOutMnuItmActionPerformed
-
     private void blogFeedMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blogFeedMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Blog feed")) {
@@ -248,17 +271,36 @@ public class MainPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_blogFeedMnuItmActionPerformed
 
+    private void userInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userInformationActionPerformed
+        //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
+        if(!tabExists("User information")) {
+            showUserInformation = new ShowUserInformation(idb);
+            openTab(showUserInformation, "User information");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
+            moveFocusToTab("User information");
+        }
+    }//GEN-LAST:event_userInformationActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem addUser;
     private javax.swing.JMenu blog;
     private javax.swing.JMenuItem blogFeedMnuItm;
     private javax.swing.JMenuItem closeWindowsMnuItm;
     private javax.swing.JMenuItem createBlogMnuItm;
     private javax.swing.JMenuItem editBlogMnuItm;
+    private javax.swing.JMenuItem editUser;
     private javax.swing.JMenuItem exitMnuItm;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem logOutMnuItm;
     private javax.swing.JMenu mainMenu;
     private javax.swing.JMenuItem removeBlogMnuItm;
+    private javax.swing.JMenuItem removeUser;
     private javax.swing.JMenuBar superMenyBar;
+    private javax.swing.JMenu user;
+    private javax.swing.JMenuItem userInformation;
     // End of variables declaration//GEN-END:variables
 }
