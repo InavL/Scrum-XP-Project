@@ -207,7 +207,7 @@ public class LoginWindow extends javax.swing.JFrame {
 
                 txtEmail.setText(""); // Empties the fields (Maybe redundant)
                 pwdPassword.setText("");
-                this.dispose(); // Disposes the loginwindow
+                this.setVisible(false); // Hides the window
 
             } else { // If the password doesn't match
 
