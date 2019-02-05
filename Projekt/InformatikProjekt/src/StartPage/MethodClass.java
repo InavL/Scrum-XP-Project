@@ -1,6 +1,5 @@
 package StartPage;
 
-import static StartPage.LoginWindow.getBehorighet;
 import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -40,7 +39,7 @@ public class MethodClass {
     //Gör en check om personen som är inloggad om den har admin status eller inte.
     public static boolean isAdmin(){
         
-        int sid=getBehorighet();
+        int sid = LoggedUser.getBehorighet();
         System.out.println(sid);
         if(sid<4){ 
             return true;
