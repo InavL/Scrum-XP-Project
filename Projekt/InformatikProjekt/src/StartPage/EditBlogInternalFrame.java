@@ -201,7 +201,7 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
 
 private void fillListWithYourPosts(){
     
-    int personID = LoginWindow.getID();
+    int personID = LoggedUser.getID();
     
     try {
             //Hämtar inläggen som användaren har skrivit
