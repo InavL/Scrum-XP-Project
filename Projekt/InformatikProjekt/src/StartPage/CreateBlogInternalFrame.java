@@ -220,7 +220,7 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         jLabel2.setText("Write post");
 
         jLabel3.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
-        jLabel3.setText("-----------------------------------------------------------------------------------------------------------------");
+        jLabel3.setText("-------------------------------------------------------------------------------------------------------------------------");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -233,9 +233,11 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnlMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(pnlMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,7 +268,7 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
 
     private void btnPublishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPublishActionPerformed
         //Kontrollerar att användaren har skrivit någoi i textfälten
-        if (Validation.textfieldWithValue(tfHeading) && Validation.textareaWithValue(taText)) {
+        if (Validation.textfieldWithValue(tfHeading) && Validation.textareaWithValue(taText) && Validation.elementSelectedInCombobox(cbBranch, "Branch is not choosen, please select an option.")) {
             String titel = tfHeading.getText();
             String bloggpost = taText.getText();
             int personID = LoginWindow.getID();
@@ -300,7 +302,7 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
                 
                 tfHeading.setText("");
                 taText.setText("");
-                pnlMainPanel.setVisible(false);
+                //pnlMainPanel.setVisible(false);
             
             }
             catch (InfException oneException) {
