@@ -22,6 +22,7 @@ public class MainPage extends javax.swing.JFrame {
     private EditBlogInternalFrame editBlogInternalFrame;
     private RemoveBlogInternalFrame removeBlogInternalFrame;
     private FeedBlogInternalFrame feedBlogInternalFrame;
+    
         
     /**
      * Creates new form ColorPage
@@ -227,7 +228,10 @@ public class MainPage extends javax.swing.JFrame {
 
     private void logOutMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMnuItmActionPerformed
         //Stänger applikationen och får ej upp inloggningsfönstret
-        System.exit(1);
+        
+        
+        
+        
      
         
     }//GEN-LAST:event_logOutMnuItmActionPerformed
