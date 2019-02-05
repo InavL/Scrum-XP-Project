@@ -15,28 +15,32 @@ import oru.inf.InfException;
  */
 public class LoginWindow extends javax.swing.JFrame {
 
-    private static InfDB idb;
-    private static int id;
-    private static int behorighet;
-    private boolean usernameKlickad = false;
-    private boolean passwordKlickad = false;
+    private static InfDB idb; // Used to establish a connection to the database
+    private static int id; // Where the user ID is stored
+    private static int behorighet; // Where the permissionlevel of the logged user is stored
+    private boolean mailFocused = false; // Used in focusGain
+    private boolean passFocused = false; // Used in focusGain
+
     /**
      * Creates new form ColorPage
+     *
      * @param idb
      */
     public LoginWindow(InfDB idb) {
+
         initComponents();
         this.idb = idb;
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null); // Opens the window at the centre of the screen
+
     }
-    
-    public static int getID(){ // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
-        return id;
-    }
-    
-    public static int getBehorighet(){ // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
-        return behorighet;
-    }
+
+//    public static int getID() { // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
+//        return id;
+//    }
+//
+//    public static int getBehorighet() { // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
+//        return behorighet;
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -179,70 +183,82 @@ public class LoginWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        try
-        {
-            String email = txtEmail.getText();
-            String password = pwdPassword.getText();
-            
+
+        try {
+            String email = txtEmail.getText(); // Stores the text from the field
+            String password = pwdPassword.getText(); // Stores the password from the field
+
             String fraga = "select LOSENORD from PERSONER where MAIL = '" + email + "';";
-            String losenord = idb.fetchSingle(fraga); //Hämtar lösenordet som ska höra ihop med mailen.
-            
+            String losenord = idb.fetchSingle(fraga); // Gets the password that corresponds to the mail
+
             String queryBehorighet = "select SID from PERSONER where MAIL = '" + email + "';";
-            String svarBehorighet = idb.fetchSingle(queryBehorighet); //Hämtar behörigheten
-             
-            String queryID = "select ID from PERSONER where MAIL ='" + email +"';";
-            String svarID = idb.fetchSingle(queryID); //Hämtar IDt
-            
-            if(password.equals(losenord)) //Testar så att lösenordet som hör ihop med mailen matchar det lösenordet som skrevs in i fältet.
-            {
-                new MainPage(idb).setVisible(true);
+            String svarBehorighet = idb.fetchSingle(queryBehorighet); // Gets the SID for permissionlevel
+
+            String queryID = "select ID from PERSONER where MAIL ='" + email + "';";
+            String svarID = idb.fetchSingle(queryID); // Gets the user ID 
+
+            if (password.equals(losenord)) { // Checks if the password provided matches the one in the database
+
+                new MainPage(idb).setVisible(true); // Creates a MainPage if the login was successful
                 int svBehorighet = Integer.parseInt(svarBehorighet);
-                behorighet = svBehorighet;
+                LoggedUser.setBehorighet(svBehorighet);
+                //behorighet = svBehorighet; // Sets the permissionlevel
                 int svID = Integer.parseInt(svarID);
-                id = svID;
-                
-                txtEmail.setText("");
+                LoggedUser.setID(svID);
+                //id = svID; // Sets the ID
+
+                txtEmail.setText(""); // Empties the fields (Maybe redundant)
                 pwdPassword.setText("");
+                //this.setVisible(false); // Hides the window
                 this.dispose();
-            }
-            else //Om lösenordet inte matchar.
-            {
+
+            } else { // If the password doesn't match
+
                 JOptionPane.showMessageDialog(null, "The e-mail and the password did not match, please try again.");
+
             }
-        }
-        catch(InfException ex)
-        {
+
+        } catch (InfException ex) { // Catches an error from a faulty database connection
+
             JOptionPane.showMessageDialog(null, "Something went wrong.");
+
         }
+
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void txtEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusGained
-        if(usernameKlickad == false){
+
+        if (mailFocused == false) { // If the field is focused the box is cleared
             txtEmail.setText("");
-            usernameKlickad = true;
+            mailFocused = true;
         }
+
     }//GEN-LAST:event_txtEmailFocusGained
 
     private void pwdPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pwdPasswordFocusGained
-        if(passwordKlickad == false){
+
+        if (passFocused == false) { // If the field is focused the box is cleared
             pwdPassword.setText("");
-            passwordKlickad = true;
+            passFocused = true;
         }
+
     }//GEN-LAST:event_pwdPasswordFocusGained
 
     private void txtEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyPressed
-        this.getRootPane().setDefaultButton(btnLogin);
+
+        this.getRootPane().setDefaultButton(btnLogin); // Makes the enter-key push the login button
+
     }//GEN-LAST:event_txtEmailKeyPressed
 
     private void pwdPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwdPasswordKeyPressed
-        this.getRootPane().setDefaultButton(btnLogin);
+
+        this.getRootPane().setDefaultButton(btnLogin); // Makes the enter-key push the login button
+
     }//GEN-LAST:event_pwdPasswordKeyPressed
 
     /**
      * @param args the command line arguments
      */
-
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
