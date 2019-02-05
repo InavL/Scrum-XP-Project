@@ -35,7 +35,7 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
         //fillListWithPosts();
         mainPanel.setVisible(false);
         //Fyller listan med aktuella inlägg
-        fillListWithPosts();
+        fillListWithYourPosts();
         
     }
 
@@ -198,16 +198,8 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    // ATT GÖRA:
-    //1. Fyll comboboxen med inlägg X
-    //2. btnCHoose this post Fyll alla fält, comboboxar och areor med värden X
-    //3. Save >
-    //4. Save
-    //5. Back
-    //6. Next
 
-
-private void fillListWithPosts(){
+private void fillListWithYourPosts(){
     
     int personID = LoginWindow.getID();
     
@@ -226,9 +218,9 @@ private void fillListWithPosts(){
      
             }
         }
-        catch (InfException ettUndantag) {
-                ettUndantag.getMessage();
-                JOptionPane.showMessageDialog(null, "Något gick fel.");
+        catch (InfException oneException) {
+                oneException.getMessage();
+                JOptionPane.showMessageDialog(null, "Something went wrong");
             }
     } 
     
@@ -241,6 +233,7 @@ private void fillListWithPosts(){
             String titel = cbPosts.getSelectedItem().toString();
             
             
+            
             try {
                 String bloggID = idb.fetchSingle("SELECT bloggid FROM blogg  WHERE titel = \'" + titel + "\'");
                 //Uppdaterar blogginlägget med den nya titeln och texten
@@ -249,8 +242,8 @@ private void fillListWithPosts(){
                 lblChanges.setVisible(true);
                 
             } 
-            catch (InfException ettUndantag) {
-                ettUndantag.getMessage();
+            catch (InfException oneException) {
+                oneException.getMessage();
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }         
         }

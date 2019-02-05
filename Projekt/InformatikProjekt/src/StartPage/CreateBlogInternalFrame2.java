@@ -7,7 +7,6 @@ package StartPage;
 
 import com.jidesoft.swing.AutoCompletion;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -18,7 +17,7 @@ import oru.inf.InfException;
  *
  * @author ellin
  */
-public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
+public class CreateBlogInternalFrame2 extends javax.swing.JInternalFrame {
     
     private static InfDB idb;
     private MethodService methodService;
@@ -26,16 +25,16 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public CreateBlogInternalFrame(InfDB idb) {
+    public CreateBlogInternalFrame2(InfDB idb) {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);
         lblSucceed.setVisible(false);
         pnlMainPanel.setVisible(false);
-        methodService.fillComboboxBranch(cbBranch);
+       // methodService.fillComboboxAllCategories1(cbCategory);
         
         //Gör listan sökbar.
-        AutoCompletion editableBranchList = new AutoCompletion(cbBranch);
+        AutoCompletion editablePostList = new AutoCompletion(cbCategory);
         
     }
 
@@ -51,6 +50,7 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        cbCategory = new javax.swing.JComboBox<>();
         lblChoosePlace = new javax.swing.JLabel();
         pnlMainPanel = new javax.swing.JPanel();
         btnPublish = new javax.swing.JButton();
@@ -59,10 +59,12 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         lblText = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         taText = new javax.swing.JTextArea();
+        lblSucceed = new javax.swing.JLabel();
+        lblCategory = new javax.swing.JLabel();
+        lblTopic = new javax.swing.JLabel();
+        cbTopics = new javax.swing.JComboBox<>();
         lblBranch = new javax.swing.JLabel();
         cbBranch = new javax.swing.JComboBox<>();
-        btnSave = new javax.swing.JButton();
-        lblSucceed = new javax.swing.JLabel();
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -87,14 +89,12 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
+        cbCategory.setEditable(true);
+        cbCategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose category" }));
+
         lblChoosePlace.setText("Choose the place to store the post:");
 
         btnPublish.setText("Publish");
-        btnPublish.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPublishActionPerformed(evt);
-            }
-        });
 
         lblHeading.setText("Heading:");
 
@@ -106,6 +106,9 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         taText.setRows(5);
         jScrollPane1.setViewportView(taText);
 
+        lblSucceed.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblSucceed.setText("You have published your post!");
+
         javax.swing.GroupLayout pnlMainPanelLayout = new javax.swing.GroupLayout(pnlMainPanel);
         pnlMainPanel.setLayout(pnlMainPanelLayout);
         pnlMainPanelLayout.setHorizontalGroup(
@@ -113,13 +116,16 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
             .addGroup(pnlMainPanelLayout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnPublish)
+                    .addGroup(pnlMainPanelLayout.createSequentialGroup()
+                        .addComponent(lblSucceed)
+                        .addGap(472, 472, 472)
+                        .addComponent(btnPublish))
                     .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(lblText)
                         .addComponent(tfHeading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblHeading)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 732, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         pnlMainPanelLayout.setVerticalGroup(
             pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,25 +137,23 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
                 .addGap(28, 28, 28)
                 .addComponent(lblText)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(btnPublish)
+                .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPublish)
+                    .addComponent(lblSucceed))
                 .addContainerGap())
         );
+
+        lblCategory.setText("Category:");
+
+        lblTopic.setText("Topic:");
+
+        cbTopics.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose topic" }));
 
         lblBranch.setText("Branch:");
 
         cbBranch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose branch" }));
-
-        btnSave.setText("Save");
-        btnSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveActionPerformed(evt);
-            }
-        });
-
-        lblSucceed.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblSucceed.setText("You have published your post!");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -158,18 +162,22 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(69, 69, 69)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblBranch)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblChoosePlace)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel5Layout.createSequentialGroup()
-                            .addComponent(cbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(54, 54, 54)
-                            .addComponent(btnSave)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lblSucceed))
-                        .addComponent(pnlMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(81, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCategory))
+                        .addGap(198, 198, 198)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblTopic)
+                            .addComponent(cbTopics, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblBranch)
+                            .addComponent(cbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -177,16 +185,19 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblChoosePlace)
-                .addGap(18, 18, 18)
-                .addComponent(lblBranch)
-                .addGap(1, 1, 1)
+                .addGap(13, 13, 13)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSave)
-                    .addComponent(lblSucceed))
+                    .addComponent(lblCategory)
+                    .addComponent(lblTopic)
+                    .addComponent(lblBranch))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbCategory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTopics, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 104, Short.MAX_VALUE))
+                .addGap(0, 76, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -203,79 +214,25 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        if (Validation.elementSelectedInCombobox(cbBranch, "Choose a branch")) {
-            
-            pnlMainPanel.setVisible(true);
-            lblSucceed.setVisible(false);
-        }
-        
-    }//GEN-LAST:event_btnSaveActionPerformed
-
-    private void btnPublishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPublishActionPerformed
-        //Kontrollerar att användaren har skrivit någoi i textfälten
-        if (Validation.textfieldWithValue(tfHeading) && Validation.textareaWithValue(taText)) {
-            String titel = tfHeading.getText();
-            String bloggpost = taText.getText();
-            int personID = LoginWindow.getID();
-            String namn = cbBranch.getSelectedItem().toString();
-            
-            Date datum=new Date();
-             int dag=datum.getDate();
-             int manad=datum.getMonth();
-             
-             int ar=datum.getYear();
-             int rattAr = ar + 1900;
-             
-             String dagen = Integer.toString(dag);
-             String manaden = Integer.toString(manad);
-             String aret = Integer.toString(rattAr);
-             
-             String datumet = (aret + "-" + manaden + "-" + dagen);
-             
-             
-
-            
-            try {
-            String kat3 = idb.fetchSingle("SELECT kat3_ID FROM Kat3 WHERE Kat3_Namn = \'" + namn + "\'");
-            
-            //Hämtar ett nytt oanvänt bloggID
-            String bloggID = idb.getAutoIncrement("blogg", "bloggid");
-            
-            //Lägger till inlägget i bloggtabellen med de valda värdena
-                idb.insert("INSERT INTO blogg (bloggid, bloggpost, titel, datum, kat3_ID, bloggskribent) \n" +
-                "VALUES (" + bloggID + ", \'" + bloggpost + "\', \'" + titel + "\', \'" + datumet + "\', \'" + kat3 + "\', " + personID + ")");
-                
-                lblSucceed.setVisible(true);
-                tfHeading.setText("");
-                taText.setText("");
-                pnlMainPanel.setVisible(false);
-            
-            }
-            catch (InfException oneException) {
-                oneException.getMessage();
-                JOptionPane.showMessageDialog(null, "Something went wrong.");
-            } 
-            
-        }
-    }//GEN-LAST:event_btnPublishActionPerformed
-
     
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPublish;
-    private javax.swing.JButton btnSave;
     private javax.swing.JComboBox<String> cbBranch;
+    private javax.swing.JComboBox<String> cbCategory;
+    private javax.swing.JComboBox<String> cbTopics;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBranch;
+    private javax.swing.JLabel lblCategory;
     private javax.swing.JLabel lblChoosePlace;
     private javax.swing.JLabel lblHeading;
     private javax.swing.JLabel lblSucceed;
     private javax.swing.JLabel lblText;
+    private javax.swing.JLabel lblTopic;
     private javax.swing.JPanel pnlMainPanel;
     private javax.swing.JTextArea taText;
     private javax.swing.JTextField tfHeading;
