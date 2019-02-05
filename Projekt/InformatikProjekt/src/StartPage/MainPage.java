@@ -141,7 +141,7 @@ public class MainPage extends javax.swing.JFrame {
 
         superMenyBar.add(blog);
 
-        mRegisterUser.setText("Register user");
+        mRegisterUser.setText("User");
 
         addUser.setText("Add user");
         mRegisterUser.add(addUser);
@@ -289,11 +289,10 @@ public class MainPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_removeUserActionPerformed
     private void showAdminWindow(){
-        isAdministrator=isAdmin();
-        System.out.println(isAdministrator);
-
+        //Tar bort om personen som loggar in inte är admin.
+            isAdministrator = isAdmin();
             if(!isAdministrator){
-            mRegisterUser.setVisible(false);
+                mRegisterUser.setVisible(false);
             }
     
     
