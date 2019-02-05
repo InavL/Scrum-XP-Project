@@ -99,6 +99,14 @@
                 <Property name="text" type="java.lang.String" value="Edit user"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="removeUser">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Remove user"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeUserActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
       </SubComponents>

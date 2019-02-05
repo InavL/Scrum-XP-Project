@@ -24,6 +24,8 @@ public class MainPage extends javax.swing.JFrame {
     private RemoveBlogInternalFrame removeBlogInternalFrame;
     private FeedBlogInternalFrame feedBlogInternalFrame;
     private boolean isAdministrator;
+    
+    private RemoveEmployeeFromTheSystem removeEmployeeFromTheSystem;
         
     /**
      * Creates new form ColorPage
@@ -67,6 +69,7 @@ public class MainPage extends javax.swing.JFrame {
         mRegisterUser = new javax.swing.JMenu();
         addUser = new javax.swing.JMenuItem();
         editUser = new javax.swing.JMenuItem();
+        removeUser = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -145,6 +148,14 @@ public class MainPage extends javax.swing.JFrame {
 
         editUser.setText("Edit user");
         mRegisterUser.add(editUser);
+
+        removeUser.setText("Remove user");
+        removeUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeUserActionPerformed(evt);
+            }
+        });
+        mRegisterUser.add(removeUser);
 
         superMenyBar.add(mRegisterUser);
 
@@ -265,6 +276,18 @@ public class MainPage extends javax.swing.JFrame {
             moveFocusToTab("Blog feed");
         }
     }//GEN-LAST:event_blogFeedMnuItmActionPerformed
+
+    private void removeUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeUserActionPerformed
+                //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
+        if(!tabExists("Remove user")) {
+            removeEmployeeFromTheSystem = new RemoveEmployeeFromTheSystem(idb);
+            openTab(removeEmployeeFromTheSystem, "Remove user");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
+            moveFocusToTab("Remove user");
+        }
+    }//GEN-LAST:event_removeUserActionPerformed
     private void showAdminWindow(){
         isAdministrator=isAdmin();
         System.out.println(isAdministrator);
@@ -291,6 +314,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JMenu mRegisterUser;
     private javax.swing.JMenu mainMenu;
     private javax.swing.JMenuItem removeBlogMnuItm;
+    private javax.swing.JMenuItem removeUser;
     private javax.swing.JMenuBar superMenyBar;
     // End of variables declaration//GEN-END:variables
 }
