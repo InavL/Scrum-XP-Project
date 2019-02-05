@@ -5,7 +5,6 @@
  */
 package StartPage;
 
-import static StartPage.MethodClass.isAdmin;
 import java.beans.PropertyVetoException;
 import oru.inf.InfDB;
 import org.seamless.swing.ClosableTabbedPane;
@@ -23,9 +22,8 @@ public class MainPage extends javax.swing.JFrame {
     private EditBlogInternalFrame editBlogInternalFrame;
     private RemoveBlogInternalFrame removeBlogInternalFrame;
     private FeedBlogInternalFrame feedBlogInternalFrame;
-    private boolean isAdministrator;
+    private ShowUserInformation showUserInformation;
     
-    private RemoveEmployeeFromTheSystem removeEmployeeFromTheSystem;
         
     /**
      * Creates new form ColorPage
@@ -41,7 +39,6 @@ public class MainPage extends javax.swing.JFrame {
         getContentPane().add(paneMainPageTabs);
         //methodService.setDesign(paneMainPageTabs);
         setMenuVisible(true);
-        showAdminWindow();
         
     }
 
@@ -66,7 +63,8 @@ public class MainPage extends javax.swing.JFrame {
         createBlogMnuItm = new javax.swing.JMenuItem();
         editBlogMnuItm = new javax.swing.JMenuItem();
         removeBlogMnuItm = new javax.swing.JMenuItem();
-        mRegisterUser = new javax.swing.JMenu();
+        user = new javax.swing.JMenu();
+        userInformation = new javax.swing.JMenuItem();
         addUser = new javax.swing.JMenuItem();
         editUser = new javax.swing.JMenuItem();
         removeUser = new javax.swing.JMenuItem();
@@ -80,11 +78,6 @@ public class MainPage extends javax.swing.JFrame {
         mainMenu.setText("Main menu");
 
         logOutMnuItm.setText("Log out");
-        logOutMnuItm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                logOutMnuItmActionPerformed(evt);
-            }
-        });
         mainMenu.add(logOutMnuItm);
 
         closeWindowsMnuItm.setText("Close all windows");
@@ -141,13 +134,21 @@ public class MainPage extends javax.swing.JFrame {
 
         superMenyBar.add(blog);
 
-        mRegisterUser.setText("Register user");
+        user.setText("User");
+
+        userInformation.setText("User information");
+        userInformation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userInformationActionPerformed(evt);
+            }
+        });
+        user.add(userInformation);
 
         addUser.setText("Add user");
-        mRegisterUser.add(addUser);
+        user.add(addUser);
 
         editUser.setText("Edit user");
-        mRegisterUser.add(editUser);
+        user.add(editUser);
 
         removeUser.setText("Remove user");
         removeUser.addActionListener(new java.awt.event.ActionListener() {
@@ -155,9 +156,9 @@ public class MainPage extends javax.swing.JFrame {
                 removeUserActionPerformed(evt);
             }
         });
-        mRegisterUser.add(removeUser);
+        user.add(removeUser);
 
-        superMenyBar.add(mRegisterUser);
+        superMenyBar.add(user);
 
         setJMenuBar(superMenyBar);
 
@@ -258,13 +259,6 @@ public class MainPage extends javax.swing.JFrame {
         paneMainPageTabs.removeAll();
     }//GEN-LAST:event_closeWindowsMnuItmActionPerformed
 
-    private void logOutMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMnuItmActionPerformed
-        //Stänger applikationen och får ej upp inloggningsfönstret
-        System.exit(1);
-     
-        
-    }//GEN-LAST:event_logOutMnuItmActionPerformed
-
     private void blogFeedMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blogFeedMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Blog feed")) {
@@ -277,27 +271,18 @@ public class MainPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_blogFeedMnuItmActionPerformed
 
-    private void removeUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeUserActionPerformed
-                //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Remove user")) {
-            removeEmployeeFromTheSystem = new RemoveEmployeeFromTheSystem(idb);
-            openTab(removeEmployeeFromTheSystem, "Remove user");
+    private void userInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userInformationActionPerformed
+        //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
+        if(!tabExists("User information")) {
+            showUserInformation = new ShowUserInformation(idb);
+            openTab(showUserInformation, "User information");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else{
-            moveFocusToTab("Remove user");
+            moveFocusToTab("User information");
         }
-    }//GEN-LAST:event_removeUserActionPerformed
-    private void showAdminWindow(){
-        isAdministrator=isAdmin();
-        System.out.println(isAdministrator);
+    }//GEN-LAST:event_userInformationActionPerformed
 
-            if(!isAdministrator){
-            mRegisterUser.setVisible(false);
-            }
-    
-    
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem addUser;
@@ -311,10 +296,11 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem logOutMnuItm;
-    private javax.swing.JMenu mRegisterUser;
     private javax.swing.JMenu mainMenu;
     private javax.swing.JMenuItem removeBlogMnuItm;
     private javax.swing.JMenuItem removeUser;
     private javax.swing.JMenuBar superMenyBar;
+    private javax.swing.JMenu user;
+    private javax.swing.JMenuItem userInformation;
     // End of variables declaration//GEN-END:variables
 }
