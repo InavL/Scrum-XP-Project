@@ -54,10 +54,28 @@ public class MethodService {
     public void fillComboboxBranch (JComboBox<String> enCombobox) {
         try {
             //Hämtar en lista på kategorier på alla kategori1 i databasen
-            ArrayList<HashMap<String, String>> categories = idb.fetchRows("SELECT kat3_namn FROM kat3");
+            ArrayList<HashMap<String, String>> categories = idb.fetchRows("SELECT kat2_namn FROM kat2");
             //Loopar igenom listan och lägger till alla kategorier i kategorilistan
             for (int i = 0; i < categories.size(); i++) {
-                String oneCat = categories.get(i).get("KAT3_NAMN");
+                String oneCat = categories.get(i).get("KAT2_NAMN");
+                enCombobox.addItem(oneCat);
+            } 
+        }
+        catch (InfException oneException) {
+            oneException.getMessage();
+        }
+        catch (NullPointerException anotherException) {
+            anotherException.getMessage();
+        }   
+    }
+    
+        public void fillComboboxBranchKat1 (JComboBox<String> enCombobox) {
+        try {
+            //Hämtar en lista på kategorier på alla kategori1 i databasen
+            ArrayList<HashMap<String, String>> categories = idb.fetchRows("SELECT kat1_namn FROM kat1");
+            //Loopar igenom listan och lägger till alla kategorier i kategorilistan
+            for (int i = 0; i < categories.size(); i++) {
+                String oneCat = categories.get(i).get("KAT1_NAMN");
                 enCombobox.addItem(oneCat);
             } 
         }
