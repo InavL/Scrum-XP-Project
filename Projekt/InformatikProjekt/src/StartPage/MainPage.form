@@ -2,6 +2,16 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
+    <Component class="javax.swing.JMenuItem" name="jMenuItem1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jMenuItem1"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JMenuItem" name="jMenuItem2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jMenuItem2"/>
+      </Properties>
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="superMenyBar">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="mainMenu">
@@ -71,6 +81,23 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="removeBlogMnuItmActionPerformed"/>
               </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="mRegisterUser">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Register user"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="addUser">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Add user"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="editUser">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Edit user"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>

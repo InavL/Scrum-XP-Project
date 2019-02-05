@@ -5,6 +5,7 @@
  */
 package StartPage;
 
+import static StartPage.MethodClass.isAdmin;
 import java.beans.PropertyVetoException;
 import oru.inf.InfDB;
 import org.seamless.swing.ClosableTabbedPane;
@@ -22,6 +23,7 @@ public class MainPage extends javax.swing.JFrame {
     private EditBlogInternalFrame editBlogInternalFrame;
     private RemoveBlogInternalFrame removeBlogInternalFrame;
     private FeedBlogInternalFrame feedBlogInternalFrame;
+    private boolean isAdministrator;
         
     /**
      * Creates new form ColorPage
@@ -37,6 +39,7 @@ public class MainPage extends javax.swing.JFrame {
         getContentPane().add(paneMainPageTabs);
         //methodService.setDesign(paneMainPageTabs);
         setMenuVisible(true);
+        showAdminWindow();
         
     }
 
@@ -49,6 +52,8 @@ public class MainPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         superMenyBar = new javax.swing.JMenuBar();
         mainMenu = new javax.swing.JMenu();
         logOutMnuItm = new javax.swing.JMenuItem();
@@ -59,6 +64,13 @@ public class MainPage extends javax.swing.JFrame {
         createBlogMnuItm = new javax.swing.JMenuItem();
         editBlogMnuItm = new javax.swing.JMenuItem();
         removeBlogMnuItm = new javax.swing.JMenuItem();
+        mRegisterUser = new javax.swing.JMenu();
+        addUser = new javax.swing.JMenuItem();
+        editUser = new javax.swing.JMenuItem();
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -125,6 +137,16 @@ public class MainPage extends javax.swing.JFrame {
         blog.add(removeBlogMnuItm);
 
         superMenyBar.add(blog);
+
+        mRegisterUser.setText("Register user");
+
+        addUser.setText("Add user");
+        mRegisterUser.add(addUser);
+
+        editUser.setText("Edit user");
+        mRegisterUser.add(editUser);
+
+        superMenyBar.add(mRegisterUser);
 
         setJMenuBar(superMenyBar);
 
@@ -243,16 +265,30 @@ public class MainPage extends javax.swing.JFrame {
             moveFocusToTab("Blog feed");
         }
     }//GEN-LAST:event_blogFeedMnuItmActionPerformed
+    private void showAdminWindow(){
+        isAdministrator=isAdmin();
+        System.out.println(isAdministrator);
 
+            if(!isAdministrator){
+            mRegisterUser.setVisible(false);
+            }
+    
+    
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem addUser;
     private javax.swing.JMenu blog;
     private javax.swing.JMenuItem blogFeedMnuItm;
     private javax.swing.JMenuItem closeWindowsMnuItm;
     private javax.swing.JMenuItem createBlogMnuItm;
     private javax.swing.JMenuItem editBlogMnuItm;
+    private javax.swing.JMenuItem editUser;
     private javax.swing.JMenuItem exitMnuItm;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem logOutMnuItm;
+    private javax.swing.JMenu mRegisterUser;
     private javax.swing.JMenu mainMenu;
     private javax.swing.JMenuItem removeBlogMnuItm;
     private javax.swing.JMenuBar superMenyBar;
