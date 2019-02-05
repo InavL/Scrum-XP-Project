@@ -173,7 +173,7 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtIDActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        if(Validation.textfieldWithValue(txtFirstname) && Validation.textfieldWithValue(txtLastname) && Validation.textfieldWithValue(txtID))
+        if(Validation.textfieldWithValue(txtFirstname) && Validation.textfieldWithValue(txtLastname) && Validation.textfieldWithValue(txtID) && Validation.idTesting(txtID, idb))
         {
             try
             {
@@ -192,6 +192,10 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
                     idb.delete("delete from PERSONER where ID = '" + id + "';");
                     
                     lblRemove.setText("The person is now removed.");
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "The ID did not match the name.");
                 }
                 
             }
