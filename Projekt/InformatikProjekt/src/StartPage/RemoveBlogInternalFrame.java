@@ -5,7 +5,12 @@
  */
 package StartPage;
 
+import com.jidesoft.swing.AutoCompletion;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.JOptionPane;
 import oru.inf.InfDB;
+import oru.inf.InfException;
 
 /**
  *
@@ -23,6 +28,11 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);
+        //Gör listan sökbar.
+        AutoCompletion editablePostList = new AutoCompletion(cbPosts);
+        //Fyller listan med aktuella inlägg
+        fillListWithYourPosts();
+        lblRemoveSucceed.setVisible(false);
     }
 
     /**
@@ -37,6 +47,10 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        cbPosts = new javax.swing.JComboBox<>();
+        btnRemove = new javax.swing.JButton();
+        lblSelectOnePostRemove = new javax.swing.JLabel();
+        lblRemoveSucceed = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -61,17 +75,53 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
+        cbPosts.setEditable(true);
+        cbPosts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose a post" }));
+
+        btnRemove.setText("Remove");
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveActionPerformed(evt);
+            }
+        });
+
+        lblSelectOnePostRemove.setText("Select the post you want to remove:");
+
+        lblRemoveSucceed.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblRemoveSucceed.setText("You have removed the post!");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(132, 132, 132)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblRemoveSucceed)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRemove)
+                        .addGap(117, 117, 117))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSelectOnePostRemove)
+                            .addComponent(cbPosts, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 664, Short.MAX_VALUE))
+                .addGap(140, 140, 140)
+                .addComponent(lblSelectOnePostRemove)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cbPosts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 401, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRemove)
+                    .addComponent(lblRemoveSucceed))
+                .addGap(65, 65, 65))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -88,10 +138,49 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+        
+        String post = cbPosts.getSelectedItem().toString();
+        try {
+            idb.delete("DELETE FROM blogg WHERE titel = \'" + post + "\'");
+                    
+            lblRemoveSucceed.setVisible(true);              
+        }
+        catch (InfException oneException) {
+            oneException.getMessage();
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+        }
+    }//GEN-LAST:event_btnRemoveActionPerformed
+
+    private void fillListWithYourPosts(){
+    
+    int personID = LoginWindow.getID();
+    
+        try {
+            //Hämtar inläggen som användaren har skrivit
+            ArrayList<HashMap<String, String>> posts = idb.fetchRows("SELECT titel FROM blogg WHERE bloggskribent =" + personID + ";");
+            //Loopar igenom listan och lägger till alla namn på inläggen till inläggslistanlistan
+            if (posts != null) {
+                for (int i = 0; i < posts.size(); i++) {
+                    String postName = posts.get(i).get("TITEL");
+                    cbPosts.addItem(postName);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "You haven't written any posts yet.");
+            }
+        } catch (InfException oneException) {
+            oneException.getMessage();
+            JOptionPane.showMessageDialog(null, "Something went wrong");
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRemove;
+    private javax.swing.JComboBox<String> cbPosts;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblRemoveSucceed;
+    private javax.swing.JLabel lblSelectOnePostRemove;
     // End of variables declaration//GEN-END:variables
 }

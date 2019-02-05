@@ -16,7 +16,7 @@ import oru.inf.InfException;
  *
  * @author krist
  */
-public class CreateBlog extends javax.swing.JFrame {
+public class CreateBlogNy extends javax.swing.JFrame {
 
     private static InfDB idb;
    
@@ -24,7 +24,7 @@ public class CreateBlog extends javax.swing.JFrame {
     /**
      * Creates new form ColorPage
      */
-    public CreateBlog(InfDB idb) {
+    public CreateBlogNy(InfDB idb) {
         
         initComponents();
         this.idb = idb;
@@ -162,10 +162,6 @@ public class CreateBlog extends javax.swing.JFrame {
             }
         });
 
-        cbxKat2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cbxKat3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         txtNewTag.setColumns(8);
 
         lblTags.setText("Tags");
@@ -204,23 +200,23 @@ public class CreateBlog extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnAddFile, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(lblSize))
-                                .addGap(29, 29, 29)
+                                .addGap(12, 12, 12)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(cbxKat1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbxKat2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbxKat3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(cbxKat1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cbxKat2, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(cbxKat3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(lblTags))
-                                .addGap(16, 16, 16)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(txtNewTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(18, 18, 18)
                                         .addComponent(btnAdd))
                                     .addComponent(lblNewTag))))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(45, 45, 45))
                     .addComponent(txtHeading)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(lblWrritePost)
@@ -308,7 +304,10 @@ public class CreateBlog extends javax.swing.JFrame {
     }//GEN-LAST:event_txtHeadingActionPerformed
 
     private void btnPublishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPublishActionPerformed
-        // TODO add your handling code here:
+        String heading = txtHeading.getText();
+        String text = txtText.getText();
+        
+        //String fragaInsert = "Insert into "
     }//GEN-LAST:event_btnPublishActionPerformed
 
 
