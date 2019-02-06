@@ -27,7 +27,7 @@ public class MainPage extends javax.swing.JFrame {
     
     private RemoveEmployeeFromTheSystem removeEmployeeFromTheSystem;
         
-    /**
+    /*-*
      * Creates new form ColorPage
      * @param idb
      */
