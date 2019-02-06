@@ -118,6 +118,11 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         jLabelFirstName.setText("Firsname");
 
         jTextFieldFirstName.setText("Your first name");
+        jTextFieldFirstName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldFirstNameActionPerformed(evt);
+            }
+        });
 
         jLabelPassword.setText("Password");
 
@@ -243,8 +248,42 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jAccessTypeActionPerformed
 
     private void jButtonSaveNewEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveNewEmployeeActionPerformed
-        // TODO add your handling code here:
+        if(Validation.textfieldWithValue(jTextFieldEmailAdress) && Validation.textfieldWithValue(jTextFieldPhoneNumber))
+        {
+            try
+            {
+                String mail = jTextFieldEmailAdress.getText();
+                String phonenumber = jTextFieldPhoneNumber.getText();
+                String firstname = jTextFieldFirstName.getText();
+                String lastname = jLabelSureName.getText();
+                
+                String fraga1 = "select MAIL from PERSONER where MAIL = '" + mail + "';";
+                mail = idb.fetchSingle(fraga1);
+                
+                String fraga2 = "select TELEFON from PERSONER where TELEFON = '" + phonenumber + "';";
+                phonenumber = idb.fetchSingle(fraga2);
+                
+                if(mail.equals(mail) && phonenumber.equals(phonenumber))
+                {
+                    idb.insert("insert into PERSONER (ID,FNAMN,ENAMN,MAIL,TELEFON,SID) values ( "+mail+",' "+phonenumber+",' "+firstname+",'"+lastname+",')");
+                    
+                    jButtonSaveNewEmployee.setText("The person is now added to the employee list.");
+                }
+                
+            }
+            catch(InfException ex)
+            {
+                 JOptionPane.showMessageDialog(null, "Something went wrong.");
+            }
+        }
+                                             
+
+    
     }//GEN-LAST:event_jButtonSaveNewEmployeeActionPerformed
+
+    private void jTextFieldFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFirstNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldFirstNameActionPerformed
 
     
     
