@@ -132,7 +132,7 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
     
     private void btnShowInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowInformationActionPerformed
         
-        String kursNamn = allUsers.
+       // String kursNamn = allUsers.
             
             
     }//GEN-LAST:event_btnShowInformationActionPerformed
