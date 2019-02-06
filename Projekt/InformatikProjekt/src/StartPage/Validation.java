@@ -102,16 +102,24 @@ public class Validation {
     }
 
     public static boolean idTesting(JTextField id, InfDB idb) {
+        
+        //Kollar så att ID:et finns med i tabellen PERONSER.
+        
         boolean resultat = true;
 
         try {
-            String personID = id.getText();
+            String personID = id.getText(); //Hämta värdet i fältet.
 
             String fraga = "select FNAMN from PERSONER where ID = '" + personID + "';";
-            String hamtatID = idb.fetchSingle(fraga);
+            String hamtatFornamn = idb.fetchSingle(fraga); 
 
-            if (hamtatID == null) {
-                JOptionPane.showMessageDialog(null, "The ID is incorrect.");
+            //Försöker att hämta förnamn som matchar ID:et.
+
+            if (hamtatFornamn == null) { 
+            //Kollar om värdet som man vill hämta finns.
+            
+                JOptionPane.showMessageDialog(null, "The ID is incorrect."); 
+                //Om man får null som värde.
 
                 resultat = false;
             }
