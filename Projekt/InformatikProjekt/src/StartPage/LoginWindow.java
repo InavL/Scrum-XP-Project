@@ -199,7 +199,7 @@ public class LoginWindow extends javax.swing.JFrame {
 
             if (password.equals(losenord)) { // Checks if the password provided matches the one in the database
 
-                new MainPage(idb).setVisible(true); // Creates a MainPage if the login was successful
+                
                 int svBehorighet = Integer.parseInt(svarBehorighet);
                 LoggedUser.setBehorighet(svBehorighet);
                 //behorighet = svBehorighet; // Sets the permissionlevel
@@ -210,6 +210,7 @@ public class LoginWindow extends javax.swing.JFrame {
                 txtEmail.setText(""); // Empties the fields (Maybe redundant)
                 pwdPassword.setText("");
                 //this.setVisible(false); // Hides the window
+                new MainPage(idb).setVisible(true); // Creates a MainPage if the login was successful
                 this.dispose();
 
             } else { // If the password doesn't match
