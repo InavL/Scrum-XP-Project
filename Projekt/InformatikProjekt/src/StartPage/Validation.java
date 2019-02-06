@@ -137,5 +137,22 @@ public class Validation {
         }
         return resultat;
     }
+    
+    //Kollar om textfältet är ett heltal.
+    public static boolean textfaltTal(JTextField tf) {
+   
+        boolean ettTal = true; 
+        
+        try{
+            String instring = tf.getText();
+            Integer.parseInt(instring);   
+            tf.requestFocus();  
+        }
+        catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Ange ett heltal!");
+            ettTal = false;    
+        }    
+        return ettTal;
+    }
 
 }
