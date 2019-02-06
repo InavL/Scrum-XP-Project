@@ -67,7 +67,7 @@
                           <Component id="lblText" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="286" max="32767" attributes="0"/>
+                  <EmptySpace pref="274" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -163,13 +163,16 @@
         <Component class="javax.swing.JTextField" name="txtFirstname">
         </Component>
         <Component class="javax.swing.JTextField" name="txtLastname">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtLastnameActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblText">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Calibri" size="18" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Please enter the ID, firstname and lastname for the person that needs to be romved."/>
+            <Property name="text" type="java.lang.String" value="Please enter the ID, first name and last name for the person that needs to be romved."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnRemove">

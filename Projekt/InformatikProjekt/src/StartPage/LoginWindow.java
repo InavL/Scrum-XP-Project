@@ -34,13 +34,13 @@ public class LoginWindow extends javax.swing.JFrame {
 
     }
 
-    public static int getID() { // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
-        return id;
-    }
-
-    public static int getBehorighet() { // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
-        return behorighet;
-    }
+//    public static int getID() { // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
+//        return id;
+//    }
+//
+//    public static int getBehorighet() { // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
+//        return behorighet;
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -199,15 +199,19 @@ public class LoginWindow extends javax.swing.JFrame {
 
             if (password.equals(losenord)) { // Checks if the password provided matches the one in the database
 
-                new MainPage(idb).setVisible(true); // Creates a MainPage if the login was successful
+                
                 int svBehorighet = Integer.parseInt(svarBehorighet);
-                behorighet = svBehorighet; // Sets the permissionlevel
+                LoggedUser.setBehorighet(svBehorighet);
+                //behorighet = svBehorighet; // Sets the permissionlevel
                 int svID = Integer.parseInt(svarID);
-                id = svID; // Sets the ID
+                LoggedUser.setID(svID);
+                //id = svID; // Sets the ID
 
                 txtEmail.setText(""); // Empties the fields (Maybe redundant)
                 pwdPassword.setText("");
-                this.setVisible(false); // Hides the window
+                //this.setVisible(false); // Hides the window
+                new MainPage(idb).setVisible(true); // Creates a MainPage if the login was successful
+                this.dispose();
 
             } else { // If the password doesn't match
 

@@ -5,8 +5,6 @@
  */
 package StartPage;
 
-import static StartPage.LoginWindow.getID;
-
 /**
  *
  * @author krist
@@ -18,7 +16,7 @@ public class RegisterUsers extends javax.swing.JInternalFrame {
      */
     public RegisterUsers() {
         initComponents();
-        id=getID();
+        id = LoggedUser.getID();
         
     }
 

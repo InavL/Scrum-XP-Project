@@ -27,7 +27,7 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
         methodService = new MethodService(idb);
         
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -85,8 +85,14 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
             }
         });
 
+        txtLastname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLastnameActionPerformed(evt);
+            }
+        });
+
         lblText.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
-        lblText.setText("Please enter the ID, firstname and lastname for the person that needs to be romved.");
+        lblText.setText("Please enter the ID, first name and last name for the person that needs to be romved.");
 
         btnRemove.setText("Remove");
         btnRemove.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +127,7 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(lblText)))
-                .addContainerGap(286, Short.MAX_VALUE))
+                .addContainerGap(274, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,7 +173,7 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtIDActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        if(Validation.textfieldWithValue(txtFirstname) && Validation.textfieldWithValue(txtLastname) && Validation.textfieldWithValue(txtID))
+        if(Validation.textfieldWithValue(txtFirstname) && Validation.textfieldWithValue(txtLastname) && Validation.textfieldWithValue(txtID) && Validation.idTesting(txtID, idb))
         {
             try
             {
@@ -187,6 +193,10 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
                     
                     lblRemove.setText("The person is now removed.");
                 }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "The ID did not match the name.");
+                }
                 
             }
             catch(InfException ex)
@@ -195,6 +205,10 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
+
+    private void txtLastnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLastnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtLastnameActionPerformed
 
     
     
