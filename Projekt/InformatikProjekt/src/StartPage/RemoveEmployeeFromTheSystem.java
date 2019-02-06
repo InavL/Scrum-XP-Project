@@ -27,7 +27,7 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
         methodService = new MethodService(idb);
         
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -82,12 +82,6 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
         txtID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIDActionPerformed(evt);
-            }
-        });
-
-        txtLastname.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLastnameActionPerformed(evt);
             }
         });
 
@@ -205,10 +199,6 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
-
-    private void txtLastnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLastnameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtLastnameActionPerformed
 
     
     

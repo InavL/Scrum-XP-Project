@@ -23,6 +23,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Log out"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logOutMnuItmActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="closeWindowsMnuItm">
               <Properties>
@@ -81,19 +84,11 @@
             </MenuItem>
           </SubComponents>
         </Menu>
-        <Menu class="javax.swing.JMenu" name="user">
+        <Menu class="javax.swing.JMenu" name="mRegisterUser">
           <Properties>
             <Property name="text" type="java.lang.String" value="User"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="userInformation">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="User information"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="userInformationActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="addUser">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Add user"/>
