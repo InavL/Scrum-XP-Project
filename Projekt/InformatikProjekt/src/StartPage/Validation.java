@@ -128,5 +128,14 @@ public class Validation {
         }
         return resultat;
     }
+    
+    public static boolean valtVarde(String text){
+        boolean resultat=true;
+            if(text==null){
+                JOptionPane.showMessageDialog(null, "You must choose a user");
+                resultat=false;
+        }
+        return resultat;
+    }
 
 }

@@ -88,14 +88,7 @@ public class MethodService {
         }   
     }
         
-        public static boolean valtVarde(String text){
-        boolean resultat=true;
-            if(text==null){
-                JOptionPane.showMessageDialog(null, "Du måste välja från listan");
-                resultat=false;
-        }
-        return resultat;
-    }
+       
     
     
 }
