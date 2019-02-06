@@ -130,6 +130,63 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
         }
     }
     
+    public void snominkod(){
+     //if(Validation.valtVarde(listAllUsers.getSelectedValue())){
+            try{
+                String personInfo = listAllUsers.getSelectedValue();
+                String id = personInfo.substring(0,2);
+                String fraga = "SELECT BETYG.BETYGSBESKRIVNING, KURS.KURSNAMN from ELEV"
+                +" join HAR_BETYG_I on ELEV.ELEV_ID = HAR_BETYG_I.ELEV_ID"
+                +" join BETYG on HAR_BETYG_I.KURSBETYG = BETYG.BETYGSBETECKNING"
+                +" join KURS on HAR_BETYG_I.KURS_ID = KURS.KURS_ID"
+                +" where ELEV.ELEV_ID ="+id;
+                ArrayList<HashMap<String,String>> svar = idb.fetchRows(fraga);
+                if(svar==null){
+                    JOptionPane.showMessageDialog(null, "Den studenten har inga betyg!");
+                }
+                else{
+                    String resultatLista="";
+                    for(HashMap rad:svar){ 
+                        resultatLista+=rad.get("KURSNAMN");
+                        resultatLista+=" ";
+                        resultatLista+=rad.get("BETYGSBESKRIVNING");
+                        resultatLista+="\n";
+                    } 
+                    //txtBetygOchKurser.setText(resultatLista);
+                }
+            }
+            catch (InfException e){
+                JOptionPane.showMessageDialog(null, "Något gick fel!");
+                System.out.println("Internt felmeddelande"+e.getMessage());  
+            }
+      }
+    
+    
+        private void elevLista(){
+        DefaultListModel din=new DefaultListModel();
+        try{
+            String fraga = "select ELEV_ID,FORNAMN,EFTERNAMN from ELEV";
+            ArrayList<HashMap<String,String>> svar = idb.fetchRows(fraga);       
+            for(HashMap rad:svar){ 
+                String resultatLista="";
+                resultatLista+=rad.get("ELEV_ID");
+                resultatLista+=" ";
+                resultatLista+=rad.get("FORNAMN");
+                resultatLista+=" ";
+                resultatLista+=rad.get("EFTERNAMN");
+                din.addElement(resultatLista);
+            } 
+            listAllUsers.setModel(din);
+            listAllUsers.getSelectedValue();
+
+        }
+        catch (InfException e){
+            JOptionPane.showMessageDialog(null, "Något gick fel!");
+            System.out.println("Internt felmeddelande"+e.getMessage());  
+        }
+    }   
+        
+    
     private void btnShowInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowInformationActionPerformed
         
        // String kursNamn = allUsers.
