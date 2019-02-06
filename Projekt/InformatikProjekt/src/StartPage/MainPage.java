@@ -5,7 +5,6 @@
  */
 package StartPage;
 
-import static StartPage.MethodClass.isAdmin;
 import java.beans.PropertyVetoException;
 import oru.inf.InfDB;
 import org.seamless.swing.ClosableTabbedPane;
@@ -23,9 +22,7 @@ public class MainPage extends javax.swing.JFrame {
     private EditBlogInternalFrame editBlogInternalFrame;
     private RemoveBlogInternalFrame removeBlogInternalFrame;
     private FeedBlogInternalFrame feedBlogInternalFrame;
-    private boolean isAdministrator;
     
-    private RemoveEmployeeFromTheSystem removeEmployeeFromTheSystem;
         
     /**
      * Creates new form ColorPage
@@ -41,7 +38,6 @@ public class MainPage extends javax.swing.JFrame {
         getContentPane().add(paneMainPageTabs);
         //methodService.setDesign(paneMainPageTabs);
         setMenuVisible(true);
-        showAdminWindow();
         
     }
 
@@ -54,8 +50,6 @@ public class MainPage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
         superMenyBar = new javax.swing.JMenuBar();
         mainMenu = new javax.swing.JMenu();
         logOutMnuItm = new javax.swing.JMenuItem();
@@ -66,14 +60,6 @@ public class MainPage extends javax.swing.JFrame {
         createBlogMnuItm = new javax.swing.JMenuItem();
         editBlogMnuItm = new javax.swing.JMenuItem();
         removeBlogMnuItm = new javax.swing.JMenuItem();
-        mRegisterUser = new javax.swing.JMenu();
-        addUser = new javax.swing.JMenuItem();
-        editUser = new javax.swing.JMenuItem();
-        removeUser = new javax.swing.JMenuItem();
-
-        jMenuItem1.setText("jMenuItem1");
-
-        jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -141,6 +127,7 @@ public class MainPage extends javax.swing.JFrame {
 
         superMenyBar.add(blog);
 
+<<<<<<< HEAD
         mRegisterUser.setText("User");
 
         addUser.setText("Add user");
@@ -159,6 +146,8 @@ public class MainPage extends javax.swing.JFrame {
 
         superMenyBar.add(mRegisterUser);
 
+=======
+>>>>>>> 90b37c8feab2e5a9de06e5a441bd39ac087d8807
         setJMenuBar(superMenyBar);
 
         pack();
@@ -260,7 +249,10 @@ public class MainPage extends javax.swing.JFrame {
 
     private void logOutMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMnuItmActionPerformed
         //Stänger applikationen och får ej upp inloggningsfönstret
-        System.exit(1);
+        
+        
+        
+        
      
         
     }//GEN-LAST:event_logOutMnuItmActionPerformed
@@ -277,6 +269,7 @@ public class MainPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_blogFeedMnuItmActionPerformed
 
+<<<<<<< HEAD
     private void removeUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeUserActionPerformed
                 //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Remove user")) {
@@ -297,23 +290,19 @@ public class MainPage extends javax.swing.JFrame {
     
     
     }
+=======
+>>>>>>> 90b37c8feab2e5a9de06e5a441bd39ac087d8807
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem addUser;
     private javax.swing.JMenu blog;
     private javax.swing.JMenuItem blogFeedMnuItm;
     private javax.swing.JMenuItem closeWindowsMnuItm;
     private javax.swing.JMenuItem createBlogMnuItm;
     private javax.swing.JMenuItem editBlogMnuItm;
-    private javax.swing.JMenuItem editUser;
     private javax.swing.JMenuItem exitMnuItm;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem logOutMnuItm;
-    private javax.swing.JMenu mRegisterUser;
     private javax.swing.JMenu mainMenu;
     private javax.swing.JMenuItem removeBlogMnuItm;
-    private javax.swing.JMenuItem removeUser;
     private javax.swing.JMenuBar superMenyBar;
     // End of variables declaration//GEN-END:variables
 }
