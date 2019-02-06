@@ -22,7 +22,11 @@ public class MainPage extends javax.swing.JFrame {
     private EditBlogInternalFrame editBlogInternalFrame;
     private RemoveBlogInternalFrame removeBlogInternalFrame;
     private FeedBlogInternalFrame feedBlogInternalFrame;
+    private RemoveEmployeeFromTheSystem removeEmployeeFromTheSystem;
     private ShowUserInformation showUserInformation;
+    private EditUserInformation editUserInformation;
+    private AddNewEmployee addNewEmployee;
+    
     
         
     /**
@@ -145,9 +149,19 @@ public class MainPage extends javax.swing.JFrame {
         user.add(userInformation);
 
         addUser.setText("Add user");
+        addUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addUserActionPerformed(evt);
+            }
+        });
         user.add(addUser);
 
         editUser.setText("Edit user");
+        editUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editUserActionPerformed(evt);
+            }
+        });
         user.add(editUser);
 
         removeUser.setText("Remove user");
@@ -282,6 +296,42 @@ public class MainPage extends javax.swing.JFrame {
             moveFocusToTab("User information");
         }
     }//GEN-LAST:event_userInformationActionPerformed
+
+    private void removeUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeUserActionPerformed
+        //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
+        if(!tabExists("Remove user")) {
+            removeEmployeeFromTheSystem = new RemoveEmployeeFromTheSystem(idb);
+            openTab(removeEmployeeFromTheSystem, "Remove user");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
+            moveFocusToTab("Remove user");
+        }
+    }//GEN-LAST:event_removeUserActionPerformed
+
+    private void editUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserActionPerformed
+        //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
+        if(!tabExists("Edit user")) {
+            editUserInformation = new EditUserInformation(idb);
+            openTab(editUserInformation, "Edit user");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
+            moveFocusToTab("Edit user");
+        }
+    }//GEN-LAST:event_editUserActionPerformed
+
+    private void addUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserActionPerformed
+        //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
+        if(!tabExists("Add user")) {
+            addNewEmployee = new AddNewEmployee(idb);
+            openTab(addNewEmployee, "Add user");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
+            moveFocusToTab("Add user");
+        }
+    }//GEN-LAST:event_addUserActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

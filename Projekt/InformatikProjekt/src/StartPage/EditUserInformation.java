@@ -7,8 +7,6 @@ package StartPage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 import oru.inf.InfException;
@@ -17,21 +15,18 @@ import oru.inf.InfException;
  *
  * @author ellin
  */
-public class ShowUserInformation extends javax.swing.JInternalFrame {
+public class EditUserInformation extends javax.swing.JInternalFrame {
     
     private static InfDB idb;
     private MethodService methodService;
-    private DefaultListModel allUsers;
-    //private JList listAllUsers;
-    
+
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public ShowUserInformation(InfDB idb) {
+    public EditUserInformation(InfDB idb) {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);
-        fillListWithUsers();
         
     }
 
@@ -47,11 +42,6 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listAllUsers = new javax.swing.JList<>();
-        btnShowInformation = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        taInformation = new javax.swing.JTextArea();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -79,24 +69,6 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, -1));
 
-        jScrollPane1.setViewportView(listAllUsers);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 300, 560));
-
-        btnShowInformation.setText("Show information");
-        btnShowInformation.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnShowInformationActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnShowInformation, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, -1, -1));
-
-        taInformation.setColumns(20);
-        taInformation.setRows(5);
-        jScrollPane2.setViewportView(taInformation);
-
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 160, 310, 220));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,42 +83,11 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void fillListWithUsers() {
-        
-        try {
-
-            ArrayList<HashMap<String, String>> nameList = idb.fetchRows("SELECT fnamn, enamn FROM personer;");
-
-            //Loopar genom listan för att hämta ut alla för- och efternamn
-            for (int i = 0; i < nameList.size(); i++) {
-                String firstName = nameList.get(i).get("FNAMN");
-                String surName = nameList.get(i).get("ENAMN");
-                String user = (firstName + " " + surName + "\n");
-                allUsers.addElement(user); 
-            }
-        } catch (InfException oneException) {
-            oneException.getMessage();
-            JOptionPane.showMessageDialog(null, "Something went wrong.");
-        }
-    }
-    
-    private void btnShowInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowInformationActionPerformed
-        
-        String kursNamn = allUsers.
-            
-            
-    }//GEN-LAST:event_btnShowInformationActionPerformed
-
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnShowInformation;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> listAllUsers;
-    private javax.swing.JTextArea taInformation;
     // End of variables declaration//GEN-END:variables
 }
