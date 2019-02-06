@@ -27,6 +27,8 @@ public class MainPage extends javax.swing.JFrame {
     private EditUserInformation editUserInformation;
     private AddNewEmployee addNewEmployee;
     
+    private AddNewCategoryAndTopic addNewCategoryAndTopic;
+    
     
         
     /**
@@ -67,6 +69,7 @@ public class MainPage extends javax.swing.JFrame {
         createBlogMnuItm = new javax.swing.JMenuItem();
         editBlogMnuItm = new javax.swing.JMenuItem();
         removeBlogMnuItm = new javax.swing.JMenuItem();
+        addCategory = new javax.swing.JMenuItem();
         user = new javax.swing.JMenu();
         userInformation = new javax.swing.JMenuItem();
         addUser = new javax.swing.JMenuItem();
@@ -135,6 +138,14 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
         blog.add(removeBlogMnuItm);
+
+        addCategory.setText("Add category");
+        addCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCategoryActionPerformed(evt);
+            }
+        });
+        blog.add(addCategory);
 
         superMenyBar.add(blog);
 
@@ -333,8 +344,21 @@ public class MainPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addUserActionPerformed
 
+    private void addCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCategoryActionPerformed
+        //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
+        if(!tabExists("Add category")) {
+            addNewCategoryAndTopic = new AddNewCategoryAndTopic(idb);
+            openTab(addNewCategoryAndTopic, "Add category");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
+            moveFocusToTab("Add category");
+        }
+    }//GEN-LAST:event_addCategoryActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem addCategory;
     private javax.swing.JMenuItem addUser;
     private javax.swing.JMenu blog;
     private javax.swing.JMenuItem blogFeedMnuItm;
