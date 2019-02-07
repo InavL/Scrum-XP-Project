@@ -214,6 +214,13 @@
             <Property name="text" type="java.lang.String" value="Access type:"/>
           </Properties>
         </Component>
+<<<<<<< HEAD
+        <Component class="javax.swing.JTextField" name="jTextFieldSureName">
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldEmailAdress">
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldPhoneNumber">
+=======
         <Component class="javax.swing.JTextField" name="jTextFieldLastName">
           <Properties>
             <Property name="text" type="java.lang.String" value="Your last name"/>
@@ -237,6 +244,7 @@
           <Events>
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldPhoneFocusGained"/>
           </Events>
+>>>>>>> 4399c664cb8091be49b80179b939af34fd964820
         </Component>
         <Component class="javax.swing.JComboBox" name="jAccessType">
           <Properties>
@@ -257,6 +265,8 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldFirstName">
+<<<<<<< HEAD
+=======
           <Properties>
             <Property name="text" type="java.lang.String" value="Your first name"/>
           </Properties>
@@ -264,6 +274,7 @@
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldFirstNameFocusGained"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldFirstNameActionPerformed"/>
           </Events>
+>>>>>>> 4399c664cb8091be49b80179b939af34fd964820
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelPassword">
           <Properties>
@@ -271,12 +282,15 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="jPasswordField1">
+<<<<<<< HEAD
+=======
           <Properties>
             <Property name="text" type="java.lang.String" value="jPasswordField1"/>
           </Properties>
           <Events>
             <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jPasswordField1FocusGained"/>
           </Events>
+>>>>>>> 4399c664cb8091be49b80179b939af34fd964820
         </Component>
         <Component class="javax.swing.JButton" name="jButtonSaveNewEmployee">
           <Properties>

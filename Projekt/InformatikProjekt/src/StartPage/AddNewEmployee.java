@@ -31,7 +31,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);
-        fillCombobox();
+        comboboxAlternatives();
        
     }
 
@@ -95,6 +95,8 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
 
         jLabelAccessType.setText("Access type:");
 
+<<<<<<< HEAD
+=======
         jTextFieldLastName.setText("Your last name");
         jTextFieldLastName.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -116,6 +118,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
             }
         });
 
+>>>>>>> 4399c664cb8091be49b80179b939af34fd964820
         jAccessType.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jAccessType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,6 +128,10 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
 
         jLabelFirstName.setText("First name:");
 
+<<<<<<< HEAD
+        jLabelPassword.setText("Password");
+
+=======
         jTextFieldFirstName.setText("Your first name");
         jTextFieldFirstName.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -146,6 +153,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
             }
         });
 
+>>>>>>> 4399c664cb8091be49b80179b939af34fd964820
         jButtonSaveNewEmployee.setText("Save");
         jButtonSaveNewEmployee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -327,6 +335,28 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         }  
         
     }
+    private void comboboxAlternatives(){
+        int sid = LoggedUser.getBehorighet();
+        switch (sid) {
+          case 1:
+            System.out.println("SID");
+            fillCombobox();
+            break;
+          case 2:
+            System.out.println("SID");
+            fillComboboxEducation();
+
+            break;
+          case 3:
+            System.out.println("SID");
+            fillComboboxResearch();
+            break;
+    
+    
+    }
+    }
+    
+    
     //Metoden fyller comboboxen vad för användare som finns i databasen.
     private void fillCombobox(){
       
@@ -343,6 +373,30 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         
        
     }
+    private void fillComboboxEducation(){
+          try{
+            String fraga = "select BEHORIGHET from SYSTEMTILLGANG where SID = 3 or SID = 4 or SID = 6";
+            ArrayList<String> svar = idb.fetchColumn(fraga);
+            for(String oneBox:svar){
+                jAccessType.addItem(oneBox);
+            }
+        }catch (InfException e){
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+            System.out.println("Internt felmeddelande"+e.getMessage());  
+        }
+    }
+    private void fillComboboxResearch(){
+          try{
+            String fraga = "select BEHORIGHET from SYSTEMTILLGANG where SID = 2 or SID = 5";
+            ArrayList<String> svar = idb.fetchColumn(fraga);
+            for(String oneBox:svar){
+                jAccessType.addItem(oneBox);
+            }
+        }catch (InfException e){
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+            System.out.println("Internt felmeddelande"+e.getMessage());  
+        }      
+    }
     //Metoden jämför namnet den användare man ska skapa och hämtar ut SID och skickar tillbaka det.
     private String getSID(String access){
         try{
@@ -357,6 +411,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         }
         return "";
     }
+
     private void jTextFieldFirstNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldFirstNameFocusGained
         
         if (firstNameFocused == false) { // If the field is focused the box is cleared
@@ -406,8 +461,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldFirstNameActionPerformed
 
-    
-    
+       
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jAccessType;
