@@ -18,6 +18,11 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
     
     private static InfDB idb;
     private MethodService methodService;
+    private boolean firstNameFocused = false; // Used in focusGain
+    private boolean lastNameFocused = false; // Used in focusGain
+    private boolean mailFocused = false; // Used in focusGain
+    private boolean phoneFocused = false; // Used in focusGain
+    private boolean passFocused = false; // Used in focusGain
 
     /**
      * Creates new form EditBlogInternalFrame
@@ -26,7 +31,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);
-        comboboxAlternatives();
+        fillCombobox();
        
     }
 
@@ -44,9 +49,9 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         jLabelEmailAdress = new javax.swing.JLabel();
         jLabelPhoneNumber = new javax.swing.JLabel();
         jLabelAccessType = new javax.swing.JLabel();
-        jTextFieldSureName = new javax.swing.JTextField();
-        jTextFieldEmailAdress = new javax.swing.JTextField();
-        jTextFieldPhoneNumber = new javax.swing.JTextField();
+        jTextFieldLastName = new javax.swing.JTextField();
+        jTextFieldMail = new javax.swing.JTextField();
+        jTextFieldPhone = new javax.swing.JTextField();
         jAccessType = new javax.swing.JComboBox();
         jLabelFirstName = new javax.swing.JLabel();
         jTextFieldFirstName = new javax.swing.JTextField();
@@ -82,7 +87,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         lblAddNewEmployee.setFont(lblAddNewEmployee.getFont().deriveFont(lblAddNewEmployee.getFont().getStyle() | java.awt.Font.BOLD, lblAddNewEmployee.getFont().getSize()+5));
         lblAddNewEmployee.setText("Add new employee");
 
-        jLabelSureName.setText("Surename:");
+        jLabelSureName.setText("Last name:");
 
         jLabelEmailAdress.setText("E-Mail:");
 
@@ -90,16 +95,46 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
 
         jLabelAccessType.setText("Access type:");
 
-        jAccessType.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jAccessType.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jAccessTypeActionPerformed(evt);
+        jTextFieldLastName.setText("Your last name");
+        jTextFieldLastName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldLastNameFocusGained(evt);
             }
         });
 
-        jLabelFirstName.setText("Firsname");
+        jTextFieldMail.setText("email@example.com");
+        jTextFieldMail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldMailFocusGained(evt);
+            }
+        });
 
-        jLabelPassword.setText("Password");
+        jTextFieldPhone.setText("0X-XX XXX XX");
+        jTextFieldPhone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldPhoneFocusGained(evt);
+            }
+        });
+
+        jAccessType.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jLabelFirstName.setText("First name:");
+
+        jTextFieldFirstName.setText("Your first name");
+        jTextFieldFirstName.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextFieldFirstNameFocusGained(evt);
+            }
+        });
+
+        jLabelPassword.setText("Password:");
+
+        jPasswordField1.setText("jPasswordField1");
+        jPasswordField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jPasswordField1FocusGained(evt);
+            }
+        });
 
         jButtonSaveNewEmployee.setText("Save");
         jButtonSaveNewEmployee.addActionListener(new java.awt.event.ActionListener() {
@@ -134,9 +169,9 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
                                     .addGroup(jPanel5Layout.createSequentialGroup()
                                         .addGap(62, 62, 62)
                                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jTextFieldSureName)
-                                            .addComponent(jTextFieldPhoneNumber)
-                                            .addComponent(jTextFieldEmailAdress, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                                            .addComponent(jTextFieldLastName)
+                                            .addComponent(jTextFieldPhone)
+                                            .addComponent(jTextFieldMail, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
                                             .addComponent(jAccessType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jTextFieldFirstName)
                                             .addComponent(jPasswordField1)))
@@ -165,15 +200,15 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelSureName)
-                    .addComponent(jTextFieldSureName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelEmailAdress)
-                    .addComponent(jTextFieldEmailAdress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelPhoneNumber)
-                    .addComponent(jTextFieldPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelAccessType)
@@ -208,23 +243,19 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jAccessTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAccessTypeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jAccessTypeActionPerformed
-
     private void jButtonSaveNewEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveNewEmployeeActionPerformed
         //Metoden skapar nya användare.
-        if(Validation.textfieldWithValue(jTextFieldEmailAdress) && Validation.textfieldWithValue(jTextFieldPhoneNumber) 
-                && Validation.textfaltTal(jTextFieldPhoneNumber) && Validation.textfieldWithValue(jTextFieldFirstName) && Validation.textfieldWithValue(jTextFieldSureName)
+        if(Validation.textfieldWithValue(jTextFieldMail) && Validation.isValidEmailAddress(jTextFieldMail.getText()) && Validation.textfieldWithValue(jTextFieldPhone) 
+                && Validation.textfaltTal(jTextFieldPhone) && Validation.textfieldWithValue(jTextFieldFirstName) && Validation.textfieldWithValue(jTextFieldLastName)
                && Validation.textfieldWithValue(jPasswordField1) )
         {
             try
             {
                 int id = createId();
-                String phonenumber = jTextFieldPhoneNumber.getText();
-                String mail = jTextFieldEmailAdress.getText();
+                String phonenumber = jTextFieldPhone.getText();
+                String mail = jTextFieldMail.getText();
                 String firstname = jTextFieldFirstName.getText();
-                String lastname = jTextFieldSureName.getText();
+                String lastname = jTextFieldLastName.getText();
                 String password = jPasswordField1.getText();
                 String access=jAccessType.getSelectedItem().toString();
                 String sid = getSID(access);
@@ -282,28 +313,6 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         }  
         
     }
-    private void comboboxAlternatives(){
-        int sid = LoggedUser.getBehorighet();
-        switch (sid) {
-          case 1:
-            System.out.println("SID");
-            fillCombobox();
-            break;
-          case 2:
-            System.out.println("SID");
-            fillComboboxEducation();
-
-            break;
-          case 3:
-            System.out.println("SID");
-            fillComboboxResearch();
-            break;
-    
-    
-    }
-    }
-    
-    
     //Metoden fyller comboboxen vad för användare som finns i databasen.
     private void fillCombobox(){
       
@@ -320,30 +329,6 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         
        
     }
-    private void fillComboboxEducation(){
-          try{
-            String fraga = "select BEHORIGHET from SYSTEMTILLGANG where SID = 3 or SID = 4 or SID = 6";
-            ArrayList<String> svar = idb.fetchColumn(fraga);
-            for(String oneBox:svar){
-                jAccessType.addItem(oneBox);
-            }
-        }catch (InfException e){
-            JOptionPane.showMessageDialog(null, "Something went wrong!");
-            System.out.println("Internt felmeddelande"+e.getMessage());  
-        }
-    }
-    private void fillComboboxResearch(){
-          try{
-            String fraga = "select BEHORIGHET from SYSTEMTILLGANG where SID = 2 or SID = 5";
-            ArrayList<String> svar = idb.fetchColumn(fraga);
-            for(String oneBox:svar){
-                jAccessType.addItem(oneBox);
-            }
-        }catch (InfException e){
-            JOptionPane.showMessageDialog(null, "Something went wrong!");
-            System.out.println("Internt felmeddelande"+e.getMessage());  
-        }      
-    }
     //Metoden jämför namnet den användare man ska skapa och hämtar ut SID och skickar tillbaka det.
     private String getSID(String access){
         try{
@@ -358,32 +343,50 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         }
         return "";
     }
-
     private void jTextFieldFirstNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldFirstNameFocusGained
-
+        
+        if (firstNameFocused == false) { // If the field is focused the box is cleared
+            jTextFieldFirstName.setText("");
+            firstNameFocused = true;
+        }
+        
     }//GEN-LAST:event_jTextFieldFirstNameFocusGained
 
     private void jTextFieldLastNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldLastNameFocusGained
-
+        
+        if (lastNameFocused == false) { // If the field is focused the box is cleared
+            jTextFieldLastName.setText("");
+            lastNameFocused = true;
+        }
+        
     }//GEN-LAST:event_jTextFieldLastNameFocusGained
 
     private void jTextFieldMailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldMailFocusGained
-
+        
+        if (mailFocused == false) { // If the field is focused the box is cleared
+            jTextFieldMail.setText("");
+            mailFocused = true;
+        }
+        
     }//GEN-LAST:event_jTextFieldMailFocusGained
 
     private void jTextFieldPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPhoneFocusGained
-
+         
+        if (phoneFocused == false) { // If the field is focused the box is cleared
+            jTextFieldPhone.setText("");
+            phoneFocused = true;
+        }
         
     }//GEN-LAST:event_jTextFieldPhoneFocusGained
 
     private void jPasswordField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordField1FocusGained
-
-       
+         
+        if (passFocused == false) { // If the field is focused the box is cleared
+            jPasswordField1.setText("");
+            passFocused = true;
+        }
+        
     }//GEN-LAST:event_jPasswordField1FocusGained
-
-    private void jTextFieldFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFirstNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldFirstNameActionPerformed
 
     
     
@@ -402,10 +405,10 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextFieldEmailAdress;
     private javax.swing.JTextField jTextFieldFirstName;
-    private javax.swing.JTextField jTextFieldPhoneNumber;
-    private javax.swing.JTextField jTextFieldSureName;
+    private javax.swing.JTextField jTextFieldLastName;
+    private javax.swing.JTextField jTextFieldMail;
+    private javax.swing.JTextField jTextFieldPhone;
     private javax.swing.JLabel lEmployeeAdded;
     private javax.swing.JLabel lblAddNewEmployee;
     private javax.swing.JLabel lblCategory;
