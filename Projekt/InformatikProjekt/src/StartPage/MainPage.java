@@ -349,7 +349,6 @@ public class MainPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addUserActionPerformed
 
-<<<<<<< HEAD
     private void addCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCategoryActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Add category")) {
@@ -361,13 +360,13 @@ public class MainPage extends javax.swing.JFrame {
             moveFocusToTab("Add category");
         }
     }//GEN-LAST:event_addCategoryActionPerformed
-=======
+
     private void logOutMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMnuItmActionPerformed
         //Skapar ett nytt LoginWindow och gör det synligt och stänger ner MainPage 
         new LoginWindow(idb).setVisible(true); 
         this.dispose();
     }//GEN-LAST:event_logOutMnuItmActionPerformed
->>>>>>> c3034200ffb49d659d78318dd690c4506682c811
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
