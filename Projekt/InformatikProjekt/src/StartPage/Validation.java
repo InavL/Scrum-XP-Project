@@ -95,7 +95,7 @@ public class Validation {
     }
 
     //Kollar om textfältet har ett värde
-    public static boolean textareaWithValue(JTextArea ta) {
+    public static boolean textareaWithValueTA(JTextArea ta) {
 
         boolean value = true;
 
@@ -160,10 +160,12 @@ public class Validation {
         return resultat;
     }
     
+    
+    //Kollar om man har valt ett värde i en jList
     public static boolean valtVarde(String text){
         boolean resultat=true;
             if(text==null){
-                JOptionPane.showMessageDialog(null, "You must choose a user");
+                JOptionPane.showMessageDialog(null, "You must select an alternative");
                 resultat=false;
         }
         return resultat;
@@ -184,6 +186,42 @@ public class Validation {
             ettTal = false;    
         }    
         return ettTal;
+    }
+    
+    public static boolean isEmail(JTextField tf){
+        
+        boolean resultat = true;
+        
+        String instring =tf.getText();
+            
+        if(!instring.contains("@") && !instring.contains(".")){
+                JOptionPane.showMessageDialog(null, "The email is incorrect");
+                resultat=false;
+        }
+        return resultat;
+    }
+    
+    public static boolean emailExisting(JTextField tf, InfDB idb)
+    {
+        boolean resultat = true;
+        
+        String instring = tf.getText();
+        
+        try
+        {
+            String test = idb.fetchSingle("select ID from PERSONER where MAIL = '" + instring + "';");
+            
+            if(test == null)
+            {
+                JOptionPane.showMessageDialog(null, "The email is incorrect");
+                resultat = false;
+            }
+        }
+        catch(InfException ex)
+        {
+            JOptionPane.showMessageDialog(null, "Something went wrong.");
+        }
+        return resultat;
     }
 
 }

@@ -226,7 +226,7 @@ private void fillListWithYourPosts(){
     
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         //Uppdaterar inlägget
-        if (Validation.textfieldWithValue(tfHeading) && Validation.textareaWithValue(taText)) {
+        if (Validation.textfieldWithValue(tfHeading) && Validation.textareaWithValueTA(taText)) {
             //Lägger in värdena i de lokala variablerna
             String heading = tfHeading.getText();
             String text = taText.getText();
