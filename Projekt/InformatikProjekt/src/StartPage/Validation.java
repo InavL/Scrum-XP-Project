@@ -64,33 +64,22 @@ public class Validation {
         }
         return value;
     }
-
-//    public static boolean isMail(JTextField mail) {
-//        boolean value = true;
-//        
-//        if (!mail.getText().contains("@")) {
-//            JOptionPane.showMessageDialog(null, "The E-mail adress looks incorrect!");
-//            mail.requestFocus();
-//            return false;
-//        }
-//   
-//        if (!mail.getText().contains("[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) {
-//            JOptionPane.showMessageDialog(null, "The E-mail adress looks incorrect!");
-//            mail.requestFocus();
-//            return false;
-//        }
-//
-//        return value;
-//    }
     
     public static boolean isValidEmailAddress(String email) {
+        
         boolean result = true;
+        
         try {
+            
             InternetAddress emailAddr = new InternetAddress(email);
             emailAddr.validate();
+            
         } catch (AddressException ex) {
+            
             result = false;
+            
         }
+        
         return result;
     }
 
