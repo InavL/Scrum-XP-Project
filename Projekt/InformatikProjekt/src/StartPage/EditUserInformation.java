@@ -7,6 +7,9 @@ package StartPage;
 
 import com.jidesoft.swing.AutoCompletion;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -18,6 +21,9 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
     
     private static InfDB idb;
     private MethodService methodService;
+    private String firstName;
+    private String surName;
+    
 
     /**
      * Creates new form EditBlogInternalFrame
@@ -241,14 +247,35 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
         //Kontorllerar att man har valt ett värde i comboboxen
         if(Validation.elementSelectedInCombobox(cbUsers, "Select user")) {
+
+            //Delar strängen som användaren skickar in i namnfältet i för- och efternamn.
+            String[] user = cbUsers.getSelectedItem().toString().trim().split("\\s+");
+            firstName = user[0];
+            surName = user[1];
             
-
-
-
-
-
-            //Gör panelen synlig
-            pnlMainPanel.setVisible(true);
+            try {
+             String fraga = "SELECT PERSONER.MAIL, PERSONER.TELEFON, PERSONER.LOSENORD, SYSTEMTILLGANG.BEHORIGHET from PERSONER"
+                +" join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID"
+                +" where FNAMN =" + firstName + "and ENAMN=" + surName;
+                HashMap<String,String> resultatLista = idb.fetchRow(fraga);
+                
+                tfFirstname.setText(firstName);
+                tfSurname.setText(surName);
+                tfEmail.setText(resultatLista.get("PERSONER.MAIL"));
+                tfPhone.setText(resultatLista.get("PERSONER.TELEFON"));
+                tfPassword.setText(resultatLista.get("PERSONER.LOSENORD"));
+                   
+            //Lägger in alla behörigheter i comboboxen
+            methodService.fillComboboxAccessTypes(cbAccessType);
+            cbAccessType.setSelectedItem(resultatLista.get("SYSTEMTILLGANG.BEHORIGHET"));
+            
+                    }
+        
+          
+            catch (InfException oneException) {
+                oneException.getMessage();
+                JOptionPane.showMessageDialog(null, "Something went wrong");
+            }
         }
     }//GEN-LAST:event_btnSelectActionPerformed
 

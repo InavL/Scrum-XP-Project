@@ -26,11 +26,9 @@ public class MainPage extends javax.swing.JFrame {
     private ShowUserInformation showUserInformation;
     private EditUserInformation editUserInformation;
     private AddNewEmployee addNewEmployee;
-    private boolean loggedInAsAdmin;
-    
+    private boolean loggedInAsAdmin;  
     private AddNewCategoryAndTopic addNewCategoryAndTopic;
-    
-    
+        
         
     /**
      * Creates new form ColorPage
@@ -47,6 +45,7 @@ public class MainPage extends javax.swing.JFrame {
         //methodService.setDesign(paneMainPageTabs);
         setMenuVisible(true);
         adminFunktions();
+        setStartPage();
         
     }
 
@@ -197,6 +196,19 @@ public class MainPage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setStartPage() {
+        
+        //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
+        if(!tabExists("Blog feed")) {
+            feedBlogInternalFrame = new FeedBlogInternalFrame(idb);
+            openTab(feedBlogInternalFrame, "Blog feed");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
+            moveFocusToTab("Blog feed");
+        }
+    }
+    
     private void openTab(javax.swing.JInternalFrame oneTab, String tabName) {
         // Metoden hjälper till att öppna en flik och kan göra detta utifrån basklassen.       
         paneMainPageTabs.addTab(tabName, oneTab);
