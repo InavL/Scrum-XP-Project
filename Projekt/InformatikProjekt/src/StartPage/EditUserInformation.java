@@ -21,8 +21,9 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
     
     private static InfDB idb;
     private MethodService methodService;
-    private String firstName;
-    private String surName;
+    private String firstname;
+    private String surname;
+    private String ID;
     
 
     /**
@@ -31,6 +32,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
     public EditUserInformation(InfDB idb) {
         initComponents();
         this.idb = idb;
+        ID = null;
         methodService = new MethodService(idb);
         //Gör panelen vit som backgrunden
         pnlMainPanel.setBackground(Color.WHITE);
@@ -137,6 +139,11 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
         cbAccessType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select access type" }));
 
         btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlMainPanelLayout = new javax.swing.GroupLayout(pnlMainPanel);
         pnlMainPanel.setLayout(pnlMainPanelLayout);
@@ -246,38 +253,73 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
 
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
         //Kontorllerar att man har valt ett värde i comboboxen
-        if(Validation.elementSelectedInCombobox(cbUsers, "Select user")) {
+        if (Validation.elementSelectedInCombobox(cbUsers, "Select user")) {
 
             //Delar strängen som användaren skickar in i namnfältet i för- och efternamn.
             String[] user = cbUsers.getSelectedItem().toString().trim().split("\\s+");
-            firstName = user[0];
-            surName = user[1];
-            
+            firstname = user[0];
+            surname = user[1];
+
             try {
-             String fraga = "SELECT PERSONER.MAIL, PERSONER.TELEFON, PERSONER.LOSENORD, SYSTEMTILLGANG.BEHORIGHET from PERSONER"
-                +" join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID"
-                +" where FNAMN =" + firstName + "and ENAMN=" + surName;
-                HashMap<String,String> resultatLista = idb.fetchRow(fraga);
-                
-                tfFirstname.setText(firstName);
-                tfSurname.setText(surName);
-                tfEmail.setText(resultatLista.get("PERSONER.MAIL"));
-                tfPhone.setText(resultatLista.get("PERSONER.TELEFON"));
-                tfPassword.setText(resultatLista.get("PERSONER.LOSENORD"));
-                   
-            //Lägger in alla behörigheter i comboboxen
-            methodService.fillComboboxAccessTypes(cbAccessType);
-            cbAccessType.setSelectedItem(resultatLista.get("SYSTEMTILLGANG.BEHORIGHET"));
-            
-                    }
-        
-          
-            catch (InfException oneException) {
+                HashMap<String, String> resultatLista = idb.fetchRow("SELECT PERSONER.ID, PERSONER.MAIL, PERSONER.TELEFON, PERSONER.LOSENORD, SYSTEMTILLGANG.BEHORIGHET from PERSONER"
+                        + " join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID"
+                        + " where FNAMN ='" + firstname + "' and ENAMN='" + surname + "'");
+                ID = resultatLista.get("ID");
+                tfFirstname.setText(firstname);
+                tfSurname.setText(surname);
+                String email = resultatLista.get("MAIL");
+                tfEmail.setText(email);
+                String phone = resultatLista.get("TELEFON");
+                tfPhone.setText(phone);
+                String password = resultatLista.get("LOSENORD");
+                tfPassword.setText(password);
+
+                //Lägger in alla behörigheter i comboboxen
+                methodService.fillComboboxAccessTypes(cbAccessType);
+                cbAccessType.setSelectedItem(resultatLista.get("BEHORIGHET"));
+
+                //Gör panelen synlig
+                pnlMainPanel.setVisible(true);
+
+            } catch (InfException oneException) {
                 oneException.getMessage();
                 JOptionPane.showMessageDialog(null, "Something went wrong");
             }
         }
     }//GEN-LAST:event_btnSelectActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        if(Validation.textfieldWithValue(tfFirstname) && Validation.textfieldWithValue(tfSurname) && Validation.isEmail(tfEmail) && Validation.textfaltTal(tfPhone) && Validation.textfieldWithValue(tfPassword) && Validation.elementSelectedInCombobox(cbAccessType, "Select Access type")) {
+          
+            //Hämtar det som finns i textfälten och lägger in värdena i lokala variabler
+            firstname = tfFirstname.getText();
+            surname = tfSurname.getText();
+            String email = tfEmail.getText();
+            String phone = tfPhone.getText();
+            String password = tfPassword.getText();
+            String access = cbAccessType.getSelectedItem().toString();
+            
+            try {
+                String accessID = idb.fetchSingle("SELECT sid FROM systemtillgang  WHERE behorighet = \'" + access + "\'");
+                
+                String fraga=" UPDATE PERSONER SET MAIL = '" + email + "', LOSENORD = '" + password + "', SID ='" + accessID + "' WHERE ID =" + ID ;
+                System.out.println(fraga);
+                idb.update(fraga);
+                 
+                //"', TELEFON = '" + phone + "', FNAMN = '" + firstname + "', ENAMN ='" + surname +
+                
+                
+                
+            }
+            catch (InfException oneException) {
+                oneException.getMessage();
+                JOptionPane.showMessageDialog(null, "Something went wrong");
+            }
+            
+            
+            
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
 
     
 
