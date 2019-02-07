@@ -88,7 +88,41 @@ public class MethodService {
         }   
     }
         
-       
-    
-    
+        public void fillComboboxAllUsers(JComboBox<String> enCombobox) {
+        try {
+            //Hämtar en lista på förnamn och efternamn på alla elever i databasen
+            ArrayList<HashMap<String, String>> userList = idb.fetchRows("SELECT fnamn, enamn FROM personer");
+            //Loopar igenom listan och lägger till alla namn till elevlistan
+            for (int i = 0; i < userList.size(); i++) {
+                String firstname = userList.get(i).get("FNAMN");
+                String surname = userList.get(i).get("ENAMN");
+                enCombobox.addItem(firstname + " " + surname);
+            } 
+        }
+        catch (InfException ettUndantag) {
+            ettUndantag.getMessage();
+        }
+        catch (NullPointerException ettAnnatUndantag) {
+            ettAnnatUndantag.getMessage();
+        }   
+    }
+        
+        public void fillComboboxAccessTypes (JComboBox<String> enCombobox) {
+        try {
+            //Hämtar en lista på alla behörigheter i databasen
+            ArrayList<HashMap<String, String>> accessTypes = idb.fetchRows("SELECT behorighet FROM SYSTEMTILLGANG");
+            //Loopar igenom listan och lägger till alla behörigheter i behörighetslistan
+            for (int i = 0; i < accessTypes.size(); i++) {
+                String oneCat = accessTypes.get(i).get("BEHORIGHET");
+                enCombobox.addItem(oneCat);
+            } 
+        }
+        catch (InfException oneException) {
+            oneException.getMessage();
+        }
+        catch (NullPointerException anotherException) {
+            anotherException.getMessage();
+        }   
+    }
+        
 }

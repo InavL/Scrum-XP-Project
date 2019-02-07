@@ -5,6 +5,7 @@
  */
 package StartPage;
 
+import com.jidesoft.swing.AutoCompletion;
 import java.awt.Color;
 import oru.inf.InfDB;
 import oru.inf.InfException;
@@ -29,6 +30,13 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
         pnlMainPanel.setBackground(Color.WHITE);
         //Gör panelen osynlig
         pnlMainPanel.setVisible(false);
+        //Lägger in alla personer i comboboxen
+        methodService.fillComboboxAllUsers(cbUsers);
+        //Lägger in alla behörigheter i comboboxen
+        methodService.fillComboboxAccessTypes(cbAccessType);
+        //Gör comboboxarna sökbara.
+        AutoCompletion searchableUserList = new AutoCompletion(cbUsers);
+        AutoCompletion searchableAccessTypeList = new AutoCompletion(cbAccessType);
         
     }
 
@@ -44,9 +52,9 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        lblUserToEdit = new javax.swing.JLabel();
+        lblSelectToEdit = new javax.swing.JLabel();
         cbUsers = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btnSelect = new javax.swing.JButton();
         pnlMainPanel = new javax.swing.JPanel();
         lblFirstname = new javax.swing.JLabel();
         tfFirstname = new javax.swing.JTextField();
@@ -85,11 +93,17 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
-        lblUserToEdit.setText("Choose user you want to edit");
+        lblSelectToEdit.setText("Select user you want to edit");
 
         cbUsers.setEditable(true);
+        cbUsers.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select user" }));
 
-        jButton1.setText("Choose");
+        btnSelect.setText("Select");
+        btnSelect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelectActionPerformed(evt);
+            }
+        });
 
         lblFirstname.setText("Firstname:");
 
@@ -114,6 +128,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
         lblAccessType.setText("Access type:");
 
         cbAccessType.setEditable(true);
+        cbAccessType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select access type" }));
 
         btnSave.setText("Save");
 
@@ -171,7 +186,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
                 .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbAccessType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblAccessType))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(btnSave)
                 .addGap(40, 40, 40))
         );
@@ -187,11 +202,11 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
                         .addGap(220, 220, 220)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblUserToEdit)
+                                .addComponent(lblSelectToEdit)
                                 .addGap(53, 53, 53)
                                 .addComponent(cbUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1))
+                                .addComponent(btnSelect))
                             .addComponent(pnlMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 20, Short.MAX_VALUE))
         );
@@ -199,14 +214,14 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(80, 80, 80)
+                .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbUsers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(lblUserToEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSelect)
+                    .addComponent(lblSelectToEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addComponent(pnlMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(83, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -223,13 +238,27 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
+        //Kontorllerar att man har valt ett värde i comboboxen
+        if(Validation.elementSelectedInCombobox(cbUsers, "Select user")) {
+            
+
+
+
+
+
+            //Gör panelen synlig
+            pnlMainPanel.setVisible(true);
+        }
+    }//GEN-LAST:event_btnSelectActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSelect;
     private javax.swing.JComboBox<String> cbAccessType;
     private javax.swing.JComboBox<String> cbUsers;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -239,7 +268,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblFirstname;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblPhoneNumber;
-    private javax.swing.JLabel lblUserToEdit;
+    private javax.swing.JLabel lblSelectToEdit;
     private javax.swing.JPanel pnlMainPanel;
     private javax.swing.JTextField tfEmail;
     private javax.swing.JTextField tfFirstname;
