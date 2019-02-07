@@ -26,7 +26,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);
-        fillCombobox();
+        comboboxAlternatives();
        
     }
 
@@ -324,6 +324,28 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         }  
         
     }
+    private void comboboxAlternatives(){
+       int sid = LoggedUser.getBehorighet();
+        switch (sid) {
+          case 1:
+            System.out.println("SID");
+            fillCombobox();
+            break;
+          case 2:
+            System.out.println("SID");
+            fillComboboxEducation();
+
+            break;
+          case 3:
+            System.out.println("SID");
+            fillComboboxResearch();
+            break;
+    
+    
+    }
+    }
+    
+    
     //Metoden fyller comboboxen vad för användare som finns i databasen.
     private void fillCombobox(){
       
@@ -339,6 +361,30 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         }
         
        
+    }
+    private void fillComboboxEducation(){
+          try{
+            String fraga = "select BEHORIGHET from SYSTEMTILLGANG where SID = 3 or SID = 4 or SID = 6";
+            ArrayList<String> svar = idb.fetchColumn(fraga);
+            for(String oneBox:svar){
+                jAccessType.addItem(oneBox);
+            }
+        }catch (InfException e){
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+            System.out.println("Internt felmeddelande"+e.getMessage());  
+        }
+    }
+    private void fillComboboxResearch(){
+          try{
+            String fraga = "select BEHORIGHET from SYSTEMTILLGANG where SID = 2 or SID = 5";
+            ArrayList<String> svar = idb.fetchColumn(fraga);
+            for(String oneBox:svar){
+                jAccessType.addItem(oneBox);
+            }
+        }catch (InfException e){
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+            System.out.println("Internt felmeddelande"+e.getMessage());  
+        }      
     }
     //Metoden jämför namnet den användare man ska skapa och hämtar ut SID och skickar tillbaka det.
     private String getSID(String access){
