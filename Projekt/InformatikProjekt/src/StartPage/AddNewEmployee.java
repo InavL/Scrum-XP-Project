@@ -90,27 +90,6 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
 
         jLabelAccessType.setText("Access type:");
 
-        jTextFieldSureName.setText("Your last name");
-        jTextFieldSureName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldSureNameActionPerformed(evt);
-            }
-        });
-
-        jTextFieldEmailAdress.setText("email@example.com");
-        jTextFieldEmailAdress.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldEmailAdressActionPerformed(evt);
-            }
-        });
-
-        jTextFieldPhoneNumber.setText("0X-XX XXX XX");
-        jTextFieldPhoneNumber.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldPhoneNumberActionPerformed(evt);
-            }
-        });
-
         jAccessType.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jAccessType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,16 +99,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
 
         jLabelFirstName.setText("Firsname");
 
-        jTextFieldFirstName.setText("Your first name");
-        jTextFieldFirstName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldFirstNameActionPerformed(evt);
-            }
-        });
-
         jLabelPassword.setText("Password");
-
-        jPasswordField1.setText("jPasswordField1");
 
         jButtonSaveNewEmployee.setText("Save");
         jButtonSaveNewEmployee.addActionListener(new java.awt.event.ActionListener() {
@@ -238,18 +208,6 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldEmailAdressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEmailAdressActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldEmailAdressActionPerformed
-
-    private void jTextFieldSureNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSureNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldSureNameActionPerformed
-
-    private void jTextFieldPhoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPhoneNumberActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldPhoneNumberActionPerformed
-
     private void jAccessTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jAccessTypeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jAccessTypeActionPerformed
@@ -325,7 +283,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         
     }
     private void comboboxAlternatives(){
-       int sid = LoggedUser.getBehorighet();
+        int sid = LoggedUser.getBehorighet();
         switch (sid) {
           case 1:
             System.out.println("SID");
@@ -400,10 +358,6 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         }
         return "";
     }
-    private void jTextFieldFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFirstNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldFirstNameActionPerformed
-
     
     
 
