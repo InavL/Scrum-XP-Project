@@ -26,6 +26,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);
+        fillCombobox();
        
     }
 
@@ -109,6 +110,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
             }
         });
 
+        jAccessType.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jAccessType.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jAccessTypeActionPerformed(evt);
@@ -248,27 +250,40 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jAccessTypeActionPerformed
 
     private void jButtonSaveNewEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveNewEmployeeActionPerformed
+        String number = jTextFieldPhoneNumber.getText();
+        int phonenumber = Integer.parseInt(number);
+        
         if(Validation.textfieldWithValue(jTextFieldEmailAdress) && Validation.textfieldWithValue(jTextFieldPhoneNumber))
         {
             try
             {
+                int id = createId();
                 String mail = jTextFieldEmailAdress.getText();
-                String phonenumber = jTextFieldPhoneNumber.getText();
                 String firstname = jTextFieldFirstName.getText();
-                String lastname = jLabelSureName.getText();
+                String lastname = jTextFieldSureName.getText();
+                String password = jPasswordField1.getText();
+                String access=jAccessType.getSelectedItem().toString();
+                String sid = getSID(access);
+                
+                System.out.println(mail+phonenumber+firstname+lastname+sid+password);
+              
                 
                 String fraga1 = "select MAIL from PERSONER where MAIL = '" + mail + "';";
-                mail = idb.fetchSingle(fraga1);
+                String checkMail = idb.fetchSingle(fraga1);
                 
                 String fraga2 = "select TELEFON from PERSONER where TELEFON = '" + phonenumber + "';";
-                phonenumber = idb.fetchSingle(fraga2);
+                String checkPhonenumber = idb.fetchSingle(fraga2);
                 
-                if(mail.equals(mail) && phonenumber.equals(phonenumber))
+                if(!mail.equals(checkMail) && phonenumber!=Integer.parseInt(checkPhonenumber))
                 {
-                    idb.insert("insert into PERSONER (ID,FNAMN,ENAMN,MAIL,TELEFON,SID) values ( "+mail+",' "+phonenumber+",' "+firstname+",'"+lastname+",')");
+                    String question ="insert into PERSONER (ID,FNAMN,ENAMN,MAIL,TELEFON,SID,LOSENORD) values"
+                    +"("+id+",'"+firstname+"','"+lastname+"','"+mail+"',"+phonenumber+","+sid+",'"+password+"');";
+                    System.out.println(question);
+                    idb.insert(question);
                     
                     jButtonSaveNewEmployee.setText("The person is now added to the employee list.");
                 }
+                
                 
             }
             catch(InfException ex)
@@ -280,7 +295,55 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
 
     
     }//GEN-LAST:event_jButtonSaveNewEmployeeActionPerformed
-
+    private int createId(){
+        try{
+        String svar="";
+        int id = 0;
+        while(svar!=null){
+            id++;
+            String fraga = "select ID from PERSONER"
+            +" where ID ="+id;
+            svar= idb.fetchSingle(fraga);
+        }
+        return id;
+        
+        }catch (InfException e){
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+            System.out.println("Internt felmeddelande"+e.getMessage());  
+            return 0;
+        }  
+        
+    }
+    
+    private void fillCombobox(){
+      
+        try{
+        String fraga = "select BEHORIGHET from SYSTEMTILLGANG";
+        ArrayList<String> svar = idb.fetchColumn(fraga);
+        for(String oneBox:svar){
+            jAccessType.addItem(oneBox);
+        }
+        }catch (InfException e){
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+            System.out.println("Internt felmeddelande"+e.getMessage());  
+        }
+        
+       
+    }
+    
+    private String getSID(String access){
+        try{
+           String fraga = "SELECT SID from SYSTEMTILLGANG where behorighet ='"+access+"'";
+           System.out.println(fraga);
+           String sid=idb.fetchSingle(fraga);
+           System.out.println(sid);
+           return sid;
+        }catch (InfException e){
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+            System.out.println("Internt felmeddelande"+e.getMessage());  
+        }
+        return "";
+    }
     private void jTextFieldFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFirstNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldFirstNameActionPerformed
