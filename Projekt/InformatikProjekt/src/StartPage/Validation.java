@@ -149,7 +149,7 @@ public class Validation {
             tf.requestFocus();  
         }
         catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(null, "Ange ett heltal!");
+            JOptionPane.showMessageDialog(null, "Use numbers!");
             ettTal = false;    
         }    
         return ettTal;
