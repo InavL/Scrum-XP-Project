@@ -354,6 +354,13 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         }
         return "";
     }
+    
+    private void whatKindOfAdmin(){
+    
+        
+    
+    
+    }
     private void jTextFieldFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFirstNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldFirstNameActionPerformed
