@@ -350,19 +350,13 @@ public class MainPage extends javax.swing.JFrame {
             moveFocusToTab("Add user");
         }
     }//GEN-LAST:event_addUserActionPerformed
-<<<<<<< HEAD
+    //Metoden körs i konstruktorn och kollar om användaren har admin behörighet.
     private void adminFunktions(){
         loggedInAsAdmin = MethodClass.isAdmin();
         if(!loggedInAsAdmin){
-        user.setVisible(false);
-        
+            user.setVisible(false);
         }
-        
-    
     }
-    
-=======
-
     private void addCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCategoryActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Add category")) {
@@ -375,7 +369,6 @@ public class MainPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addCategoryActionPerformed
 
->>>>>>> 8524e82891e7b0186003ecfe6a32cd6c3c564b08
     private void logOutMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMnuItmActionPerformed
         //Skapar ett nytt LoginWindow och gör det synligt och stänger ner MainPage 
         new LoginWindow(idb).setVisible(true); 
