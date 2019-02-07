@@ -5,10 +5,10 @@
  */
 package StartPage;
 
-import java.util.*;
+/*import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.activation.*;
+import javax.activation.*;*/
 
 
 /**
@@ -17,7 +17,7 @@ import javax.activation.*;
  */
 public class SendEmail {
 
-   public static void main(String [] args) {    
+  /* public static void main(String [] args) {    
       // Recipient's email ID needs to be mentioned.
       String to = "abcd@gmail.com";
 
@@ -58,5 +58,5 @@ public class SendEmail {
       } catch (MessagingException mex) {
          mex.printStackTrace();
       }
-   }
+   }*/
 }

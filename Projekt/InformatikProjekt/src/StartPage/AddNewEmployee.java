@@ -54,6 +54,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
         jButtonSaveNewEmployee = new javax.swing.JButton();
         jLabeltextMessage = new javax.swing.JLabel();
+        lEmployeeAdded = new javax.swing.JLabel();
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -174,7 +175,9 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
                                         .addComponent(jLabeltextMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(239, 239, 239)
-                        .addComponent(jButtonSaveNewEmployee)))
+                        .addComponent(jButtonSaveNewEmployee)
+                        .addGap(89, 89, 89)
+                        .addComponent(lEmployeeAdded)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -210,7 +213,9 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
                     .addComponent(jLabelPassword)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
-                .addComponent(jButtonSaveNewEmployee)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonSaveNewEmployee)
+                    .addComponent(lEmployeeAdded))
                 .addGap(46, 46, 46)
                 .addComponent(jLabeltextMessage)
                 .addGap(0, 85, Short.MAX_VALUE))
@@ -250,14 +255,15 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jAccessTypeActionPerformed
 
     private void jButtonSaveNewEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveNewEmployeeActionPerformed
-        String number = jTextFieldPhoneNumber.getText();
-        int phonenumber = Integer.parseInt(number);
-        
-        if(Validation.textfieldWithValue(jTextFieldEmailAdress) && Validation.textfieldWithValue(jTextFieldPhoneNumber))
+        //Metoden skapar nya användare.
+        if(Validation.textfieldWithValue(jTextFieldEmailAdress) && Validation.textfieldWithValue(jTextFieldPhoneNumber) 
+                && Validation.textfaltTal(jTextFieldPhoneNumber) && Validation.textfieldWithValue(jTextFieldFirstName) && Validation.textfieldWithValue(jTextFieldSureName)
+               && Validation.textfieldWithValue(jPasswordField1) )
         {
             try
             {
                 int id = createId();
+                String phonenumber = jTextFieldPhoneNumber.getText();
                 String mail = jTextFieldEmailAdress.getText();
                 String firstname = jTextFieldFirstName.getText();
                 String lastname = jTextFieldSureName.getText();
@@ -265,23 +271,27 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
                 String access=jAccessType.getSelectedItem().toString();
                 String sid = getSID(access);
                 
-                System.out.println(mail+phonenumber+firstname+lastname+sid+password);
-              
-                
                 String fraga1 = "select MAIL from PERSONER where MAIL = '" + mail + "';";
                 String checkMail = idb.fetchSingle(fraga1);
                 
                 String fraga2 = "select TELEFON from PERSONER where TELEFON = '" + phonenumber + "';";
                 String checkPhonenumber = idb.fetchSingle(fraga2);
                 
-                if(!mail.equals(checkMail) && phonenumber!=Integer.parseInt(checkPhonenumber))
+                if(!mail.equals(checkMail) && !phonenumber.equals(checkPhonenumber))
                 {
                     String question ="insert into PERSONER (ID,FNAMN,ENAMN,MAIL,TELEFON,SID,LOSENORD) values"
                     +"("+id+",'"+firstname+"','"+lastname+"','"+mail+"',"+phonenumber+","+sid+",'"+password+"');";
                     System.out.println(question);
                     idb.insert(question);
                     
-                    jButtonSaveNewEmployee.setText("The person is now added to the employee list.");
+                   
+                    lEmployeeAdded.setText("The person is now added to the employee list.");
+                }
+                else if(mail.equals(checkMail)){
+                    JOptionPane.showMessageDialog(null, "E-Mail is allready in use!");
+                }
+                else{
+                    JOptionPane.showMessageDialog(null, "Phonenumber is allready in use!");
                 }
                 
                 
@@ -295,18 +305,18 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
 
     
     }//GEN-LAST:event_jButtonSaveNewEmployeeActionPerformed
+    //Metoden kollar igenom databasen och ser över vilket id i person tabellen som är ledigt.
     private int createId(){
         try{
-        String svar="";
-        int id = 0;
-        while(svar!=null){
-            id++;
-            String fraga = "select ID from PERSONER"
-            +" where ID ="+id;
-            svar= idb.fetchSingle(fraga);
-        }
-        return id;
-        
+            String svar="";
+            int id = 0;
+            while(svar!=null){
+                id++;
+                String fraga = "select ID from PERSONER"
+                +" where ID ="+id;
+                svar= idb.fetchSingle(fraga);
+            }
+            return id;
         }catch (InfException e){
             JOptionPane.showMessageDialog(null, "Something went wrong!");
             System.out.println("Internt felmeddelande"+e.getMessage());  
@@ -314,15 +324,15 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         }  
         
     }
-    
+    //Metoden fyller comboboxen vad för användare som finns i databasen.
     private void fillCombobox(){
       
         try{
-        String fraga = "select BEHORIGHET from SYSTEMTILLGANG";
-        ArrayList<String> svar = idb.fetchColumn(fraga);
-        for(String oneBox:svar){
-            jAccessType.addItem(oneBox);
-        }
+            String fraga = "select BEHORIGHET from SYSTEMTILLGANG";
+            ArrayList<String> svar = idb.fetchColumn(fraga);
+            for(String oneBox:svar){
+                jAccessType.addItem(oneBox);
+            }
         }catch (InfException e){
             JOptionPane.showMessageDialog(null, "Something went wrong!");
             System.out.println("Internt felmeddelande"+e.getMessage());  
@@ -330,7 +340,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         
        
     }
-    
+    //Metoden jämför namnet den användare man ska skapa och hämtar ut SID och skickar tillbaka det.
     private String getSID(String access){
         try{
            String fraga = "SELECT SID from SYSTEMTILLGANG where behorighet ='"+access+"'";
@@ -369,6 +379,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextFieldFirstName;
     private javax.swing.JTextField jTextFieldPhoneNumber;
     private javax.swing.JTextField jTextFieldSureName;
+    private javax.swing.JLabel lEmployeeAdded;
     private javax.swing.JLabel lblAddNewEmployee;
     private javax.swing.JLabel lblCategory;
     // End of variables declaration//GEN-END:variables

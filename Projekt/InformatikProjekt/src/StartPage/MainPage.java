@@ -26,6 +26,7 @@ public class MainPage extends javax.swing.JFrame {
     private ShowUserInformation showUserInformation;
     private EditUserInformation editUserInformation;
     private AddNewEmployee addNewEmployee;
+    private boolean loggedInAsAdmin;
     
     
         
@@ -43,6 +44,7 @@ public class MainPage extends javax.swing.JFrame {
         getContentPane().add(paneMainPageTabs);
         //methodService.setDesign(paneMainPageTabs);
         setMenuVisible(true);
+        adminFunktions();
         
     }
 
@@ -337,7 +339,16 @@ public class MainPage extends javax.swing.JFrame {
             moveFocusToTab("Add user");
         }
     }//GEN-LAST:event_addUserActionPerformed
-
+    private void adminFunktions(){
+        loggedInAsAdmin = MethodClass.isAdmin();
+        if(!loggedInAsAdmin){
+        user.setVisible(false);
+        
+        }
+        
+    
+    }
+    
     private void logOutMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMnuItmActionPerformed
         //Skapar ett nytt LoginWindow och gör det synligt och stänger ner MainPage 
         new LoginWindow(idb).setVisible(true); 
