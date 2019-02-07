@@ -358,61 +358,33 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         }
         return "";
     }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
     private void jTextFieldFirstNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldFirstNameFocusGained
-        
-        if (firstNameFocused == false) { // If the field is focused the box is cleared
-            jTextFieldFirstName.setText("");
-            firstNameFocused = true;
-        }
-        
+
     }//GEN-LAST:event_jTextFieldFirstNameFocusGained
 
     private void jTextFieldLastNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldLastNameFocusGained
-        
-        if (lastNameFocused == false) { // If the field is focused the box is cleared
-            jTextFieldLastName.setText("");
-            lastNameFocused = true;
-        }
-        
+
     }//GEN-LAST:event_jTextFieldLastNameFocusGained
 
     private void jTextFieldMailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldMailFocusGained
-        
-        if (mailFocused == false) { // If the field is focused the box is cleared
-            jTextFieldMail.setText("");
-            mailFocused = true;
-        }
-        
+
     }//GEN-LAST:event_jTextFieldMailFocusGained
 
     private void jTextFieldPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPhoneFocusGained
-         
-        if (phoneFocused == false) { // If the field is focused the box is cleared
-            jTextFieldPhone.setText("");
-            phoneFocused = true;
-        }
+
         
     }//GEN-LAST:event_jTextFieldPhoneFocusGained
 
     private void jPasswordField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordField1FocusGained
-         
-        if (passFocused == false) { // If the field is focused the box is cleared
-            jPasswordField1.setText("");
-            passFocused = true;
-        }
-        
+
+       
     }//GEN-LAST:event_jPasswordField1FocusGained
 
     private void jTextFieldFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFirstNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldFirstNameActionPerformed
 
->>>>>>> 4399c664cb8091be49b80179b939af34fd964820
-=======
->>>>>>> 48ad779c62d1edcf08e00525090bf9108d4ea5f2
     
     
 
