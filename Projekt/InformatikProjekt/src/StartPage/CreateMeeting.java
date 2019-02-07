@@ -52,7 +52,11 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
         txtEMail = new javax.swing.JTextField();
         btnAddEMail = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
+<<<<<<< HEAD
         jTextArea1 = new javax.swing.JTextArea();
+=======
+        txtAreaEMail = new javax.swing.JTextArea();
+>>>>>>> 4399c664cb8091be49b80179b939af34fd964820
         jScrollPane4 = new javax.swing.JScrollPane();
         txtAreaDateTime = new javax.swing.JTextArea();
 
@@ -70,7 +74,11 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+<<<<<<< HEAD
                 .addContainerGap(611, Short.MAX_VALUE))
+=======
+                .addContainerGap(1249, Short.MAX_VALUE))
+>>>>>>> 4399c664cb8091be49b80179b939af34fd964820
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,10 +110,22 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
         jLabel8.setText("E-mail:");
 
         btnAddEMail.setText("Add");
+<<<<<<< HEAD
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane3.setViewportView(jTextArea1);
+=======
+        btnAddEMail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddEMailActionPerformed(evt);
+            }
+        });
+
+        txtAreaEMail.setColumns(20);
+        txtAreaEMail.setRows(5);
+        jScrollPane3.setViewportView(txtAreaEMail);
+>>>>>>> 4399c664cb8091be49b80179b939af34fd964820
 
         txtAreaDateTime.setColumns(20);
         txtAreaDateTime.setRows(5);
@@ -119,6 +139,7 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+<<<<<<< HEAD
                         .addGap(135, 135, 135)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -155,6 +176,54 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
                                         .addComponent(txtDate, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
                                         .addComponent(txtTime)))))))
                 .addContainerGap(171, Short.MAX_VALUE))
+=======
+                        .addGap(143, 143, 143)
+                        .addComponent(jLabel2)
+                        .addGap(158, 158, 158)
+                        .addComponent(jLabel7)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(135, 135, 135)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(282, 282, 282)
+                                .addComponent(btnAddEMail))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(340, 340, 340)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGap(120, 120, 120)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane4)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(109, 109, 109)
+                                        .addComponent(btnaddDateTime)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                                .addComponent(jLabel6)
+                                                .addGap(71, 71, 71)
+                                                .addComponent(txtTime, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGap(135, 135, 135)
+                                .addComponent(jLabel3)
+                                .addGap(72, 72, 72)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(112, 112, 112)
+                        .addComponent(jLabel8)
+                        .addGap(28, 28, 28)
+                        .addComponent(txtEMail, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(521, 521, 521)))
+                .addContainerGap(246, Short.MAX_VALUE))
+>>>>>>> 4399c664cb8091be49b80179b939af34fd964820
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,6 +233,7 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel7))
+<<<<<<< HEAD
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(58, 58, 58)
@@ -175,11 +245,23 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(txtEMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+=======
+                .addGap(58, 58, 58)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtEMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+>>>>>>> 4399c664cb8091be49b80179b939af34fd964820
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(btnAddEMail))
+<<<<<<< HEAD
                 .addGap(25, 25, 25)
+=======
+                .addGap(20, 20, 20)
+>>>>>>> 4399c664cb8091be49b80179b939af34fd964820
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -191,10 +273,18 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
                             .addComponent(jLabel6))
                         .addGap(52, 52, 52)
                         .addComponent(btnaddDateTime))
+<<<<<<< HEAD
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(186, Short.MAX_VALUE))
+=======
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(175, 175, 175)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(195, Short.MAX_VALUE))
+>>>>>>> 4399c664cb8091be49b80179b939af34fd964820
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -220,9 +310,27 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
             String time = txtTime.getText();
                 
             txtAreaDateTime.append(date + " " + time + "\n");
+<<<<<<< HEAD
         }
     }//GEN-LAST:event_btnaddDateTimeActionPerformed
 
+=======
+            
+            txtTime.setText("");
+        }
+    }//GEN-LAST:event_btnaddDateTimeActionPerformed
+
+    private void btnAddEMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEMailActionPerformed
+        if(Validation.textfieldWithValue(txtEMail));
+        {
+            String eMail = txtEMail.getText();
+                
+            txtAreaEMail.append(eMail + "\n");
+            txtEMail.setText("");
+        }
+    }//GEN-LAST:event_btnAddEMailActionPerformed
+
+>>>>>>> 4399c664cb8091be49b80179b939af34fd964820
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddEMail;
@@ -239,9 +347,15 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+<<<<<<< HEAD
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextArea txtAreaDateTime;
+=======
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextArea txtAreaDateTime;
+    private javax.swing.JTextArea txtAreaEMail;
+>>>>>>> 4399c664cb8091be49b80179b939af34fd964820
     private javax.swing.JTextField txtDate;
     private javax.swing.JTextField txtEMail;
     private javax.swing.JTextField txtTime;
