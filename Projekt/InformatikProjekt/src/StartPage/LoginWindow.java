@@ -16,8 +16,6 @@ import oru.inf.InfException;
 public class LoginWindow extends javax.swing.JFrame {
 
     private static InfDB idb; // Used to establish a connection to the database
-    private static int id; // Where the user ID is stored
-    private static int behorighet; // Where the permissionlevel of the logged user is stored
     private boolean mailFocused = false; // Used in focusGain
     private boolean passFocused = false; // Used in focusGain
 
@@ -33,15 +31,7 @@ public class LoginWindow extends javax.swing.JFrame {
         this.setLocationRelativeTo(null); // Opens the window at the centre of the screen
 
     }
-
-//    public static int getID() { // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
-//        return id;
-//    }
-//
-//    public static int getBehorighet() { // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
-//        return behorighet;
-//    }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
