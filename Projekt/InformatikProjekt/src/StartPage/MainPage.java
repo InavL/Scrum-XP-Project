@@ -26,6 +26,7 @@ public class MainPage extends javax.swing.JFrame {
     private ShowUserInformation showUserInformation;
     private EditUserInformation editUserInformation;
     private AddNewEmployee addNewEmployee;
+    private boolean loggedInAsAdmin;
     
     private AddNewCategoryAndTopic addNewCategoryAndTopic;
     
@@ -45,6 +46,7 @@ public class MainPage extends javax.swing.JFrame {
         getContentPane().add(paneMainPageTabs);
         //methodService.setDesign(paneMainPageTabs);
         setMenuVisible(true);
+        adminFunktions();
         
     }
 
@@ -348,7 +350,13 @@ public class MainPage extends javax.swing.JFrame {
             moveFocusToTab("Add user");
         }
     }//GEN-LAST:event_addUserActionPerformed
-
+    //Metoden körs i konstruktorn och kollar om användaren har admin behörighet.
+    private void adminFunktions(){
+        loggedInAsAdmin = MethodClass.isAdmin();
+        if(!loggedInAsAdmin){
+            user.setVisible(false);
+        }
+    }
     private void addCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCategoryActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Add category")) {
