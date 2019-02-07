@@ -169,5 +169,28 @@ public class Validation {
         }
         return resultat;
     }
+    
+    public static boolean emailExisting(JTextField tf, InfDB idb)
+    {
+        boolean resultat = true;
+        
+        String instring = tf.getText();
+        
+        try
+        {
+            String test = idb.fetchSingle("select ID from PERSONER where MAIL = '" + instring + "';");
+            
+            if(test == null)
+            {
+                JOptionPane.showMessageDialog(null, "The email is incorrect");
+                resultat = false;
+            }
+        }
+        catch(InfException ex)
+        {
+            JOptionPane.showMessageDialog(null, "Something went wrong.");
+        }
+        return resultat;
+    }
 
 }

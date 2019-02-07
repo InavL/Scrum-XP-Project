@@ -237,7 +237,7 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnaddDateTimeActionPerformed
 
     private void btnAddEMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEMailActionPerformed
-        if(Validation.textfieldWithValue(txtEMail));
+        if(Validation.textfieldWithValue(txtEMail) && Validation.emailExisting(txtEMail, idb))
         {
             String eMail = txtEMail.getText();
                 
