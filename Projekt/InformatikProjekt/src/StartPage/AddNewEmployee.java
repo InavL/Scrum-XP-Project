@@ -131,11 +131,6 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
                 jTextFieldFirstNameFocusGained(evt);
             }
         });
-        jTextFieldFirstName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldFirstNameActionPerformed(evt);
-            }
-        });
 
         jLabelPassword.setText("Password:");
 
@@ -259,7 +254,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
 
     private void jButtonSaveNewEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveNewEmployeeActionPerformed
         //Metoden skapar nya användare.
-        if(Validation.textfieldWithValue(jTextFieldMail) && Validation.textfieldWithValue(jTextFieldPhone) 
+        if(Validation.textfieldWithValue(jTextFieldMail) && Validation.isValidEmailAddress(jTextFieldMail.getText()) && Validation.textfieldWithValue(jTextFieldPhone) 
                 && Validation.textfaltTal(jTextFieldPhone) && Validation.textfieldWithValue(jTextFieldFirstName) && Validation.textfieldWithValue(jTextFieldLastName)
                && Validation.textfieldWithValue(jPasswordField1) )
         {
@@ -401,10 +396,6 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_jPasswordField1FocusGained
-
-    private void jTextFieldFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldFirstNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldFirstNameActionPerformed
 
     
     

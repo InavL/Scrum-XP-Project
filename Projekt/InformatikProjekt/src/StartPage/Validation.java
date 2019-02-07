@@ -1,5 +1,7 @@
 package StartPage;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -56,11 +58,40 @@ public class Validation {
         boolean value = true;
 
         if (tf.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Textfältet är tomt!");
+            JOptionPane.showMessageDialog(null, "The text field is empty!");
             tf.requestFocus();
             return false;
         }
         return value;
+    }
+
+//    public static boolean isMail(JTextField mail) {
+//        boolean value = true;
+//        
+//        if (!mail.getText().contains("@")) {
+//            JOptionPane.showMessageDialog(null, "The E-mail adress looks incorrect!");
+//            mail.requestFocus();
+//            return false;
+//        }
+//   
+//        if (!mail.getText().contains("[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) {
+//            JOptionPane.showMessageDialog(null, "The E-mail adress looks incorrect!");
+//            mail.requestFocus();
+//            return false;
+//        }
+//
+//        return value;
+//    }
+    
+    public static boolean isValidEmailAddress(String email) {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
     }
 
     //Kollar om textfältet har ett värde
@@ -69,7 +100,7 @@ public class Validation {
         boolean value = true;
 
         if (ta.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Textfältet är tomt!");
+            JOptionPane.showMessageDialog(null, "The text field is empty!");
             ta.requestFocus();
             return false;
         }
@@ -81,7 +112,7 @@ public class Validation {
         boolean resultat = true;
 
         if (rutaAttValidera.getPassword().length == 0) {
-            JOptionPane.showMessageDialog(null, "Lösenordsrutan är tom!");
+            JOptionPane.showMessageDialog(null, "You have to type in a password!");
             resultat = false;
         }
 
