@@ -25,12 +25,7 @@ public class CreateBlog extends javax.swing.JFrame {
         
         initComponents();
         this.idb = idb;
-<<<<<<< HEAD
         kategori1();
-=======
-
-        kategori3();
->>>>>>> 1070d535e668d58e4748df95e32c642885375a0e
         
     }
 
