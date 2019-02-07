@@ -67,9 +67,9 @@
                                       <Group type="102" attributes="0">
                                           <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="jTextFieldLastName" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jTextFieldPhone" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jTextFieldMail" alignment="0" pref="159" max="32767" attributes="0"/>
+                                              <Component id="jTextFieldSureName" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="jTextFieldPhoneNumber" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="jTextFieldEmailAdress" alignment="0" pref="159" max="32767" attributes="0"/>
                                               <Component id="jAccessType" alignment="0" max="32767" attributes="0"/>
                                               <Component id="jTextFieldFirstName" alignment="0" max="32767" attributes="0"/>
                                               <Component id="jPasswordField1" alignment="0" max="32767" attributes="0"/>
@@ -110,17 +110,17 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabelSureName" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldLastName" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextFieldSureName" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabelEmailAdress" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldMail" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextFieldEmailAdress" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabelPhoneNumber" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldPhone" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextFieldPhoneNumber" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -196,7 +196,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelSureName">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Last name:"/>
+            <Property name="text" type="java.lang.String" value="Surename:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelEmailAdress">
@@ -214,37 +214,11 @@
             <Property name="text" type="java.lang.String" value="Access type:"/>
           </Properties>
         </Component>
-<<<<<<< HEAD
         <Component class="javax.swing.JTextField" name="jTextFieldSureName">
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldEmailAdress">
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPhoneNumber">
-=======
-        <Component class="javax.swing.JTextField" name="jTextFieldLastName">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Your last name"/>
-          </Properties>
-          <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldLastNameFocusGained"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldMail">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="email@example.com"/>
-          </Properties>
-          <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldMailFocusGained"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldPhone">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="0X-XX XXX XX"/>
-          </Properties>
-          <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldPhoneFocusGained"/>
-          </Events>
->>>>>>> 4399c664cb8091be49b80179b939af34fd964820
         </Component>
         <Component class="javax.swing.JComboBox" name="jAccessType">
           <Properties>
@@ -252,7 +226,7 @@
               <StringArray count="0"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Default Cursor"/>
+              <Color id="Standardmark&#xf6;r"/>
             </Property>
           </Properties>
           <Events>
@@ -261,36 +235,17 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelFirstName">
           <Properties>
-            <Property name="text" type="java.lang.String" value="First name:"/>
+            <Property name="text" type="java.lang.String" value="Firsname"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldFirstName">
-<<<<<<< HEAD
-=======
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Your first name"/>
-          </Properties>
-          <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextFieldFirstNameFocusGained"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldFirstNameActionPerformed"/>
-          </Events>
->>>>>>> 4399c664cb8091be49b80179b939af34fd964820
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelPassword">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Password:"/>
+            <Property name="text" type="java.lang.String" value="Password"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JPasswordField" name="jPasswordField1">
-<<<<<<< HEAD
-=======
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jPasswordField1"/>
-          </Properties>
-          <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jPasswordField1FocusGained"/>
-          </Events>
->>>>>>> 4399c664cb8091be49b80179b939af34fd964820
         </Component>
         <Component class="javax.swing.JButton" name="jButtonSaveNewEmployee">
           <Properties>
