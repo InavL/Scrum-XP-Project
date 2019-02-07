@@ -127,7 +127,7 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
                         rL+=rad.get("FNAMN");
                         rL+= "\n" + "Surname: ";
                         rL+=rad.get("ENAMN");
-                        rL+= "\n" + "Competece: ";
+                        rL+= "\n" + "Access type: ";
                         rL+=rad.get("BEHORIGHET");
                         rL+= "\n" + "Phone number: ";
                         rL+=rad.get("TELEFON");
