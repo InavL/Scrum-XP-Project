@@ -28,6 +28,9 @@ public class MainPage extends javax.swing.JFrame {
     private AddNewEmployee addNewEmployee;
     private boolean loggedInAsAdmin;  
     private AddNewCategoryAndTopic addNewCategoryAndTopic;
+    private AddNewTopic addNewTopic;
+    
+    private CreateMeeting createMeeting;
         
         
     /**
@@ -86,6 +89,9 @@ public class MainPage extends javax.swing.JFrame {
         addUser = new javax.swing.JMenuItem();
         editUser = new javax.swing.JMenuItem();
         removeUser = new javax.swing.JMenuItem();
+        createMetting = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -226,6 +232,21 @@ public class MainPage extends javax.swing.JFrame {
         user.add(removeUser);
 
         superMenyBar.add(user);
+
+        createMetting.setText("Calender");
+
+        jMenuItem3.setText("View calender");
+        createMetting.add(jMenuItem3);
+
+        jMenuItem4.setText("Create meeting");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        createMetting.add(jMenuItem4);
+
+        superMenyBar.add(createMetting);
 
         setJMenuBar(superMenyBar);
 
@@ -423,6 +444,30 @@ public class MainPage extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_logOutMnuItmActionPerformed
 
+    private void addTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTopicActionPerformed
+        //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
+        if(!tabExists("Add topic")) {
+            addNewTopic = new AddNewTopic(idb);
+            openTab(addNewTopic, "Add topiccategory");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
+            moveFocusToTab("Add category");
+        }
+    }//GEN-LAST:event_addTopicActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
+        if(!tabExists("Create meeting")) {
+            createMeeting = new CreateMeeting(idb);
+            openTab(createMeeting, "Create meeting");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
+            moveFocusToTab("Create meeting");
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -433,6 +478,7 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JMenuItem blogFeedMnuItm;
     private javax.swing.JMenuItem closeWindowsMnuItm;
     private javax.swing.JMenuItem createBlogMnuItm;
+    private javax.swing.JMenu createMetting;
     private javax.swing.JMenuItem editBlogMnuItm;
     private javax.swing.JMenuItem editUser;
     private javax.swing.JMenuItem exitMnuItm;
@@ -447,6 +493,8 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem logOutMnuItm;
     private javax.swing.JMenu mainMenu;
     private javax.swing.JMenuItem removeBlogMnuItm;
