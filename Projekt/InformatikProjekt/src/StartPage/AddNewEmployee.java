@@ -13,9 +13,8 @@ import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
-
 public class AddNewEmployee extends javax.swing.JInternalFrame {
-    
+
     private static InfDB idb;
     private MethodService methodService;
     private boolean firstNameFocused = false; // Used in focusGain
@@ -31,11 +30,11 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);
-        fillCombobox();
-       
+        //fillCombobox();
+        comboboxAlternatives();
+
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -245,151 +244,188 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
 
     private void jButtonSaveNewEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveNewEmployeeActionPerformed
         //Metoden skapar nya användare.
-        if(Validation.textfieldWithValue(jTextFieldMail) && Validation.isValidEmailAddress(jTextFieldMail.getText()) && Validation.textfieldWithValue(jTextFieldPhone) 
+        if (Validation.textfieldWithValue(jTextFieldMail) && Validation.isValidEmailAddress(jTextFieldMail.getText()) && Validation.textfieldWithValue(jTextFieldPhone)
                 && Validation.textfaltTal(jTextFieldPhone) && Validation.textfieldWithValue(jTextFieldFirstName) && Validation.textfieldWithValue(jTextFieldLastName)
-               && Validation.textfieldWithValue(jPasswordField1) )
-        {
-            try
-            {
+                && Validation.textfieldWithValue(jPasswordField1)) {
+            try {
                 int id = createId();
                 String phonenumber = jTextFieldPhone.getText();
                 String mail = jTextFieldMail.getText();
                 String firstname = jTextFieldFirstName.getText();
                 String lastname = jTextFieldLastName.getText();
                 String password = jPasswordField1.getText();
-                String access=jAccessType.getSelectedItem().toString();
+                String access = jAccessType.getSelectedItem().toString();
                 String sid = getSID(access);
-                
+
                 String fraga1 = "select MAIL from PERSONER where MAIL = '" + mail + "';";
                 String checkMail = idb.fetchSingle(fraga1);
-                
+
                 String fraga2 = "select TELEFON from PERSONER where TELEFON = '" + phonenumber + "';";
                 String checkPhonenumber = idb.fetchSingle(fraga2);
-                
-                if(!mail.equals(checkMail) && !phonenumber.equals(checkPhonenumber))
-                {
-                    String question ="insert into PERSONER (ID,FNAMN,ENAMN,MAIL,TELEFON,SID,LOSENORD) values"
-                    +"("+id+",'"+firstname+"','"+lastname+"','"+mail+"',"+phonenumber+","+sid+",'"+password+"');";
+
+                if (!mail.equals(checkMail) && !phonenumber.equals(checkPhonenumber)) {
+                    String question = "insert into PERSONER (ID,FNAMN,ENAMN,MAIL,TELEFON,SID,LOSENORD) values"
+                            + "(" + id + ",'" + firstname + "','" + lastname + "','" + mail + "'," + phonenumber + "," + sid + ",'" + password + "');";
                     System.out.println(question);
                     idb.insert(question);
-                    
-                   
+
                     lEmployeeAdded.setText("The person is now added to the employee list.");
-                }
-                else if(mail.equals(checkMail)){
+                } else if (mail.equals(checkMail)) {
                     JOptionPane.showMessageDialog(null, "E-Mail is allready in use!");
-                }
-                else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Phonenumber is allready in use!");
                 }
-                
-                
-            }
-            catch(InfException ex)
-            {
-                 JOptionPane.showMessageDialog(null, "Something went wrong.");
+
+            } catch (InfException ex) {
+                JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
         }
-                                             
-
-    
-    }//GEN-LAST:event_jButtonSaveNewEmployeeActionPerformed
-    //Metoden kollar igenom databasen och ser över vilket id i person tabellen som är ledigt.
-    private int createId(){
-        try{
-            String svar="";
-            int id = 0;
-            while(svar!=null){
-                id++;
-                String fraga = "select ID from PERSONER"
-                +" where ID ="+id;
-                svar= idb.fetchSingle(fraga);
-            }
-            return id;
-        }catch (InfException e){
-            JOptionPane.showMessageDialog(null, "Something went wrong!");
-            System.out.println("Internt felmeddelande"+e.getMessage());  
-            return 0;
-        }  
-        
     }
-    //Metoden fyller comboboxen vad för användare som finns i databasen.
-    private void fillCombobox(){
-      
-        try{
-            String fraga = "select BEHORIGHET from SYSTEMTILLGANG";
+
+    private void comboboxAlternatives() {
+
+        int sid = LoggedUser.getBehorighet();
+
+        switch (sid) {
+            case 1:
+                System.out.println("SID");
+                fillCombobox();
+                break;
+            case 2:
+                System.out.println("SID");
+                fillComboboxEducation();
+
+                break;
+            case 3:
+                System.out.println("SID");
+                fillComboboxResearch();
+                break;
+
+        }
+    }
+
+    private void fillComboboxEducation() {
+        try {
+            String fraga = "select BEHORIGHET from SYSTEMTILLGANG where SID = 3 or SID = 4 or SID = 6";
             ArrayList<String> svar = idb.fetchColumn(fraga);
-            for(String oneBox:svar){
+            for (String oneBox : svar) {
                 jAccessType.addItem(oneBox);
             }
-        }catch (InfException e){
+        } catch (InfException e) {
             JOptionPane.showMessageDialog(null, "Something went wrong!");
-            System.out.println("Internt felmeddelande"+e.getMessage());  
+            System.out.println("Internt felmeddelande" + e.getMessage());
         }
-        
-       
     }
-    //Metoden jämför namnet den användare man ska skapa och hämtar ut SID och skickar tillbaka det.
-    private String getSID(String access){
-        try{
-           String fraga = "SELECT SID from SYSTEMTILLGANG where behorighet ='"+access+"'";
-           System.out.println(fraga);
-           String sid=idb.fetchSingle(fraga);
-           System.out.println(sid);
-           return sid;
-        }catch (InfException e){
+
+    private void fillComboboxResearch() {
+        try {
+            String fraga = "select BEHORIGHET from SYSTEMTILLGANG where SID = 2 or SID = 5";
+            ArrayList<String> svar = idb.fetchColumn(fraga);
+            for (String oneBox : svar) {
+                jAccessType.addItem(oneBox);
+            }
+        } catch (InfException e) {
             JOptionPane.showMessageDialog(null, "Something went wrong!");
-            System.out.println("Internt felmeddelande"+e.getMessage());  
+            System.out.println("Internt felmeddelande" + e.getMessage());
+        }
+
+    }//GEN-LAST:event_jButtonSaveNewEmployeeActionPerformed
+
+//Metoden kollar igenom databasen och ser över vilket id i person tabellen som är ledigt.
+    private int createId() {
+        try {
+            String svar = "";
+            int id = 0;
+            while (svar != null) {
+                id++;
+                String fraga = "select ID from PERSONER"
+                        + " where ID =" + id;
+                svar = idb.fetchSingle(fraga);
+            }
+            return id;
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+            System.out.println("Internt felmeddelande" + e.getMessage());
+            return 0;
+        }
+
+    }
+
+    //Metoden fyller comboboxen vad för användare som finns i databasen.
+    private void fillCombobox() {
+
+        try {
+            String fraga = "select BEHORIGHET from SYSTEMTILLGANG";
+            ArrayList<String> svar = idb.fetchColumn(fraga);
+            for (String oneBox : svar) {
+                jAccessType.addItem(oneBox);
+            }
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+            System.out.println("Internt felmeddelande" + e.getMessage());
+        }
+
+    }
+
+    //Metoden jämför namnet den användare man ska skapa och hämtar ut SID och skickar tillbaka det.
+    private String getSID(String access) {
+        try {
+            String fraga = "SELECT SID from SYSTEMTILLGANG where behorighet ='" + access + "'";
+            System.out.println(fraga);
+            String sid = idb.fetchSingle(fraga);
+            System.out.println(sid);
+            return sid;
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+            System.out.println("Internt felmeddelande" + e.getMessage());
         }
         return "";
     }
     private void jTextFieldFirstNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldFirstNameFocusGained
-        
+
         if (firstNameFocused == false) { // If the field is focused the box is cleared
             jTextFieldFirstName.setText("");
             firstNameFocused = true;
         }
-        
+
     }//GEN-LAST:event_jTextFieldFirstNameFocusGained
 
     private void jTextFieldLastNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldLastNameFocusGained
-        
+
         if (lastNameFocused == false) { // If the field is focused the box is cleared
             jTextFieldLastName.setText("");
             lastNameFocused = true;
         }
-        
+
     }//GEN-LAST:event_jTextFieldLastNameFocusGained
 
     private void jTextFieldMailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldMailFocusGained
-        
+
         if (mailFocused == false) { // If the field is focused the box is cleared
             jTextFieldMail.setText("");
             mailFocused = true;
         }
-        
+
     }//GEN-LAST:event_jTextFieldMailFocusGained
 
     private void jTextFieldPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPhoneFocusGained
-         
+
         if (phoneFocused == false) { // If the field is focused the box is cleared
             jTextFieldPhone.setText("");
             phoneFocused = true;
         }
-        
+
     }//GEN-LAST:event_jTextFieldPhoneFocusGained
 
     private void jPasswordField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordField1FocusGained
-         
+
         if (passFocused == false) { // If the field is focused the box is cleared
             jPasswordField1.setText("");
             passFocused = true;
         }
-        
+
     }//GEN-LAST:event_jPasswordField1FocusGained
 
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jAccessType;
