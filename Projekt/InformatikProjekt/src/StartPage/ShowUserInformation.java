@@ -8,7 +8,6 @@ package StartPage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 import oru.inf.InfException;
@@ -21,7 +20,7 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
     
     private static InfDB idb;
     private MethodService methodService;
-    private DefaultListModel allUsers;
+ 
     //private JList listAllUsers;
     
     /**
@@ -81,7 +80,7 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
 
         jScrollPane1.setViewportView(listAllUsers);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 300, 560));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 300, 430));
 
         btnShowInformation.setText("Show information");
         btnShowInformation.addActionListener(new java.awt.event.ActionListener() {
@@ -95,7 +94,7 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
         taInformation.setRows(5);
         jScrollPane2.setViewportView(taInformation);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 160, 310, 220));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 160, 310, 120));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -111,32 +110,70 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnShowInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowInformationActionPerformed
+        
+        if(Validation.valtVarde(listAllUsers.getSelectedValue())){
+            try{
+                String personInfo = listAllUsers.getSelectedValue();
+                String id = personInfo.substring(0,2);
+                String fraga = "SELECT PERSONER.MAIL, PERSONER.TELEFON, PERSONER.FNAMN, PERSONER.ENAMN, PERSONER.LOSENORD, SYSTEMTILLGANG.BEHORIGHET from PERSONER"
+                +" join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID"
+                +" where ID ="+id;
+                ArrayList<HashMap<String,String>> resultatLista = idb.fetchRows(fraga);
+                
+                    String rL = "";
+                    for(HashMap rad: resultatLista){
+                        rL+= "Firstname: ";
+                        rL+=rad.get("FNAMN");
+                        rL+= "\n" + "Surname: ";
+                        rL+=rad.get("ENAMN");
+                        rL+= "\n" + "Competece: ";
+                        rL+=rad.get("BEHORIGHET");
+                        rL+= "\n" + "Phone number: ";
+                        rL+=rad.get("TELEFON");
+                        rL+= "\n" + "E-mail: ";
+                        rL+=rad.get("MAIL");
+                        rL+= "\n" +"Password: ";
+                        rL+=rad.get("LOSENORD");
+                        
+                    }
+                        
+                    taInformation.setText(rL);
+                
+            }
+            catch (InfException e){
+                JOptionPane.showMessageDialog(null, "Något gick fel!");
+                System.out.println("Internt felmeddelande"+e.getMessage());  
+            }
+      }   
+    
+    }//GEN-LAST:event_btnShowInformationActionPerformed
+
     private void fillListWithUsers() {
         
         try {
+            DefaultListModel allUsers = new DefaultListModel();
 
-            ArrayList<HashMap<String, String>> nameList = idb.fetchRows("SELECT fnamn, enamn FROM personer;");
+            ArrayList<HashMap<String, String>> nameList = idb.fetchRows("SELECT id, fnamn, enamn FROM personer;");
 
             //Loopar genom listan för att hämta ut alla för- och efternamn
             for (int i = 0; i < nameList.size(); i++) {
+                String id = nameList.get(i).get("ID");
                 String firstName = nameList.get(i).get("FNAMN");
                 String surName = nameList.get(i).get("ENAMN");
-                String user = (firstName + " " + surName + "\n");
+                String user = (id + " " + firstName + " " + surName + "\n");
                 allUsers.addElement(user); 
             }
+            
+            listAllUsers.setModel(allUsers);
+            listAllUsers.getSelectedValue();
+            
+            
         } catch (InfException oneException) {
             oneException.getMessage();
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
-    
-    private void btnShowInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowInformationActionPerformed
-        
-       // String kursNamn = allUsers.
-            
-            
-    }//GEN-LAST:event_btnShowInformationActionPerformed
-
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

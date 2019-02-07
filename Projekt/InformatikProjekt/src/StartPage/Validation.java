@@ -128,5 +128,31 @@ public class Validation {
         }
         return resultat;
     }
+    
+    public static boolean valtVarde(String text){
+        boolean resultat=true;
+            if(text==null){
+                JOptionPane.showMessageDialog(null, "You must choose a user");
+                resultat=false;
+        }
+        return resultat;
+    }
+    
+    //Kollar om textfältet är ett heltal.
+    public static boolean textfaltTal(JTextField tf) {
+   
+        boolean ettTal = true; 
+        
+        try{
+            String instring = tf.getText();
+            Integer.parseInt(instring);   
+            tf.requestFocus();  
+        }
+        catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Ange ett heltal!");
+            ettTal = false;    
+        }    
+        return ettTal;
+    }
 
 }

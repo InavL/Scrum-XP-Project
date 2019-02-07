@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import oru.inf.InfDB;
 import oru.inf.InfException;
@@ -86,6 +87,8 @@ public class MethodService {
             anotherException.getMessage();
         }   
     }
+        
+       
     
     
 }
