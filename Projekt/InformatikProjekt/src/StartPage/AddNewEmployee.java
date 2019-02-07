@@ -411,7 +411,8 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         }
         return "";
     }
-
+<<<<<<< HEAD
+=======
     private void jTextFieldFirstNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldFirstNameFocusGained
         
         if (firstNameFocused == false) { // If the field is focused the box is cleared
@@ -461,7 +462,9 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldFirstNameActionPerformed
 
-       
+>>>>>>> 4399c664cb8091be49b80179b939af34fd964820
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jAccessType;
