@@ -268,7 +268,7 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
 
     private void btnPublishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPublishActionPerformed
         //Kontrollerar att användaren har skrivit någoi i textfälten
-        if (Validation.textfieldWithValue(tfHeading) && Validation.textareaWithValue(taText) && Validation.elementSelectedInCombobox(cbBranch, "Branch is not choosen, please select an option.")) {
+        if (Validation.textfieldWithValue(tfHeading) && Validation.textareaWithValueTA(taText) && Validation.elementSelectedInCombobox(cbBranch, "Branch is not choosen, please select an option.")) {
             String titel = tfHeading.getText();
             String bloggpost = taText.getText();
             int personID = LoggedUser.getID();
