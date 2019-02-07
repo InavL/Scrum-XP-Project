@@ -82,6 +82,11 @@ public class MainPage extends javax.swing.JFrame {
         mainMenu.setText("Main menu");
 
         logOutMnuItm.setText("Log out");
+        logOutMnuItm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logOutMnuItmActionPerformed(evt);
+            }
+        });
         mainMenu.add(logOutMnuItm);
 
         closeWindowsMnuItm.setText("Close all windows");
@@ -332,6 +337,12 @@ public class MainPage extends javax.swing.JFrame {
             moveFocusToTab("Add user");
         }
     }//GEN-LAST:event_addUserActionPerformed
+
+    private void logOutMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMnuItmActionPerformed
+        //Skapar ett nytt LoginWindow och gör det synligt och stänger ner MainPage 
+        new LoginWindow(idb).setVisible(true); 
+        this.dispose();
+    }//GEN-LAST:event_logOutMnuItmActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
