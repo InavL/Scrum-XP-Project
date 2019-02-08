@@ -30,7 +30,9 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         methodService = new MethodService(idb);
         
         fillListWithSienceBlog();
-        
+        fillListWithEducationBlog();
+        fillListWithInformalBlog();
+
     }
 
     /**
@@ -129,6 +131,11 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
+        JlGetBlogEducation.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                JlGetBlogEducationValueChanged(evt);
+            }
+        });
         jScrollPane3.setViewportView(JlGetBlogEducation);
 
         javax.swing.GroupLayout pnlEducationLayout = new javax.swing.GroupLayout(pnlEducation);
@@ -148,6 +155,11 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        JlGetBlogInformal.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                JlGetBlogInformalValueChanged(evt);
+            }
         });
         jScrollPane4.setViewportView(JlGetBlogInformal);
 
@@ -212,6 +224,56 @@ if(Validation.valtVarde(jListAllScienceBlog.getSelectedValue())){
       }   
     }//GEN-LAST:event_jListAllScienceBlogValueChanged
 
+    private void JlGetBlogEducationValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_JlGetBlogEducationValueChanged
+     if(Validation.valtVarde(JlGetBlogEducation.getSelectedValue())){
+            try{
+                String sienceBlogInfo = JlGetBlogEducation.getSelectedValue();
+                String id = sienceBlogInfo.substring(0,2);
+                String fraga = "SELECT BLOGGPOST FROM BLOGG"
+                +" where BLOGGID ="+id;
+                ArrayList<HashMap<String,String>> resultatLista = idb.fetchRows(fraga);
+                
+                    String rL = "";
+                    for(HashMap rad: resultatLista){
+                        rL+=rad.get("BLOGGPOST");
+                        rL+= "\n";     
+                    }
+                        
+                    taBlogFeed.setText(rL);
+                
+            }
+            catch (InfException e){
+                JOptionPane.showMessageDialog(null, "Något gick fel!");
+                System.out.println("Internt felmeddelande"+e.getMessage());  
+            }
+      }   
+    }//GEN-LAST:event_JlGetBlogEducationValueChanged
+
+    private void JlGetBlogInformalValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_JlGetBlogInformalValueChanged
+     if(Validation.valtVarde(JlGetBlogInformal.getSelectedValue())){
+            try{
+                String sienceBlogInfo = JlGetBlogInformal.getSelectedValue();
+                String id = sienceBlogInfo.substring(0,2);
+                String fraga = "SELECT BLOGGPOST FROM BLOGG"
+                +" where BLOGGID ="+id;
+                ArrayList<HashMap<String,String>> resultatLista = idb.fetchRows(fraga);
+                
+                    String rL = "";
+                    for(HashMap rad: resultatLista){
+                        rL+=rad.get("BLOGGPOST");
+                        rL+= "\n";     
+                    }
+                        
+                    taBlogFeed.setText(rL);
+                
+            }
+            catch (InfException e){
+                JOptionPane.showMessageDialog(null, "Något gick fel!");
+                System.out.println("Internt felmeddelande"+e.getMessage());  
+            }
+      }   
+    }//GEN-LAST:event_JlGetBlogInformalValueChanged
+
 
     private void fillListWithSienceBlog() {
         
@@ -243,6 +305,66 @@ if(Validation.valtVarde(jListAllScienceBlog.getSelectedValue())){
         }
     }
     
+    
+    private void fillListWithEducationBlog() {
+        
+        try {
+            DefaultListModel allSienceBlog = new DefaultListModel();
+
+            ArrayList<HashMap<String, String>> SienceBlogList = idb.fetchRows("SELECT BLOGGID, TITEL, DATUM FROM BLOGG"
+            + " join KAT3 on BLOGG.KAT3_ID = KAT3.KAT3_ID"
+            + " join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID"
+            + " join KAT1 on KAT2.KAT1_ID = KAT1.KAT1_ID"
+            + " where KAT1.KAT1_ID ='2'");
+
+            //Loopar genom listan för att hämta ut alla för- och efternamn
+            for (int i = 0; i < SienceBlogList.size(); i++) {
+                String id = SienceBlogList.get(i).get("BLOGGID");
+                String titel = SienceBlogList.get(i).get("TITEL");
+                String datum = SienceBlogList.get(i).get("DATUM");
+                String sienceBlog = (id + " " + titel + " " + datum + "\n");
+                allSienceBlog.addElement(sienceBlog); 
+            }
+            
+            JlGetBlogEducation.setModel(allSienceBlog);
+            JlGetBlogEducation.getSelectedValue();
+            
+            
+        } catch (InfException oneException) {
+            oneException.getMessage();
+            JOptionPane.showMessageDialog(null, "Something went wrong.");
+        }
+    }
+    
+    private void fillListWithInformalBlog() {
+        
+        try {
+            DefaultListModel allSienceBlog = new DefaultListModel();
+
+            ArrayList<HashMap<String, String>> SienceBlogList = idb.fetchRows("SELECT BLOGGID, TITEL, DATUM FROM BLOGG"
+            + " join KAT3 on BLOGG.KAT3_ID = KAT3.KAT3_ID"
+            + " join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID"
+            + " join KAT1 on KAT2.KAT1_ID = KAT1.KAT1_ID"
+            + " where KAT1.KAT1_ID ='3'");
+
+            //Loopar genom listan för att hämta ut alla för- och efternamn
+            for (int i = 0; i < SienceBlogList.size(); i++) {
+                String id = SienceBlogList.get(i).get("BLOGGID");
+                String titel = SienceBlogList.get(i).get("TITEL");
+                String datum = SienceBlogList.get(i).get("DATUM");
+                String sienceBlog = (id + " " + titel + " " + datum + "\n");
+                allSienceBlog.addElement(sienceBlog); 
+            }
+            
+            JlGetBlogInformal.setModel(allSienceBlog);
+            JlGetBlogInformal.getSelectedValue();
+            
+            
+        } catch (InfException oneException) {
+            oneException.getMessage();
+            JOptionPane.showMessageDialog(null, "Something went wrong.");
+        }
+    }
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
