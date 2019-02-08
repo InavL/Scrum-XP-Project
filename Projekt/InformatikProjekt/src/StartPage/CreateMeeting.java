@@ -17,7 +17,10 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
     
     private static InfDB idb;
     private MethodService methodService;
-
+    private boolean dateFocused = false; // Used in focusGain
+    private boolean startTimeFocused = false; // Used in focusGain
+    private boolean endTimeFocused = false; // Used in focusGain
+    
     /**
      * Creates new form EditBlogInternalFrame
      */
@@ -26,6 +29,8 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
         this.idb = idb;
         methodService = new MethodService(idb);
         skapaMote();
+        //txtTitle.requestFocusInWindow(true);
+        
     }
 
     /**
@@ -60,6 +65,7 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
         btnCreate = new javax.swing.JButton();
         txtEndTime = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        lblText = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -94,6 +100,11 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
         jLabel5.setText("Date:");
 
         txtDate.setText("YYYY-MM-DD");
+        txtDate.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtDateFocusGained(evt);
+            }
+        });
 
         btnaddDateTime.setText("Add");
         btnaddDateTime.addActionListener(new java.awt.event.ActionListener() {
@@ -105,6 +116,11 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
         jLabel6.setText("Start time:");
 
         txtStartTime.setText("HH:MM");
+        txtStartTime.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtStartTimeFocusGained(evt);
+            }
+        });
 
         jLabel7.setText("Invite others to the meeting.");
 
@@ -133,6 +149,11 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
         });
 
         txtEndTime.setText("HH:MM");
+        txtEndTime.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtEndTimeFocusGained(evt);
+            }
+        });
 
         jLabel9.setText("End time:");
 
@@ -144,13 +165,7 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnaddDateTime))
-                                .addGap(68, 68, 68))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -169,7 +184,13 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(txtEndTime, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(65, 65, 65)))
+                                .addGap(65, 65, 65))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnaddDateTime))
+                                .addGap(68, 68, 68)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
@@ -177,7 +198,6 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
                                 .addComponent(txtEMail, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(72, 72, 72)
                                 .addComponent(AddEMail))
-                            .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(143, 143, 143)
@@ -189,7 +209,13 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel9)
                                 .addComponent(jLabel6)
-                                .addComponent(jLabel5)))))
+                                .addComponent(jLabel5)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblText, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53)
+                        .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(771, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -234,8 +260,12 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(52, 52, 52)
-                .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(lblText, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -343,6 +373,8 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
                 
                 idb.update("update MOTEN set TYP_AV_MOTE = '" + titel + "' where MID = " + motesID + ";");
                 
+                lblText.setText("The meeting request has been saved.");
+                
             }
             catch(InfException ex)
             {
@@ -350,6 +382,27 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
             }
         }
     }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void txtDateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDateFocusGained
+        if (dateFocused == false) { // If the field is focused the box is cleared
+            txtDate.setText("");
+            dateFocused = true;
+        }
+    }//GEN-LAST:event_txtDateFocusGained
+
+    private void txtStartTimeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtStartTimeFocusGained
+        if (startTimeFocused == false) { // If the field is focused the box is cleared
+            txtStartTime.setText("");
+            startTimeFocused = true;
+        }
+    }//GEN-LAST:event_txtStartTimeFocusGained
+
+    private void txtEndTimeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEndTimeFocusGained
+        if (endTimeFocused == false) { // If the field is focused the box is cleared
+            txtEndTime.setText("");
+            endTimeFocused = true;
+        }
+    }//GEN-LAST:event_txtEndTimeFocusGained
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddEMail;
@@ -368,6 +421,7 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JLabel lblText;
     private javax.swing.JTextArea txtAreaDateTime;
     private javax.swing.JTextArea txtAreaEMail;
     private javax.swing.JTextField txtDate;

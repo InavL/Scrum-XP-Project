@@ -43,15 +43,7 @@
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jScrollPane4" min="-2" pref="266" max="-2" attributes="0"/>
-                                      <Component id="btnaddDateTime" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
-                              </Group>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
@@ -78,6 +70,14 @@
                                   </Group>
                                   <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="jScrollPane4" min="-2" pref="266" max="-2" attributes="0"/>
+                                      <Component id="btnaddDateTime" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" attributes="0">
@@ -87,7 +87,6 @@
                                   <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                                   <Component id="AddEMail" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="btnCreate" alignment="1" min="-2" pref="117" max="-2" attributes="0"/>
                               <Component id="jScrollPane3" min="-2" pref="344" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -105,6 +104,13 @@
                                   <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="lblText" min="-2" pref="332" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                          <Component id="btnCreate" min="-2" pref="117" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="771" max="32767" attributes="0"/>
@@ -164,8 +170,14 @@
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
-                  <Component id="btnCreate" min="-2" pref="46" max="-2" attributes="0"/>
-                  <EmptySpace pref="77" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="btnCreate" min="-2" pref="46" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                          <Component id="lblText" min="-2" pref="25" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace pref="81" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -237,6 +249,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="YYYY-MM-DD"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtDateFocusGained"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnaddDateTime">
           <Properties>
@@ -255,6 +270,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="HH:MM"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtStartTimeFocusGained"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
@@ -318,11 +336,16 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="HH:MM"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="txtEndTimeFocusGained"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel9">
           <Properties>
             <Property name="text" type="java.lang.String" value="End time:"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblText">
         </Component>
       </SubComponents>
     </Container>
