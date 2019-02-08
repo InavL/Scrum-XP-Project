@@ -183,11 +183,11 @@ public class Validation {
         
         String instring =tf.getText();
             
-        if(!instring.contains("@") && !instring.contains(".")){
+        if(instring.contains("@") && instring.contains(".")){
                 JOptionPane.showMessageDialog(null, "The email is incorrect");
                 resultat=false;
         }
-        return resultat;
+        return false;
     }
     
     public static boolean emailExisting(JTextField tf, InfDB idb)
