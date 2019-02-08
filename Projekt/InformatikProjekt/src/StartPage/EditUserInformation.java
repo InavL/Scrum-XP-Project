@@ -216,7 +216,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lblSelectToEdit)
-                                .addGap(53, 53, 53)
+                                .addGap(32, 32, 32)
                                 .addComponent(cbUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnSelect))
@@ -234,7 +234,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
                     .addComponent(lblSelectToEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addComponent(pnlMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -273,6 +273,10 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
                 tfPhone.setText(phone);
                 String password = resultatLista.get("LOSENORD");
                 tfPassword.setText(password);
+                
+                
+                //Tar bort alla tidigare värden i comboboxen
+                cbAccessType.removeAllItems();
 
                 //Lägger in alla behörigheter i comboboxen
                 methodService.fillComboboxAccessTypes(cbAccessType);
@@ -280,6 +284,11 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
 
                 //Gör panelen synlig
                 pnlMainPanel.setVisible(true);
+                
+                //Gör funktioner osynliga
+                lblSelectToEdit.setVisible(false);
+                cbUsers.setVisible(false);
+                btnSelect.setVisible(false);
 
             } catch (InfException oneException) {
                 oneException.getMessage();
@@ -300,15 +309,22 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
             String access = cbAccessType.getSelectedItem().toString();
             
             try {
+                //Hämtar behörighetsID med hjälp av dess namn
                 String accessID = idb.fetchSingle("SELECT sid FROM systemtillgang  WHERE behorighet = \'" + access + "\'");
                 
-                String fraga=" UPDATE PERSONER SET MAIL = '" + email + "', LOSENORD = '" + password + "', SID ='" + accessID + "' WHERE ID =" + ID ;
-                System.out.println(fraga);
-                idb.update(fraga);
+                //Uppdaterar tabellen med de nya värdena
+                idb.update("UPDATE personer SET mail = \'" + email + "\', telefon = \'" + phone +"\', fnamn = \'" + firstname + "\', enamn = \'" + surname +"\', losenord = \'" + password + "\', sid = \'" + accessID + "\' WHERE id = " + ID);
                  
-                //"', TELEFON = '" + phone + "', FNAMN = '" + firstname + "', ENAMN ='" + surname +
+                //SKirver ut ett meddelande om att ändringarna har sparats
+                JOptionPane.showMessageDialog(null, "The changes have been saved");
                 
+                //Gör panelen osynlig
+                pnlMainPanel.setVisible(false);
                 
+                //Gör funktioner synliga
+                lblSelectToEdit.setVisible(true);
+                cbUsers.setVisible(true);
+                btnSelect.setVisible(true);
                 
             }
             catch (InfException oneException) {
