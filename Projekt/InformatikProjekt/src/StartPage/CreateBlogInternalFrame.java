@@ -277,12 +277,13 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
             Date datum=  new Date();
              int dag = datum.getDate();
              int manad = datum.getMonth();
+             int rattManad = manad + 1;
              
              int ar = datum.getYear();
              int rattAr = ar + 1900;
              
              String dagen = Integer.toString(dag);
-             String manaden = Integer.toString(manad);
+             String manaden = Integer.toString(rattManad);
              String aret = Integer.toString(rattAr);
              
              String datumet = (aret + "-" + manaden + "-" + dagen);
