@@ -198,7 +198,6 @@ public class AddNewTopic extends javax.swing.JInternalFrame {
                 String maxID = idb.fetchSingle("Select max(Kat2_ID) From Kat2;");
                 int maxIdInt = Integer.parseInt(maxID);
                 int maxInt = maxIdInt + 1;
-                System.out.println(maxInt);
                 
                 idb.insert("insert into KAT2 values(" + maxInt + ",'" + kat1ID + "', '" + topicName + "');");
                 
