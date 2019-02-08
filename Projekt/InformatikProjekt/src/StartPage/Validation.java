@@ -76,6 +76,7 @@ public class Validation {
             
         } catch (AddressException ex) {
             
+            JOptionPane.showMessageDialog(null, "That's not a valid email!");
             result = false;
             
         }

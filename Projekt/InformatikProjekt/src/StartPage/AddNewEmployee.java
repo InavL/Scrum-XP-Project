@@ -247,7 +247,9 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         if (Validation.textfieldWithValue(jTextFieldMail) && Validation.isValidEmailAddress(jTextFieldMail.getText()) && Validation.textfieldWithValue(jTextFieldPhone)
                 && Validation.textfaltTal(jTextFieldPhone) && Validation.textfieldWithValue(jTextFieldFirstName) && Validation.textfieldWithValue(jTextFieldLastName)
                 && Validation.textfieldWithValue(jPasswordField1)) {
+            
             try {
+                
                 int id = createId();
                 String phonenumber = jTextFieldPhone.getText();
                 String mail = jTextFieldMail.getText();
@@ -264,16 +266,20 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
                 String checkPhonenumber = idb.fetchSingle(fraga2);
 
                 if (!mail.equals(checkMail) && !phonenumber.equals(checkPhonenumber)) {
+                    
                     String question = "insert into PERSONER (ID,FNAMN,ENAMN,MAIL,TELEFON,SID,LOSENORD) values"
                             + "(" + id + ",'" + firstname + "','" + lastname + "','" + mail + "'," + phonenumber + "," + sid + ",'" + password + "');";
                     System.out.println(question);
                     idb.insert(question);
 
                     lEmployeeAdded.setText("The person is now added to the employee list.");
+                    
                 } else if (mail.equals(checkMail)) {
-                    JOptionPane.showMessageDialog(null, "E-Mail is allready in use!");
+                    JOptionPane.showMessageDialog(null, "E-Mail is already in use!");
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "Phonenumber is allready in use!");
+                    
                 }
 
             } catch (InfException ex) {
