@@ -10,8 +10,12 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import net.coobird.thumbnailator.Thumbnails;
 import oru.inf.InfDB;
 
 /**
@@ -21,26 +25,19 @@ import oru.inf.InfDB;
 public class ImageTesting extends javax.swing.JInternalFrame {
 
     private static InfDB idb;
-    
+
     private static final String IMG_PATH = "src/images/test.jpg";
 
     /**
      * Creates new form EditBlogInternalFrame
      */
     public ImageTesting(InfDB idb) {
-        
+
         initComponents();
         this.idb = idb;
         
-        try {
-            BufferedImage img = ImageIO.read(new File(IMG_PATH));
-            ImageIcon icon = new ImageIcon(img);
-            JLabel label = new JLabel(icon);
-            JOptionPane.showMessageDialog(null, label);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        showImage();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -51,6 +48,7 @@ public class ImageTesting extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtImage = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -81,6 +79,19 @@ public class ImageTesting extends javax.swing.JInternalFrame {
         txtImage.setText("jLabel2");
         jPanel1.add(txtImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, -1, -1));
 
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 960, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 500, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 960, 500));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -95,12 +106,43 @@ public class ImageTesting extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+    public void showImage() {
+        
+        try {
+            
+            BufferedImage img = ImageIO.read(new File(IMG_PATH));
+            
+            BufferedImage thumbnail = Thumbnails.of(img)
+                    .scale(0.25)
+                    .asBufferedImage();
+            
+            ImageIcon icon = new ImageIcon(thumbnail);
+            txtImage.setIcon(icon);
+            JLabel label = new JLabel(icon);
+//            JOptionPane.showMessageDialog(null, label);
+
+            final JFrame f = new JFrame("ImageIconExample");
+            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            f.getContentPane().add(label);
+            f.pack();
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    f.setLocationRelativeTo(null);
+                    f.setVisible(true);
+                }
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel txtImage;
     // End of variables declaration//GEN-END:variables
 }
