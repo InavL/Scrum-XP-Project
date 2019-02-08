@@ -197,10 +197,12 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // Uppdaterar flödet ifall ändringar har gjorts sedan man öppnade fönstret
         fillListWithSienceBlog();
+        fillListWithEducationBlog();
+        fillListWithInformalBlog();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void jListAllScienceBlogValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListAllScienceBlogValueChanged
-if(Validation.valtVarde(jListAllScienceBlog.getSelectedValue())){
+
             try{
                 String sienceBlogInfo = jListAllScienceBlog.getSelectedValue();
                 String id = sienceBlogInfo.substring(0,2);
@@ -221,11 +223,11 @@ if(Validation.valtVarde(jListAllScienceBlog.getSelectedValue())){
                 JOptionPane.showMessageDialog(null, "Något gick fel!");
                 System.out.println("Internt felmeddelande"+e.getMessage());  
             }
-      }   
+   
     }//GEN-LAST:event_jListAllScienceBlogValueChanged
 
     private void JlGetBlogEducationValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_JlGetBlogEducationValueChanged
-     if(Validation.valtVarde(JlGetBlogEducation.getSelectedValue())){
+     
             try{
                 String sienceBlogInfo = JlGetBlogEducation.getSelectedValue();
                 String id = sienceBlogInfo.substring(0,2);
@@ -246,11 +248,11 @@ if(Validation.valtVarde(jListAllScienceBlog.getSelectedValue())){
                 JOptionPane.showMessageDialog(null, "Något gick fel!");
                 System.out.println("Internt felmeddelande"+e.getMessage());  
             }
-      }   
+      
     }//GEN-LAST:event_JlGetBlogEducationValueChanged
 
     private void JlGetBlogInformalValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_JlGetBlogInformalValueChanged
-     if(Validation.valtVarde(JlGetBlogInformal.getSelectedValue())){
+    
             try{
                 String sienceBlogInfo = JlGetBlogInformal.getSelectedValue();
                 String id = sienceBlogInfo.substring(0,2);
@@ -271,7 +273,7 @@ if(Validation.valtVarde(jListAllScienceBlog.getSelectedValue())){
                 JOptionPane.showMessageDialog(null, "Något gick fel!");
                 System.out.println("Internt felmeddelande"+e.getMessage());  
             }
-      }   
+      
     }//GEN-LAST:event_JlGetBlogInformalValueChanged
 
 
@@ -296,7 +298,6 @@ if(Validation.valtVarde(jListAllScienceBlog.getSelectedValue())){
             }
             
             jListAllScienceBlog.setModel(allSienceBlog);
-            jListAllScienceBlog.getSelectedValue();
             
             
         } catch (InfException oneException) {
@@ -327,7 +328,6 @@ if(Validation.valtVarde(jListAllScienceBlog.getSelectedValue())){
             }
             
             JlGetBlogEducation.setModel(allSienceBlog);
-            JlGetBlogEducation.getSelectedValue();
             
             
         } catch (InfException oneException) {
@@ -357,7 +357,6 @@ if(Validation.valtVarde(jListAllScienceBlog.getSelectedValue())){
             }
             
             JlGetBlogInformal.setModel(allSienceBlog);
-            JlGetBlogInformal.getSelectedValue();
             
             
         } catch (InfException oneException) {
