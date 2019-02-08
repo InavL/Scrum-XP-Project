@@ -286,7 +286,8 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             + " join KAT3 on BLOGG.KAT3_ID = KAT3.KAT3_ID"
             + " join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID"
             + " join KAT1 on KAT2.KAT1_ID = KAT1.KAT1_ID"
-            + " where KAT1.KAT1_ID ='1'");
+            + " where KAT1.KAT1_ID ='1'"
+            + " ORDER BY bloggid DESC");
 
             //Loopar genom listan för att hämta ut alla för- och efternamn
             for (int i = 0; i < SienceBlogList.size(); i++) {
@@ -316,7 +317,8 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             + " join KAT3 on BLOGG.KAT3_ID = KAT3.KAT3_ID"
             + " join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID"
             + " join KAT1 on KAT2.KAT1_ID = KAT1.KAT1_ID"
-            + " where KAT1.KAT1_ID ='2'");
+            + " where KAT1.KAT1_ID ='2'"
+            + " ORDER BY bloggid DESC");
 
             //Loopar genom listan för att hämta ut alla för- och efternamn
             for (int i = 0; i < SienceBlogList.size(); i++) {
@@ -345,7 +347,10 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             + " join KAT3 on BLOGG.KAT3_ID = KAT3.KAT3_ID"
             + " join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID"
             + " join KAT1 on KAT2.KAT1_ID = KAT1.KAT1_ID"
-            + " where KAT1.KAT1_ID ='3'");
+            + " where KAT1.KAT1_ID ='3'"
+            + " ORDER BY bloggid DESC");
+            
+            
 
             //Loopar genom listan för att hämta ut alla för- och efternamn
             for (int i = 0; i < SienceBlogList.size(); i++) {
