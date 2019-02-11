@@ -29,6 +29,11 @@ public class ColorPage extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("ip.fdbPU").createEntityManager();
+        motesForslagQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT m FROM MotesForslag m");
+        motesForslagList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : motesForslagQuery.getResultList();
+        personerDeltarQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT p FROM PersonerDeltar p");
+        personerDeltarList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : personerDeltarQuery.getResultList();
         jPanel1 = new javax.swing.JPanel();
         pnlBlue = new javax.swing.JPanel();
         lblOrebroUniversitet = new javax.swing.JLabel();
@@ -38,8 +43,6 @@ public class ColorPage extends javax.swing.JFrame {
         btnSend = new javax.swing.JButton();
         lblName = new javax.swing.JLabel();
         txtfieldName = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tableOptions = new javax.swing.JTable();
         lblParticipants = new javax.swing.JLabel();
         txtfieldParticipants = new javax.swing.JTextField();
         btnChoose = new javax.swing.JButton();
@@ -99,35 +102,6 @@ public class ColorPage extends javax.swing.JFrame {
 
         lblName.setText("Name:");
 
-        tableOptions.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Option 1", "Option 2", "Option 3", "Option 4", "YES", "NO"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jScrollPane2.setViewportView(tableOptions);
-        if (tableOptions.getColumnModel().getColumnCount() > 0) {
-            tableOptions.getColumnModel().getColumn(0).setHeaderValue("Option 1");
-            tableOptions.getColumnModel().getColumn(1).setHeaderValue("Option 2");
-            tableOptions.getColumnModel().getColumn(2).setHeaderValue("Option 3");
-            tableOptions.getColumnModel().getColumn(3).setHeaderValue("Option 4");
-            tableOptions.getColumnModel().getColumn(4).setHeaderValue("YES");
-            tableOptions.getColumnModel().getColumn(5).setHeaderValue("NO");
-        }
-
         lblParticipants.setText("Participants:");
 
         txtfieldParticipants.addActionListener(new java.awt.event.ActionListener() {
@@ -145,44 +119,46 @@ public class ColorPage extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlBlue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(44, 44, 44)
-                .addComponent(txtfieldParticipants, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(72, 72, 72))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(lblDate)
                 .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblParticipants)
+                    .addComponent(cbxOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnChoose)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(textfieldDates, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtfieldName)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblParticipants)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(cbxOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnChoose)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(textfieldDates, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblName)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(txtfieldName))
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSend)
-                        .addGap(29, 29, 29))))
+                        .addGap(23, 23, 23)
+                        .addComponent(lblName)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addComponent(btnSend)
+                .addGap(29, 29, 29))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblChoosenDates)
                 .addGap(331, 331, 331))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addComponent(txtfieldParticipants, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblChoosenDates)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textfieldDates, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(124, 124, 124))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(pnlBlue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,25 +169,17 @@ public class ColorPage extends javax.swing.JFrame {
                                     .addComponent(cbxOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btnChoose)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(111, 111, 111)
+                                .addGap(129, 129, 129)
                                 .addComponent(lblName)
-                                .addGap(25, 25, 25)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(btnSend)
                                     .addComponent(txtfieldName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 145, Short.MAX_VALUE)
-                        .addComponent(lblChoosenDates)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(textfieldDates, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(133, 133, 133)))
-                .addComponent(lblParticipants)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                        .addComponent(lblParticipants)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(txtfieldParticipants, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE))
-                .addGap(142, 142, 142))
+                .addComponent(txtfieldParticipants, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69))
         );
 
         mMainMenu.setText("Main menu");
@@ -267,6 +235,7 @@ public class ColorPage extends javax.swing.JFrame {
     private javax.swing.JButton btnChoose;
     private javax.swing.JButton btnSend;
     private javax.swing.JComboBox<String> cbxOptions;
+    private javax.persistence.EntityManager entityManager;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
@@ -274,7 +243,6 @@ public class ColorPage extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblChoosenDates;
     private javax.swing.JLabel lblDate;
@@ -284,8 +252,11 @@ public class ColorPage extends javax.swing.JFrame {
     private javax.swing.JMenu mBlog;
     private javax.swing.JMenu mMainMenu;
     private javax.swing.JMenuBar mMenybar;
+    private java.util.List<StartPage.MotesForslag> motesForslagList;
+    private javax.persistence.Query motesForslagQuery;
+    private java.util.List<StartPage.PersonerDeltar> personerDeltarList;
+    private javax.persistence.Query personerDeltarQuery;
     private javax.swing.JPanel pnlBlue;
-    private javax.swing.JTable tableOptions;
     private javax.swing.JTextField textfieldDates;
     private javax.swing.JTextField txtfieldName;
     private javax.swing.JTextField txtfieldParticipants;
