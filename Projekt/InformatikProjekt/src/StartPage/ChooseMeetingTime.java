@@ -5,7 +5,6 @@
  */
 package StartPage;
 
-import com.jidesoft.swing.AutoCompletion;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
@@ -17,7 +16,7 @@ import oru.inf.InfException;
  * @author ellin
  */
 public class ChooseMeetingTime extends javax.swing.JInternalFrame {
-    
+
     private static InfDB idb;
     private MethodService methodService;
 
@@ -162,87 +161,76 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnChooseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseActionPerformed
-        if(Validation.elementSelectedInCombobox(cbxOption, "Choose an element from the combobox."))
-        {
-           try
-            {
+        if (Validation.elementSelectedInCombobox(cbxOption, "Choose an element from the combobox.")) {
+            try {
                 String tid = cbxOption.getSelectedItem().toString();
                 int userID = LoggedUser.getID();
                 String motesID = idb.fetchSingle("Select MID from PERSONER_DELTAR where ID = " + userID + ";");
                 txtAreaChoose.setText(tid); //Lägger in den valda tiden i textArean.
-                
+
                 String[] user = cbxOption.getSelectedItem().toString().trim().split(" till "); //delar upp varje item i comboboxen i start och sluttid.
                 String start = user[0];
                 String end = user[1];
-            
+
                 //Hämtar FORSLAGS_ID, kollar så att slut och starttiden för ett möte är olika,
                 //i och med att det inte ska finnas två exakt samma förslagtider för ett möte
                 String fraga = "select FORSLAGS_ID from MOTES_FORSLAG where START_TID = '" + start + "' and SLUT_TID = '" + end + "' and MID = '" + motesID + "';";
                 String forslagsID = idb.fetchSingle(fraga);
-                
+
                 String roster = idb.fetchSingle("select MAX(ROSTER) from MOTES_FORSLAG where FORSLAGS_ID = '" + forslagsID + "';");
                 int maxRosterInt = Integer.parseInt(roster);
                 int maxInt = maxRosterInt + 1;
-                
+
                 idb.update("update MOTES_FORSLAG set ROSTER = " + maxInt + " where FORSLAGS_ID = '" + forslagsID + "';");
-                
+
                 idb.insert("insert into PERSON_ACCEPTERAT values('" + forslagsID + "', " + userID + ");");
-                
+
                 String fraga2 = "select FNAMN,ENAMN,START_TID,SLUT_TID from PERSONER"
-                                + " join PERSON_ACCEPTERAT on PERSONER.ID = PERSON_ACCEPTERAT.ID"
-                                + " join MOTES_FORSLAG on PERSON_ACCEPTERAT.FORSLAGS_ID = MOTES_FORSLAG.FORSLAGS_ID"
-                                + " where PERSON_ACCEPTERAT.FORSLAGS_ID = " + forslagsID + ";";
+                        + " join PERSON_ACCEPTERAT on PERSONER.ID = PERSON_ACCEPTERAT.ID"
+                        + " join MOTES_FORSLAG on PERSON_ACCEPTERAT.FORSLAGS_ID = MOTES_FORSLAG.FORSLAGS_ID"
+                        + " where PERSON_ACCEPTERAT.FORSLAGS_ID = " + forslagsID + ";";
                 System.out.println(fraga2);
                 ArrayList<HashMap<String, String>> iDLista = idb.fetchRows(fraga2);
-               
+
                 String lista = "";
-                
-                for(HashMap rad : iDLista)
-                {
+
+                for (HashMap rad : iDLista) {
                     lista += rad.get("FNAMN");
                     lista += " ";
                     lista += rad.get("ENAMN");
-                    lista += " ";    
+                    lista += " ";
                     lista += rad.get("START_TID");
-                    lista += " ";  
+                    lista += " ";
                     lista += rad.get("SLUT_TID");
                     lista += "\n";
-                    
-                    
+
                 }
                 txtAreaAccepterat.setText(lista);
-                
-                
-            }
-            catch(InfException ex)
-            {
+
+            } catch (InfException ex) {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
         }
     }//GEN-LAST:event_btnChooseActionPerformed
 
-    private void fillComboBox(){
-      
-            try
-            {
-                int id = LoggedUser.getID();
-                
-                String motesID = idb.fetchSingle("Select MID from PERSONER_DELTAR where ID = " + id + ";");
-                
-                String fraga1 = "Select START_TID, SLUT_TID from MOTES_FORSLAG where MID = '" + motesID + "';";
-                ArrayList<HashMap<String, String>> forslagslista = idb.fetchRows(fraga1);
-                for(int i = 0; i < forslagslista.size(); i ++)
-                {
-                    String start = forslagslista.get(i).get("START_TID");
-                    String slut = forslagslista.get(i).get("SLUT_TID");
-                    cbxOption.addItem(start + " till " + slut);
-                }
+    private void fillComboBox() {
+
+        try {
+            int id = LoggedUser.getID();
+
+            String motesID = idb.fetchSingle("Select MID from PERSONER_DELTAR where ID = " + id + ";");
+
+            String fraga1 = "Select START_TID, SLUT_TID from MOTES_FORSLAG where MID = '" + motesID + "';";
+            ArrayList<HashMap<String, String>> forslagslista = idb.fetchRows(fraga1);
+            for (int i = 0; i < forslagslista.size(); i++) {
+                String start = forslagslista.get(i).get("START_TID");
+                String slut = forslagslista.get(i).get("SLUT_TID");
+                cbxOption.addItem(start + " till " + slut);
             }
-            catch(InfException ex)
-            {
-                JOptionPane.showMessageDialog(null, "Something went wrong.");
-            }
-        
+        } catch (InfException ex) {
+            JOptionPane.showMessageDialog(null, "Something went wrong.");
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

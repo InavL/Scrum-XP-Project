@@ -11,15 +11,15 @@ import oru.inf.InfDB;
  *
  * @author ellin
  */
-public class CreateANewCategori extends javax.swing.JInternalFrame {
-    
+public class CreateNewCategory extends javax.swing.JInternalFrame {
+
     private static InfDB idb;
     private MethodService methodService;
 
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public CreateANewCategori(InfDB idb) {
+    public CreateNewCategory(InfDB idb) {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);

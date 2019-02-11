@@ -17,14 +17,14 @@ import oru.inf.InfException;
  * @author ellin
  */
 public class ShowUser extends javax.swing.JInternalFrame {
-    
+
     private static InfDB idb;
     private MethodService methodService;
- 
+
     //private JList listAllUsers;
-    
     /**
      * Creates new form EditBlogInternalFrame
+     *
      * @param idb
      */
     public ShowUser(InfDB idb) {
@@ -32,7 +32,7 @@ public class ShowUser extends javax.swing.JInternalFrame {
         this.idb = idb;
         methodService = new MethodService(idb);
         fillListWithUsers();
-        
+
     }
 
     /**
@@ -133,45 +133,44 @@ public class ShowUser extends javax.swing.JInternalFrame {
 
     private void btnShowInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowInformationActionPerformed
 
-        if(Validation.valtVarde(listAllUsers.getSelectedValue())){
-            try{
+        if (Validation.valtVarde(listAllUsers.getSelectedValue())) {
+            try {
                 String personInfo = listAllUsers.getSelectedValue();
-                String id = personInfo.substring(0,2);
+                String id = personInfo.substring(0, 2);
                 String fraga = "SELECT PERSONER.MAIL, PERSONER.TELEFON, PERSONER.FNAMN, PERSONER.ENAMN, PERSONER.LOSENORD, SYSTEMTILLGANG.BEHORIGHET from PERSONER"
-                +" join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID"
-                +" where ID ="+id;
-                ArrayList<HashMap<String,String>> resultatLista = idb.fetchRows(fraga);
+                        + " join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID"
+                        + " where ID =" + id;
+                ArrayList<HashMap<String, String>> resultatLista = idb.fetchRows(fraga);
 
                 String rL = "";
-                for(HashMap rad: resultatLista){
-                    rL+= "Firstname: ";
-                    rL+=rad.get("FNAMN");
-                    rL+= "\n" + "Surname: ";
-                    rL+=rad.get("ENAMN");
-                    rL+= "\n" + "Access type: ";
-                    rL+=rad.get("BEHORIGHET");
-                    rL+= "\n" + "Phone number: ";
-                    rL+=rad.get("TELEFON");
-                    rL+= "\n" + "E-mail: ";
-                    rL+=rad.get("MAIL");
-                    rL+= "\n" +"Password: ";
-                    rL+=rad.get("LOSENORD");
+                for (HashMap rad : resultatLista) {
+                    rL += "Firstname: ";
+                    rL += rad.get("FNAMN");
+                    rL += "\n" + "Surname: ";
+                    rL += rad.get("ENAMN");
+                    rL += "\n" + "Access type: ";
+                    rL += rad.get("BEHORIGHET");
+                    rL += "\n" + "Phone number: ";
+                    rL += rad.get("TELEFON");
+                    rL += "\n" + "E-mail: ";
+                    rL += rad.get("MAIL");
+                    rL += "\n" + "Password: ";
+                    rL += rad.get("LOSENORD");
 
                 }
 
                 taInformation.setText(rL);
 
-            }
-            catch (InfException e){
+            } catch (InfException e) {
                 JOptionPane.showMessageDialog(null, "Something went wrong!");
-                System.out.println("Internt felmeddelande"+e.getMessage());
+                System.out.println("Internt felmeddelande" + e.getMessage());
             }
         }
 
     }//GEN-LAST:event_btnShowInformationActionPerformed
 
     private void fillListWithUsers() {
-        
+
         try {
             DefaultListModel allUsers = new DefaultListModel();
 
@@ -183,13 +182,12 @@ public class ShowUser extends javax.swing.JInternalFrame {
                 String firstName = nameList.get(i).get("FNAMN");
                 String surName = nameList.get(i).get("ENAMN");
                 String user = (id + " " + firstName + " " + surName + "\n");
-                allUsers.addElement(user); 
+                allUsers.addElement(user);
             }
-            
+
             listAllUsers.setModel(allUsers);
             listAllUsers.getSelectedValue();
-            
-            
+
         } catch (InfException oneException) {
             oneException.getMessage();
             JOptionPane.showMessageDialog(null, "Something went wrong.");

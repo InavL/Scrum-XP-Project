@@ -5,25 +5,12 @@
  */
 package StartPage;
 
-import com.jidesoft.swing.AutoCompletion;
-import java.util.ArrayList;
-import java.util.HashMap;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import oru.inf.InfDB;
-import oru.inf.InfException;
-
-
-
-
-
 
 public class Calender extends javax.swing.JInternalFrame {
-    
+
     private static InfDB idb;
     private MethodService methodService;
-    
-    
 
     /**
      * Creates new form EditBlogInternalFrame
@@ -32,7 +19,7 @@ public class Calender extends javax.swing.JInternalFrame {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);
-       
+
     }
 
     @SuppressWarnings("unchecked")
@@ -165,8 +152,6 @@ public class Calender extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.github.lgooddatepicker.optionalusertools.CalendarBorderProperties calendarBorderProperties1;

@@ -9,15 +9,13 @@ package StartPage;
 import javax.mail.*;
 import javax.mail.internet.*;
 import javax.activation.*;*/
-
-
 /**
  *
  * @author sadeerbedan
  */
 public class SendEmail {
 
-  /* public static void main(String [] args) {    
+    /* public static void main(String [] args) {    
       // Recipient's email ID needs to be mentioned.
       String to = "abcd@gmail.com";
 

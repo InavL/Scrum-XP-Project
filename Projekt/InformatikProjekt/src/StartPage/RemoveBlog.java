@@ -17,7 +17,7 @@ import oru.inf.InfException;
  * @author ellin
  */
 public class RemoveBlog extends javax.swing.JInternalFrame {
-    
+
     private static InfDB idb;
     private MethodService methodService;
 
@@ -135,23 +135,22 @@ public class RemoveBlog extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        
+
         String post = cbPosts.getSelectedItem().toString();
         try {
             idb.delete("DELETE FROM blogg WHERE titel = \'" + post + "\'");
-                    
-            lblRemoveSucceed.setVisible(true);              
-        }
-        catch (InfException oneException) {
+
+            lblRemoveSucceed.setVisible(true);
+        } catch (InfException oneException) {
             oneException.getMessage();
             JOptionPane.showMessageDialog(null, "Something went wrong!");
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
-    private void fillListWithYourPosts(){
-    
-    int personID = LoggedUser.getID();
-    
+    private void fillListWithYourPosts() {
+
+        int personID = LoggedUser.getID();
+
         try {
             //Hämtar inläggen som användaren har skrivit
             ArrayList<HashMap<String, String>> posts = idb.fetchRows("SELECT titel FROM blogg WHERE bloggskribent =" + personID + ";");

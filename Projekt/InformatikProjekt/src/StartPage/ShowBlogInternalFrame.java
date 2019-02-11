@@ -12,7 +12,7 @@ import oru.inf.InfDB;
  * @author ellin
  */
 public class ShowBlogInternalFrame extends javax.swing.JInternalFrame {
-    
+
     private static InfDB idb;
     private MethodService methodService;
 

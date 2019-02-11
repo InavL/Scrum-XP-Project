@@ -10,14 +10,16 @@ package StartPage;
  * @author krist
  */
 public class RegisterUsers extends javax.swing.JInternalFrame {
+
     private int id;
+
     /**
      * Creates new form RegisterUsers
      */
     public RegisterUsers() {
         initComponents();
         id = LoggedUser.getID();
-        
+
     }
 
     /**
