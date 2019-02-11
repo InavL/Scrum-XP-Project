@@ -9,7 +9,6 @@ import oru.inf.InfException;
  *
  * @author Alvin Johansson
  */
-
 public class StartInfProj { // The program is run through this file
 
     private static InfDB idb;
@@ -17,7 +16,6 @@ public class StartInfProj { // The program is run through this file
     /**
      * @param args the command line arguments
      */
-    
     public static void main(String[] args) {
 
         windowsStil(); // Calls the method for setting up the design
@@ -25,7 +23,6 @@ public class StartInfProj { // The program is run through this file
         try {
 
             String file = new File("IP.FDB").getAbsolutePath(); // Tells the program where the database is located
-            System.out.println(file); // Prints the location in the terminal
             idb = new InfDB(file);
 
         } catch (InfException ettUndantag) {
