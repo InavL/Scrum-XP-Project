@@ -27,7 +27,7 @@ public class MainPage extends javax.swing.JFrame {
     private CreateBlog createBlog;
 //    private CreateBlogInternalFrame createBlogInternalFrame;
     private EditBlogInternalFrame editBlogInternalFrame;
-    private RemoveBlog removeBlogInternalFrame;
+    private RemoveBlog removeBlog;
     private BlogFeed blogFeed;
 //    private FeedBlogInternalFrame feedBlogInternalFrame;
     private RemoveEmployeeFromTheSystem removeEmployeeFromTheSystem;
@@ -373,8 +373,8 @@ public class MainPage extends javax.swing.JFrame {
     private void removeBlogMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBlogMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if (!tabExists("Remove blog")) {
-            removeBlogInternalFrame = new RemoveBlog(idb);
-            openTab(removeBlogInternalFrame, "Remove blog");
+            removeBlog = new RemoveBlog(idb);
+            openTab(removeBlog, "Remove blog");
         } //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else {
             moveFocusToTab("Remove blog");
