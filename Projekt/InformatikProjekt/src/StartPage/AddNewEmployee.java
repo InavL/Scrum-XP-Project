@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -32,9 +33,13 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         methodService = new MethodService(idb);
         //fillCombobox();
         comboboxAlternatives();
-
-    }
-
+        SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                      jTextFieldFirstName.requestFocus();
+                }
+          });
+                 }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -303,7 +308,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
 
         }
     }
-
+    //Fyller combo
     private void fillComboboxEducation() {
         try {
             String fraga = "select BEHORIGHET from SYSTEMTILLGANG where SID = 3 or SID = 4 or SID = 6";

@@ -259,8 +259,8 @@ public class MainPage extends javax.swing.JFrame {
         
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Blog feed")) {
-            imageTesting = new ImageTesting(idb);
-            //feedBlogInternalFrame = new FeedBlogInternalFrame(idb);
+            //imageTesting = new ImageTesting(idb);
+            feedBlogInternalFrame = new FeedBlogInternalFrame(idb);
             openTab(feedBlogInternalFrame, "Blog feed");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
