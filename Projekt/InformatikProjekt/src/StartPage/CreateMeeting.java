@@ -325,7 +325,7 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
                 
                 String hamtaID = idb.fetchSingle("select max(MID) from MOTEN");
                 
-                idb.insert("insert into MOTES_FORSLAG values(" + maxInt + ", '" + hamtaID + "', '" + start + "', '" + end + "');");
+                idb.insert("insert into MOTES_FORSLAG values(" + maxInt + ", '" + hamtaID + "', '" + start + "', '" + end + "', 0);");
             }
             catch(InfException ex)
             {

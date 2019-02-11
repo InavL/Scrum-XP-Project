@@ -31,6 +31,7 @@ public class MainPage extends javax.swing.JFrame {
     private AddNewTopic addNewTopic;
     
     private CreateMeeting createMeeting;
+    private ChooseMeetingTime chooseMeetingTime;
         
         
     /**
@@ -92,6 +93,7 @@ public class MainPage extends javax.swing.JFrame {
         createMetting = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        ChooseMeetingTime = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -245,6 +247,14 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
         createMetting.add(jMenuItem4);
+
+        ChooseMeetingTime.setText("Choose meeting time");
+        ChooseMeetingTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ChooseMeetingTimeActionPerformed(evt);
+            }
+        });
+        createMetting.add(ChooseMeetingTime);
 
         superMenyBar.add(createMetting);
 
@@ -468,9 +478,22 @@ public class MainPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void ChooseMeetingTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseMeetingTimeActionPerformed
+        //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
+        if(!tabExists("Choose meeting time")) {
+            chooseMeetingTime = new ChooseMeetingTime(idb);
+            openTab(chooseMeetingTime, "Choose meeting time");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
+            moveFocusToTab("Choose meeting time");
+        }
+    }//GEN-LAST:event_ChooseMeetingTimeActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ChooseMeetingTime;
     private javax.swing.JMenuItem addCategory;
     private javax.swing.JMenuItem addTopic;
     private javax.swing.JMenuItem addUser;
