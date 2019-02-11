@@ -22,6 +22,7 @@ public class AddNewTopic extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form EditBlogInternalFrame
+     * @param idb
      */
     public AddNewTopic(InfDB idb) {
         initComponents();
@@ -198,7 +199,7 @@ public class AddNewTopic extends javax.swing.JInternalFrame {
                 
                 idb.insert("insert into KAT2 values(" + maxInt + ",'" + kat1ID + "', '" + topicName + "');");
                 
-                lblText.setText("The category is now added into the system.");
+                lblText.setText("Topic successfully added.");
             }
             catch(InfException ex)
             {
