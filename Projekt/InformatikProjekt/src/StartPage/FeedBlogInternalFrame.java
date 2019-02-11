@@ -32,6 +32,8 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         fillListWithSienceBlog();
         fillListWithEducationBlog();
         fillListWithInformalBlog();
+        educationStart();
+        informalStart();
 
     }
 
@@ -199,6 +201,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         fillListWithSienceBlog();
         fillListWithEducationBlog();
         fillListWithInformalBlog();
+        
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void jListAllScienceBlogValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListAllScienceBlogValueChanged
@@ -277,6 +280,25 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_JlGetBlogInformalValueChanged
 
 
+    
+    private void educationStart() {
+        
+        int behorighet = LoggedUser.getBehorighet();
+        if(behorighet == 3) {
+        
+        jTabbedPane1.setSelectedIndex(1);
+        }
+    }
+    
+    private void informalStart() {
+        
+        int behorighet = LoggedUser.getBehorighet();
+        if(behorighet == 1|| behorighet == 4 || behorighet == 5) {
+        
+        jTabbedPane1.setSelectedIndex(2);
+        }
+    }
+    
     private void fillListWithSienceBlog() {
         
         try {
