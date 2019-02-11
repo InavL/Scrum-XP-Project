@@ -30,8 +30,6 @@ public class MainPage extends javax.swing.JFrame {
     private AddNewCategoryAndTopic addNewCategoryAndTopic;
     private AddNewTopic addNewTopic;
     
-    private ImageTesting imageTesting;
-    
     private CreateMeeting createMeeting;
         
         
@@ -259,7 +257,8 @@ public class MainPage extends javax.swing.JFrame {
         
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Blog feed")) {
-            //imageTesting = new ImageTesting(idb);
+            //imageHandling = new ImageHandling(idb);
+            //openTab(imageHandling, "Image testing");
             feedBlogInternalFrame = new FeedBlogInternalFrame(idb);
             openTab(feedBlogInternalFrame, "Blog feed");
         }       
