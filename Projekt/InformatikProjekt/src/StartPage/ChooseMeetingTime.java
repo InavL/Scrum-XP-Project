@@ -48,6 +48,9 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtAreaChoose = new javax.swing.JTextArea();
         lbChoose = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txtAreaAccepterat = new javax.swing.JTextArea();
+        lblParcipant = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -89,24 +92,39 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
 
         lbChoose.setText("Choosen dates:");
 
+        txtAreaAccepterat.setColumns(20);
+        txtAreaAccepterat.setRows(5);
+        jScrollPane2.setViewportView(txtAreaAccepterat);
+
+        lblParcipant.setText("Participant:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jLabel2)
-                .addGap(34, 34, 34)
-                .addComponent(cbxOption, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnChoose)
-                .addGap(44, 44, 44)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lbChoose)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                        .addGap(38, 38, 38)
+                        .addComponent(jLabel2)
+                        .addGap(34, 34, 34)
+                        .addComponent(cbxOption, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnChoose)
+                        .addGap(44, 44, 44)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lbChoose)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(76, 76, 76)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblParcipant)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -121,8 +139,12 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
                         .addComponent(cbxOption, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2)
                         .addComponent(btnChoose))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(358, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(lblParcipant)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(81, 81, 81))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -149,8 +171,9 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
                 String tid = cbxOption.getSelectedItem().toString();
                 int userID = LoggedUser.getID();
                 String motesID = idb.fetchSingle("Select MID from PERSONER_DELTAR where ID = " + userID + ";");
+                txtAreaChoose.setText(tid); //Lägger in den valda tiden i textArean.
                 
-                String[] user = cbxOption.getSelectedItem().toString().trim().split(" till ");
+                String[] user = cbxOption.getSelectedItem().toString().trim().split(" till "); //delar upp varje item i comboboxen i start och sluttid.
                 String start = user[0];
                 String end = user[1];
             
@@ -164,8 +187,34 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
                 int maxInt = maxRosterInt + 1;
                 
                 idb.update("update MOTES_FORSLAG set ROSTER = " + maxInt + " where FORSLAGS_ID = '" + forslagsID + "';");
-            
-                txtAreaChoose.setText(tid);
+                
+                idb.insert("insert into PERSON_ACCEPTERAT values('" + forslagsID + "', " + userID + ");");
+                
+                String fraga2 = "select FNAMN,ENAMN,START_TID,SLUT_TID from PERSONER"
+                                + " join PERSON_ACCEPTERAT on PERSONER.ID = PERSON_ACCEPTERAT.ID"
+                                + " join MOTES_FORSLAG on PERSON_ACCEPTERAT.FORSLAGS_ID = MOTES_FORSLAG.FORSLAGS_ID"
+                                + " where PERSON_ACCEPTERAT.FORSLAGS_ID = " + forslagsID + ";";
+                System.out.println(fraga2);
+                ArrayList<HashMap<String, String>> iDLista = idb.fetchRows(fraga2);
+               
+                String lista = "";
+                
+                for(HashMap rad : iDLista)
+                {
+                    lista += rad.get("FNAMN");
+                    lista += " ";
+                    lista += rad.get("ENAMN");
+                    lista += " ";    
+                    lista += rad.get("START_TID");
+                    lista += " ";  
+                    lista += rad.get("SLUT_TID");
+                    lista += "\n";
+                    
+                    
+                }
+                txtAreaAccepterat.setText(lista);
+                
+                
             }
             catch(InfException ex)
             {
@@ -206,7 +255,10 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbChoose;
+    private javax.swing.JLabel lblParcipant;
+    private javax.swing.JTextArea txtAreaAccepterat;
     private javax.swing.JTextArea txtAreaChoose;
     // End of variables declaration//GEN-END:variables
 }
