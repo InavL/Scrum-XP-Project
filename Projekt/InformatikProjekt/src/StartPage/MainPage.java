@@ -42,6 +42,7 @@ public class MainPage extends javax.swing.JFrame {
         initComponents();
         this.setSize(1000, 800);
         this.idb = idb;
+        this.setExtendedState(this.MAXIMIZED_BOTH);
         //Instansierar ett nytt methodServiceobjekt
         methodService = new MethodService(idb);
         paneMainPageTabs = new ClosableTabbedPane();

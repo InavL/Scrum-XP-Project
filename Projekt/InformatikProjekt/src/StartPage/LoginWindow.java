@@ -5,7 +5,15 @@
  */
 package StartPage;
 
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import net.coobird.thumbnailator.Thumbnails;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -30,8 +38,22 @@ public class LoginWindow extends javax.swing.JFrame {
         this.idb = idb;
         this.setLocationRelativeTo(null); // Opens the window at the centre of the screen
 
-    }
-    
+        try {
+
+            BufferedImage img = ImageIO.read(new File("src/images/OrUIS-farg.png"));
+
+            BufferedImage thumbnail = Thumbnails.of(img)
+                    .scale(.75)
+                    .asBufferedImage();
+
+            ImageIcon icon = new ImageIcon(thumbnail);
+            this.setIconImage(icon.getImage());
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+            }
+        }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,6 +74,10 @@ public class LoginWindow extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("ÖrUIS");
+        setMaximumSize(new java.awt.Dimension(463, 402));
+        setName("frame"); // NOI18N
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
