@@ -62,6 +62,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         pnlInformal = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         JlGetBlogInformal = new javax.swing.JList<>();
+        txtImage = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -93,7 +94,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         taBlogFeed.setRows(5);
         jScrollPane1.setViewportView(taBlogFeed);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 166, 410, 460));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 140, 270, 460));
 
         btnUpdate.setText("Update");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -101,7 +102,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 btnUpdateActionPerformed(evt);
             }
         });
-        jPanel1.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 590, -1, -1));
+        jPanel1.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 610, -1, -1));
 
         jListAllScienceBlog.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -119,14 +120,14 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         pnlSience.setLayout(pnlSienceLayout);
         pnlSienceLayout.setHorizontalGroup(
             pnlSienceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
         );
         pnlSienceLayout.setVerticalGroup(
             pnlSienceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Sience", pnlSience);
+        jTabbedPane1.addTab("Science", pnlSience);
 
         JlGetBlogEducation.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -144,11 +145,11 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         pnlEducation.setLayout(pnlEducationLayout);
         pnlEducationLayout.setHorizontalGroup(
             pnlEducationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
         );
         pnlEducationLayout.setVerticalGroup(
             pnlEducationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Education", pnlEducation);
@@ -169,22 +170,23 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         pnlInformal.setLayout(pnlInformalLayout);
         pnlInformalLayout.setHorizontalGroup(
             pnlInformalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
         );
         pnlInformalLayout.setVerticalGroup(
             pnlInformalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Informal", pnlInformal);
 
-        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 160, 320, 460));
+        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 140, 190, 460));
+        jPanel1.add(txtImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 984, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,9 +220,13 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                         rL+=rad.get("BLOGGPOST");
                         rL+= "\n";     
                     }
-                        
-                    taBlogFeed.setText(rL);
                 
+                String bid = id.trim();
+
+                ImageHandling.showImage("src\\images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
+
+                taBlogFeed.setText(rL);
+
             }
             catch (InfException e){
                 JOptionPane.showMessageDialog(null, "Något gick fel!");
@@ -243,6 +249,11 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                         rL+=rad.get("BLOGGPOST");
                         rL+= "\n";     
                     }
+                    
+                    String bid = id.trim();
+
+                    ImageHandling.showImage("src\\images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
+
                         
                     taBlogFeed.setText(rL);
                 
@@ -268,6 +279,11 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                         rL+=rad.get("BLOGGPOST");
                         rL+= "\n";     
                     }
+                    
+                    String bid = id.trim();
+
+                    ImageHandling.showImage("src\\images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
+
                         
                     taBlogFeed.setText(rL);
                 
@@ -410,5 +426,6 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     private javax.swing.JPanel pnlInformal;
     private javax.swing.JPanel pnlSience;
     private javax.swing.JTextArea taBlogFeed;
+    private javax.swing.JLabel txtImage;
     // End of variables declaration//GEN-END:variables
 }

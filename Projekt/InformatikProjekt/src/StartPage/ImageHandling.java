@@ -19,23 +19,23 @@ import net.coobird.thumbnailator.Thumbnails;
  * @author atb19
  */
 public class ImageHandling {
-    
+
     public ImageHandling() {
-        
-         int id = LoggedUser.getID();
-         
+
+        int id = LoggedUser.getID();
+
     }
-    
+
     public static void showImage(String IMG_PATH, JLabel imageLabel, JPanel bottomPanel, int x, int y) {
-        
+
         try {
-            
+
             BufferedImage img = ImageIO.read(new File(IMG_PATH));
-            
+
             BufferedImage thumbnail = Thumbnails.of(img)
                     .size(x, y)
                     .asBufferedImage();
-            
+
             ImageIcon icon = new ImageIcon(thumbnail);
             imageLabel.setIcon(icon);
             bottomPanel.repaint();
@@ -44,11 +44,5 @@ public class ImageHandling {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-//        String bid = id.trim();
-//
-//        ImageHandling.showImage("src\\images\\" + bid + "\\funkar.png", txtImage, jPanel1, 450, 470);
-//        taBlogFeed.setText(rL);
-
     }
 }
