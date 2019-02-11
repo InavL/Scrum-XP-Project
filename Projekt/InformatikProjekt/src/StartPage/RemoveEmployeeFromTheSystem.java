@@ -15,19 +15,19 @@ import oru.inf.InfException;
  */
 public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
 
-
     private static InfDB idb;
     private MethodService methodService;
+
     /**
      * Creates new form EditBlogInternalFrame
      */
     public RemoveEmployeeFromTheSystem(InfDB idb) {
         initComponents();
-        this.idb = idb; 
+        this.idb = idb;
         methodService = new MethodService(idb);
-        
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,7 +46,6 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
         txtID = new javax.swing.JTextField();
         txtFirstname = new javax.swing.JTextField();
         txtLastname = new javax.swing.JTextField();
-        lblText = new javax.swing.JLabel();
         btnRemove = new javax.swing.JButton();
         lblRemove = new javax.swing.JLabel();
 
@@ -75,9 +74,9 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
 
         lblID.setText("ID:");
 
-        lblFirstname.setText("Firstname:");
+        lblFirstname.setText("First name:");
 
-        lblLastname.setText("Lastname:");
+        lblLastname.setText("Last name:");
 
         txtID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,9 +89,6 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
                 txtLastnameActionPerformed(evt);
             }
         });
-
-        lblText.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
-        lblText.setText("Please enter the ID, first name and last name for the person that needs to be romved.");
 
         btnRemove.setText("Remove");
         btnRemove.addActionListener(new java.awt.event.ActionListener() {
@@ -107,35 +103,27 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRemove)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(159, 159, 159)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblID)
-                            .addComponent(lblFirstname)
-                            .addComponent(lblLastname))
-                        .addGap(34, 34, 34)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtLastname, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFirstname, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(220, 220, 220)
-                        .addComponent(btnRemove)
-                        .addGap(32, 32, 32)
-                        .addComponent(lblRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(lblText)))
-                .addContainerGap(274, Short.MAX_VALUE))
+                            .addComponent(lblID, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblFirstname, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblLastname, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtLastname)
+                            .addComponent(txtFirstname)
+                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(lblText)
-                .addGap(88, 88, 88)
+                .addGap(27, 27, 27)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblID)
                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -147,11 +135,11 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblLastname)
                     .addComponent(txtLastname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(64, 64, 64)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRemove))
-                .addGap(0, 66, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRemove)
+                .addGap(0, 27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -173,35 +161,28 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtIDActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        if(Validation.textfieldWithValue(txtFirstname) && Validation.textfieldWithValue(txtLastname) && Validation.textfieldWithValue(txtID) && Validation.idTesting(txtID, idb))
-        {
-            try
-            {
+        if (Validation.textfieldWithValue(txtFirstname) && Validation.textfieldWithValue(txtLastname) && Validation.textfieldWithValue(txtID) && Validation.idTesting(txtID, idb)) {
+            try {
                 String id = txtID.getText();
                 String firstname = txtFirstname.getText();
                 String lastname = txtLastname.getText();
-                
+
                 String fraga1 = "select ENAMN from PERSONER where ID = '" + id + "';";
                 String efternamn = idb.fetchSingle(fraga1);
-                
+
                 String fraga2 = "select FNAMN from PERSONER where ID = '" + id + "';";
                 String fornamn = idb.fetchSingle(fraga2);
-                
-                if(fornamn.equals(firstname) && efternamn.equals(lastname))
-                {
+
+                if (fornamn.equals(firstname) && efternamn.equals(lastname)) {
                     idb.delete("delete from PERSONER where ID = '" + id + "';");
-                    
+
                     lblRemove.setText("The person is now removed.");
-                }
-                else
-                {
+                } else {
                     JOptionPane.showMessageDialog(null, "The ID did not match the name.");
                 }
-                
-            }
-            catch(InfException ex)
-            {
-                 JOptionPane.showMessageDialog(null, "Something went wrong.");
+
+            } catch (InfException ex) {
+                JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
@@ -210,8 +191,6 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtLastnameActionPerformed
 
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRemove;
@@ -222,7 +201,6 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblLastname;
     private javax.swing.JLabel lblRemove;
-    private javax.swing.JLabel lblText;
     private javax.swing.JTextField txtFirstname;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtLastname;

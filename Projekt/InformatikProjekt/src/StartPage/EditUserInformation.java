@@ -7,7 +7,6 @@ package StartPage;
 
 import com.jidesoft.swing.AutoCompletion;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
