@@ -20,8 +20,8 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanel5" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -69,10 +69,10 @@
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Component id="jTextFieldLastName" alignment="0" max="32767" attributes="0"/>
                                               <Component id="jTextFieldPhone" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jTextFieldMail" alignment="0" pref="159" max="32767" attributes="0"/>
+                                              <Component id="jTextFieldMail" alignment="0" max="32767" attributes="0"/>
                                               <Component id="jAccessType" alignment="0" max="32767" attributes="0"/>
                                               <Component id="jTextFieldFirstName" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jPasswordField1" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="jPasswordField1" alignment="0" pref="159" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
@@ -90,7 +90,7 @@
                           <Component id="lEmployeeAdded" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="467" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -158,7 +158,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" pref="239" max="-2" attributes="0"/>
-                      <EmptySpace pref="367" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -244,7 +244,7 @@
               <StringArray count="0"/>
             </Property>
             <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-              <Color id="Default Cursor"/>
+              <Color id="Standardmark&#xf6;r"/>
             </Property>
           </Properties>
         </Component>

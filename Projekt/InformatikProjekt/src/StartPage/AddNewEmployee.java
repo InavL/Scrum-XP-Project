@@ -74,7 +74,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(367, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,10 +170,10 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
                                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(jTextFieldLastName)
                                             .addComponent(jTextFieldPhone)
-                                            .addComponent(jTextFieldMail, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                                            .addComponent(jTextFieldMail)
                                             .addComponent(jAccessType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(jTextFieldFirstName)
-                                            .addComponent(jPasswordField1)))
+                                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)))
                                     .addGroup(jPanel5Layout.createSequentialGroup()
                                         .addGap(28, 28, 28)
                                         .addComponent(jLabeltextMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))))))
@@ -182,7 +182,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
                         .addComponent(jButtonSaveNewEmployee)
                         .addGap(89, 89, 89)
                         .addComponent(lEmployeeAdded)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(467, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,8 +230,8 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -247,7 +247,9 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         if (Validation.textfieldWithValue(jTextFieldMail) && Validation.isValidEmailAddress(jTextFieldMail.getText()) && Validation.textfieldWithValue(jTextFieldPhone)
                 && Validation.textfaltTal(jTextFieldPhone) && Validation.textfieldWithValue(jTextFieldFirstName) && Validation.textfieldWithValue(jTextFieldLastName)
                 && Validation.textfieldWithValue(jPasswordField1)) {
+            
             try {
+                
                 int id = createId();
                 String phonenumber = jTextFieldPhone.getText();
                 String mail = jTextFieldMail.getText();
@@ -264,16 +266,20 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
                 String checkPhonenumber = idb.fetchSingle(fraga2);
 
                 if (!mail.equals(checkMail) && !phonenumber.equals(checkPhonenumber)) {
+                    
                     String question = "insert into PERSONER (ID,FNAMN,ENAMN,MAIL,TELEFON,SID,LOSENORD) values"
                             + "(" + id + ",'" + firstname + "','" + lastname + "','" + mail + "'," + phonenumber + "," + sid + ",'" + password + "');";
                     System.out.println(question);
                     idb.insert(question);
 
                     lEmployeeAdded.setText("The person is now added to the employee list.");
+                    
                 } else if (mail.equals(checkMail)) {
-                    JOptionPane.showMessageDialog(null, "E-Mail is allready in use!");
+                    JOptionPane.showMessageDialog(null, "E-Mail is already in use!");
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "Phonenumber is allready in use!");
+                    
                 }
 
             } catch (InfException ex) {
