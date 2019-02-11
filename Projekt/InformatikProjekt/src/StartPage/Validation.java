@@ -77,6 +77,7 @@ public class Validation {
         } catch (AddressException ex) {
             
             result = false;
+            JOptionPane.showMessageDialog(null, "Not a valid email");
             
         }
         
@@ -176,20 +177,7 @@ public class Validation {
         }    
         return ettTal;
     }
-    
-    public static boolean isEmail(JTextField tf){
         
-        boolean resultat = true;
-        
-        String instring =tf.getText();
-            
-        if(instring.contains("@") && instring.contains(".")){
-                JOptionPane.showMessageDialog(null, "The email is incorrect");
-                resultat=false;
-        }
-        return false;
-    }
-    
     public static boolean emailExisting(JTextField tf, InfDB idb)
     {
         boolean resultat = true;

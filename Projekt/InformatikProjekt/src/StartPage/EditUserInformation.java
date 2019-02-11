@@ -298,12 +298,14 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSelectActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        if(Validation.textfieldWithValue(tfFirstname) && Validation.textfieldWithValue(tfSurname) && Validation.isEmail(tfEmail) && Validation.textfaltTal(tfPhone) && Validation.textfieldWithValue(tfPassword) && Validation.elementSelectedInCombobox(cbAccessType, "Select Access type")) {
+        
+        String email = tfEmail.getText();
+        
+        if(Validation.textfieldWithValue(tfFirstname) && Validation.textfieldWithValue(tfSurname) && Validation.isValidEmailAddress(email) && Validation.textfaltTal(tfPhone) && Validation.textfieldWithValue(tfPassword) && Validation.elementSelectedInCombobox(cbAccessType, "Select Access type")) {
           
             //Hämtar det som finns i textfälten och lägger in värdena i lokala variabler
             firstname = tfFirstname.getText();
             surname = tfSurname.getText();
-            String email = tfEmail.getText();
             String phone = tfPhone.getText();
             String password = tfPassword.getText();
             String access = cbAccessType.getSelectedItem().toString();
