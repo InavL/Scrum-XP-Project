@@ -16,7 +16,7 @@ import oru.inf.InfException;
  *
  * @author ellin
  */
-public class ShowUserInformation extends javax.swing.JInternalFrame {
+public class ShowUser extends javax.swing.JInternalFrame {
     
     private static InfDB idb;
     private MethodService methodService;
@@ -25,8 +25,9 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
     
     /**
      * Creates new form EditBlogInternalFrame
+     * @param idb
      */
-    public ShowUserInformation(InfDB idb) {
+    public ShowUser(InfDB idb) {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);
@@ -53,15 +54,8 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
         taInformation = new javax.swing.JTextArea();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setAlignmentX(0.5F);
-        jPanel1.setAlignmentY(0.5F);
-        jPanel1.setMaximumSize(new java.awt.Dimension(32767, 32767));
-        jPanel1.setMinimumSize(new java.awt.Dimension(0, 0));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1175, 810));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(51, 153, 255));
-        jPanel2.setPreferredSize(new java.awt.Dimension(1175, 100));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Örebro universitet");
@@ -73,7 +67,7 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(3847, Short.MAX_VALUE))
+                .addContainerGap(550, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,11 +76,7 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 4096, -1));
-
         jScrollPane1.setViewportView(listAllUsers);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 300, 430));
 
         btnShowInformation.setText("Show information");
         btnShowInformation.addActionListener(new java.awt.event.ActionListener() {
@@ -94,13 +84,36 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
                 btnShowInformationActionPerformed(evt);
             }
         });
-        jPanel1.add(btnShowInformation, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 160, -1, -1));
 
         taInformation.setColumns(20);
         taInformation.setRows(5);
         jScrollPane2.setViewportView(taInformation);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 160, 310, 120));
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(btnShowInformation)
+                .addGap(10, 10, 10)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnShowInformation)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,14 +123,16 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnShowInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowInformationActionPerformed
-        
+
         if(Validation.valtVarde(listAllUsers.getSelectedValue())){
             try{
                 String personInfo = listAllUsers.getSelectedValue();
@@ -126,33 +141,33 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
                 +" join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID"
                 +" where ID ="+id;
                 ArrayList<HashMap<String,String>> resultatLista = idb.fetchRows(fraga);
-                
-                    String rL = "";
-                    for(HashMap rad: resultatLista){
-                        rL+= "Firstname: ";
-                        rL+=rad.get("FNAMN");
-                        rL+= "\n" + "Surname: ";
-                        rL+=rad.get("ENAMN");
-                        rL+= "\n" + "Access type: ";
-                        rL+=rad.get("BEHORIGHET");
-                        rL+= "\n" + "Phone number: ";
-                        rL+=rad.get("TELEFON");
-                        rL+= "\n" + "E-mail: ";
-                        rL+=rad.get("MAIL");
-                        rL+= "\n" +"Password: ";
-                        rL+=rad.get("LOSENORD");
-                        
-                    }
-                        
-                    taInformation.setText(rL);
-                
+
+                String rL = "";
+                for(HashMap rad: resultatLista){
+                    rL+= "Firstname: ";
+                    rL+=rad.get("FNAMN");
+                    rL+= "\n" + "Surname: ";
+                    rL+=rad.get("ENAMN");
+                    rL+= "\n" + "Access type: ";
+                    rL+=rad.get("BEHORIGHET");
+                    rL+= "\n" + "Phone number: ";
+                    rL+=rad.get("TELEFON");
+                    rL+= "\n" + "E-mail: ";
+                    rL+=rad.get("MAIL");
+                    rL+= "\n" +"Password: ";
+                    rL+=rad.get("LOSENORD");
+
+                }
+
+                taInformation.setText(rL);
+
             }
             catch (InfException e){
-                JOptionPane.showMessageDialog(null, "Något gick fel!");
-                System.out.println("Internt felmeddelande"+e.getMessage());  
+                JOptionPane.showMessageDialog(null, "Something went wrong!");
+                System.out.println("Internt felmeddelande"+e.getMessage());
             }
-      }   
-    
+        }
+
     }//GEN-LAST:event_btnShowInformationActionPerformed
 
     private void fillListWithUsers() {
@@ -180,7 +195,6 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnShowInformation;

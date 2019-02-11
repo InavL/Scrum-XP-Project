@@ -31,7 +31,8 @@ public class MainPage extends javax.swing.JFrame {
     private BlogFeed blogFeed;
 //    private FeedBlogInternalFrame feedBlogInternalFrame;
     private RemoveEmployeeFromTheSystem removeEmployeeFromTheSystem;
-    private ShowUserInformation showUserInformation;
+    private ShowUser showUser;
+//    private ShowUserInformation showUserInformation;
     private EditUserInformation editUserInformation;
     private AddNewEmployee addNewEmployee;
     private boolean loggedInAsAdmin;
@@ -400,8 +401,8 @@ public class MainPage extends javax.swing.JFrame {
     private void userInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userInformationActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if (!tabExists("User information")) {
-            showUserInformation = new ShowUserInformation(idb);
-            openTab(showUserInformation, "User information");
+            showUser = new ShowUser(idb);
+            openTab(showUser, "User information");
         } //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else {
             moveFocusToTab("User information");
