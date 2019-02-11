@@ -5,7 +5,13 @@
  */
 package StartPage;
 
+import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import net.coobird.thumbnailator.Thumbnails;
 import oru.inf.InfDB;
 import org.seamless.swing.ClosableTabbedPane;
 
@@ -14,7 +20,7 @@ import org.seamless.swing.ClosableTabbedPane;
  * @author Java Grupp 1
  */
 public class MainPage extends javax.swing.JFrame {
-    
+
     private static InfDB idb;
     private MethodService methodService;
     private ClosableTabbedPane paneMainPageTabs;
@@ -26,16 +32,16 @@ public class MainPage extends javax.swing.JFrame {
     private ShowUserInformation showUserInformation;
     private EditUserInformation editUserInformation;
     private AddNewEmployee addNewEmployee;
-    private boolean loggedInAsAdmin;  
+    private boolean loggedInAsAdmin;
     private AddNewCategoryAndTopic addNewCategoryAndTopic;
     private AddNewTopic addNewTopic;
-    
+
     private CreateMeeting createMeeting;
     private ChooseMeetingTime chooseMeetingTime;
-        
-        
+
     /**
      * Creates new form ColorPage
+     *
      * @param idb
      */
     public MainPage(InfDB idb) {
@@ -43,6 +49,22 @@ public class MainPage extends javax.swing.JFrame {
         this.setSize(1000, 800);
         this.idb = idb;
         this.setExtendedState(this.MAXIMIZED_BOTH);
+
+        try {
+
+            BufferedImage img = ImageIO.read(new File("src/images/OrUIS-farg.png"));
+
+            BufferedImage thumbnail = Thumbnails.of(img)
+                    .scale(.75)
+                    .asBufferedImage();
+
+            ImageIcon icon = new ImageIcon(thumbnail);
+            this.setIconImage(icon.getImage());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         //Instansierar ett nytt methodServiceobjekt
         methodService = new MethodService(idb);
         paneMainPageTabs = new ClosableTabbedPane();
@@ -51,7 +73,7 @@ public class MainPage extends javax.swing.JFrame {
         setMenuVisible(true);
         adminFunktions();
         setStartPage();
-        
+
     }
 
     /**
@@ -265,66 +287,60 @@ public class MainPage extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void setStartPage() {
-        
+
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Blog feed")) {
+        if (!tabExists("Blog feed")) {
             feedBlogInternalFrame = new FeedBlogInternalFrame(idb);
             openTab(feedBlogInternalFrame, "Blog feed");
-        }       
-        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else{
+        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else {
             moveFocusToTab("Blog feed");
         }
     }
-    
+
     private void openTab(javax.swing.JInternalFrame oneTab, String tabName) {
         // Metoden hjälper till att öppna en flik och kan göra detta utifrån basklassen.       
         paneMainPageTabs.addTab(tabName, oneTab);
-        paneMainPageTabs.setSelectedIndex(paneMainPageTabs.getTabCount()-1);
-            // Maximerar fliken.
-            try { 
-                oneTab.setMaximum(true);
-            }catch (PropertyVetoException ettUndantag) {
-                System.out.println(ettUndantag.getMessage());
-            }
-            
-            // Tar bort ramen och huvudet från fönstret.
-            oneTab.setBorder(null);
-            ((javax.swing.plaf.basic.BasicInternalFrameUI)oneTab.getUI()).setNorthPane(null); 
+        paneMainPageTabs.setSelectedIndex(paneMainPageTabs.getTabCount() - 1);
+        // Maximerar fliken.
+        try {
+            oneTab.setMaximum(true);
+        } catch (PropertyVetoException ettUndantag) {
+            System.out.println(ettUndantag.getMessage());
         }
-    
+
+        // Tar bort ramen och huvudet från fönstret.
+        oneTab.setBorder(null);
+        ((javax.swing.plaf.basic.BasicInternalFrameUI) oneTab.getUI()).setNorthPane(null);
+    }
+
     private void moveFocusToTab(String flikTitel) {
         //Flyttar fokus till fliken
         int tabCount = paneMainPageTabs.getTabCount();
-        for (int i=0; i < tabCount; i++) 
-        {
+        for (int i = 0; i < tabCount; i++) {
             String tabTitle = paneMainPageTabs.getTitleAt(i);
-            if (tabTitle.equals(flikTitel)){ 
+            if (tabTitle.equals(flikTitel)) {
                 paneMainPageTabs.setSelectedIndex(i);
             }
         }
     }
-    
+
     private boolean tabExists(String flikTitel) {
         boolean tabExists = false;
-                int tabCount = paneMainPageTabs.getTabCount();
-        for (int i=0; i < tabCount; i++) 
-        {
+        int tabCount = paneMainPageTabs.getTabCount();
+        for (int i = 0; i < tabCount; i++) {
             String tabTitle = paneMainPageTabs.getTitleAt(i);
-            if (tabTitle.equals(flikTitel)){ 
+            if (tabTitle.equals(flikTitel)) {
                 tabExists = true;
             }
         }
         return tabExists;
     }
-    
+
     private void setMenuVisible(boolean enBoolean) {
-        
-        
-        
-        
+
     }
-    
+
     private void exitMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMnuItmActionPerformed
         //Avslutar applikationen
         System.exit(1);
@@ -332,36 +348,33 @@ public class MainPage extends javax.swing.JFrame {
 
     private void createBlogMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBlogMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Create blog")) {
+        if (!tabExists("Create blog")) {
             createBlogInternalFrame = new CreateBlogInternalFrame(idb);
             openTab(createBlogInternalFrame, "Create blog");
-        }       
-        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else{
+        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else {
             moveFocusToTab("Create blog");
         }
     }//GEN-LAST:event_createBlogMnuItmActionPerformed
 
     private void editBlogMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBlogMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Edit blog")) {
+        if (!tabExists("Edit blog")) {
             editBlogInternalFrame = new EditBlogInternalFrame(idb);
             openTab(editBlogInternalFrame, "Edit blog");
-        }  
-        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else{
+        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else {
             moveFocusToTab("Edit blog");
         }
     }//GEN-LAST:event_editBlogMnuItmActionPerformed
 
     private void removeBlogMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBlogMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Remove blog")) {
+        if (!tabExists("Remove blog")) {
             removeBlogInternalFrame = new RemoveBlogInternalFrame(idb);
             openTab(removeBlogInternalFrame, "Remove blog");
-        }       
-        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else{
+        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else {
             moveFocusToTab("Remove blog");
         }
     }//GEN-LAST:event_removeBlogMnuItmActionPerformed
@@ -373,124 +386,114 @@ public class MainPage extends javax.swing.JFrame {
 
     private void blogFeedMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blogFeedMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Blog feed")) {
+        if (!tabExists("Blog feed")) {
             feedBlogInternalFrame = new FeedBlogInternalFrame(idb);
             openTab(feedBlogInternalFrame, "Blog feed");
-        }       
-        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else{
+        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else {
             moveFocusToTab("Blog feed");
         }
     }//GEN-LAST:event_blogFeedMnuItmActionPerformed
 
     private void userInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userInformationActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("User information")) {
+        if (!tabExists("User information")) {
             showUserInformation = new ShowUserInformation(idb);
             openTab(showUserInformation, "User information");
-        }       
-        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else{
+        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else {
             moveFocusToTab("User information");
         }
     }//GEN-LAST:event_userInformationActionPerformed
 
     private void removeUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeUserActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Remove user")) {
+        if (!tabExists("Remove user")) {
             removeEmployeeFromTheSystem = new RemoveEmployeeFromTheSystem(idb);
             openTab(removeEmployeeFromTheSystem, "Remove user");
-        }       
-        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else{
+        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else {
             moveFocusToTab("Remove user");
         }
     }//GEN-LAST:event_removeUserActionPerformed
 
     private void editUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Edit user")) {
+        if (!tabExists("Edit user")) {
             editUserInformation = new EditUserInformation(idb);
             openTab(editUserInformation, "Edit user");
-        }       
-        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else{
+        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else {
             moveFocusToTab("Edit user");
         }
     }//GEN-LAST:event_editUserActionPerformed
 
     private void addUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Add user")) {
+        if (!tabExists("Add user")) {
             addNewEmployee = new AddNewEmployee(idb);
             openTab(addNewEmployee, "Add user");
-        }       
-        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else{
+        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else {
             moveFocusToTab("Add user");
         }
     }//GEN-LAST:event_addUserActionPerformed
     //Metoden körs i konstruktorn och kollar om användaren har admin behörighet.
-    private void adminFunktions(){
+    private void adminFunktions() {
         loggedInAsAdmin = MethodClass.isAdmin();
-        if(!loggedInAsAdmin){
+        if (!loggedInAsAdmin) {
             user.setVisible(false);
         }
     }
     private void addCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCategoryActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Add category")) {
+        if (!tabExists("Add category")) {
             addNewCategoryAndTopic = new AddNewCategoryAndTopic(idb);
             openTab(addNewCategoryAndTopic, "Add category");
-        }       
-        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else{
+        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else {
             moveFocusToTab("Add category");
         }
     }//GEN-LAST:event_addCategoryActionPerformed
 
     private void logOutMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMnuItmActionPerformed
         //Skapar ett nytt LoginWindow och gör det synligt och stänger ner MainPage 
-        new LoginWindow(idb).setVisible(true); 
+        new LoginWindow(idb).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_logOutMnuItmActionPerformed
 
     private void addTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTopicActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Add topic")) {
+        if (!tabExists("Add topic")) {
             addNewTopic = new AddNewTopic(idb);
             openTab(addNewTopic, "Add topiccategory");
-        }       
-        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else{
+        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else {
             moveFocusToTab("Add category");
         }
     }//GEN-LAST:event_addTopicActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Create meeting")) {
+        if (!tabExists("Create meeting")) {
             createMeeting = new CreateMeeting(idb);
             openTab(createMeeting, "Create meeting");
-        }       
-        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else{
+        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else {
             moveFocusToTab("Create meeting");
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void ChooseMeetingTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseMeetingTimeActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Choose meeting time")) {
+        if (!tabExists("Choose meeting time")) {
             chooseMeetingTime = new ChooseMeetingTime(idb);
             openTab(chooseMeetingTime, "Choose meeting time");
-        }       
-        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else{
+        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else {
             moveFocusToTab("Choose meeting time");
         }
     }//GEN-LAST:event_ChooseMeetingTimeActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

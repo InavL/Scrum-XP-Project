@@ -75,10 +75,13 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
         lblChoosepostToEdit = new javax.swing.JLabel();
         btnChooseThisPost = new javax.swing.JButton();
 
+        setPreferredSize(new java.awt.Dimension(1920, 1080));
+
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(51, 153, 255));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1175, 100));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Örebro universitet");
@@ -96,10 +99,10 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 42, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, -1));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 4096, -1));
 
         cbPosts.setEditable(true);
         cbPosts.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose a post" }));
@@ -113,7 +116,7 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
                 btnSaveActionPerformed(evt);
             }
         });
-        textPanel.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 380, -1, -1));
+        textPanel.add(btnSave, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 380, -1, -1));
 
         lblHeading.setText("Heading");
         textPanel.add(lblHeading, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 28, -1, -1));
@@ -125,7 +128,7 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
         taText.setRows(5);
         jScrollPane1.setViewportView(taText);
 
-        textPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 106, 770, 238));
+        textPanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 106, 830, 238));
 
         lblChanges.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblChanges.setText("Your changes have been saved!");
@@ -171,7 +174,7 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
 
         mainPanel.addTab("Edit category", categoryPanel1);
 
-        jPanel1.add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 181, 870, 470));
+        jPanel1.add(mainPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 181, 900, 470));
 
         lblChoosepostToEdit.setText("Choose a post to edit");
         jPanel1.add(lblChoosepostToEdit, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 107, -1, -1));
@@ -188,15 +191,64 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1920, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 703, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1080, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnChooseThisPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseThisPostActionPerformed
+        //Kontrollerar att sökfältet inte är tomt.
+        if (Validation.elementSelectedInCombobox(cbPosts, "Choose a post")) {
+            String titel = cbPosts.getSelectedItem().toString();
+            try {
+                HashMap<String, String> postInfo = idb.fetchRow("SELECT bloggID, bloggpost FROM blogg \n" +
+                    "WHERE titel = \'" + titel + "\'");
+
+                //Fyller i de hämtade värdena i textrutorna för blogginlägget
+                tfHeading.setText(titel);
+                taText.setText(postInfo.get("BLOGGPOST"));
+                blogID = postInfo.get("bloggID");
+
+                //Gör panelen synlig
+                mainPanel.setVisible(true);
+                //Döljer texterna med att ändringarna har sparats
+                lblChanges.setVisible(false);
+                lblChanges2.setVisible(false);
+            }
+            catch (InfException ettUndantag) {
+                ettUndantag.getMessage();
+                JOptionPane.showMessageDialog(null, "Something went wrong.");
+            }
+        }
+    }//GEN-LAST:event_btnChooseThisPostActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        //Uppdaterar inlägget
+        if (Validation.textfieldWithValue(tfHeading) && Validation.textareaWithValueTA(taText)) {
+            //Lägger in värdena i de lokala variablerna
+            String heading = tfHeading.getText();
+            String text = taText.getText();
+            String titel = cbPosts.getSelectedItem().toString();
+
+            try {
+                String bloggID = idb.fetchSingle("SELECT bloggid FROM blogg  WHERE titel = \'" + titel + "\'");
+                //Uppdaterar blogginlägget med den nya titeln och texten
+                idb.update("UPDATE blogg SET titel = \'" + heading + "\', bloggpost = \'" + text + "\' WHERE bloggid = " + bloggID);
+
+                lblChanges.setVisible(true);
+
+            }
+            catch (InfException oneException) {
+                oneException.getMessage();
+                JOptionPane.showMessageDialog(null, "Something went wrong.");
+            }
+        }
+    }//GEN-LAST:event_btnSaveActionPerformed
 
 
 private void fillListWithYourPosts(){
@@ -224,57 +276,6 @@ private void fillListWithYourPosts(){
             }
     } 
     
-    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        //Uppdaterar inlägget
-        if (Validation.textfieldWithValue(tfHeading) && Validation.textareaWithValueTA(taText)) {
-            //Lägger in värdena i de lokala variablerna
-            String heading = tfHeading.getText();
-            String text = taText.getText();
-            String titel = cbPosts.getSelectedItem().toString();
-            
-            
-            
-            try {
-                String bloggID = idb.fetchSingle("SELECT bloggid FROM blogg  WHERE titel = \'" + titel + "\'");
-                //Uppdaterar blogginlägget med den nya titeln och texten
-                idb.update("UPDATE blogg SET titel = \'" + heading + "\', bloggpost = \'" + text + "\' WHERE bloggid = " + bloggID);
-                
-                lblChanges.setVisible(true);
-                
-            } 
-            catch (InfException oneException) {
-                oneException.getMessage();
-                JOptionPane.showMessageDialog(null, "Something went wrong.");
-            }         
-        }
-    }//GEN-LAST:event_btnSaveActionPerformed
-
-    private void btnChooseThisPostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChooseThisPostActionPerformed
-        //Kontrollerar att sökfältet inte är tomt.
-        if (Validation.elementSelectedInCombobox(cbPosts, "Choose a post")) {  
-            String titel = cbPosts.getSelectedItem().toString();
-            try {
-             HashMap<String, String> postInfo = idb.fetchRow("SELECT bloggID, bloggpost FROM blogg \n" +
-                    "WHERE titel = \'" + titel + "\'");
-             
-             //Fyller i de hämtade värdena i textrutorna för blogginlägget
-            tfHeading.setText(titel);
-            taText.setText(postInfo.get("BLOGGPOST"));
-            blogID = postInfo.get("bloggID");
-            
-            //Gör panelen synlig
-            mainPanel.setVisible(true);
-            //Döljer texterna med att ändringarna har sparats
-            lblChanges.setVisible(false);
-            lblChanges2.setVisible(false);
-            }
-            catch (InfException ettUndantag) {
-                ettUndantag.getMessage();
-                JOptionPane.showMessageDialog(null, "Something went wrong.");
-            } 
-        }
-    }//GEN-LAST:event_btnChooseThisPostActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;

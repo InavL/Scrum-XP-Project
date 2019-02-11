@@ -5,11 +5,9 @@
  */
 package StartPage;
 
-import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -48,11 +46,11 @@ public class LoginWindow extends javax.swing.JFrame {
 
             ImageIcon icon = new ImageIcon(thumbnail);
             this.setIconImage(icon.getImage());
-            
+
         } catch (IOException e) {
             e.printStackTrace();
-            }
         }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -215,7 +213,6 @@ public class LoginWindow extends javax.swing.JFrame {
 
             if (password.equals(losenord)) { // Checks if the password provided matches the one in the database
 
-                
                 int svBehorighet = Integer.parseInt(svarBehorighet);
                 LoggedUser.setBehorighet(svBehorighet);
                 //behorighet = svBehorighet; // Sets the permissionlevel
