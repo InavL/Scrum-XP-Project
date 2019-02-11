@@ -24,7 +24,8 @@ public class MainPage extends javax.swing.JFrame {
     private static InfDB idb;
     private MethodService methodService;
     private ClosableTabbedPane paneMainPageTabs;
-    private CreateBlogInternalFrame createBlogInternalFrame;
+    private CreateBlog createBlog;
+//    private CreateBlogInternalFrame createBlogInternalFrame;
     private EditBlogInternalFrame editBlogInternalFrame;
     private RemoveBlogInternalFrame removeBlogInternalFrame;
     private BlogFeed blogFeed;
@@ -350,8 +351,8 @@ public class MainPage extends javax.swing.JFrame {
     private void createBlogMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBlogMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if (!tabExists("Create blog")) {
-            createBlogInternalFrame = new CreateBlogInternalFrame(idb);
-            openTab(createBlogInternalFrame, "Create blog");
+            createBlog = new CreateBlog(idb);
+            openTab(createBlog, "Create blog");
         } //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else {
             moveFocusToTab("Create blog");
