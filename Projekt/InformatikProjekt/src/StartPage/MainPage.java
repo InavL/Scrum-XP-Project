@@ -27,7 +27,8 @@ public class MainPage extends javax.swing.JFrame {
     private CreateBlogInternalFrame createBlogInternalFrame;
     private EditBlogInternalFrame editBlogInternalFrame;
     private RemoveBlogInternalFrame removeBlogInternalFrame;
-    private FeedBlogInternalFrame feedBlogInternalFrame;
+    private BlogFeed blogFeed;
+//    private FeedBlogInternalFrame feedBlogInternalFrame;
     private RemoveEmployeeFromTheSystem removeEmployeeFromTheSystem;
     private ShowUserInformation showUserInformation;
     private EditUserInformation editUserInformation;
@@ -290,8 +291,8 @@ public class MainPage extends javax.swing.JFrame {
 
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if (!tabExists("Blog feed")) {
-            feedBlogInternalFrame = new FeedBlogInternalFrame(idb);
-            openTab(feedBlogInternalFrame, "Blog feed");
+            blogFeed = new BlogFeed(idb);
+            openTab(blogFeed, "Blog feed");
         } //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else {
             moveFocusToTab("Blog feed");
@@ -387,8 +388,8 @@ public class MainPage extends javax.swing.JFrame {
     private void blogFeedMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blogFeedMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if (!tabExists("Blog feed")) {
-            feedBlogInternalFrame = new FeedBlogInternalFrame(idb);
-            openTab(feedBlogInternalFrame, "Blog feed");
+            blogFeed = new BlogFeed(idb);
+            openTab(blogFeed, "Blog feed");
         } //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else {
             moveFocusToTab("Blog feed");

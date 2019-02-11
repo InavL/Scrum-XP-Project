@@ -16,7 +16,7 @@ import oru.inf.InfException;
  *
  * @author ellin
  */
-public class ChooseMeetingTime extends javax.swing.JInternalFrame {
+public class ChooseMeetingTime1 extends javax.swing.JInternalFrame {
     
     private static InfDB idb;
     private MethodService methodService;
@@ -24,7 +24,7 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public ChooseMeetingTime(InfDB idb) {
+    public ChooseMeetingTime1(InfDB idb) {
         initComponents();
         this.idb = idb;
         fillComboBox();
@@ -109,7 +109,7 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
                 {
                     String start = forslagslista.get(i).get("START_TID");
                     String slut = forslagslista.get(i).get("SLUT_TID");
-                    cbxOption.addItem(start + " till " + slut);
+                    //cbxOption.addItem(start + " till " + slut);
                 }
             }
             catch(InfException ex)

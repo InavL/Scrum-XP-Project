@@ -16,19 +16,19 @@ import oru.inf.InfException;
  *
  * @author ellin
  */
-public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
-    
+public class BlogFeed extends javax.swing.JInternalFrame {
+
     private static InfDB idb;
     private MethodService methodService;
 
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public FeedBlogInternalFrame(InfDB idb) {
+    public BlogFeed(InfDB idb) {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);
-        
+
         fillListWithSienceBlog();
         fillListWithEducationBlog();
         fillListWithInformalBlog();
@@ -49,9 +49,9 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        txtImage = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         taBlogFeed = new javax.swing.JTextArea();
-        btnUpdate = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         pnlSience = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -62,13 +62,11 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         pnlInformal = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         JlGetBlogInformal = new javax.swing.JList<>();
-        txtImage = new javax.swing.JLabel();
+        btnUpdate = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(51, 153, 255));
-        jPanel2.setPreferredSize(new java.awt.Dimension(1175, 100));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Örebro universitet");
@@ -80,7 +78,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(3847, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,21 +87,9 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 4096, -1));
-
         taBlogFeed.setColumns(20);
         taBlogFeed.setRows(5);
         jScrollPane1.setViewportView(taBlogFeed);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 140, 270, 460));
-
-        btnUpdate.setText("Update");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 610, -1, -1));
 
         jListAllScienceBlog.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -121,11 +107,11 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         pnlSience.setLayout(pnlSienceLayout);
         pnlSienceLayout.setHorizontalGroup(
             pnlSienceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
         );
         pnlSienceLayout.setVerticalGroup(
             pnlSienceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Science", pnlSience);
@@ -146,11 +132,11 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         pnlEducation.setLayout(pnlEducationLayout);
         pnlEducationLayout.setHorizontalGroup(
             pnlEducationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
         );
         pnlEducationLayout.setVerticalGroup(
             pnlEducationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Education", pnlEducation);
@@ -171,17 +157,55 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         pnlInformal.setLayout(pnlInformalLayout);
         pnlInformalLayout.setHorizontalGroup(
             pnlInformalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
         );
         pnlInformalLayout.setVerticalGroup(
             pnlInformalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Informal", pnlInformal);
 
-        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 140, 190, 460));
-        jPanel1.add(txtImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtImage)
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(900, 900, 900)
+                        .addComponent(btnUpdate)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtImage)
+                    .addComponent(jScrollPane1)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
+                .addComponent(btnUpdate)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -191,142 +215,135 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-   
-    
+    private void jListAllScienceBlogValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListAllScienceBlogValueChanged
+
+        try {
+            String sienceBlogInfo = jListAllScienceBlog.getSelectedValue();
+            String id = sienceBlogInfo.substring(0, 2);
+            String fraga = "SELECT BLOGGPOST FROM BLOGG"
+                    + " where BLOGGID =" + id;
+            ArrayList<HashMap<String, String>> resultatLista = idb.fetchRows(fraga);
+
+            String rL = "";
+            for (HashMap rad : resultatLista) {
+                rL += rad.get("BLOGGPOST");
+                rL += "\n";
+            }
+
+            String bid = id.trim();
+
+            ImageHandling.showImage("src\\images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);
+
+            taBlogFeed.setText(rL);
+
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(null, "Något gick fel!");
+            System.out.println("Internt felmeddelande" + e.getMessage());
+        }
+
+    }//GEN-LAST:event_jListAllScienceBlogValueChanged
+
+    private void JlGetBlogEducationValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_JlGetBlogEducationValueChanged
+
+        try {
+            String sienceBlogInfo = JlGetBlogEducation.getSelectedValue();
+            String id = sienceBlogInfo.substring(0, 2);
+            String fraga = "SELECT BLOGGPOST FROM BLOGG"
+                    + " where BLOGGID =" + id;
+            ArrayList<HashMap<String, String>> resultatLista = idb.fetchRows(fraga);
+
+            String rL = "";
+            for (HashMap rad : resultatLista) {
+                rL += rad.get("BLOGGPOST");
+                rL += "\n";
+            }
+
+            String bid = id.trim();
+
+            ImageHandling.showImage("src\\images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);
+
+            taBlogFeed.setText(rL);
+
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(null, "Något gick fel!");
+            System.out.println("Internt felmeddelande" + e.getMessage());
+        }
+
+    }//GEN-LAST:event_JlGetBlogEducationValueChanged
+
+    private void JlGetBlogInformalValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_JlGetBlogInformalValueChanged
+
+        try {
+            String sienceBlogInfo = JlGetBlogInformal.getSelectedValue();
+            String id = sienceBlogInfo.substring(0, 2);
+            String fraga = "SELECT BLOGGPOST FROM BLOGG"
+                    + " where BLOGGID =" + id;
+            ArrayList<HashMap<String, String>> resultatLista = idb.fetchRows(fraga);
+
+            String rL = "";
+            for (HashMap rad : resultatLista) {
+                rL += rad.get("BLOGGPOST");
+                rL += "\n";
+            }
+
+            String bid = id.trim();
+
+            ImageHandling.showImage("src\\images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);
+
+            taBlogFeed.setText(rL);
+
+        } catch (InfException e) {
+            JOptionPane.showMessageDialog(null, "Något gick fel!");
+            System.out.println("Internt felmeddelande" + e.getMessage());
+        }
+
+    }//GEN-LAST:event_JlGetBlogInformalValueChanged
+
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         // Uppdaterar flödet ifall ändringar har gjorts sedan man öppnade fönstret
         fillListWithSienceBlog();
         fillListWithEducationBlog();
         fillListWithInformalBlog();
-        
+
     }//GEN-LAST:event_btnUpdateActionPerformed
 
-    private void jListAllScienceBlogValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListAllScienceBlogValueChanged
-
-            try{
-                String sienceBlogInfo = jListAllScienceBlog.getSelectedValue();
-                String id = sienceBlogInfo.substring(0,2);
-                String fraga = "SELECT BLOGGPOST FROM BLOGG"
-                +" where BLOGGID ="+id;
-                ArrayList<HashMap<String,String>> resultatLista = idb.fetchRows(fraga);
-                
-                    String rL = "";
-                    for(HashMap rad: resultatLista){
-                        rL+=rad.get("BLOGGPOST");
-                        rL+= "\n";     
-                    }
-                
-                String bid = id.trim();
-
-                ImageHandling.showImage("src\\images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
-
-                taBlogFeed.setText(rL);
-
-            }
-            catch (InfException e){
-                JOptionPane.showMessageDialog(null, "Något gick fel!");
-                System.out.println("Internt felmeddelande"+e.getMessage());  
-            }
-   
-    }//GEN-LAST:event_jListAllScienceBlogValueChanged
-
-    private void JlGetBlogEducationValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_JlGetBlogEducationValueChanged
-     
-            try{
-                String sienceBlogInfo = JlGetBlogEducation.getSelectedValue();
-                String id = sienceBlogInfo.substring(0,2);
-                String fraga = "SELECT BLOGGPOST FROM BLOGG"
-                +" where BLOGGID ="+id;
-                ArrayList<HashMap<String,String>> resultatLista = idb.fetchRows(fraga);
-                
-                    String rL = "";
-                    for(HashMap rad: resultatLista){
-                        rL+=rad.get("BLOGGPOST");
-                        rL+= "\n";     
-                    }
-                    
-                    String bid = id.trim();
-
-                    ImageHandling.showImage("src\\images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
-
-                        
-                    taBlogFeed.setText(rL);
-                
-            }
-            catch (InfException e){
-                JOptionPane.showMessageDialog(null, "Något gick fel!");
-                System.out.println("Internt felmeddelande"+e.getMessage());  
-            }
-      
-    }//GEN-LAST:event_JlGetBlogEducationValueChanged
-
-    private void JlGetBlogInformalValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_JlGetBlogInformalValueChanged
-    
-            try{
-                String sienceBlogInfo = JlGetBlogInformal.getSelectedValue();
-                String id = sienceBlogInfo.substring(0,2);
-                String fraga = "SELECT BLOGGPOST FROM BLOGG"
-                +" where BLOGGID ="+id;
-                ArrayList<HashMap<String,String>> resultatLista = idb.fetchRows(fraga);
-                
-                    String rL = "";
-                    for(HashMap rad: resultatLista){
-                        rL+=rad.get("BLOGGPOST");
-                        rL+= "\n";     
-                    }
-                    
-                    String bid = id.trim();
-
-                    ImageHandling.showImage("src\\images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
-
-                        
-                    taBlogFeed.setText(rL);
-                
-            }
-            catch (InfException e){
-                JOptionPane.showMessageDialog(null, "Något gick fel!");
-                System.out.println("Internt felmeddelande"+e.getMessage());  
-            }
-      
-    }//GEN-LAST:event_JlGetBlogInformalValueChanged
-
-
-    
     private void educationStart() {
-        
+
         int behorighet = LoggedUser.getBehorighet();
-        if(behorighet == 3) {
-        
-        jTabbedPane1.setSelectedIndex(1);
+        if (behorighet == 3) {
+
+            jTabbedPane1.setSelectedIndex(1);
         }
     }
-    
+
     private void informalStart() {
-        
+
         int behorighet = LoggedUser.getBehorighet();
-        if(behorighet == 1|| behorighet == 4 || behorighet == 5) {
-        
-        jTabbedPane1.setSelectedIndex(2);
+        if (behorighet == 1 || behorighet == 4 || behorighet == 5) {
+
+            jTabbedPane1.setSelectedIndex(2);
         }
     }
-    
+
     private void fillListWithSienceBlog() {
-        
+
         try {
             DefaultListModel allSienceBlog = new DefaultListModel();
 
             ArrayList<HashMap<String, String>> SienceBlogList = idb.fetchRows("SELECT BLOGGID, TITEL, DATUM FROM BLOGG"
-            + " join KAT3 on BLOGG.KAT3_ID = KAT3.KAT3_ID"
-            + " join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID"
-            + " join KAT1 on KAT2.KAT1_ID = KAT1.KAT1_ID"
-            + " where KAT1.KAT1_ID ='1'"
-            + " ORDER BY bloggid DESC");
+                    + " join KAT3 on BLOGG.KAT3_ID = KAT3.KAT3_ID"
+                    + " join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID"
+                    + " join KAT1 on KAT2.KAT1_ID = KAT1.KAT1_ID"
+                    + " where KAT1.KAT1_ID ='1'"
+                    + " ORDER BY bloggid DESC");
 
             //Loopar genom listan för att hämta ut alla för- och efternamn
             for (int i = 0; i < SienceBlogList.size(); i++) {
@@ -334,30 +351,28 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 String titel = SienceBlogList.get(i).get("TITEL");
                 String datum = SienceBlogList.get(i).get("DATUM");
                 String sienceBlog = (id + " " + titel + " " + datum + "\n");
-                allSienceBlog.addElement(sienceBlog); 
+                allSienceBlog.addElement(sienceBlog);
             }
-            
+
             jListAllScienceBlog.setModel(allSienceBlog);
-            
-            
+
         } catch (InfException oneException) {
             oneException.getMessage();
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
-    
-    
+
     private void fillListWithEducationBlog() {
-        
+
         try {
             DefaultListModel allSienceBlog = new DefaultListModel();
 
             ArrayList<HashMap<String, String>> SienceBlogList = idb.fetchRows("SELECT BLOGGID, TITEL, DATUM FROM BLOGG"
-            + " join KAT3 on BLOGG.KAT3_ID = KAT3.KAT3_ID"
-            + " join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID"
-            + " join KAT1 on KAT2.KAT1_ID = KAT1.KAT1_ID"
-            + " where KAT1.KAT1_ID ='2'"
-            + " ORDER BY bloggid DESC");
+                    + " join KAT3 on BLOGG.KAT3_ID = KAT3.KAT3_ID"
+                    + " join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID"
+                    + " join KAT1 on KAT2.KAT1_ID = KAT1.KAT1_ID"
+                    + " where KAT1.KAT1_ID ='2'"
+                    + " ORDER BY bloggid DESC");
 
             //Loopar genom listan för att hämta ut alla för- och efternamn
             for (int i = 0; i < SienceBlogList.size(); i++) {
@@ -365,31 +380,28 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 String titel = SienceBlogList.get(i).get("TITEL");
                 String datum = SienceBlogList.get(i).get("DATUM");
                 String sienceBlog = (id + " " + titel + " " + datum + "\n");
-                allSienceBlog.addElement(sienceBlog); 
+                allSienceBlog.addElement(sienceBlog);
             }
-            
+
             JlGetBlogEducation.setModel(allSienceBlog);
-            
-            
+
         } catch (InfException oneException) {
             oneException.getMessage();
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
-    
+
     private void fillListWithInformalBlog() {
-        
+
         try {
             DefaultListModel allSienceBlog = new DefaultListModel();
 
             ArrayList<HashMap<String, String>> SienceBlogList = idb.fetchRows("SELECT BLOGGID, TITEL, DATUM FROM BLOGG"
-            + " join KAT3 on BLOGG.KAT3_ID = KAT3.KAT3_ID"
-            + " join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID"
-            + " join KAT1 on KAT2.KAT1_ID = KAT1.KAT1_ID"
-            + " where KAT1.KAT1_ID ='3'"
-            + " ORDER BY bloggid DESC");
-            
-            
+                    + " join KAT3 on BLOGG.KAT3_ID = KAT3.KAT3_ID"
+                    + " join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID"
+                    + " join KAT1 on KAT2.KAT1_ID = KAT1.KAT1_ID"
+                    + " where KAT1.KAT1_ID ='3'"
+                    + " ORDER BY bloggid DESC");
 
             //Loopar genom listan för att hämta ut alla för- och efternamn
             for (int i = 0; i < SienceBlogList.size(); i++) {
@@ -397,19 +409,17 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 String titel = SienceBlogList.get(i).get("TITEL");
                 String datum = SienceBlogList.get(i).get("DATUM");
                 String sienceBlog = (id + " " + titel + " " + datum + "\n");
-                allSienceBlog.addElement(sienceBlog); 
+                allSienceBlog.addElement(sienceBlog);
             }
-            
+
             JlGetBlogInformal.setModel(allSienceBlog);
-            
-            
+
         } catch (InfException oneException) {
             oneException.getMessage();
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
-    
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> JlGetBlogEducation;
     private javax.swing.JList<String> JlGetBlogInformal;
