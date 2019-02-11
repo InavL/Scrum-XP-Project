@@ -16,7 +16,7 @@ import oru.inf.InfException;
  *
  * @author ellin
  */
-public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
+public class RemoveBlog extends javax.swing.JInternalFrame {
     
     private static InfDB idb;
     private MethodService methodService;
@@ -24,7 +24,7 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public RemoveBlogInternalFrame(InfDB idb) {
+    public RemoveBlog(InfDB idb) {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);
