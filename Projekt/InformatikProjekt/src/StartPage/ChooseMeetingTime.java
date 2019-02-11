@@ -189,7 +189,6 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
                         + " join PERSON_ACCEPTERAT on PERSONER.ID = PERSON_ACCEPTERAT.ID"
                         + " join MOTES_FORSLAG on PERSON_ACCEPTERAT.FORSLAGS_ID = MOTES_FORSLAG.FORSLAGS_ID"
                         + " where PERSON_ACCEPTERAT.FORSLAGS_ID = " + forslagsID + ";";
-                System.out.println(fraga2);
                 ArrayList<HashMap<String, String>> iDLista = idb.fetchRows(fraga2);
 
                 String lista = "";

@@ -261,7 +261,6 @@ public class AddEmployee extends javax.swing.JInternalFrame {
 
                     String question = "insert into PERSONER (ID,FNAMN,ENAMN,MAIL,TELEFON,SID,LOSENORD) values"
                             + "(" + id + ",'" + firstname + "','" + lastname + "','" + mail + "'," + phonenumber + "," + sid + ",'" + password + "');";
-                    System.out.println(question);
                     idb.insert(question);
 
                     lEmployeeAdded.setText("The person is now added to the employee list.");
@@ -408,9 +407,7 @@ public class AddEmployee extends javax.swing.JInternalFrame {
     private String getSID(String access) {
         try {
             String fraga = "SELECT SID from SYSTEMTILLGANG where behorighet ='" + access + "'";
-            System.out.println(fraga);
             String sid = idb.fetchSingle(fraga);
-            System.out.println(sid);
             return sid;
         } catch (InfException e) {
             JOptionPane.showMessageDialog(null, "Something went wrong!");

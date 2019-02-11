@@ -214,9 +214,7 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
                 String topic = tflTopicNamn.getText();
 
                 String kategoriID = idb.fetchSingle("select KAT1_ID from KAT1 where KAT1_NAMN = '" + kategori + "';");
-                System.out.println(kategoriID);
                 String maxID = idb.fetchSingle("Select max(Kat2_ID) From Kat2;");
-                System.out.println(maxID);
 
                 int maxIdInt = Integer.parseInt(maxID);
                 int maxInt = maxIdInt + 1;

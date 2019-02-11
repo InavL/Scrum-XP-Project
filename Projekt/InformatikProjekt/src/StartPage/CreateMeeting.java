@@ -270,7 +270,6 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
             int maxInt = maxIdInt + 1;
 
             int userID = LoggedUser.getID();
-            System.out.println(userID);
 
             idb.insert("insert into MOTEN values(" + maxInt + ", " + userID + ", 'test', '01-01-01 00:00:00', '01-01-01 00:00:00');");
 
@@ -321,8 +320,6 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
             try {
                 String personID = idb.fetchSingle("select ID from PERSONER where MAIL = '" + eMail + "';");
                 String motesID = idb.fetchSingle("select max(MID) from MOTEN");
-
-                System.out.println(personID + " " + motesID);
 
                 idb.insert("insert into PERSONER_DELTAR values('" + motesID + "', '" + personID + "');");
 

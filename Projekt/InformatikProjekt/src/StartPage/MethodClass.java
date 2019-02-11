@@ -21,7 +21,6 @@ public class MethodClass {
 //    }
     public static ArrayList<String> getComboBox(String katNamn, String katTabell, InfDB idb) {
         try {
-            System.out.println("fghjklöä");
             String fraga = "Select '" + katNamn + "' from '" + katTabell + "';";
 
             ArrayList<String> allaKategorier1 = idb.fetchColumn(fraga);
@@ -37,7 +36,6 @@ public class MethodClass {
     public static boolean isAdmin() {
 
         int sid = LoggedUser.getBehorighet();
-        System.out.println(sid);
         if (sid < 4) {
             return true;
         }

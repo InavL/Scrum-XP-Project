@@ -56,7 +56,7 @@ public class MainPage extends javax.swing.JFrame {
 
         try {
 
-            BufferedImage img = ImageIO.read(new File("src/images/OrUIS-farg.png"));
+            BufferedImage img = ImageIO.read(new File("images/OrUIS-farg.png"));
 
             BufferedImage thumbnail = Thumbnails.of(img)
                     .scale(.75)
