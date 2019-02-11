@@ -75,6 +75,7 @@ public class Validation {
             emailAddr.validate();
             
         } catch (AddressException ex) {
+            JOptionPane.showMessageDialog(null, "Use the right format for E-mail!");
             
             result = false;
             
