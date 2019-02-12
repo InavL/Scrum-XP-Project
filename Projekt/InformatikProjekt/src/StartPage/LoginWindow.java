@@ -5,13 +5,7 @@
  */
 package StartPage;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import net.coobird.thumbnailator.Thumbnails;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -21,35 +15,27 @@ import oru.inf.InfException;
  */
 public class LoginWindow extends javax.swing.JFrame {
 
-    private static InfDB idb; // Used to establish a connection to the database
-    private boolean mailFocused = false; // Used in focusGain
-    private boolean passFocused = false; // Used in focusGain
-
+    private static InfDB idb;
+    private static int id;
+    private static int behorighet;
+    private boolean usernameKlickad = false;
+    private boolean passwordKlickad = false;
     /**
      * Creates new form ColorPage
-     *
      * @param idb
      */
     public LoginWindow(InfDB idb) {
-
         initComponents();
         this.idb = idb;
-        this.setLocationRelativeTo(null); // Opens the window at the centre of the screen
-
-        try {
-
-            BufferedImage img = ImageIO.read(new File("images/OrUIS-farg.png"));
-
-            BufferedImage thumbnail = Thumbnails.of(img)
-                    .scale(.75)
-                    .asBufferedImage();
-
-            ImageIcon icon = new ImageIcon(thumbnail);
-            this.setIconImage(icon.getImage());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.setLocationRelativeTo(null);
+    }
+    
+    public static int getID(){ // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
+        return id;
+    }
+    
+    public static int getBehorighet(){ // en funktion för att andra klasser ska kunna ha koll på vilken behörighet användaren har
+        return behorighet;
     }
 
     /**
@@ -72,10 +58,6 @@ public class LoginWindow extends javax.swing.JFrame {
         btnLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("ÖrUIS");
-        setMaximumSize(new java.awt.Dimension(463, 402));
-        setName("frame"); // NOI18N
-        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -197,82 +179,70 @@ public class LoginWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-
-        try {
-            String email = txtEmail.getText(); // Stores the text from the field
-            String password = pwdPassword.getText(); // Stores the password from the field
-
+        try
+        {
+            String email = txtEmail.getText();
+            String password = pwdPassword.getText();
+            
             String fraga = "select LOSENORD from PERSONER where MAIL = '" + email + "';";
-            String losenord = idb.fetchSingle(fraga); // Gets the password that corresponds to the mail
-
+            String losenord = idb.fetchSingle(fraga); //Hämtar lösenordet som ska höra ihop med mailen.
+            
             String queryBehorighet = "select SID from PERSONER where MAIL = '" + email + "';";
-            String svarBehorighet = idb.fetchSingle(queryBehorighet); // Gets the SID for permissionlevel
-
-            String queryID = "select ID from PERSONER where MAIL ='" + email + "';";
-            String svarID = idb.fetchSingle(queryID); // Gets the user ID 
-
-            if (password.equals(losenord)) { // Checks if the password provided matches the one in the database
-
+            String svarBehorighet = idb.fetchSingle(queryBehorighet); //Hämtar behörigheten
+             
+            String queryID = "select ID from PERSONER where MAIL ='" + email +"';";
+            String svarID = idb.fetchSingle(queryID); //Hämtar IDt
+            
+            if(password.equals(losenord)) //Testar så att lösenordet som hör ihop med mailen matchar det lösenordet som skrevs in i fältet.
+            {
+                new MainPage(idb).setVisible(true);
                 int svBehorighet = Integer.parseInt(svarBehorighet);
-                LoggedUser.setBehorighet(svBehorighet);
-                //behorighet = svBehorighet; // Sets the permissionlevel
+                behorighet = svBehorighet;
                 int svID = Integer.parseInt(svarID);
-                LoggedUser.setID(svID);
-                //id = svID; // Sets the ID
-
-                txtEmail.setText(""); // Empties the fields (Maybe redundant)
+                id = svID;
+                
+                txtEmail.setText("");
                 pwdPassword.setText("");
-                //this.setVisible(false); // Hides the window
-                new MainPage(idb).setVisible(true); // Creates a MainPage if the login was successful
                 this.dispose();
-
-            } else { // If the password doesn't match
-
-                JOptionPane.showMessageDialog(null, "The e-mail and the password did not match, please try again.");
-
             }
-
-        } catch (InfException ex) { // Catches an error from a faulty database connection
-
-            JOptionPane.showMessageDialog(null, "Something went wrong.");
-
+            else //Om lösenordet inte matchar.
+            {
+                JOptionPane.showMessageDialog(null, "The e-mail and the password did not match, please try again.");
+            }
         }
-
+        catch(InfException ex)
+        {
+            JOptionPane.showMessageDialog(null, "Something went wrong.");
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void txtEmailFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEmailFocusGained
-
-        if (mailFocused == false) { // If the field is focused the box is cleared
+        if(usernameKlickad == false){
             txtEmail.setText("");
-            mailFocused = true;
+            usernameKlickad = true;
         }
-
     }//GEN-LAST:event_txtEmailFocusGained
 
     private void pwdPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_pwdPasswordFocusGained
-
-        if (passFocused == false) { // If the field is focused the box is cleared
+        if(passwordKlickad == false){
             pwdPassword.setText("");
-            passFocused = true;
+            passwordKlickad = true;
         }
-
     }//GEN-LAST:event_pwdPasswordFocusGained
 
     private void txtEmailKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEmailKeyPressed
-
-        this.getRootPane().setDefaultButton(btnLogin); // Makes the enter-key push the login button
-
+        this.getRootPane().setDefaultButton(btnLogin);
     }//GEN-LAST:event_txtEmailKeyPressed
 
     private void pwdPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pwdPasswordKeyPressed
-
-        this.getRootPane().setDefaultButton(btnLogin); // Makes the enter-key push the login button
-
+        this.getRootPane().setDefaultButton(btnLogin);
     }//GEN-LAST:event_pwdPasswordKeyPressed
 
     /**
      * @param args the command line arguments
      */
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
