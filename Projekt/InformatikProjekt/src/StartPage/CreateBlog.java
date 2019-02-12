@@ -4,61 +4,38 @@
  * and open the template in the editor.
  */
 package StartPage;
-        
-import static StartPage.MethodClass.getComboBox;
-import java.io.File;
+
+import com.jidesoft.swing.AutoCompletion;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
 /**
  *
- * @author krist
+ * @author ellin
  */
-public class CreateBlog extends javax.swing.JFrame {
+public class CreateBlog extends javax.swing.JInternalFrame {
 
     private static InfDB idb;
-   
-    
+    private MethodService methodService;
+
     /**
-     * Creates new form ColorPage
+     * Creates new form EditBlogInternalFrame
      */
     public CreateBlog(InfDB idb) {
-        
         initComponents();
         this.idb = idb;
+        methodService = new MethodService(idb);
+        //pnlMainPanel.setVisible(false);
+        methodService.fillComboboxBranch(cbBranch);
+        methodService.fillComboboxBranchKat1(cbxKat1);
 
-       ArrayList<String> allaKategorier1 = getComboBox("KAT1_NAMN", "KAT1", idb);
-        for(String enKat : allaKategorier1)
-            {
-                cbxKat1.addItem(enKat);
-            }
-        
-        kat2();
-        
-    }
-    
-    private void kat2()
-    {
-        
-        try{
-            
-            String fraga1 = "select KAT1_ID from KAT1 where KAT1_NAMN = '" + cbxKat1.getSelectedItem().toString() + "'";
-            
-           
-            
-        String fraga = "select KAT2_NAMN from KAT2 where KAT1_ID = 1;";
-        ArrayList<String> allaKategorier2 = idb.fetchColumn(fraga);
-        for(String enKat : allaKategorier2)
-        {
-            cbxKat2.addItem(enKat);
-        }
-        }
-        catch(InfException ex)
-        {
-            JOptionPane.showMessageDialog(null, "Something went wrong.");
-        }
+        //Gör listan sökbar.
+        AutoCompletion editableBranchList = new AutoCompletion(cbBranch);
+
     }
 
     /**
@@ -71,90 +48,46 @@ public class CreateBlog extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        pnlBlue = new javax.swing.JPanel();
-        lblOrebroUniversitet = new javax.swing.JLabel();
-        txtHeading = new javax.swing.JTextField();
-        lblWrritePost = new javax.swing.JLabel();
-        lblavskiljare = new javax.swing.JLabel();
-        lblHeadeing = new javax.swing.JLabel();
-        cbxInterface = new javax.swing.JComboBox<>();
-        cbxSize = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtText = new javax.swing.JTextArea();
-        btbAddPicture = new javax.swing.JButton();
-        btnAddFile = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        pnlMainPanel = new javax.swing.JPanel();
         btnPublish = new javax.swing.JButton();
-        cbxKat1 = new javax.swing.JComboBox<>();
+        lblHeading = new javax.swing.JLabel();
+        tfHeading = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        taText = new javax.swing.JTextArea();
+        cbBranch = new javax.swing.JComboBox<>();
+        lblChoosePlace = new javax.swing.JLabel();
         cbxKat2 = new javax.swing.JComboBox<>();
-        cbxKat3 = new javax.swing.JComboBox<>();
-        txtNewTag = new javax.swing.JTextField();
-        lblTags = new javax.swing.JLabel();
-        lblNewTag = new javax.swing.JLabel();
-        lblInterface = new javax.swing.JLabel();
-        lblSize = new javax.swing.JLabel();
+        cbxKat1 = new javax.swing.JComboBox<>();
+        btnSave2 = new javax.swing.JButton();
+        btnSave1 = new javax.swing.JButton();
+        txtAdd = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
-        mMenybar = new javax.swing.JMenuBar();
-        mMainMenu = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        mBlog = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        pnlBlue.setBackground(new java.awt.Color(51, 153, 255));
+        jPanel2.setBackground(new java.awt.Color(51, 153, 255));
 
-        lblOrebroUniversitet.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        lblOrebroUniversitet.setText("Örebro universitet");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setText("Örebro universitet");
 
-        javax.swing.GroupLayout pnlBlueLayout = new javax.swing.GroupLayout(pnlBlue);
-        pnlBlue.setLayout(pnlBlueLayout);
-        pnlBlueLayout.setHorizontalGroup(
-            pnlBlueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBlueLayout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblOrebroUniversitet, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(737, Short.MAX_VALUE))
         );
-        pnlBlueLayout.setVerticalGroup(
-            pnlBlueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlBlueLayout.createSequentialGroup()
-                .addComponent(lblOrebroUniversitet, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
-        txtHeading.setColumns(15);
-        txtHeading.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtHeadingActionPerformed(evt);
-            }
-        });
-
-        lblWrritePost.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
-        lblWrritePost.setText("Write post");
-
-        lblavskiljare.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-        lblavskiljare.setText("-------------------------------------------------------------------------------------------------------------------------------");
-
-        lblHeadeing.setText("Heading");
-
-        cbxInterface.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cbxSize.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        txtText.setColumns(20);
-        txtText.setRows(5);
-        jScrollPane1.setViewportView(txtText);
-
-        btbAddPicture.setText("Add picture");
-
-        btnAddFile.setText("Add file");
-
-        btnPublish.setBackground(new java.awt.Color(255, 0, 51));
         btnPublish.setText("Publish");
         btnPublish.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -162,132 +95,136 @@ public class CreateBlog extends javax.swing.JFrame {
             }
         });
 
-        cbxKat2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        lblHeading.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblHeading.setText("Heading");
 
-        cbxKat3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        tfHeading.setColumns(30);
 
-        txtNewTag.setColumns(8);
+        taText.setColumns(20);
+        taText.setRows(5);
+        jScrollPane1.setViewportView(taText);
 
-        lblTags.setText("Tags");
+        cbBranch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose branch" }));
+        cbBranch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbBranchActionPerformed(evt);
+            }
+        });
 
-        lblNewTag.setText("New tag");
+        lblChoosePlace.setText("Choose the place to store the post:");
 
-        lblInterface.setText("Interface");
+        cbxKat2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose topic" }));
 
-        lblSize.setText("Size");
+        cbxKat1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose category" }));
+
+        btnSave2.setText("Save");
+        btnSave2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSave2ActionPerformed(evt);
+            }
+        });
+
+        btnSave1.setText("Save");
+        btnSave1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSave1ActionPerformed(evt);
+            }
+        });
 
         btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlMainPanelLayout = new javax.swing.GroupLayout(pnlMainPanel);
+        pnlMainPanel.setLayout(pnlMainPanelLayout);
+        pnlMainPanelLayout.setHorizontalGroup(
+            pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlMainPanelLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnPublish)
+                    .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 832, Short.MAX_VALUE)
+                        .addGroup(pnlMainPanelLayout.createSequentialGroup()
+                            .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(tfHeading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblHeading))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(pnlMainPanelLayout.createSequentialGroup()
+                                    .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(cbxKat2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(cbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(btnSave2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(pnlMainPanelLayout.createSequentialGroup()
+                                    .addGap(1, 1, 1)
+                                    .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblChoosePlace)
+                                        .addGroup(pnlMainPanelLayout.createSequentialGroup()
+                                            .addComponent(cbxKat1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(btnSave1))))))))
+                .addGap(50, 50, 50))
+        );
+        pnlMainPanelLayout.setVerticalGroup(
+            pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainPanelLayout.createSequentialGroup()
+                .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlMainPanelLayout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(lblHeading)
+                        .addGap(17, 17, 17)
+                        .addComponent(tfHeading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblChoosePlace)
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbxKat1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSave1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnSave2)
+                            .addComponent(cbxKat2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(cbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAdd))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 293, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnPublish)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlBlue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblHeadeing)
-                            .addComponent(btnPublish, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbxInterface, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblInterface))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(cbxSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(31, 31, 31)
-                                        .addComponent(btbAddPicture)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnAddFile, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(lblSize))
-                                .addGap(29, 29, 29)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(cbxKat1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbxKat2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(cbxKat3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(lblTags))
-                                .addGap(16, 16, 16)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtNewTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnAdd))
-                                    .addComponent(lblNewTag))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtHeading)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblWrritePost)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblavskiljare, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(pnlMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(27, 27, 27))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(pnlBlue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblWrritePost)
-                    .addComponent(lblavskiljare))
-                .addGap(26, 26, 26)
-                .addComponent(lblHeadeing)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtHeading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTags)
-                    .addComponent(lblNewTag)
-                    .addComponent(lblInterface)
-                    .addComponent(lblSize))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbxInterface, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btbAddPicture)
-                    .addComponent(btnAddFile)
-                    .addComponent(cbxKat1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxKat2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxKat3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNewTag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAdd))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(btnPublish, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
+                .addComponent(pnlMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(27, 27, 27))
         );
-
-        mMainMenu.setText("Main menu");
-
-        jMenuItem4.setText("Logg out");
-        mMainMenu.add(jMenuItem4);
-
-        jMenuItem5.setText("Exit");
-        mMainMenu.add(jMenuItem5);
-
-        mMenybar.add(mMainMenu);
-
-        mBlog.setText("Blog");
-
-        jMenuItem1.setText("Create blog");
-        mBlog.add(jMenuItem1);
-
-        jMenuItem2.setText("Edit blog");
-        mBlog.add(jMenuItem2);
-
-        jMenuItem3.setText("Remove blog");
-        mBlog.add(jMenuItem3);
-
-        mMenybar.add(mBlog);
-
-        setJMenuBar(mMenybar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -297,69 +234,163 @@ public class CreateBlog extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtHeadingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHeadingActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtHeadingActionPerformed
-
     private void btnPublishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPublishActionPerformed
-        // TODO add your handling code here:
+        //Kontrollerar att användaren har skrivit någoi i textfälten
+        if (Validation.textfieldWithValue(tfHeading) && Validation.textareaWithValueTA(taText) && Validation.elementSelectedInCombobox(cbBranch, "Branch is not choosen, please select an option.")) {
+            String titel = tfHeading.getText();
+            String bloggpost = taText.getText();
+            int personID = LoggedUser.getID();
+            String namn = cbBranch.getSelectedItem().toString();
+
+            Date datum = new Date();
+            int dag = datum.getDate();
+            int manad = datum.getMonth();
+            int rattManad = manad + 1;
+
+            int ar = datum.getYear();
+            int rattAr = ar + 1900;
+
+            String dagen = Integer.toString(dag);
+            String manaden = Integer.toString(rattManad);
+            String aret = Integer.toString(rattAr);
+
+            String datumet = (aret + "-" + manaden + "-" + dagen);
+
+            try {
+                String kat3 = idb.fetchSingle("SELECT kat3_ID FROM Kat3 WHERE Kat3_Namn = \'" + namn + "\'");
+
+                //Hämtar ett nytt oanvänt bloggID
+                String bloggID = idb.getAutoIncrement("blogg", "bloggid");
+
+                //Lägger till inlägget i bloggtabellen med de valda värdena
+                idb.insert("INSERT INTO blogg (bloggid, bloggpost, titel, datum, kat3_ID, bloggskribent) \n"
+                        + "VALUES (" + bloggID + ", \'" + bloggpost + "\', \'" + titel + "\', \'" + datumet + "\', \'" + kat3 + "\', " + personID + ")");
+
+                tfHeading.setText("");
+                taText.setText("");
+                //pnlMainPanel.setVisible(false);
+
+            } catch (InfException oneException) {
+                oneException.getMessage();
+                JOptionPane.showMessageDialog(null, "Something went wrong.");
+            }
+
+        }
     }//GEN-LAST:event_btnPublishActionPerformed
 
+    private void cbBranchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbBranchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbBranchActionPerformed
 
+    private void btnSave2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave2ActionPerformed
+        if (Validation.elementSelectedInCombobox(cbxKat2, "Choose category.")) {
+            String index = cbBranch.getItemAt(0);
+            cbBranch.removeAllItems();
+            cbBranch.addItem(index);
 
+            String kat2 = cbxKat2.getSelectedItem().toString();
 
+            try {
+
+                String hittaKat3 = "select KAT3_NAMN from KAT3 join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID where KAT2_NAMN = '" + kat2 + "';";
+
+                ArrayList<HashMap<String, String>> kategorier3 = idb.fetchRows(hittaKat3);
+
+                for (int i = 0; i < kategorier3.size(); i++) {
+                    String oneCat = kategorier3.get(i).get("KAT3_NAMN");
+                    cbBranch.addItem(oneCat);
+                }
+            } catch (InfException ex) {
+                JOptionPane.showMessageDialog(null, "Something went wrong.");
+            }
+        }
+    }//GEN-LAST:event_btnSave2ActionPerformed
+
+    private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
+        if (Validation.elementSelectedInCombobox(cbxKat1, "Choose category.")) {
+            String index = cbxKat2.getItemAt(0);
+            cbxKat2.removeAllItems();
+            cbxKat2.addItem(index);
+
+            String kat1 = cbxKat1.getSelectedItem().toString();
+
+            try {
+
+                String hittaKat2 = "select KAT2_NAMN from KAT2 join KAT1 on KAT2.KAT1_ID = KAT1.KAT1_ID where KAT1_NAMN = '" + kat1 + "';";
+
+                ArrayList<HashMap<String, String>> kategorier2 = idb.fetchRows(hittaKat2);
+
+                for (int i = 0; i < kategorier2.size(); i++) {
+                    String oneCat = kategorier2.get(i).get("KAT2_NAMN");
+                    cbxKat2.addItem(oneCat);
+                }
+            } catch (InfException ex) {
+                JOptionPane.showMessageDialog(null, "Something went wrong.");
+            }
+        }
+    }//GEN-LAST:event_btnSave1ActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        
-        //String newTag = txtNewTag.getText();
-        //String fraga = "update KAT1 set KAT"
-        //idn.update()
+        if (Validation.textfieldWithValue(txtAdd) && Validation.elementSelectedInCombobox(cbxKat2, "Choose topic.")) {
+            try {
+                String nyBranch = txtAdd.getText();
+                String kat2 = cbxKat2.getSelectedItem().toString();
+
+                String idKat2 = idb.fetchSingle("select KAT2_ID from KAT2 where Kat2_NAMN = '" + kat2 + "';");
+
+                String kat3ID = idb.getAutoIncrement("KAT3", "KAT3_ID");
+
+                idb.insert("insert into KAT3 values('" + kat3ID + "', '" + idKat2 + "', '" + nyBranch + "');");
+
+                JOptionPane.showMessageDialog(null, "The new branch has now been saved.");
+
+                txtAdd.setText("");
+
+                String index = cbBranch.getItemAt(0);
+                cbBranch.removeAllItems();
+                cbBranch.addItem(index);
+
+                String hittaKat3 = "select KAT3_NAMN from KAT3 join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID where KAT2_NAMN = '" + kat2 + "';";
+
+                ArrayList<HashMap<String, String>> kategorier3 = idb.fetchRows(hittaKat3);
+
+                for (int i = 0; i < kategorier3.size(); i++) {
+                    String oneCat = kategorier3.get(i).get("KAT3_NAMN");
+                    cbBranch.addItem(oneCat);
+
+                }
+            } catch (InfException ex) {
+                JOptionPane.showMessageDialog(null, "Something went wrong.");
+            }
+        }
     }//GEN-LAST:event_btnAddActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btbAddPicture;
     private javax.swing.JButton btnAdd;
-    private javax.swing.JButton btnAddFile;
     private javax.swing.JButton btnPublish;
-    private javax.swing.JComboBox<String> cbxInterface;
+    private javax.swing.JButton btnSave1;
+    private javax.swing.JButton btnSave2;
+    private javax.swing.JComboBox<String> cbBranch;
     private javax.swing.JComboBox<String> cbxKat1;
     private javax.swing.JComboBox<String> cbxKat2;
-    private javax.swing.JComboBox<String> cbxKat3;
-    private javax.swing.JComboBox<String> cbxSize;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblHeadeing;
-    private javax.swing.JLabel lblInterface;
-    private javax.swing.JLabel lblNewTag;
-    private javax.swing.JLabel lblOrebroUniversitet;
-    private javax.swing.JLabel lblSize;
-    private javax.swing.JLabel lblTags;
-    private javax.swing.JLabel lblWrritePost;
-    private javax.swing.JLabel lblavskiljare;
-    private javax.swing.JMenu mBlog;
-    private javax.swing.JMenu mMainMenu;
-    private javax.swing.JMenuBar mMenybar;
-    private javax.swing.JPanel pnlBlue;
-    private javax.swing.JTextField txtHeading;
-    private javax.swing.JTextField txtNewTag;
-    private javax.swing.JTextArea txtText;
+    private javax.swing.JLabel lblChoosePlace;
+    private javax.swing.JLabel lblHeading;
+    private javax.swing.JPanel pnlMainPanel;
+    private javax.swing.JTextArea taText;
+    private javax.swing.JTextField tfHeading;
+    private javax.swing.JTextField txtAdd;
     // End of variables declaration//GEN-END:variables
-
-    //private static class InfExeception {
-
-        //public InfExeception() {
-        //}
-    //}
 }
