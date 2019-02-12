@@ -88,6 +88,7 @@ public class BlogFeed extends javax.swing.JInternalFrame {
         );
 
         taBlogFeed.setColumns(20);
+        taBlogFeed.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
         taBlogFeed.setRows(5);
         jScrollPane1.setViewportView(taBlogFeed);
 
