@@ -193,12 +193,5 @@ public class Validation {
         }
         return resultat;
     }
-    
-    public static boolean containsPictureFormat(String picture){
-        String picFormat = picture.toLowerCase();
-        if(picFormat.contains("jpg")|| picFormat.contains("png")||picFormat.contains("jpeg")){
-            return true;
-        }
-        return false; 
-    }
+
 }
