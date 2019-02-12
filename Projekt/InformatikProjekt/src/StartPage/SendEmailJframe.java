@@ -52,7 +52,7 @@ public class SendEmailJframe extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(51, 153, 255));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("Örebro universitet");
+        jLabel1.setText("Örebro universitett");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
