@@ -241,18 +241,10 @@ public class BlogFeed extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 String post = rs.getString("BLOGGPOST");
                 taBlogFeed.setText(post);
+                String bid = id.trim();
+                ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);
             }
             
-            String bid = id.trim();
-            ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);
-            
-//            String rL = "";
-//            for (HashMap rad : resultatLista) {
-//                rL += rad.get("BLOGGPOST");
-//                rL += "\n";
-//            }
-//            taBlogFeed.setText(rL);
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Något gick fel!");
             System.out.println("Internt felmeddelande" + e.getMessage());
@@ -275,26 +267,10 @@ public class BlogFeed extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 String post = rs.getString("BLOGGPOST");
                 taBlogFeed.setText(post);
+                String bid = id.trim();
+                ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);
             }
             
-            String bid = id.trim();
-            ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);
-            
-//            String fraga = "SELECT BLOGGPOST FROM BLOGG"
-//                    + " where BLOGGID =" + id;
-//            ArrayList<HashMap<String, String>> resultatLista = idb.fetchRows(fraga);
-//
-//            String rL = "";
-//            for (HashMap rad : resultatLista) {
-//                rL += rad.get("BLOGGPOST");
-//                rL += "\n";
-//            }
-//
-//            String bid = id.trim();
-//
-//            ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);
-//
-//            taBlogFeed.setText(rL);
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Något gick fel!");
@@ -318,29 +294,10 @@ public class BlogFeed extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 String post = rs.getString("BLOGGPOST");
                 taBlogFeed.setText(post);
+                String bid = id.trim();
+                ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);  
             }
             
-            String bid = id.trim();
-            ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);            
-            
-//            String sienceBlogInfo = JlGetBlogInformal.getSelectedValue();
-//            String id = sienceBlogInfo.substring(0, 2);
-//            String fraga = "SELECT BLOGGPOST FROM BLOGG"
-//                    + " where BLOGGID =" + id;
-//            ArrayList<HashMap<String, String>> resultatLista = idb.fetchRows(fraga);
-//
-//            String rL = "";
-//            for (HashMap rad : resultatLista) {
-//                rL += rad.get("BLOGGPOST");
-//                rL += "\n";
-//            }
-//
-//            String bid = id.trim();
-//
-//            ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);
-//
-//            taBlogFeed.setText(rL);
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Något gick fel!");
             System.out.println("Internt felmeddelande" + e.getMessage());
@@ -400,25 +357,6 @@ public class BlogFeed extends javax.swing.JInternalFrame {
             
             jListAllScienceBlog.setModel(allScienceBlog);
             
-            
-
-//            ArrayList<HashMap<String, String>> SienceBlogList = idb.fetchRows("SELECT BLOGGID, TITEL, DATUM FROM BLOGG"
-//                    + " join KAT3 on BLOGG.KAT3_ID = KAT3.KAT3_ID"
-//                    + " join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID"
-//                    + " join KAT1 on KAT2.KAT1_ID = KAT1.KAT1_ID"
-//                    + " where KAT1.KAT1_ID ='1'"
-//                    + " ORDER BY bloggid DESC");
-//
-//            //Loopar genom listan för att hämta ut alla för- och efternamn
-//            for (int i = 0; i < SienceBlogList.size(); i++) {
-//                String id = SienceBlogList.get(i).get("BLOGGID");
-//                String titel = SienceBlogList.get(i).get("TITEL");
-//                String datum = SienceBlogList.get(i).get("DATUM");
-//                String sienceBlog = (id + " " + titel + " " + datum + "\n");
-//                allSienceBlog.addElement(sienceBlog);
-//            }
-//
-//            jListAllScienceBlog.setModel(allSienceBlog);
 
         } catch (SQLException oneException) {
             oneException.getMessage();
@@ -453,24 +391,6 @@ public class BlogFeed extends javax.swing.JInternalFrame {
             JlGetBlogEducation.setModel(allScienceBlog);
             
 
-//            ArrayList<HashMap<String, String>> SienceBlogList = idb.fetchRows("SELECT BLOGGID, TITEL, DATUM FROM BLOGG"
-//                    + " join KAT3 on BLOGG.KAT3_ID = KAT3.KAT3_ID"
-//                    + " join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID"
-//                    + " join KAT1 on KAT2.KAT1_ID = KAT1.KAT1_ID"
-//                    + " where KAT1.KAT1_ID ='2'"
-//                    + " ORDER BY bloggid DESC");
-//
-//            //Loopar genom listan för att hämta ut alla för- och efternamn
-//            for (int i = 0; i < SienceBlogList.size(); i++) {
-//                String id = SienceBlogList.get(i).get("BLOGGID");
-//                String titel = SienceBlogList.get(i).get("TITEL");
-//                String datum = SienceBlogList.get(i).get("DATUM");
-//                String sienceBlog = (id + " " + titel + " " + datum + "\n");
-//                allSienceBlog.addElement(sienceBlog);
-//            }
-//
-//            JlGetBlogEducation.setModel(allSienceBlog);
-
         } catch (SQLException oneException) {
             oneException.getMessage();
             JOptionPane.showMessageDialog(null, "Something went wrong.");
@@ -503,27 +423,6 @@ public class BlogFeed extends javax.swing.JInternalFrame {
             
             JlGetBlogInformal.setModel(allScienceBlog);
             
-            
-            
-//            DefaultListModel allSienceBlog = new DefaultListModel();
-//
-//            ArrayList<HashMap<String, String>> SienceBlogList = idb.fetchRows("SELECT BLOGGID, TITEL, DATUM FROM BLOGG"
-//                    + " join KAT3 on BLOGG.KAT3_ID = KAT3.KAT3_ID"
-//                    + " join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID"
-//                    + " join KAT1 on KAT2.KAT1_ID = KAT1.KAT1_ID"
-//                    + " where KAT1.KAT1_ID ='3'"
-//                    + " ORDER BY bloggid DESC");
-//
-//            //Loopar genom listan för att hämta ut alla för- och efternamn
-//            for (int i = 0; i < SienceBlogList.size(); i++) {
-//                String id = SienceBlogList.get(i).get("BLOGGID");
-//                String titel = SienceBlogList.get(i).get("TITEL");
-//                String datum = SienceBlogList.get(i).get("DATUM");
-//                String sienceBlog = (id + " " + titel + " " + datum + "\n");
-//                allSienceBlog.addElement(sienceBlog);
-//            }
-//
-//            JlGetBlogInformal.setModel(allSienceBlog);
 
         } catch (SQLException oneException) {
             oneException.getMessage();

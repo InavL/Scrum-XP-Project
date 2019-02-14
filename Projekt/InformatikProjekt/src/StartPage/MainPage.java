@@ -80,7 +80,7 @@ public class MainPage extends javax.swing.JFrame {
         //methodService.setDesign(paneMainPageTabs);
         setMenuVisible(true);
         adminFunktions();
-        //setStartPage();
+        setStartPage();
 
     }
 
@@ -357,7 +357,7 @@ public class MainPage extends javax.swing.JFrame {
     private void createBlogMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBlogMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if (!tabExists("Create blog")) {
-            createBlog = new CreateBlog(idb);
+            createBlog = new CreateBlog(con);
             openTab(createBlog, "Create blog");
         } //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else {

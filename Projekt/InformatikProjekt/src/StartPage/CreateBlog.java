@@ -33,10 +33,11 @@ public class CreateBlog extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form EditBlogInternalFrame
+     * @param con
      */
-    public CreateBlog(InfDB idb) {
+    public CreateBlog(Connection con) {
         initComponents();
-        this.idb = idb;
+        this.con = con;
         methodService = new MethodService(con);
         //pnlMainPanel.setVisible(false);
         methodService.fillComboboxBranch(cbBranch);
