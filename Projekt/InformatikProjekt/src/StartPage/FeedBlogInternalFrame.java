@@ -63,6 +63,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         JlGetBlogInformal = new javax.swing.JList<>();
         txtImage = new javax.swing.JLabel();
+        btnDelete = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -182,6 +183,15 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 140, 190, 460));
         jPanel1.add(txtImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
+        btnDelete.setBackground(new java.awt.Color(102, 204, 0));
+        btnDelete.setText("Comment");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(649, 620, 120, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -190,7 +200,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
         );
 
         pack();
@@ -294,6 +304,16 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             }
       
     }//GEN-LAST:event_JlGetBlogInformalValueChanged
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+           
+        
+        String sienceBlogInfo = JlGetBlogInformal.getSelectedValue();
+        String id = sienceBlogInfo.substring(0,2); 
+        System.out.println(id);
+        ChoosenBlogg.setBloggID(id);
+        
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
 
     
@@ -412,6 +432,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> JlGetBlogEducation;
     private javax.swing.JList<String> JlGetBlogInformal;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jListAllScienceBlog;
