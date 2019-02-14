@@ -5,6 +5,7 @@
  */
 package StartPage;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
@@ -17,6 +18,7 @@ import oru.inf.InfException;
  */
 public class AddNewTopic extends javax.swing.JInternalFrame {
 
+    private static Connection con;
     private static InfDB idb;
     private MethodService methodService;
 
@@ -28,7 +30,7 @@ public class AddNewTopic extends javax.swing.JInternalFrame {
     public AddNewTopic(InfDB idb) {
         initComponents();
         this.idb = idb;
-        methodService = new MethodService(idb);
+        methodService = new MethodService(con);
         fyllComboBox();
     }
 

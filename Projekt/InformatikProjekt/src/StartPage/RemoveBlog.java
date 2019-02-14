@@ -6,6 +6,7 @@
 package StartPage;
 
 import com.jidesoft.swing.AutoCompletion;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
@@ -18,6 +19,7 @@ import oru.inf.InfException;
  */
 public class RemoveBlog extends javax.swing.JInternalFrame {
 
+    private static Connection con;
     private static InfDB idb;
     private MethodService methodService;
 
@@ -27,7 +29,7 @@ public class RemoveBlog extends javax.swing.JInternalFrame {
     public RemoveBlog(InfDB idb) {
         initComponents();
         this.idb = idb;
-        methodService = new MethodService(idb);
+        methodService = new MethodService(con);
         //Gör listan sökbar.
         AutoCompletion editablePostList = new AutoCompletion(cbPosts);
         //Fyller listan med aktuella inlägg

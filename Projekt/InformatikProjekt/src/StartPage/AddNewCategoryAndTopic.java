@@ -5,6 +5,7 @@
  */
 package StartPage;
 
+import java.sql.Connection;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 import oru.inf.InfException;
@@ -21,10 +22,10 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public AddNewCategoryAndTopic(InfDB idb) {
+    public AddNewCategoryAndTopic(Connection con) {
         initComponents();
         this.idb = idb;
-        methodService = new MethodService(idb);
+        methodService = new MethodService(con);
         methodService.fillComboboxBranchKat1(cBoxKategori);
     }
 
