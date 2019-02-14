@@ -8,12 +8,14 @@ package StartPage;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import net.coobird.thumbnailator.Thumbnails;
-import oru.inf.InfDB;
-import oru.inf.InfException;
 
 /**
  *
@@ -21,19 +23,19 @@ import oru.inf.InfException;
  */
 public class LoginWindow extends javax.swing.JFrame {
 
-    private static InfDB idb; // Used to establish a connection to the database
+    private static Connection con; // Used to establish a connection to the database
     private boolean mailFocused = false; // Used in focusGain
     private boolean passFocused = false; // Used in focusGain
 
     /**
      * Creates new form ColorPage
      *
-     * @param idb
+     * @param con
      */
-    public LoginWindow(InfDB idb) {
+    public LoginWindow(Connection con) {
 
         initComponents();
-        this.idb = idb;
+        this.con = con;
         this.setLocationRelativeTo(null); // Opens the window at the centre of the screen
 
         try {
@@ -198,44 +200,38 @@ public class LoginWindow extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
+        String mail = txtEmail.getText(); // Stores the text from the field
+        String password = pwdPassword.getText(); // Stores the password from the field
+
         try {
-            String email = txtEmail.getText(); // Stores the text from the field
-            String password = pwdPassword.getText(); // Stores the password from the field
 
-            String fraga = "select LOSENORD from PERSONER where MAIL = '" + email + "';";
-            String losenord = idb.fetchSingle(fraga); // Gets the password that corresponds to the mail
+            String fraga = "select * from PERSONER where MAIL=? and LOSENORD=?";
 
-            String queryBehorighet = "select SID from PERSONER where MAIL = '" + email + "';";
-            String svarBehorighet = idb.fetchSingle(queryBehorighet); // Gets the SID for permissionlevel
+            PreparedStatement ps = con.prepareStatement(fraga);
+            ps.setString(1, mail);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
 
-            String queryID = "select ID from PERSONER where MAIL ='" + email + "';";
-            String svarID = idb.fetchSingle(queryID); // Gets the user ID 
-
-            if (password.equals(losenord)) { // Checks if the password provided matches the one in the database
-
-                int svBehorighet = Integer.parseInt(svarBehorighet);
-                LoggedUser.setBehorighet(svBehorighet);
-                //behorighet = svBehorighet; // Sets the permissionlevel
-                int svID = Integer.parseInt(svarID);
-                LoggedUser.setID(svID);
-                //id = svID; // Sets the ID
-
-                txtEmail.setText(""); // Empties the fields (Maybe redundant)
-                pwdPassword.setText("");
-                //this.setVisible(false); // Hides the window
-                new MainPage(idb).setVisible(true); // Creates a MainPage if the login was successful
+            ps = con.prepareStatement(fraga);
+            ps.setString(1, txtEmail.getText());
+            ps.setString(2, pwdPassword.getText());
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                
+                //LoggedUser.setBehorighet(beh);
+                new MainPage(con).setVisible(true);
                 this.dispose();
+//                int svBehorighet = Integer.parseInt(svarBehorighet);
+//                LoggedUser.setBehorighet(svBehorighet);
+//                int svID = Integer.parseInt(svarID);
+//                LoggedUser.setID(svID);
 
-            } else { // If the password doesn't match
-
-                JOptionPane.showMessageDialog(null, "The e-mail and the password did not match, please try again.");
-
-            }
-
-        } catch (InfException ex) { // Catches an error from a faulty database connection
-
+            } else {
+                JOptionPane.showMessageDialog(null, "E-mail and password doesn't match.");
+            }    
+        
+        } catch (SQLException ex) { // Catches an error from a faulty database connection
             JOptionPane.showMessageDialog(null, "Something went wrong.");
-
         }
 
     }//GEN-LAST:event_btnLoginActionPerformed

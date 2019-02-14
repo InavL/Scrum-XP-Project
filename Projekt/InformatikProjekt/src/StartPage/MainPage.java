@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import net.coobird.thumbnailator.Thumbnails;
@@ -22,6 +23,8 @@ import org.seamless.swing.ClosableTabbedPane;
 public class MainPage extends javax.swing.JFrame {
 
     private static InfDB idb;
+    private static Connection con;
+    
     private MethodService methodService;
     private ClosableTabbedPane paneMainPageTabs;
     private CreateBlog createBlog;
@@ -46,12 +49,13 @@ public class MainPage extends javax.swing.JFrame {
     /**
      * Creates new form ColorPage
      *
-     * @param idb
+     * @param con
      */
-    public MainPage(InfDB idb) {
+    public MainPage(Connection con) {
         initComponents();
         this.setSize(1000, 800);
         this.idb = idb;
+        this.con = con;
         this.setExtendedState(this.MAXIMIZED_BOTH);
 
         try {
@@ -462,7 +466,7 @@ public class MainPage extends javax.swing.JFrame {
 
     private void logOutMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMnuItmActionPerformed
         //Skapar ett nytt LoginWindow och gör det synligt och stänger ner MainPage 
-        new LoginWindow(idb).setVisible(true);
+        new LoginWindow(con).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_logOutMnuItmActionPerformed
 
