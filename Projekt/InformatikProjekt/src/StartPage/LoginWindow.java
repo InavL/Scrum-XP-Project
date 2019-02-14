@@ -206,25 +206,22 @@ public class LoginWindow extends javax.swing.JFrame {
         try {
 
             String fraga = "select * from PERSONER where MAIL=? and LOSENORD=?";
-
+            
             PreparedStatement ps = con.prepareStatement(fraga);
             ps.setString(1, mail);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
-
-            ps = con.prepareStatement(fraga);
-            ps.setString(1, txtEmail.getText());
-            ps.setString(2, pwdPassword.getText());
-            rs = ps.executeQuery();
+            
             if (rs.next()) {
                 
-                //LoggedUser.setBehorighet(beh);
+                int beh = rs.getInt("SID");
+                int id = rs.getInt("ID");
+                
+                LoggedUser.setBehorighet(beh);
+                LoggedUser.setID(id);
+                System.out.println(beh + " " + id);
                 new MainPage(con).setVisible(true);
                 this.dispose();
-//                int svBehorighet = Integer.parseInt(svarBehorighet);
-//                LoggedUser.setBehorighet(svBehorighet);
-//                int svID = Integer.parseInt(svarID);
-//                LoggedUser.setID(svID);
 
             } else {
                 JOptionPane.showMessageDialog(null, "E-mail and password doesn't match.");

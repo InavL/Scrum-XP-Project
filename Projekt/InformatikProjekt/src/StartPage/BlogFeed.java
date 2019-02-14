@@ -5,6 +5,7 @@
  */
 package StartPage;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.DefaultListModel;
@@ -19,14 +20,16 @@ import oru.inf.InfException;
 public class BlogFeed extends javax.swing.JInternalFrame {
 
     private static InfDB idb;
+    private static Connection con;
     private MethodService methodService;
 
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public BlogFeed(InfDB idb) {
+    public BlogFeed(Connection con) {
         initComponents();
-        this.idb = idb;
+        //this.idb = idb;
+        this.con = con;
         methodService = new MethodService(idb);
 
         fillListWithSienceBlog();

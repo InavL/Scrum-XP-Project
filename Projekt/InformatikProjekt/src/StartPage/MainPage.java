@@ -80,7 +80,7 @@ public class MainPage extends javax.swing.JFrame {
         //methodService.setDesign(paneMainPageTabs);
         setMenuVisible(true);
         adminFunktions();
-        setStartPage();
+        //setStartPage();
 
     }
 
@@ -298,7 +298,7 @@ public class MainPage extends javax.swing.JFrame {
 
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if (!tabExists("Blog feed")) {
-            blogFeed = new BlogFeed(idb);
+            blogFeed = new BlogFeed(con);
             openTab(blogFeed, "Blog feed");
         } //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else {
@@ -395,7 +395,7 @@ public class MainPage extends javax.swing.JFrame {
     private void blogFeedMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blogFeedMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if (!tabExists("Blog feed")) {
-            blogFeed = new BlogFeed(idb);
+            blogFeed = new BlogFeed(con);
             openTab(blogFeed, "Blog feed");
         } //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else {
