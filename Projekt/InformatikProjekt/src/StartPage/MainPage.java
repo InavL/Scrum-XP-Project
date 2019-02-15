@@ -32,6 +32,7 @@ public class MainPage extends javax.swing.JFrame {
     
     private CreateMeeting createMeeting;
     private ChooseMeetingTime chooseMeetingTime;
+    private RemoveMeeting removeMeeting;
         
         
     /**
@@ -500,7 +501,15 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_ChooseMeetingTimeActionPerformed
 
     private void RemoveMeetingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveMeetingActionPerformed
-        // TODO add your handling code here:
+        //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
+        if(!tabExists("Remove meetnig")) {
+            removeMeeting = new RemoveMeeting(idb);
+            openTab(removeMeeting, "Choose meeting time");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
+            moveFocusToTab("Remove meeting");
+        }
     }//GEN-LAST:event_RemoveMeetingActionPerformed
 
 

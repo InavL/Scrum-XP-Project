@@ -32,6 +32,9 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
         methodService = new MethodService(idb);
         //txtTitle.requestFocusInWindow(true);
         
+       fyllAreaMedMoten();
+
+        
     }
 
     /**
@@ -209,20 +212,16 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
             try
             {
                 String id = txtID.getText();
+                
 
                 idb.delete("Delete from Moten where MID = '" + id + "';");
+                System.out.println("Delete from Moten where MID = '" + id + "';");
                 
                 idb.delete("delete from MOTES_FORSLAG where MID = '" + id + "';");
+                System.out.println("delete from MOTES_FORSLAG where MID = '" + id + "';");
                 
                 idb.delete("delete from PERSON_DELTAR where MID = '" + id + "';");
-                
-                ArrayList<String> allaForslag = idb.fetchColumn("select FORSLAGS_ID where MID = '" + id + "';");
-                
-                for(int i = 0; i < allaForslag.size(); i ++)
-                {
-                    String ettForslag = allaForslag.get(i);
-                    idb.delete("delete from PERSON_ACCEPTERAT where FORSLAG_ID = '" + ettForslag + "';");
-                }
+                System.out.println("delete from PERSON_DELTAR where MID = '" + id + "';");
                 
                 lblRemove.setText("The meeting is now removed from the system.");
                 
