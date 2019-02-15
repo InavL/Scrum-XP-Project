@@ -13,10 +13,6 @@ import javax.mail.internet.*;
 import javax.mail.internet.MimeMessage;
 
 
-/*import java.util.*;
-import javax.mail.*;
-import javax.mail.internet.*;
-import javax.activation.*;*/
 
 /**
  *
@@ -30,8 +26,8 @@ public class SendEmail {
     String host = "smtp.gmail.com";
     String user = "mailoruis@gmail.com";
     String pass = "javagrupp1";
-    String to = "irmelilova@gmail.com";
-    String from = "mailoruis@mail.com";
+    String to = "lovasol@live.se";
+    String from = "mailoruis@gmail.com";
     String subject = "enkelt meddelande";
     String messageText = "testar detta!!!";
     boolean sessionDebug = false;
@@ -65,8 +61,8 @@ public class SendEmail {
     transport.close();
     System.out.println("message send sucessfully");
     } catch(Exception ex)
-       {
+    {
         System.out.println(ex);
         
-        }
+            }
     }}
