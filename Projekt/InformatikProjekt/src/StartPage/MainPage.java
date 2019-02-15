@@ -33,6 +33,7 @@ public class MainPage extends javax.swing.JFrame {
     private CreateMeeting createMeeting;
     private ChooseMeetingTime chooseMeetingTime;
     private RemoveMeeting removeMeeting;
+    private ShowThisCalender showCalender;
         
         
     /**
@@ -92,7 +93,7 @@ public class MainPage extends javax.swing.JFrame {
         editUser = new javax.swing.JMenuItem();
         removeUser = new javax.swing.JMenuItem();
         createMetting = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        ShowCalender = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         ChooseMeetingTime = new javax.swing.JMenuItem();
         RemoveMeeting = new javax.swing.JMenuItem();
@@ -239,8 +240,13 @@ public class MainPage extends javax.swing.JFrame {
 
         createMetting.setText("Calender");
 
-        jMenuItem3.setText("View calender");
-        createMetting.add(jMenuItem3);
+        ShowCalender.setText("Show calender");
+        ShowCalender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ShowCalenderActionPerformed(evt);
+            }
+        });
+        createMetting.add(ShowCalender);
 
         jMenuItem4.setText("Create meeting");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -512,11 +518,24 @@ public class MainPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_RemoveMeetingActionPerformed
 
+    private void ShowCalenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowCalenderActionPerformed
+        //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
+        if(!tabExists("Show calender")) {
+            showCalender = new ShowThisCalender(idb);
+            openTab(showCalender, "Show calender");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
+            moveFocusToTab("Show calender");
+        }
+    }//GEN-LAST:event_ShowCalenderActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem ChooseMeetingTime;
     private javax.swing.JMenuItem RemoveMeeting;
+    private javax.swing.JMenuItem ShowCalender;
     private javax.swing.JMenuItem addCategory;
     private javax.swing.JMenuItem addTopic;
     private javax.swing.JMenuItem addUser;
@@ -539,7 +558,6 @@ public class MainPage extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem logOutMnuItm;
     private javax.swing.JMenu mainMenu;

@@ -213,6 +213,14 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
             {
                 String id = txtID.getText();
                 
+                ArrayList<String> allaForslag = idb.fetchColumn("select FORSLAGS_ID from MOTES_FORSLAG where MID = '" + id + "';");
+                System.out.println(allaForslag);
+                
+                for(int i = 0; i < allaForslag.size(); i ++)
+                {
+                    String ettForslag = allaForslag.get(i);
+                    idb.delete("delete from PERSON_ACCEPTERAT where FORSLAGS_ID = '" + ettForslag + "';");
+                }
 
                 idb.delete("Delete from Moten where MID = '" + id + "';");
                 System.out.println("Delete from Moten where MID = '" + id + "';");
