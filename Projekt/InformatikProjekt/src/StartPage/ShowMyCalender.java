@@ -5,6 +5,7 @@
  */
 package StartPage;
 
+import static StartPage.LoggedUser.getID;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -144,19 +145,23 @@ public class ShowMyCalender extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    try{
         Date dateStartDatum = ChooseDate.getDate();
         String choosenDate = sdf.format(dateStartDatum);
         
-        try{
-            // Hämtar möten som den inloggade personen har på valt datum
-            ArrayList<HashMap<String, String>> resultat = idb.fetchRows("SELECT SLUT_TID, START_TID, TYP_AV_MOTE FROM MOTEN"
+        
+        LoggedUser PersonID = new LoggedUser();
+        int inloggadID = PersonID.getID();
+        
+        
+        ArrayList<HashMap<String, String>> resultat = idb.fetchRows("SELECT SLUT_TID, START_TID, TYP_AV_MOTE FROM MOTEN"
             + " join PERSONER_DELTAR on MOTEN.MID = PERSONER_DELTAR.MID"
             + " join PERSONER on PERSONER_DELTAR.ID = PERSONER.ID"
-            + " where DATEOFMEETING = \'" + choosenDate + "\'");
-       
+            + " where DATEOFMEETING = '" + choosenDate + " and PERSONER.ID = '" + inloggadID + "'");     
+ 
+                    
             textAreaShowMeeting.setText("");
-            //Loopar genom ArrayListen och hämtar sluttid, starttid och datumen för varje möte inloggad person har
-                    for (int i = 0; i < resultat.size(); i++) {
+                for (int i = 0; i < resultat.size(); i++) {
                         String sluttiden = resultat.get(i).get("SLUT_TID");
                         String starttiden = resultat.get(i).get("START_TID");
                         String typAvMote = resultat.get(i).get("TYP_AV_MOTE");
