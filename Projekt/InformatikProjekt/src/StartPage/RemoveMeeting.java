@@ -5,6 +5,8 @@
  */
 package StartPage;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 import oru.inf.InfException;
@@ -28,7 +30,6 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);
-        skapaMote();
         //txtTitle.requestFocusInWindow(true);
         
     }
@@ -47,17 +48,13 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        txtDate = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        txtStartTime = new javax.swing.JTextField();
-        txtEndTime = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
         lblText = new javax.swing.JLabel();
         btnlRemove = new javax.swing.JButton();
         txtID = new javax.swing.JTextField();
         lblID = new javax.swing.JLabel();
-        lblRemove = new javax.swing.JTextField();
+        lblRemove = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtAreaLista = new javax.swing.JTextArea();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -87,38 +84,6 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Write the date and the time for the meeting.");
 
-        jLabel5.setText("Date:");
-
-        txtDate.setText("YYYY-MM-DD");
-        txtDate.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtDateFocusGained(evt);
-            }
-        });
-        txtDate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDateActionPerformed(evt);
-            }
-        });
-
-        jLabel6.setText("Start time:");
-
-        txtStartTime.setText("HH:MM");
-        txtStartTime.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtStartTimeFocusGained(evt);
-            }
-        });
-
-        txtEndTime.setText("HH:MM");
-        txtEndTime.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtEndTimeFocusGained(evt);
-            }
-        });
-
-        jLabel9.setText("End time:");
-
         btnlRemove.setText("Remove");
         btnlRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,6 +100,10 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
 
         lblID.setText("ID:");
 
+        txtAreaLista.setColumns(20);
+        txtAreaLista.setRows(5);
+        jScrollPane1.setViewportView(txtAreaLista);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -145,37 +114,26 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
                 .addComponent(lblText, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(126, 126, 126)
+                .addGap(180, 180, 180)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtEndTime, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(lblID))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtStartTime, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(229, 229, 229)
-                .addComponent(btnlRemove)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel4)
-                        .addComponent(jLabel2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lblRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)))
-                .addContainerGap(884, Short.MAX_VALUE))
+                        .addGap(80, 80, 80)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2))
+                .addContainerGap(479, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(175, 175, 175)
+                .addComponent(lblRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(165, 165, 165)
+                .addComponent(lblID)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnlRemove)
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,28 +142,19 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
                 .addGap(39, 39, 39)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addGap(34, 34, 34)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblID))
-                .addGap(3, 3, 3)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(txtStartTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(txtEndTime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addComponent(btnlRemove)
-                .addGap(36, 36, 36)
-                .addComponent(lblRemove, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(265, 265, 265)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblID))
+                        .addGap(53, 53, 53)
+                        .addComponent(btnlRemove))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addComponent(lblRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(239, 239, 239)
                 .addComponent(lblText, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -228,23 +177,18 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void skapaMote()
+    private void fyllAreaMedMoten()
     {
-        try
+        String text = "";
+        ArrayList<HashMap<String, String>> motesLista = idb.fetchRows("select MID, TYP_AV_MOTE from MOTEN;");
+        for(HashMap ettMote : motesLista)
         {
-            String hogstaID = idb.fetchSingle("select MAX(MID) from MOTEN");
-            int maxIdInt = Integer.parseInt(hogstaID);
-            int maxInt = maxIdInt + 1;
+            text += ettMote.get("MID");
+            text += " ";
+            text += ettMote.get("TYP_AV_MOTE");
+            text += "\n";
             
-            int userID = LoggedUser.getID();
-            System.out.println(userID);
-                
-            idb.insert("insert into MOTEN values(" + maxInt + ", " + userID + ", 'test', '01-01-01 00:00:00', '01-01-01 00:00:00');");
-            
-        }
-        catch(InfException ex)
-        {
-            JOptionPane.showMessageDialog(null, "Something went wrong.");
+            txtAreaLista.setText(text);
         }
     }
     
@@ -252,51 +196,29 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnAddActionPerformed
 
-    private void txtDateFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDateFocusGained
-        if (dateFocused == false) { // If the field is focused the box is cleared
-            txtDate.setText("");
-            dateFocused = true;
-        }
-    }//GEN-LAST:event_txtDateFocusGained
-
-    private void txtStartTimeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtStartTimeFocusGained
-        if (startTimeFocused == false) { // If the field is focused the box is cleared
-            txtStartTime.setText("");
-            startTimeFocused = true;
-        }
-    }//GEN-LAST:event_txtStartTimeFocusGained
-
-    private void txtEndTimeFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtEndTimeFocusGained
-        if (endTimeFocused == false) { // If the field is focused the box is cleared
-            txtEndTime.setText("");
-            endTimeFocused = true;
-        }
-    }//GEN-LAST:event_txtEndTimeFocusGained
-
     private void btnlRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlRemoveActionPerformed
-       if(Validation.textfieldWithValue(txtStartTime) && Validation.textfieldWithValue(txtEndTime) && Validation.textfieldWithValue(txtID))
+       if(Validation.textfieldWithValue(txtID))
         {
             try
             {
                 String id = txtID.getText();
-                String startdate = txtStartTime.getText();
-                String enddate = txtEndTime.getText();
+
+                idb.delete("Delete from Moten where MID = '" + id + "';");
                 
-                String fraga1 = "select ID from PERSONER where ID = '" + id + "';";
-                String endate = idb.fetchSingle(fraga1);
+                idb.delete("delete from MOTES_FORSLAG where MID = '" + id + "';");
                 
-                String fraga2 = "select ';";
-                String stardate = idb.fetchSingle(fraga2);
+                idb.delete("delete from PERSON_DELTAR where MID = '" + id + "';");
                 
-                if(startdate.equals(startdate) && enddate.equals(enddate) && id.equals(id))
+                ArrayList<String> allaForslag = idb.fetchColumn("select FORSLAGS_ID where MID = '" + id + "';");
+                
+                for(int i = 0; i < allaForslag.size(); i ++)
                 {
-                    
-                    btnlRemove.setText("The meeting is now removed.");
+                    String ettForslag = allaForslag.get(i);
+                    idb.delete("delete from PERSON_ACCEPTERAT where FORSLAG_ID = '" + ettForslag + "';");
                 }
-                else
-                {
-                    JOptionPane.showMessageDialog(null, "The ID did not match the name.");
-                }
+                
+                lblRemove.setText("The meeting is now removed from the system.");
+                
                 
             }
             catch(InfException ex)
@@ -307,10 +229,6 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
                                              
     }//GEN-LAST:event_btnlRemoveActionPerformed
 
-    private void txtDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDateActionPerformed
-
     private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIDActionPerformed
@@ -320,17 +238,13 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblID;
-    private javax.swing.JTextField lblRemove;
+    private javax.swing.JLabel lblRemove;
     private javax.swing.JLabel lblText;
-    private javax.swing.JTextField txtDate;
-    private javax.swing.JTextField txtEndTime;
+    private javax.swing.JTextArea txtAreaLista;
     private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtStartTime;
     // End of variables declaration//GEN-END:variables
 }
