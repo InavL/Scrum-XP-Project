@@ -94,6 +94,7 @@ public class MainPage extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         ChooseMeetingTime = new javax.swing.JMenuItem();
+        RemoveMeeting = new javax.swing.JMenuItem();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -255,6 +256,14 @@ public class MainPage extends javax.swing.JFrame {
             }
         });
         createMetting.add(ChooseMeetingTime);
+
+        RemoveMeeting.setText("Remove meeting");
+        RemoveMeeting.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RemoveMeetingActionPerformed(evt);
+            }
+        });
+        createMetting.add(RemoveMeeting);
 
         superMenyBar.add(createMetting);
 
@@ -490,10 +499,15 @@ public class MainPage extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ChooseMeetingTimeActionPerformed
 
+    private void RemoveMeetingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveMeetingActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RemoveMeetingActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem ChooseMeetingTime;
+    private javax.swing.JMenuItem RemoveMeeting;
     private javax.swing.JMenuItem addCategory;
     private javax.swing.JMenuItem addTopic;
     private javax.swing.JMenuItem addUser;
