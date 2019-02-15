@@ -19,9 +19,7 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
     
     private static InfDB idb;
     private MethodService methodService;
-    private boolean dateFocused = false; // Used in focusGain
-    private boolean startTimeFocused = false; // Used in focusGain
-    private boolean endTimeFocused = false; // Used in focusGain
+    private boolean idFocus = false; // Used in focusGain
     
     /**
      * Creates new form EditBlogInternalFrame
@@ -95,6 +93,11 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
         });
 
         txtID.setText("Write your ID here");
+        txtID.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtIDFocusGained(evt);
+            }
+        });
         txtID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIDActionPerformed(evt);
@@ -222,14 +225,16 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
                     idb.delete("delete from PERSON_ACCEPTERAT where FORSLAGS_ID = '" + ettForslag + "';");
                 }
 
-                idb.delete("Delete from Moten where MID = '" + id + "';");
-                System.out.println("Delete from Moten where MID = '" + id + "';");
+               
                 
                 idb.delete("delete from MOTES_FORSLAG where MID = '" + id + "';");
                 System.out.println("delete from MOTES_FORSLAG where MID = '" + id + "';");
                 
-                idb.delete("delete from PERSON_DELTAR where MID = '" + id + "';");
+                idb.delete("delete from PERSONER_DELTAR where MID = '" + id + "';");
                 System.out.println("delete from PERSON_DELTAR where MID = '" + id + "';");
+                
+                 idb.delete("Delete from Moten where MID = '" + id + "';");
+                System.out.println("Delete from Moten where MID = '" + id + "';");
                 
                 lblRemove.setText("The meeting is now removed from the system.");
                 
@@ -246,6 +251,13 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
     private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIDActionPerformed
+
+    private void txtIDFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtIDFocusGained
+        if (idFocus == false) { // If the field is focused the box is cleared
+            txtID.setText("");
+            idFocus = true;
+        }
+    }//GEN-LAST:event_txtIDFocusGained
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnlRemove;
