@@ -1,5 +1,6 @@
 package StartPage;
 
+
 import java.util.Date;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -204,6 +205,7 @@ public class Validation {
         }
         return resultat;
     }
+
     
     public static boolean datumValjareHarVarde(JDateChooser enDatumValjare) {
         
@@ -216,6 +218,7 @@ public class Validation {
         } 
         return harVarde;
     }  
+
 
 
 
