@@ -16,7 +16,7 @@ import javax.mail.internet.MimeMessage;
 
 /**
  *
- * @author sadeerbedan
+ * fdssfsdf
  */
 public class SendEmail {
     
