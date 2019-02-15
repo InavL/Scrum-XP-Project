@@ -179,6 +179,8 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
 
     private void fyllAreaMedMoten()
     {
+        try
+        {
         String text = "";
         ArrayList<HashMap<String, String>> motesLista = idb.fetchRows("select MID, TYP_AV_MOTE from MOTEN;");
         for(HashMap ettMote : motesLista)
@@ -189,6 +191,11 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
             text += "\n";
             
             txtAreaLista.setText(text);
+        }
+        }
+        catch(InfException ex)
+        {
+            JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
     
@@ -223,7 +230,7 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
             }
             catch(InfException ex)
             {
-                 JOptionPane.showMessageDialog(null, "Something went wrong.");
+                JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
         }
                                              
