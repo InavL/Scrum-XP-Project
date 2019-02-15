@@ -1,5 +1,6 @@
 package StartPage;
 
+import java.util.Date;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.swing.JComboBox;
@@ -9,6 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import com.toedter.calendar.JDateChooser;
 
 /**
  *
@@ -202,5 +204,19 @@ public class Validation {
         }
         return resultat;
     }
+    
+    public static boolean datumValjareHarVarde(JDateChooser enDatumValjare) {
+        
+        boolean harVarde = true;
+        Date ettDatum = enDatumValjare.getDate();
+        if(ettDatum == null) {
+            JOptionPane.showMessageDialog(null, "Fyll i ett datum");
+            enDatumValjare.requestFocus();
+            return false;
+        } 
+        return harVarde;
+    }  
+
+
 
 }
