@@ -325,7 +325,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
         
             FileUtils.copyFile(file, saveAt);
-            JOptionPane.showMessageDialog(null, "You have downloaded the file");
+            JOptionPane.showMessageDialog(null, "You have downloaded the file and it is saved in C:/FilesFromBlogpost");
 
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "This post don't have an attached file!");

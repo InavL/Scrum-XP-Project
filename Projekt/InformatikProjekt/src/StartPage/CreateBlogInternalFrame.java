@@ -323,6 +323,11 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
             
             //Hämtar ett nytt oanvänt bloggID
             String bloggID = idb.getAutoIncrement("blogg", "bloggid");
+            System.out.println(bloggID);
+            
+            //Lägger till inlägget i bloggtabellen med de valda värdena
+                idb.insert("INSERT INTO blogg (bloggid, bloggpost, titel, datum, kat3_ID, bloggskribent) \n" +
+                "VALUES (" + bloggID + ", \'" + bloggpost + "\', \'" + titel + "\', \'" + datumet + "\', \'" + kat3 + "\', " + personID + ")");
             
             if (name != null) {
             name = bloggID + type;
@@ -341,8 +346,8 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
             }
             
             //Lägger till inlägget i bloggtabellen med de valda värdena
-                idb.insert("INSERT INTO blogg (bloggid, bloggpost, titel, datum, kat3_ID, bloggskribent) \n" +
-                "VALUES (" + bloggID + ", \'" + bloggpost + "\', \'" + titel + "\', \'" + datumet + "\', \'" + kat3 + "\', " + personID + ")");
+               // idb.insert("INSERT INTO blogg (bloggid, bloggpost, titel, datum, kat3_ID, bloggskribent) \n" +
+               // "VALUES (" + bloggID + ", \'" + bloggpost + "\', \'" + titel + "\', \'" + datumet + "\', \'" + kat3 + "\', " + personID + ")");
                 
                 
                 
