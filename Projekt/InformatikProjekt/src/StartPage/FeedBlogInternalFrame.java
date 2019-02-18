@@ -255,6 +255,8 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                     }
                     
                     String bid = id.trim();
+                    
+                    bID = Integer.parseInt(id);
 
                     ImageHandling.showImage("src\\images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
 
@@ -285,6 +287,8 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                     }
                     
                     String bid = id.trim();
+                    
+                    bID = Integer.parseInt(id);
 
                     ImageHandling.showImage("src\\images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
 
