@@ -166,7 +166,7 @@ public class ShowThisCalender extends javax.swing.JInternalFrame {
                        }
         }
         catch (Exception e){
-                JOptionPane.showMessageDialog(null, "Något gick fel!");
+                JOptionPane.showMessageDialog(null, "Du har inget möte det här datumet");
                 System.out.println("Internt felmeddelande"+e.getMessage());  
             }
     }//GEN-LAST:event_jButton1ActionPerformed
