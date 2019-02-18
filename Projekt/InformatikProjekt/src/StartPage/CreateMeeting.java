@@ -9,6 +9,11 @@ import java.sql.Connection;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -17,7 +22,6 @@ import oru.inf.InfException;
 public class CreateMeeting extends javax.swing.JInternalFrame {
 
     private static Connection con;
-    private static InfDB idb;
     private MethodService methodService;
     private boolean dateFocused = false; // Used in focusGain
     private boolean startTimeFocused = false; // Used in focusGain
@@ -26,9 +30,9 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public CreateMeeting(InfDB idb) {
+    public CreateMeeting(Connection con) {
         initComponents();
-        this.idb = idb;
+        this.con = con;
         methodService = new MethodService(con);
         skapaMote();
         //txtTitle.requestFocusInWindow(true);
@@ -266,16 +270,26 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void skapaMote() {
+        Statement stmt = null;
+        String hogstaID = "select MAX(MID) from MOTEN";
+        
         try {
-            String hogstaID = idb.fetchSingle("select MAX(MID) from MOTEN");
             int maxIdInt = Integer.parseInt(hogstaID);
             int maxInt = maxIdInt + 1;
 
             int userID = LoggedUser.getID();
+            
+            String fraga = "insert into MOTEN values(?, ?, ?, ?, ?, ?);";
+            PreparedStatement ps = con.prepareStatement(fraga);
+            
+            ps.setInt(1, maxInt);
+            ps.setInt(2, userID);
+            ps.setString(3, test);
+            ps.setDate
 
             idb.insert("insert into MOTEN values(" + maxInt + ", " + userID + ", 'test', '01-01-01 00:00:00', '01-01-01 00:00:00');");
 
-        } catch (InfException ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
