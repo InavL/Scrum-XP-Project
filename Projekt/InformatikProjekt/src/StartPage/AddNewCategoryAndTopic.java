@@ -6,12 +6,11 @@
 package StartPage;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
-import oru.inf.InfDB;
-import oru.inf.InfException;
 
 /**
  *
@@ -19,8 +18,7 @@ import oru.inf.InfException;
  */
 public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
 
-    private static Connection con;
-    private static InfDB idb;
+    private Connection con;
     private MethodService methodService;
 
     /**
@@ -122,19 +120,13 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
                 .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCategoriName)
-                            .addComponent(lblRubrikCategory))
+                        .addComponent(lblRubrikCategory)
                         .addGap(242, 242, 242)
                         .addComponent(lblRubrikTopic))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnAddKategori)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addGap(186, 186, 186)
-                                    .addComponent(tflKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(lblText, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(lblText, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(135, 135, 135)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -146,7 +138,11 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
                                     .addComponent(cBoxKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(tflTopicNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(btnAddTopic, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblText2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(lblText2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblCategoriName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tflKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -175,7 +171,7 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddTopic)
                     .addComponent(btnAddKategori))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -193,94 +189,61 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddKategoriActionPerformed
-
-        if (Validation.textfieldWithValue(tflKategori)) {
-
+        if (Validation.textfieldWithValue(tflKategori)) { 
+            Statement stmt = null;
             String nykategori = tflKategori.getText();
-
             try {
+                
+                String query = "Select max(Kat1_ID) as Kat1_ID From Kat1;";
+                stmt = con.createStatement();
 
-                String fraga = "select * from KAT1 where KAT1_NAMN = " + nykategori;
+                ResultSet rs = stmt.executeQuery(query);
 
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery(fraga);
+                rs.next();
+                int maxKID = rs.getInt("Kat1_ID");
+                int maxInt = maxKID + 1;
+                System.out.println(maxInt);
+                
+                String fraga = "insert into Kat1 (KAT1_ID, KAT1_NAMN) VALUES (?,?)";
+                PreparedStatement ps = con.prepareStatement(fraga);
+                ps.setInt(1, maxInt);
+                ps.setString(2, nykategori);
+                ps.executeUpdate();
 
-                String befintlig = rs.getString("KAT1_NAMN");
-                System.out.println(befintlig);
-
-                if (befintlig != null) {
-
-                    String fraga2 = "Select max(Kat1_ID) From Kat1";
-
-                    Statement stmt2 = con.createStatement();
-                    ResultSet rs2 = stmt2.executeQuery(fraga2);
-
-                    int maxIdInt = rs2.getInt("Kat1_ID");
-                    int maxInt = maxIdInt + 1;
-
-                    String fraga3 = "Insert into Kat1 values (" + maxInt + ", '" + nykategori + "');";
-
-                    Statement stmt3 = con.createStatement();
-                    ResultSet rs3 = stmt3.executeQuery(fraga3);
-
-                    lblText.setText("Category successfully added.");
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "That category already exists.");
-                }
-
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Something went wrong.");
+                lblText.setText("Category successfully added.");
+            }catch (SQLException e ) {
+            
             }
         }
     }//GEN-LAST:event_btnAddKategoriActionPerformed
 
     private void btnAddTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTopicActionPerformed
-
         if (Validation.textfieldWithValue(tflTopicNamn) && Validation.elementSelectedInCombobox(cBoxKategori, "Select an option from the combobox.")) {
-
             try {
-
                 String kategori = cBoxKategori.getSelectedItem().toString();
                 String topic = tflTopicNamn.getText();
+                System.out.println(kategori + " " + topic);
 
-                String fraga = "select KAT1_ID from KAT1 where KAT1_NAMN = '" + kategori + "'"; // Chooses the category and puts it into kat_id
-
+                String query = "Select max(Kat2_ID) as Kat2_ID From Kat2;";
                 Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery(fraga);
-
-                int kat_id = rs.getInt("KAT1_ID");
-
-                String check = "select * from KAT2 where KAT2_NAMN = " + topic; // Checks if there already is a topic with that name
-
-                Statement stmt3 = con.createStatement();
-                ResultSet rs3 = stmt3.executeQuery(check);
-
-                String befintlig = rs3.getString("KAT2_NAMN");
-                System.out.println(befintlig);
-
-                if (befintlig != null) { // if there isn't already a topic with that name it adds a new topic
-
-                    String maxID = "Select max(Kat2_ID) From Kat2";
-
-                    Statement stmt2 = con.createStatement();
-                    ResultSet rs2 = stmt2.executeQuery(maxID);
-
-                    int maxIdInt = rs2.getInt("Kat2_ID");
-                    int maxInt = maxIdInt + 1;
-
-                    String fraga4 = "insert into KAT2 values(" + maxInt + ", '" + kat_id + "', '" + topic + "');";
-
-                    Statement stmt4 = con.createStatement();
-                    ResultSet rs4 = stmt4.executeQuery(fraga4);
-
-                    lblText2.setText("Topic successfully added.");
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "That topic already exists.");
-                }
-
-            } catch (SQLException ex) {
+                ResultSet rs = stmt.executeQuery(query);
+                rs.next();
+                int maxKID = rs.getInt("Kat2_ID");
+                int maxInt = maxKID + 1;
+                
+                query = "select KAT1_ID from KAT1 where KAT1_NAMN = '" + kategori + "';";
+                rs = stmt.executeQuery(query);
+                rs.next();
+                int kategoriID = rs.getInt("KAT1_ID");                
+                String fraga = "insert into KAT2 values(?,?,?);";
+                PreparedStatement ps = con.prepareStatement(fraga);
+                ps.setInt(1, maxInt);
+                ps.setInt(2, kategoriID);
+                ps.setString(3, topic);
+                ps.executeUpdate();
+                
+                lblText2.setText("Topic successfully added.");
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Something went wrong.......");
             }
         }
