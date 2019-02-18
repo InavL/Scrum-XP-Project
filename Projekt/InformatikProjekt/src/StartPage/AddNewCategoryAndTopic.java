@@ -193,18 +193,18 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddKategoriActionPerformed
-        
+
         if (Validation.textfieldWithValue(tflKategori)) {
-            
+
             String nykategori = tflKategori.getText();
-            
+
             try {
-                
+
                 String fraga = "select * from KAT1 where KAT1_NAMN = " + nykategori;
 
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(fraga);
-                
+
                 String befintlig = rs.getString("KAT1_NAMN");
                 System.out.println(befintlig);
 
@@ -228,7 +228,7 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
                 } else {
                     JOptionPane.showMessageDialog(null, "That category already exists.");
                 }
-                
+
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
@@ -236,32 +236,50 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAddKategoriActionPerformed
 
     private void btnAddTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTopicActionPerformed
-        
+
         if (Validation.textfieldWithValue(tflTopicNamn) && Validation.elementSelectedInCombobox(cBoxKategori, "Select an option from the combobox.")) {
-            
+
             try {
-                
+
                 String kategori = cBoxKategori.getSelectedItem().toString();
                 String topic = tflTopicNamn.getText();
 
-                String fraga = "";
+                String fraga = "select KAT1_ID from KAT1 where KAT1_NAMN = '" + kategori + "'"; // Chooses the category and puts it into kat_id
 
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(fraga);
 
-                
+                int kat_id = rs.getInt("KAT1_ID");
 
-                String kategoriID = idb.fetchSingle("select KAT1_ID from KAT1 where KAT1_NAMN = '" + kategori + "';");
-                String maxID = idb.fetchSingle("Select max(Kat2_ID) From Kat2;");
+                String check = "select * from KAT2 where KAT2_NAMN = " + topic; // Checks if there already is a topic with that name
 
-                int maxIdInt = Integer.parseInt(maxID);
-                int maxInt = maxIdInt + 1;
+                Statement stmt3 = con.createStatement();
+                ResultSet rs3 = stmt3.executeQuery(check);
 
-                String fragaasdsfsa = "insert into KAT2 values(" + maxInt + ", '" + kategoriID + "', '" + topic + "');";
-                idb.insert(fraga);
+                String befintlig = rs3.getString("KAT2_NAMN");
+                System.out.println(befintlig);
 
-                lblText2.setText("Topic successfully added.");
-                
+                if (befintlig != null) { // if there isn't already a topic with that name it adds a new topic
+
+                    String maxID = "Select max(Kat2_ID) From Kat2";
+
+                    Statement stmt2 = con.createStatement();
+                    ResultSet rs2 = stmt2.executeQuery(maxID);
+
+                    int maxIdInt = rs2.getInt("Kat2_ID");
+                    int maxInt = maxIdInt + 1;
+
+                    String fraga4 = "insert into KAT2 values(" + maxInt + ", '" + kat_id + "', '" + topic + "');";
+
+                    Statement stmt4 = con.createStatement();
+                    ResultSet rs4 = stmt4.executeQuery(fraga4);
+
+                    lblText2.setText("Topic successfully added.");
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "That topic already exists.");
+                }
+
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Something went wrong.......");
             }
