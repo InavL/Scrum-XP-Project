@@ -5,6 +5,7 @@
  */
 package StartPage;
 
+import java.sql.Connection;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 import oru.inf.InfException;
@@ -14,7 +15,8 @@ import oru.inf.InfException;
  * @author ellin
  */
 public class CreateMeeting extends javax.swing.JInternalFrame {
-    
+
+    private static Connection con;
     private static InfDB idb;
     private MethodService methodService;
     private boolean dateFocused = false; // Used in focusGain
@@ -27,7 +29,7 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
     public CreateMeeting(InfDB idb) {
         initComponents();
         this.idb = idb;
-        methodService = new MethodService(idb);
+        methodService = new MethodService(con);
         skapaMote();
         //txtTitle.requestFocusInWindow(true);
         

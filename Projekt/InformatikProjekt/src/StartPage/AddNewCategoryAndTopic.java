@@ -5,6 +5,10 @@
  */
 package StartPage;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 import oru.inf.InfException;
@@ -14,17 +18,18 @@ import oru.inf.InfException;
  * @author ellin
  */
 public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
-    
+
+    private static Connection con;
     private static InfDB idb;
     private MethodService methodService;
 
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public AddNewCategoryAndTopic(InfDB idb) {
+    public AddNewCategoryAndTopic(Connection con) {
         initComponents();
-        this.idb = idb;
-        methodService = new MethodService(idb);
+        this.con = con;
+        methodService = new MethodService(con);
         methodService.fillComboboxBranchKat1(cBoxKategori);
     }
 
@@ -197,54 +202,78 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddKategoriActionPerformed
-        if(Validation.textfieldWithValue(tflKategori))
-        {
-            try
-            {
-                String nykategori = tflKategori.getText();
+        
+        if (Validation.textfieldWithValue(tflKategori)) {
+            
+            String nykategori = tflKategori.getText();
+            
+            try {
                 
-                String maxID = idb.fetchSingle("Select max(Kat1_ID) From Kat1;");
+                String fraga = "select * from KAT1 where KAT1_NAMN = " + nykategori;
+
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(fraga);
                 
-                int maxIdInt = Integer.parseInt(maxID);
-                int maxInt = maxIdInt + 1;
+                String befintlig = rs.getString("KAT1_NAMN");
+                System.out.println(befintlig);
+
+                if (befintlig != null) {
+
+                    String fraga2 = "Select max(Kat1_ID) From Kat1";
+
+                    Statement stmt2 = con.createStatement();
+                    ResultSet rs2 = stmt2.executeQuery(fraga2);
+
+                    int maxIdInt = rs2.getInt("Kat1_ID");
+                    int maxInt = maxIdInt + 1;
+
+                    String fraga3 = "Insert into Kat1 values (" + maxInt + ", '" + nykategori + "');";
+
+                    Statement stmt3 = con.createStatement();
+                    ResultSet rs3 = stmt3.executeQuery(fraga3);
+
+                    lblText.setText("Category successfully added.");
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "That category already exists.");
+                }
                 
-                
-                String fraga = "Insert into Kat1 values (" + maxInt + ", '" + nykategori + "');";
-                idb.insert(fraga);
-             
-                lblText.setText("The new category is now added into the system.");
-            }
-            catch(InfException ex)
-            {
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
         }
     }//GEN-LAST:event_btnAddKategoriActionPerformed
 
     private void btnAddTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTopicActionPerformed
-    if(Validation.textfieldWithValue(tflTopicNamn) && Validation.elementSelectedInCombobox(cBoxKategori, "Select an option from the combobox."))
-    {
-        try
-        {
-            String kategori = cBoxKategori.getSelectedItem().toString();
-            String topic = tflTopicNamn.getText();
+        
+        if (Validation.textfieldWithValue(tflTopicNamn) && Validation.elementSelectedInCombobox(cBoxKategori, "Select an option from the combobox.")) {
             
-            String kategoriID = idb.fetchSingle("select KAT1_ID from KAT1 where KAT1_NAMN = '" + kategori + "';");
-            System.out.println(kategoriID);
-            String maxID = idb.fetchSingle("Select max(Kat2_ID) From Kat2;");
-             System.out.println(maxID);
+            try {
                 
+                String kategori = cBoxKategori.getSelectedItem().toString();
+                String topic = tflTopicNamn.getText();
+
+                String fraga = "";
+
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(fraga);
+
+                
+
+                String kategoriID = idb.fetchSingle("select KAT1_ID from KAT1 where KAT1_NAMN = '" + kategori + "';");
+                String maxID = idb.fetchSingle("Select max(Kat2_ID) From Kat2;");
+
                 int maxIdInt = Integer.parseInt(maxID);
                 int maxInt = maxIdInt + 1;
-            
-            String fraga = "insert into KAT2 values(" + maxInt + ", '" + kategoriID + "', '" + topic + "');";
-            idb.insert(fraga);
-            
-            lblText2.setText("The new topic is now added into the system.");
-        }
-        catch(InfException ex)
-        {
-            JOptionPane.showMessageDialog(null, "Something went wrong.......");
+
+                String fragaasdsfsa = "insert into KAT2 values(" + maxInt + ", '" + kategoriID + "', '" + topic + "');";
+                idb.insert(fraga);
+
+                lblText2.setText("Topic successfully added.");
+                
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Something went wrong.......");
+            }
         }
     }
     }//GEN-LAST:event_btnAddTopicActionPerformed
