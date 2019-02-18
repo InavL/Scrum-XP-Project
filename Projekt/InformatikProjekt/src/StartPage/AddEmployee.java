@@ -5,6 +5,7 @@
  */
 package StartPage;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
@@ -16,6 +17,7 @@ import oru.inf.InfException;
  */
 public class AddEmployee extends javax.swing.JInternalFrame {
 
+    private static Connection con;
     private static InfDB idb;
     private MethodService methodService;
     private boolean firstNameFocused = false; // Used in focusGain
@@ -27,10 +29,10 @@ public class AddEmployee extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public AddEmployee(InfDB idb) {
+    public AddEmployee(Connection con) {
         initComponents();
         this.idb = idb;
-        methodService = new MethodService(idb);
+        methodService = new MethodService(con);
         //fillCombobox();
         comboboxAlternatives();
 
