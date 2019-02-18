@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 
@@ -21,6 +20,7 @@ import javax.swing.JOptionPane;
 public class AddEmployee extends javax.swing.JInternalFrame {
 
     private static Connection con;
+    
     private MethodService methodService;
     private boolean firstNameFocused = false; // Used in focusGain
     private boolean lastNameFocused = false; // Used in focusGain
@@ -33,8 +33,8 @@ public class AddEmployee extends javax.swing.JInternalFrame {
      */
     public AddEmployee(Connection con) {
         initComponents();
+        methodService = new MethodService(con);
         this.con = con;
-        //methodService = new MethodService(con);
         //fillCombobox();
         comboboxAlternatives();
 
