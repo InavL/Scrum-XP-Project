@@ -217,5 +217,56 @@ public class Validation {
         } 
         return harVarde;
     }  
+    public static boolean losenordsKrav(JTextField losenord)
+    {
+        boolean losenKrav = true;
+        
+        String ettLosenord = losenord.getText();
+        int digit=0;
+        int upCount = 0;
+        int loCount = 0;
+        
+        for(int i = 0; i < ettLosenord.length(); i++){
+                
+            char c = ettLosenord.charAt(i);
+            
+            if(Character.isUpperCase(c)){
+                upCount++;
+            }
+            if(Character.isLowerCase(c)){
+                loCount++;
+            }
+            if(Character.isDigit(c)){
+                digit++;
+            }
+            }
+        
+        if(ettLosenord.length() > 8)    
+        {
+            if(loCount == 0) 
+            {
+            losenKrav = false;
+            JOptionPane.showMessageDialog(null, "The password needs to have at least one lowercase letter.");
+            }
+            else if(upCount == 0)
+            {
+            losenKrav = false;
+            JOptionPane.showMessageDialog(null, "The password needs to have at least one upercase letter.");
+            }
+            else if(digit == 0)
+            {
+            losenKrav = false;
+            JOptionPane.showMessageDialog(null, "The password needs to have at least one digit.");    
+            }
+        }
+        else
+        {
+            losenKrav = false;
+            JOptionPane.showMessageDialog(null, "The password is to short, it needs to be at least 8 symbols.");
+        }
+        
+        return losenKrav;
+    }
 
 }
+

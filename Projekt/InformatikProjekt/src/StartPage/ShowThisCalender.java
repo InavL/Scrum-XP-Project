@@ -151,22 +151,19 @@ public class ShowThisCalender extends javax.swing.JInternalFrame {
         LoggedUser loggedIn = new LoggedUser();
         int personID = loggedIn.getID();
        
-            ArrayList<HashMap<String, String>> resultat = idb.fetchRows("SELECT MOTEN.TYP_AV_MOTE, MOTEN.START_TID, MOTEN.SLUT_TID FROM MOTEN"
+            ArrayList<HashMap<String, String>> resultat = idb.fetchRows("SELECT TYP_AV_MOTE, START_TID, SLUT_TID FROM MOTEN"
             + " join PERSONER_DELTAR on MOTEN.MID = PERSONER_DELTAR.MID"
             + " join PERSONER on PERSONER_DELTAR.ID = PERSONER.ID"
-            + " where PERSONER.ID = " + personID + " and DATEMEETING = '" + choosenDate + "'");
+            + " where DATEOFMEETING = \'" + choosenDate + " and PERSONER.ID = '" + personID + "'");
        
             textAreaShowMeeting.setText("");
-            String allMeetings = "";
                     for (int i = 0; i < resultat.size(); i++) {
                         String typAvMote = resultat.get(i).get("TYP_AV_MOTE");
                         String starttiden = resultat.get(i).get("START_TID");
                         String sluttiden = resultat.get(i).get("SLUT_TID");
-                        
-                        allMeetings += "Typ av möte: " + typAvMote + " Start tid: " + starttiden + " Slut tid: " + sluttiden + "\n";
-                        
+                    
+                        textAreaShowMeeting.setText(typAvMote + " " + starttiden + " " + sluttiden + "\n");
                        }
-                    textAreaShowMeeting.setText(allMeetings);
         }
         catch (Exception e){
                 JOptionPane.showMessageDialog(null, "Du har inget möte det här datumet");

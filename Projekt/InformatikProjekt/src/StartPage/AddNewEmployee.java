@@ -247,7 +247,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         //Metoden skapar nya användare.
         if (Validation.textfieldWithValue(jTextFieldMail) && Validation.isValidEmailAddress(jTextFieldMail.getText()) && Validation.textfieldWithValue(jTextFieldPhone)
                 && Validation.textfaltTal(jTextFieldPhone) && Validation.textfieldWithValue(jTextFieldFirstName) && Validation.textfieldWithValue(jTextFieldLastName)
-                && Validation.textfieldWithValue(jPasswordField1)) {
+                && Validation.textfieldWithValue(jPasswordField1) && Validation.losenordsKrav(jPasswordField1)) {
             
             try {
                 
@@ -270,7 +270,6 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
                     
                     String question = "insert into PERSONER (ID,FNAMN,ENAMN,MAIL,TELEFON,SID,LOSENORD) values"
                             + "(" + id + ",'" + firstname + "','" + lastname + "','" + mail + "'," + phonenumber + "," + sid + ",'" + password + "');";
-                    System.out.println(question);
                     idb.insert(question);
 
                     lEmployeeAdded.setText("The person is now added to the employee list.");
