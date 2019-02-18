@@ -324,21 +324,27 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
             //Hämtar ett nytt oanvänt bloggID
             String bloggID = idb.getAutoIncrement("blogg", "bloggid");
             
-            name = titel + type;
+            if (name != null) {
+            name = bloggID + type;
                 
                 File saveAt = new File("files\\" + name);
                         saveAt.getAbsolutePath();
 
                 try {
                     FileUtils.copyFile(source, saveAt);
+                    idb.insert("Insert into blogg_har_filer (blogg_id, filtyp) values (" + bloggID + ", '" + type + "')");
+                    
 
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(null, "Something went wrong");
                 }
+            }
             
             //Lägger till inlägget i bloggtabellen med de valda värdena
                 idb.insert("INSERT INTO blogg (bloggid, bloggpost, titel, datum, kat3_ID, bloggskribent) \n" +
                 "VALUES (" + bloggID + ", \'" + bloggpost + "\', \'" + titel + "\', \'" + datumet + "\', \'" + kat3 + "\', " + personID + ")");
+                
+                
                 
                 tfHeading.setText("");
                 taText.setText("");
@@ -484,6 +490,9 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         }
         if (name.endsWith(".txt")) {
             type = ".txt";
+        }
+        if (name.endsWith(".pages")) {
+            type = ".pages";
         }
 
         lblAttachment.setVisible(true);

@@ -5,10 +5,17 @@
  */
 package StartPage;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import org.apache.commons.io.FileUtils;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -20,6 +27,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     
     private static InfDB idb;
     private MethodService methodService;
+    private String id;
 
     /**
      * Creates new form EditBlogInternalFrame
@@ -28,7 +36,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         initComponents();
         this.idb = idb;
         methodService = new MethodService(idb);
-        
+        id = null;
         fillListWithSienceBlog();
         fillListWithEducationBlog();
         fillListWithInformalBlog();
@@ -63,6 +71,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         JlGetBlogInformal = new javax.swing.JList<>();
         txtImage = new javax.swing.JLabel();
+        btnDownload = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -182,6 +191,14 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 140, 190, 460));
         jPanel1.add(txtImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
+        btnDownload.setText("Download file");
+        btnDownload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDownloadActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnDownload, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 610, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -210,7 +227,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
             try{
                 String sienceBlogInfo = jListAllScienceBlog.getSelectedValue();
-                String id = sienceBlogInfo.substring(0,2);
+                id = sienceBlogInfo.substring(0,2);
                 String fraga = "SELECT BLOGGPOST FROM BLOGG"
                 +" where BLOGGID ="+id;
                 ArrayList<HashMap<String,String>> resultatLista = idb.fetchRows(fraga);
@@ -239,7 +256,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
      
             try{
                 String sienceBlogInfo = JlGetBlogEducation.getSelectedValue();
-                String id = sienceBlogInfo.substring(0,2);
+                id = sienceBlogInfo.substring(0,2);
                 String fraga = "SELECT BLOGGPOST FROM BLOGG"
                 +" where BLOGGID ="+id;
                 ArrayList<HashMap<String,String>> resultatLista = idb.fetchRows(fraga);
@@ -269,7 +286,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     
             try{
                 String sienceBlogInfo = JlGetBlogInformal.getSelectedValue();
-                String id = sienceBlogInfo.substring(0,2);
+                id = sienceBlogInfo.substring(0,2);
                 String fraga = "SELECT BLOGGPOST FROM BLOGG"
                 +" where BLOGGID ="+id;
                 ArrayList<HashMap<String,String>> resultatLista = idb.fetchRows(fraga);
@@ -294,6 +311,29 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             }
       
     }//GEN-LAST:event_JlGetBlogInformalValueChanged
+
+    private void btnDownloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownloadActionPerformed
+    try {
+        String newID = id.trim();
+        
+        String type = idb.fetchSingle("select FILTYP from BLOGG_HAR_FILER where BLOGG_ID ='" + newID + "'");
+
+
+        File file = new File("files\\" + newID + type);
+
+        File saveAt = new File("C:\\FilesFromBlogpost\\" + newID + type);
+
+        
+            FileUtils.copyFile(file, saveAt);
+            JOptionPane.showMessageDialog(null, "You have downloaded the file");
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "This post don't have an attached file!");
+        } catch (InfException ex) {
+            Logger.getLogger(FeedBlogInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }//GEN-LAST:event_btnDownloadActionPerformed
 
 
     
@@ -329,7 +369,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
             //Loopar genom listan för att hämta ut alla för- och efternamn
             for (int i = 0; i < SienceBlogList.size(); i++) {
-                String id = SienceBlogList.get(i).get("BLOGGID");
+                id = SienceBlogList.get(i).get("BLOGGID");
                 String titel = SienceBlogList.get(i).get("TITEL");
                 String datum = SienceBlogList.get(i).get("DATUM");
                 String sienceBlog = (id + " " + titel + " " + datum + "\n");
@@ -360,7 +400,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
             //Loopar genom listan för att hämta ut alla för- och efternamn
             for (int i = 0; i < SienceBlogList.size(); i++) {
-                String id = SienceBlogList.get(i).get("BLOGGID");
+                id = SienceBlogList.get(i).get("BLOGGID");
                 String titel = SienceBlogList.get(i).get("TITEL");
                 String datum = SienceBlogList.get(i).get("DATUM");
                 String sienceBlog = (id + " " + titel + " " + datum + "\n");
@@ -392,7 +432,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
             //Loopar genom listan för att hämta ut alla för- och efternamn
             for (int i = 0; i < SienceBlogList.size(); i++) {
-                String id = SienceBlogList.get(i).get("BLOGGID");
+                id = SienceBlogList.get(i).get("BLOGGID");
                 String titel = SienceBlogList.get(i).get("TITEL");
                 String datum = SienceBlogList.get(i).get("DATUM");
                 String sienceBlog = (id + " " + titel + " " + datum + "\n");
@@ -412,6 +452,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> JlGetBlogEducation;
     private javax.swing.JList<String> JlGetBlogInformal;
+    private javax.swing.JButton btnDownload;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jListAllScienceBlog;
