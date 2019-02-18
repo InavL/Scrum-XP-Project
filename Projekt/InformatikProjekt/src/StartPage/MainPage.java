@@ -6,12 +6,6 @@
 package StartPage;
 
 import java.beans.PropertyVetoException;
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import net.coobird.thumbnailator.Thumbnails;
 import oru.inf.InfDB;
 import org.seamless.swing.ClosableTabbedPane;
 
@@ -22,12 +16,9 @@ import org.seamless.swing.ClosableTabbedPane;
 public class MainPage extends javax.swing.JFrame {
     
     private static InfDB idb;
-    private static Connection con;
-    
-    private final MethodService methodService;
-    private final ClosableTabbedPane paneMainPageTabs;
-    private CreateBlog createBlog;
-//    private CreateBlogInternalFrame createBlogInternalFrame;
+    private MethodService methodService;
+    private ClosableTabbedPane paneMainPageTabs;
+    private CreateBlogInternalFrame createBlogInternalFrame;
     private EditBlogInternalFrame editBlogInternalFrame;
     private RemoveBlogInternalFrame removeBlogInternalFrame;
     private FeedBlogInternalFrame feedBlogInternalFrame;
@@ -47,33 +38,14 @@ public class MainPage extends javax.swing.JFrame {
         
     /**
      * Creates new form ColorPage
-     *
-     * @param con
+     * @param idb
      */
-    public MainPage(Connection con) {
+    public MainPage(InfDB idb) {
         initComponents();
         this.setSize(1000, 800);
         this.idb = idb;
-        this.con = con;
-        this.setExtendedState(this.MAXIMIZED_BOTH);
-
-        try {
-
-            BufferedImage img = ImageIO.read(new File("images/OrUIS-farg.png"));
-
-            BufferedImage thumbnail = Thumbnails.of(img)
-                    .scale(.75)
-                    .asBufferedImage();
-
-            ImageIcon icon = new ImageIcon(thumbnail);
-            this.setIconImage(icon.getImage());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         //Instansierar ett nytt methodServiceobjekt
-        methodService = new MethodService(con);
+        methodService = new MethodService(idb);
         paneMainPageTabs = new ClosableTabbedPane();
         getContentPane().add(paneMainPageTabs);
         //methodService.setDesign(paneMainPageTabs);
@@ -310,11 +282,12 @@ public class MainPage extends javax.swing.JFrame {
     private void setStartPage() {
         
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if (!tabExists("Blog feed")) {
-            blogFeed = new BlogFeed(con);
-            openTab(blogFeed, "Blog feed");
-        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else {
+        if(!tabExists("Blog feed")) {
+            feedBlogInternalFrame = new FeedBlogInternalFrame(idb);
+            openTab(feedBlogInternalFrame, "Blog feed");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
             moveFocusToTab("Blog feed");
         }
     }
@@ -374,11 +347,12 @@ public class MainPage extends javax.swing.JFrame {
 
     private void createBlogMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBlogMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if (!tabExists("Create blog")) {
-            createBlog = new CreateBlog(con);
-            openTab(createBlog, "Create blog");
-        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else {
+        if(!tabExists("Create blog")) {
+            createBlogInternalFrame = new CreateBlogInternalFrame(idb);
+            openTab(createBlogInternalFrame, "Create blog");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
             moveFocusToTab("Create blog");
         }
     }//GEN-LAST:event_createBlogMnuItmActionPerformed
@@ -414,11 +388,12 @@ public class MainPage extends javax.swing.JFrame {
 
     private void blogFeedMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blogFeedMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if (!tabExists("Blog feed")) {
-            blogFeed = new BlogFeed(con);
-            openTab(blogFeed, "Blog feed");
-        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else {
+        if(!tabExists("Blog feed")) {
+            feedBlogInternalFrame = new FeedBlogInternalFrame(idb);
+            openTab(feedBlogInternalFrame, "Blog feed");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
             moveFocusToTab("Blog feed");
         }
     }//GEN-LAST:event_blogFeedMnuItmActionPerformed
@@ -461,11 +436,12 @@ public class MainPage extends javax.swing.JFrame {
 
     private void addUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if (!tabExists("Add user")) {
-            addEmployee = new AddEmployee(con);
-            openTab(addEmployee, "Add user");
-        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else {
+        if(!tabExists("Add user")) {
+            addNewEmployee = new AddNewEmployee(idb);
+            openTab(addNewEmployee, "Add user");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
             moveFocusToTab("Add user");
         }
     }//GEN-LAST:event_addUserActionPerformed
@@ -478,8 +454,8 @@ public class MainPage extends javax.swing.JFrame {
     }
     private void addCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCategoryActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if (!tabExists("Add category")) {
-            addNewCategoryAndTopic = new AddNewCategoryAndTopic(con);
+        if(!tabExists("Add category")) {
+            addNewCategoryAndTopic = new AddNewCategoryAndTopic(idb);
             openTab(addNewCategoryAndTopic, "Add category");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
@@ -490,7 +466,7 @@ public class MainPage extends javax.swing.JFrame {
 
     private void logOutMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMnuItmActionPerformed
         //Skapar ett nytt LoginWindow och gör det synligt och stänger ner MainPage 
-        new LoginWindow(con).setVisible(true);
+        new LoginWindow(idb).setVisible(true); 
         this.dispose();
     }//GEN-LAST:event_logOutMnuItmActionPerformed
 

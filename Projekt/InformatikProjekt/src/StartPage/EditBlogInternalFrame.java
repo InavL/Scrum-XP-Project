@@ -6,7 +6,6 @@
 package StartPage;
 
 import com.jidesoft.swing.AutoCompletion;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
@@ -18,8 +17,7 @@ import oru.inf.InfException;
  * @author ellin
  */
 public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
-
-    private static Connection con;
+    
     private static InfDB idb;
     private MethodService methodService;
     private String blogID;
@@ -30,7 +28,7 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
     public EditBlogInternalFrame(InfDB idb) {
         initComponents();
         this.idb = idb;
-        methodService = new MethodService(con);
+        methodService = new MethodService(idb);
         blogID = null;
         //Gör listan sökbar.
         AutoCompletion editablePostList = new AutoCompletion(cbPosts);

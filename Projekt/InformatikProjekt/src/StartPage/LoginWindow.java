@@ -5,17 +5,9 @@
  */
 package StartPage;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import net.coobird.thumbnailator.Thumbnails;
+import oru.inf.InfDB;
+import oru.inf.InfException;
 
 /**
  *
@@ -23,19 +15,19 @@ import net.coobird.thumbnailator.Thumbnails;
  */
 public class LoginWindow extends javax.swing.JFrame {
 
-    private static Connection con; // Used to establish a connection to the database
+    private static InfDB idb; // Used to establish a connection to the database
     private boolean mailFocused = false; // Used in focusGain
     private boolean passFocused = false; // Used in focusGain
 
     /**
      * Creates new form ColorPage
      *
-     * @param con
+     * @param idb
      */
-    public LoginWindow(Connection con) {
+    public LoginWindow(InfDB idb) {
 
         initComponents();
-        this.con = con;
+        this.idb = idb;
         this.setLocationRelativeTo(null); // Opens the window at the centre of the screen
 
     }
@@ -129,22 +121,23 @@ public class LoginWindow extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlBlue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblemail)
-                            .addComponent(lblPassword))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(161, 161, 161)
+                        .addComponent(btnLogin))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(98, 98, 98)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pwdPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnLogin)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel3)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblemail)
+                                    .addComponent(lblPassword))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(pwdPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,7 +145,7 @@ public class LoginWindow extends javax.swing.JFrame {
                 .addComponent(pnlBlue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
                 .addComponent(jLabel3)
-                .addGap(50, 50, 50)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblemail)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -160,9 +153,9 @@ public class LoginWindow extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPassword)
                     .addComponent(pwdPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(46, 46, 46)
                 .addComponent(btnLogin)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addGap(42, 42, 42))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -181,34 +174,45 @@ public class LoginWindow extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
-        String mail = txtEmail.getText(); // Stores the text from the field
-        String password = pwdPassword.getText(); // Stores the password from the field
-
         try {
+            String email = txtEmail.getText(); // Stores the text from the field
+            String password = pwdPassword.getText(); // Stores the password from the field
 
-            String fraga = "select * from PERSONER where MAIL=? and LOSENORD=?";
-            
-            PreparedStatement ps = con.prepareStatement(fraga);
-            ps.setString(1, mail);
-            ps.setString(2, password);
-            ResultSet rs = ps.executeQuery();
-            
-            if (rs.next()) {
+            String fraga = "select LOSENORD from PERSONER where MAIL = '" + email + "';";
+            String losenord = idb.fetchSingle(fraga); // Gets the password that corresponds to the mail
+
+            String queryBehorighet = "select SID from PERSONER where MAIL = '" + email + "';";
+            String svarBehorighet = idb.fetchSingle(queryBehorighet); // Gets the SID for permissionlevel
+
+            String queryID = "select ID from PERSONER where MAIL ='" + email + "';";
+            String svarID = idb.fetchSingle(queryID); // Gets the user ID 
+
+            if (password.equals(losenord)) { // Checks if the password provided matches the one in the database
+
                 
-                int beh = rs.getInt("SID");
-                int id = rs.getInt("ID");
-                
-                LoggedUser.setBehorighet(beh);
-                LoggedUser.setID(id);
-                new MainPage(con).setVisible(true);
+                int svBehorighet = Integer.parseInt(svarBehorighet);
+                LoggedUser.setBehorighet(svBehorighet);
+                //behorighet = svBehorighet; // Sets the permissionlevel
+                int svID = Integer.parseInt(svarID);
+                LoggedUser.setID(svID);
+                //id = svID; // Sets the ID
+
+                txtEmail.setText(""); // Empties the fields (Maybe redundant)
+                pwdPassword.setText("");
+                //this.setVisible(false); // Hides the window
+                new MainPage(idb).setVisible(true); // Creates a MainPage if the login was successful
                 this.dispose();
 
-            } else {
-                JOptionPane.showMessageDialog(null, "E-mail and password doesn't match.");
-            }    
-        
-        } catch (SQLException ex) { // Catches an error from a faulty database connection
+            } else { // If the password doesn't match
+
+                JOptionPane.showMessageDialog(null, "The e-mail and the password did not match, please try again.");
+
+            }
+
+        } catch (InfException ex) { // Catches an error from a faulty database connection
+
             JOptionPane.showMessageDialog(null, "Something went wrong.");
+
         }
 
     }//GEN-LAST:event_btnLoginActionPerformed

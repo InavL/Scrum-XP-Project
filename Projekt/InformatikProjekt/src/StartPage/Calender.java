@@ -17,20 +17,22 @@ import oru.inf.InfException;
 
 
 
-    private static Connection con;
+
+public class Calender extends javax.swing.JInternalFrame {
+    
+    private static InfDB idb;
     private MethodService methodService;
     
     
 
     /**
      * Creates new form EditBlogInternalFrame
-     * @param con
      */
-    public Calender(Connection con) {
+    public Calender(InfDB idb) {
         initComponents();
-        this.con = con;
-        methodService = new MethodService(con);
-
+        this.idb = idb;
+        methodService = new MethodService(idb);
+       
     }
 
     @SuppressWarnings("unchecked")

@@ -6,9 +6,6 @@
 package StartPage;
 
 import com.jidesoft.swing.AutoCompletion;
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,20 +19,18 @@ import oru.inf.InfException;
  *
  * @author ellin
  */
-public class CreateBlog extends javax.swing.JInternalFrame {
-
-    private static Connection con;
+public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
+    
     private static InfDB idb;
     private MethodService methodService;
 
     /**
      * Creates new form EditBlogInternalFrame
-     * @param con
      */
-    public CreateBlog(Connection con) {
+    public CreateBlogInternalFrame(InfDB idb) {
         initComponents();
-        this.con = con;
-        methodService = new MethodService(con);
+        this.idb = idb;
+        methodService = new MethodService(idb);
         //pnlMainPanel.setVisible(false);
         methodService.fillComboboxBranch(cbBranch);
         methodService.fillComboboxBranchKat1(cbxKat1);

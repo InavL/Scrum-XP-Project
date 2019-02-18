@@ -5,7 +5,6 @@
  */
 package StartPage;
 
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.DefaultListModel;
@@ -17,9 +16,8 @@ import oru.inf.InfException;
  *
  * @author ellin
  */
-public class ShowUser extends javax.swing.JInternalFrame {
-
-    private static Connection con;
+public class ShowUserInformation extends javax.swing.JInternalFrame {
+    
     private static InfDB idb;
     private MethodService methodService;
  
@@ -31,7 +29,7 @@ public class ShowUser extends javax.swing.JInternalFrame {
     public ShowUserInformation(InfDB idb) {
         initComponents();
         this.idb = idb;
-        methodService = new MethodService(con);
+        methodService = new MethodService(idb);
         fillListWithUsers();
         
     }
