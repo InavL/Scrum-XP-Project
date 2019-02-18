@@ -6,6 +6,8 @@
 package StartPage;
 
 import com.jidesoft.swing.AutoCompletion;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,7 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import oru.inf.InfDB;
 import oru.inf.InfException;
-
+import javax.swing.JFileChooser;
+import org.apache.commons.io.FileUtils;
 /**
  *
  * @author ellin
@@ -23,6 +26,9 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
     
     private static InfDB idb;
     private MethodService methodService;
+    private String name;
+    private File source;
+    private String type;
 
     /**
      * Creates new form EditBlogInternalFrame
@@ -34,6 +40,8 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         //pnlMainPanel.setVisible(false);
         methodService.fillComboboxBranch(cbBranch);
         methodService.fillComboboxBranchKat1(cbxKat1);
+        //Gör texten ej synlig
+        lblAttachment.setVisible(false);
         
         //Gör listan sökbar.
         AutoCompletion editableBranchList = new AutoCompletion(cbBranch);
@@ -66,6 +74,8 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         btnSave1 = new javax.swing.JButton();
         txtAdd = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
+        btnAttachFile = new javax.swing.JButton();
+        lblAttachment = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -142,6 +152,16 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAttachFile.setText("Attach file");
+        btnAttachFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAttachFileActionPerformed(evt);
+            }
+        });
+
+        lblAttachment.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblAttachment.setText("You have attached one file!");
+
         javax.swing.GroupLayout pnlMainPanelLayout = new javax.swing.GroupLayout(pnlMainPanel);
         pnlMainPanel.setLayout(pnlMainPanelLayout);
         pnlMainPanelLayout.setHorizontalGroup(
@@ -150,6 +170,10 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
                 .addGap(64, 64, 64)
                 .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlMainPanelLayout.createSequentialGroup()
+                        .addComponent(btnAttachFile)
+                        .addGap(35, 35, 35)
+                        .addComponent(lblAttachment)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnPublish)
                         .addGap(50, 50, 50))
                     .addGroup(pnlMainPanelLayout.createSequentialGroup()
@@ -210,9 +234,12 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
                     .addComponent(txtAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAdd))
                 .addGap(14, 14, 14)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(btnPublish)
+                .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPublish)
+                    .addComponent(btnAttachFile)
+                    .addComponent(lblAttachment))
                 .addContainerGap())
         );
 
@@ -297,12 +324,25 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
             //Hämtar ett nytt oanvänt bloggID
             String bloggID = idb.getAutoIncrement("blogg", "bloggid");
             
+            name = titel + type;
+                
+                File saveAt = new File("files\\" + name);
+                        saveAt.getAbsolutePath();
+
+                try {
+                    FileUtils.copyFile(source, saveAt);
+
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "Something went wrong");
+                }
+            
             //Lägger till inlägget i bloggtabellen med de valda värdena
                 idb.insert("INSERT INTO blogg (bloggid, bloggpost, titel, datum, kat3_ID, bloggskribent) \n" +
                 "VALUES (" + bloggID + ", \'" + bloggpost + "\', \'" + titel + "\', \'" + datumet + "\', \'" + kat3 + "\', " + personID + ")");
                 
                 tfHeading.setText("");
                 taText.setText("");
+                lblAttachment.setVisible(false);
                 //pnlMainPanel.setVisible(false);
             
             }
@@ -417,9 +457,43 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
+    private void btnAttachFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAttachFileActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        // Set the text
+        chooser.setApproveButtonText("Spara");
+        // Set the mnemonic
+        chooser.setApproveButtonMnemonic('a');
+        // Set the tool tip
+        chooser.setApproveButtonToolTipText("Sparar filen");
+        chooser.showOpenDialog(null);
+
+        source = chooser.getSelectedFile().getAbsoluteFile();
+        name = source.getName();
+
+        if (name.endsWith(".docx")) {
+            type = ".docx";
+        }
+        if (name.endsWith(".pdf")) {
+            type = ".pdf";
+        }
+        if (name.endsWith(".jpeg")) {
+            type = ".jpeg";
+        }
+        if (name.endsWith(".png")) {
+            type = ".png";
+        }
+        if (name.endsWith(".txt")) {
+            type = ".txt";
+        }
+
+        lblAttachment.setVisible(true);
+    
+    }//GEN-LAST:event_btnAttachFileActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnAttachFile;
     private javax.swing.JButton btnPublish;
     private javax.swing.JButton btnSave1;
     private javax.swing.JButton btnSave2;
@@ -432,6 +506,7 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblAttachment;
     private javax.swing.JLabel lblChoosePlace;
     private javax.swing.JLabel lblHeading;
     private javax.swing.JPanel pnlMainPanel;
