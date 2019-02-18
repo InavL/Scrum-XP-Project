@@ -5,20 +5,21 @@
  */
 package StartPage;
 
-import oru.inf.InfDB;
+import java.sql.Connection;
 
 public class Calender extends javax.swing.JInternalFrame {
 
-    private static InfDB idb;
+    private static Connection con;
     private MethodService methodService;
 
     /**
      * Creates new form EditBlogInternalFrame
+     * @param con
      */
-    public Calender(InfDB idb) {
+    public Calender(Connection con) {
         initComponents();
-        this.idb = idb;
-        methodService = new MethodService(idb);
+        this.con = con;
+        methodService = new MethodService(con);
 
     }
 

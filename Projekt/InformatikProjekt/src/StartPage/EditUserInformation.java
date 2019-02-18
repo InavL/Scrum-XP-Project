@@ -7,6 +7,7 @@ package StartPage;
 
 import com.jidesoft.swing.AutoCompletion;
 import java.awt.Color;
+import java.sql.Connection;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
@@ -18,6 +19,7 @@ import oru.inf.InfException;
  */
 public class EditUserInformation extends javax.swing.JInternalFrame {
 
+    private static Connection con;
     private static InfDB idb;
     private MethodService methodService;
     private String firstname;
@@ -31,7 +33,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
         initComponents();
         this.idb = idb;
         ID = null;
-        methodService = new MethodService(idb);
+        methodService = new MethodService(con);
         //Gör panelen vit som backgrunden
         pnlMainPanel.setBackground(Color.WHITE);
         //Gör panelen osynlig

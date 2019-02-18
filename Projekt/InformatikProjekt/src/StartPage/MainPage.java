@@ -25,8 +25,8 @@ public class MainPage extends javax.swing.JFrame {
     private static InfDB idb;
     private static Connection con;
     
-    private MethodService methodService;
-    private ClosableTabbedPane paneMainPageTabs;
+    private final MethodService methodService;
+    private final ClosableTabbedPane paneMainPageTabs;
     private CreateBlog createBlog;
 //    private CreateBlogInternalFrame createBlogInternalFrame;
     private EditBlogInternalFrame editBlogInternalFrame;
@@ -74,13 +74,13 @@ public class MainPage extends javax.swing.JFrame {
         }
 
         //Instansierar ett nytt methodServiceobjekt
-        methodService = new MethodService(idb);
+        methodService = new MethodService(con);
         paneMainPageTabs = new ClosableTabbedPane();
         getContentPane().add(paneMainPageTabs);
         //methodService.setDesign(paneMainPageTabs);
         setMenuVisible(true);
         adminFunktions();
-        //setStartPage();
+        setStartPage();
 
     }
 
@@ -357,7 +357,7 @@ public class MainPage extends javax.swing.JFrame {
     private void createBlogMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBlogMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if (!tabExists("Create blog")) {
-            createBlog = new CreateBlog(idb);
+            createBlog = new CreateBlog(con);
             openTab(createBlog, "Create blog");
         } //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else {
@@ -456,7 +456,7 @@ public class MainPage extends javax.swing.JFrame {
     private void addCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCategoryActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if (!tabExists("Add category")) {
-            addNewCategoryAndTopic = new AddNewCategoryAndTopic(idb);
+            addNewCategoryAndTopic = new AddNewCategoryAndTopic(con);
             openTab(addNewCategoryAndTopic, "Add category");
         } //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else {
