@@ -144,7 +144,7 @@ public class ShowThisCalender extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try{
+              try{
         Date dateStartDatum = chooseDate.getDate();
         String choosenDate = sdf.format(dateStartDatum);
         
@@ -169,9 +169,10 @@ public class ShowThisCalender extends javax.swing.JInternalFrame {
                     textAreaShowMeeting.setText(allMeetings);
         }
         catch (Exception e){
-                JOptionPane.showMessageDialog(null, "Något gick fel!");
+                JOptionPane.showMessageDialog(null, "Du har inget möte det här datumet");
                 System.out.println("Internt felmeddelande"+e.getMessage());  
             }
+    
     }//GEN-LAST:event_jButton1ActionPerformed
 
   
