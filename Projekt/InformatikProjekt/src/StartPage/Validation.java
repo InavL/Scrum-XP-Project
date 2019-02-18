@@ -222,6 +222,7 @@ public class Validation {
         boolean losenKrav = true;
         
         String ettLosenord = losenord.getText();
+        
         int digit=0;
         int upCount = 0;
         int loCount = 0;
@@ -241,7 +242,7 @@ public class Validation {
             }
             }
         
-        if(ettLosenord.length() > 8)    
+        if(ettLosenord.length() >= 8)    
         {
             if(loCount == 0) 
             {
