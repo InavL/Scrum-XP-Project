@@ -1,16 +1,21 @@
 package StartPage;
 
 import java.awt.Point;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 
 public class MethodClass {
 
-    private static InfDB idb;
+    private static Connection con;
     private Point plats = new Point();
 
-    public MethodClass(InfDB idb) {
+    public MethodClass(Connection con) {
 
     }
 
@@ -19,12 +24,17 @@ public class MethodClass {
 //        plats = this.getLocation();
 //        return plats;
 //    }
-    public static ArrayList<String> getComboBox(String katNamn, String katTabell, InfDB idb) {
+    public static ResultSet getComboBox(String katNamn, String katTabell, Connection con) {
         try {
-            String fraga = "Select '" + katNamn + "' from '" + katTabell + "';";
+            Statement stmt = null;
+            String fraga = null;
+            
+            stmt = con.createStatement();
+            
+            fraga = "Select '" + katNamn + "' from '" + katTabell + "';";
 
-            ArrayList<String> allaKategorier1 = idb.fetchColumn(fraga);
-            return allaKategorier1;
+            ResultSet rs = stmt.executeQuery(fraga);
+            return rs;
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }

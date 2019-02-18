@@ -4,11 +4,10 @@
  * and open the template in the editor.
  */
 package StartPage;
-
+import java .sql.Connection;
 import com.jidesoft.swing.AutoCompletion;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
