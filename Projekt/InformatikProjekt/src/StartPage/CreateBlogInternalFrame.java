@@ -6,15 +6,16 @@
 package StartPage;
 
 import com.jidesoft.swing.AutoCompletion;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import oru.inf.InfDB;
 import oru.inf.InfException;
-
+import javax.swing.JFileChooser;
+import org.apache.commons.io.FileUtils;
 /**
  *
  * @author ellin
@@ -23,6 +24,9 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
     
     private static InfDB idb;
     private MethodService methodService;
+    private String name;
+    private File source;
+    private String type;
 
     /**
      * Creates new form EditBlogInternalFrame
@@ -34,6 +38,8 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         //pnlMainPanel.setVisible(false);
         methodService.fillComboboxBranch(cbBranch);
         methodService.fillComboboxBranchKat1(cbxKat1);
+        //Gör texten ej synlig
+        lblAttachment.setVisible(false);
         
         //Gör listan sökbar.
         AutoCompletion editableBranchList = new AutoCompletion(cbBranch);
@@ -66,8 +72,8 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         btnSave1 = new javax.swing.JButton();
         txtAdd = new javax.swing.JTextField();
         btnAdd = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        btnAttachFile = new javax.swing.JButton();
+        lblAttachment = new javax.swing.JLabel();
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -142,43 +148,54 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
             }
         });
 
+        btnAttachFile.setText("Attach file");
+        btnAttachFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAttachFileActionPerformed(evt);
+            }
+        });
+
+        lblAttachment.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblAttachment.setText("You have attached one file!");
+
         javax.swing.GroupLayout pnlMainPanelLayout = new javax.swing.GroupLayout(pnlMainPanel);
         pnlMainPanel.setLayout(pnlMainPanelLayout);
         pnlMainPanelLayout.setHorizontalGroup(
             pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMainPanelLayout.createSequentialGroup()
-                .addGap(64, 64, 64)
+                .addGap(27, 27, 27)
                 .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlMainPanelLayout.createSequentialGroup()
-                        .addComponent(btnPublish)
-                        .addGap(50, 50, 50))
-                    .addGroup(pnlMainPanelLayout.createSequentialGroup()
+                        .addComponent(btnAttachFile)
+                        .addGap(35, 35, 35)
+                        .addComponent(lblAttachment)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnPublish))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 878, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainPanelLayout.createSequentialGroup()
                         .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 818, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tfHeading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblHeading))
+                        .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlMainPanelLayout.createSequentialGroup()
+                                .addGap(249, 249, 249)
+                                .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(cbxKat2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnSave2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(pnlMainPanelLayout.createSequentialGroup()
+                                .addGap(250, 250, 250)
                                 .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tfHeading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblHeading))
-                                .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblChoosePlace)
                                     .addGroup(pnlMainPanelLayout.createSequentialGroup()
-                                        .addGap(249, 249, 249)
-                                        .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(cbxKat2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(cbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(cbxKat1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(btnSave2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addGroup(pnlMainPanelLayout.createSequentialGroup()
-                                        .addGap(250, 250, 250)
-                                        .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblChoosePlace)
-                                            .addGroup(pnlMainPanelLayout.createSequentialGroup()
-                                                .addComponent(cbxKat1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(btnSave1)))))))
-                        .addContainerGap(50, Short.MAX_VALUE))))
+                                        .addComponent(btnSave1)))))))
+                .addGap(27, 27, 27))
         );
         pnlMainPanelLayout.setVerticalGroup(
             pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,17 +227,14 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
                     .addComponent(txtAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAdd))
                 .addGap(14, 14, 14)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(btnPublish)
+                .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPublish)
+                    .addComponent(btnAttachFile)
+                    .addComponent(lblAttachment))
                 .addContainerGap())
         );
-
-        jLabel2.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
-        jLabel2.setText("Write post");
-
-        jLabel3.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
-        jLabel3.setText("-------------------------------------------------------------------------------------------------------------------------");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -228,28 +242,17 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(pnlMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGap(27, 27, 27)
+                .addComponent(pnlMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(27, 27, 27))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(pnlMainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(27, 27, 27))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -297,12 +300,25 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
             //Hämtar ett nytt oanvänt bloggID
             String bloggID = idb.getAutoIncrement("blogg", "bloggid");
             
+            name = titel + type;
+                
+                File saveAt = new File("files\\" + name);
+                        saveAt.getAbsolutePath();
+
+                try {
+                    FileUtils.copyFile(source, saveAt);
+
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "Something went wrong");
+                }
+            
             //Lägger till inlägget i bloggtabellen med de valda värdena
                 idb.insert("INSERT INTO blogg (bloggid, bloggpost, titel, datum, kat3_ID, bloggskribent) \n" +
                 "VALUES (" + bloggID + ", \'" + bloggpost + "\', \'" + titel + "\', \'" + datumet + "\', \'" + kat3 + "\', " + personID + ")");
                 
                 tfHeading.setText("");
                 taText.setText("");
+                lblAttachment.setVisible(false);
                 //pnlMainPanel.setVisible(false);
             
             }
@@ -417,9 +433,43 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
+    private void btnAttachFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAttachFileActionPerformed
+        JFileChooser chooser = new JFileChooser();
+        // Set the text
+        chooser.setApproveButtonText("Spara");
+        // Set the mnemonic
+        chooser.setApproveButtonMnemonic('a');
+        // Set the tool tip
+        chooser.setApproveButtonToolTipText("Sparar filen");
+        chooser.showOpenDialog(null);
+
+        source = chooser.getSelectedFile().getAbsoluteFile();
+        name = source.getName();
+
+        if (name.endsWith(".docx")) {
+            type = ".docx";
+        }
+        if (name.endsWith(".pdf")) {
+            type = ".pdf";
+        }
+        if (name.endsWith(".jpeg")) {
+            type = ".jpeg";
+        }
+        if (name.endsWith(".png")) {
+            type = ".png";
+        }
+        if (name.endsWith(".txt")) {
+            type = ".txt";
+        }
+
+        lblAttachment.setVisible(true);
+    
+    }//GEN-LAST:event_btnAttachFileActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnAttachFile;
     private javax.swing.JButton btnPublish;
     private javax.swing.JButton btnSave1;
     private javax.swing.JButton btnSave2;
@@ -427,11 +477,10 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbxKat1;
     private javax.swing.JComboBox<String> cbxKat2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblAttachment;
     private javax.swing.JLabel lblChoosePlace;
     private javax.swing.JLabel lblHeading;
     private javax.swing.JPanel pnlMainPanel;
