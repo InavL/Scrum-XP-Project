@@ -301,7 +301,10 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
         
         String email = tfEmail.getText();
         
-        if(Validation.textfieldWithValue(tfFirstname) && Validation.textfieldWithValue(tfSurname) && Validation.isValidEmailAddress(email) && Validation.textfaltTal(tfPhone) && Validation.textfieldWithValue(tfPassword) && Validation.elementSelectedInCombobox(cbAccessType, "Select Access type")) {
+        if(Validation.textfieldWithValue(tfFirstname) && Validation.textfieldWithValue(tfSurname) 
+                && Validation.isValidEmailAddress(email) && Validation.textfaltTal(tfPhone) 
+                && Validation.textfieldWithValue(tfPassword) && Validation.elementSelectedInCombobox(cbAccessType, "Select Access type")
+                && Validation.losenordsKrav(tfPassword)) {
           
             //Hämtar det som finns i textfälten och lägger in värdena i lokala variabler
             firstname = tfFirstname.getText();
