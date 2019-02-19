@@ -43,7 +43,6 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lblAddNewEmployee = new javax.swing.JLabel();
-        lblCategory = new javax.swing.JLabel();
         jLabelSureName = new javax.swing.JLabel();
         jLabelEmailAdress = new javax.swing.JLabel();
         jLabelPhoneNumber = new javax.swing.JLabel();
@@ -57,7 +56,6 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         jLabelPassword = new javax.swing.JLabel();
         jPasswordField1 = new javax.swing.JPasswordField();
         jButtonSaveNewEmployee = new javax.swing.JButton();
-        jLabeltextMessage = new javax.swing.JLabel();
         lEmployeeAdded = new javax.swing.JLabel();
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -138,49 +136,35 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonSaveNewEmployee)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(207, 207, 207)
-                        .addComponent(lblAddNewEmployee))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCategory)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelSureName)
-                                    .addComponent(jLabelEmailAdress)
-                                    .addComponent(jLabelPhoneNumber)
-                                    .addComponent(jLabelAccessType)
-                                    .addComponent(jLabelFirstName)
-                                    .addComponent(jLabelPassword))
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addGap(62, 62, 62)
-                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jTextFieldLastName)
-                                            .addComponent(jTextFieldPhone)
-                                            .addComponent(jTextFieldMail)
-                                            .addComponent(jAccessType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jTextFieldFirstName)
-                                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)))
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
-                                        .addGap(28, 28, 28)
-                                        .addComponent(jLabeltextMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(239, 239, 239)
-                        .addComponent(jButtonSaveNewEmployee)
-                        .addGap(89, 89, 89)
-                        .addComponent(lEmployeeAdded)))
-                .addContainerGap(1000, Short.MAX_VALUE))
+                            .addComponent(jLabelSureName)
+                            .addComponent(jLabelEmailAdress)
+                            .addComponent(jLabelPhoneNumber)
+                            .addComponent(jLabelAccessType)
+                            .addComponent(jLabelFirstName)
+                            .addComponent(jLabelPassword)
+                            .addComponent(lEmployeeAdded))
+                        .addGap(62, 62, 62)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblAddNewEmployee)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jTextFieldLastName)
+                                .addComponent(jTextFieldPhone)
+                                .addComponent(jTextFieldMail)
+                                .addComponent(jAccessType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextFieldFirstName)
+                                .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)))))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
-                .addComponent(lblCategory)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(27, 27, 27)
                 .addComponent(lblAddNewEmployee)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -206,13 +190,11 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelPassword)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(46, 46, 46)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonSaveNewEmployee)
-                    .addComponent(lEmployeeAdded))
-                .addGap(46, 46, 46)
-                .addComponent(jLabeltextMessage)
-                .addGap(0, 293, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addComponent(lEmployeeAdded)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonSaveNewEmployee)
+                .addGap(0, 25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -220,14 +202,14 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -444,7 +426,6 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabelPassword;
     private javax.swing.JLabel jLabelPhoneNumber;
     private javax.swing.JLabel jLabelSureName;
-    private javax.swing.JLabel jLabeltextMessage;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPasswordField jPasswordField1;
@@ -454,6 +435,5 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextFieldPhone;
     private javax.swing.JLabel lEmployeeAdded;
     private javax.swing.JLabel lblAddNewEmployee;
-    private javax.swing.JLabel lblCategory;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,11 +5,13 @@
  */
 package StartPage;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
-import oru.inf.InfDB;
-import oru.inf.InfException;
 
 /**
  *
@@ -17,15 +19,15 @@ import oru.inf.InfException;
  */
 public class ChooseMeetingTime extends javax.swing.JInternalFrame {
     
-    private static InfDB idb;
+    private static Connection con;
     private MethodService methodService;
 
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public ChooseMeetingTime(InfDB idb) {
+    public ChooseMeetingTime(Connection con) {
         initComponents();
-        this.idb = idb;
+        this.con = con;
         fillComboBox();
         fyllAreaInvited();
         fyllValtTid();
@@ -70,7 +72,7 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(733, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -114,8 +116,8 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3)
                     .addComponent(jLabel3)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -129,14 +131,14 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
                         .addGap(44, 44, 44)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbChoose)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(49, 49, 49)
                         .addComponent(lblParcipant))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 474, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(47, 47, 47)
+                        .addComponent(jScrollPane2)))
+                .addGap(27, 27, 27))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,15 +153,15 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
                         .addComponent(jLabel2)
                         .addComponent(btnChoose))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGap(40, 40, 40)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblParcipant)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE))
-                .addGap(81, 81, 81))
+                .addGap(27, 27, 27))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -171,8 +173,8 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 4, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(4, 4, 4))
         );
 
         pack();
@@ -184,23 +186,28 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
         try
         {
             int userID = LoggedUser.getID();
-            String motesID = idb.fetchSingle("Select MID from PERSONER_DELTAR where ID = " + userID + ";");
+            Statement stmt = con.createStatement();
+            String fraga = "Select MID from PERSONER_DELTAR where ID = " + userID + ";";
+            ResultSet rs = stmt.executeQuery(fraga);
+            int motesID = rs.getInt("MID");
             
-            String fraga3 = "select FNAMN, ENAMN from PERSONER join PERSONER_DELTAR on PERSONER.ID = PERSONER_DELTAR.ID where PERSONER_DELTAR.MID ='" + motesID + "';";
-            ArrayList<HashMap<String, String>> namnLista = idb.fetchRows(fraga3);
+            fraga = "select FNAMN, ENAMN from PERSONER "
+                    + "join PERSONER_DELTAR on PERSONER.ID = PERSONER_DELTAR.ID "
+                    + "where PERSONER_DELTAR.MID ='" + motesID + "';";
+            rs = stmt.executeQuery(fraga);
+                           
+            String lista = "";
                 
-            String lista2 = "";
-                
-            for(HashMap rad : namnLista)
+            while(rs.next())
             {
-                lista2 += rad.get("FNAMN");
-                lista2 += " ";
-                lista2 += rad.get("ENAMN");
-                lista2 += "\n";    
+                lista += rs.getString("FNAMN");
+                lista += " ";
+                lista += rs.getString("ENAMN");
+                lista += "\n";    
             }
-            txtAreaInvited.setText(lista2);     
+            txtAreaInvited.setText(lista);     
         }
-        catch(InfException ex)
+        catch(SQLException ex)
         {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
@@ -208,35 +215,36 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
     
     private void fyllValtTid()
     {
-         try
-            {
+         try{
+                Statement stmt = con.createStatement();
                 int userID = LoggedUser.getID();
-                String motesID = idb.fetchSingle("Select MID from PERSONER_DELTAR where ID = " + userID + ";");                
-
+                String fraga = "Select MID from PERSONER_DELTAR where ID = " + userID + ";";                
+                ResultSet rs = stmt.executeQuery(fraga);
+                rs.next();
+                int motesID = rs.getInt("MID");
+                
                 String fraga2 = "select FNAMN,ENAMN,START_TID,SLUT_TID from PERSONER"
                                 + " join PERSON_ACCEPTERAT on PERSONER.ID = PERSON_ACCEPTERAT.ID"
                                 + " join MOTES_FORSLAG on PERSON_ACCEPTERAT.FORSLAGS_ID = MOTES_FORSLAG.FORSLAGS_ID"
                                 + " where MOTES_FORSLAG.MID= " + motesID + ";";
 
-                ArrayList<HashMap<String, String>> iDLista = idb.fetchRows(fraga2);
-               
+                rs = stmt.executeQuery(fraga2);
                 String lista = "";
                 
-                for(HashMap rad : iDLista)
+                while (rs.next())
                 {
-                    lista += rad.get("FNAMN");
+                    lista += rs.getString("FNAMN");
                     lista += " ";
-                    lista += rad.get("ENAMN");
+                    lista += rs.getString("ENAMN");
                     lista += " ";    
-                    lista += rad.get("START_TID");
+                    lista += rs.getString("START_TID");
                     lista += " ";  
-                    lista += rad.get("SLUT_TID");
+                    lista += rs.getString("SLUT_TID");
                     lista += "\n";    
                 }
                 txtAreaAccepterat.setText(lista);
                 
-            }
-            catch(InfException ex)
+            } catch(SQLException ex)
             {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
@@ -248,9 +256,14 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
         {
            try
             {
+                Statement stmt = con.createStatement();
                 String tid = cbxOption.getSelectedItem().toString();
                 int userID = LoggedUser.getID();
-                String motesID = idb.fetchSingle("Select MID from PERSONER_DELTAR where ID = " + userID + ";");
+                String question = "Select MID from PERSONER_DELTAR where ID = " + userID + ";";                
+                ResultSet rs = stmt.executeQuery(question);
+                rs.next();
+                int motesID = rs.getInt("MID");
+                
                 txtAreaChoose.setText(tid); //Lägger in den valda tiden i textArean.
                 
                 String[] user = cbxOption.getSelectedItem().toString().trim().split(" till "); //delar upp varje item i comboboxen i start och sluttid.
@@ -260,18 +273,26 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
                 //Hämtar FORSLAGS_ID, kollar så att slut och starttiden för ett möte är olika,
                 //i och med att det inte ska finnas två exakt samma förslagtider för ett möte
                 String fraga = "select FORSLAGS_ID from MOTES_FORSLAG where START_TID = '" + start + "' and SLUT_TID = '" + end + "' and MID = '" + motesID + "';";
-                String forslagsID = idb.fetchSingle(fraga);
+                rs = stmt.executeQuery(fraga);
+                rs.next();
                 
-                String roster = idb.fetchSingle("select MAX(ROSTER) from MOTES_FORSLAG where FORSLAGS_ID = '" + forslagsID + "';");
-                int maxRosterInt = Integer.parseInt(roster);
+                int forslagsID = rs.getInt("FORSLAGS_ID");
+               
+                
+                String rosterFraga = "select MAX(ROSTER) as ROSTER from MOTES_FORSLAG where FORSLAGS_ID = '" + forslagsID + "';";
+                rs = stmt.executeQuery(rosterFraga);
+                rs.next();
+                int maxRosterInt = rs.getInt("ROSTER");
                 int maxInt = maxRosterInt + 1;
                 
-                idb.update("update MOTES_FORSLAG set ROSTER = " + maxInt + " where FORSLAGS_ID = '" + forslagsID + "';");
+                fraga = "update MOTES_FORSLAG set ROSTER = " + maxInt + " where FORSLAGS_ID = '" + forslagsID + "';";
+                stmt.executeUpdate(fraga);
                 
-                idb.insert("insert into PERSON_ACCEPTERAT values('" + forslagsID + "', " + userID + ");");
+                fraga = "insert into PERSON_ACCEPTERAT values('" + forslagsID + "', " + userID + ");";
+                stmt.executeUpdate(fraga);
                 
             }
-            catch(InfException ex)
+            catch(SQLException ex)
             {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
@@ -283,19 +304,22 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
             try
             {
                 int id = LoggedUser.getID();
-                
-                String motesID = idb.fetchSingle("Select MID from PERSONER_DELTAR where ID = " + id + ";");
+                Statement stmt = con.createStatement();
+                String fraga = "Select MID from PERSONER_DELTAR where ID = " + id + ";";
+                ResultSet rs = stmt.executeQuery(fraga);
+                rs.next();
+                int motesID = rs.getInt("MID");
                 
                 String fraga1 = "Select START_TID, SLUT_TID from MOTES_FORSLAG where MID = '" + motesID + "';";
-                ArrayList<HashMap<String, String>> forslagslista = idb.fetchRows(fraga1);
-                for(int i = 0; i < forslagslista.size(); i ++)
+                rs = stmt.executeQuery(fraga1);
+                while(rs.next())
                 {
-                    String start = forslagslista.get(i).get("START_TID");
-                    String slut = forslagslista.get(i).get("SLUT_TID");
+                    String start = rs.getString("START_TID");
+                    String slut = rs.getString("SLUT_TID");
                     cbxOption.addItem(start + " till " + slut);
                 }
             }
-            catch(InfException ex)
+            catch(SQLException ex)
             {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
