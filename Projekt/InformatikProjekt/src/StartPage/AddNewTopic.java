@@ -5,28 +5,29 @@
  */
 package StartPage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
-import oru.inf.InfDB;
-import oru.inf.InfException;
 
 /**
  *
  * @author ellin
  */
 public class AddNewTopic extends javax.swing.JInternalFrame {
-    
-    private static InfDB idb;
+
+    private static Connection con;
     private MethodService methodService;
 
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public AddNewTopic(InfDB idb) {
+    public AddNewTopic(Connection con) {
         initComponents();
-        this.idb = idb;
-        methodService = new MethodService(idb);
+        this.con=con;
+        methodService = new MethodService(con);
         fyllComboBox();
     }
 
@@ -149,62 +150,88 @@ public class AddNewTopic extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-     private void fyllComboBox()
-    {
-        try{
-           int behorighet = LoggedUser.getBehorighet();
+    private void fyllComboBox() {
+        try {
+            int behorighet = LoggedUser.getBehorighet();
+            Statement stmt = con.createStatement();
+            String fraga = "select COUNT(KAT1_NAMN) as KAT1_NAMN from KAT1;";
+            ResultSet rows = stmt.executeQuery(fraga);
+            rows.next();
+            int countRows=rows.getInt("KAT1_NAMN");
            
+            fraga = "select KAT1_NAMN from KAT1;";
+            ResultSet categories = stmt.executeQuery(fraga);
+            
+           
+
+           
+            
+            if (behorighet == 2) {
+                //ResultSet categories = stmt.executeQuery("select KAT1_NAMN from KAT1;");
                 
-                if(behorighet == 2)
+                System.out.println(categories);
+                for (int i = 0; i < countRows; i++)
                 {
-                    ArrayList<HashMap<String, String>> categories = idb.fetchRows("select KAT1_NAMN from KAT1;");
-                    for (int i = 0; i < categories.size(); i++)
-                    {
-                        if(i == 0 || i == 2)
-                        {
-                            String oneCat = categories.get(i).get("KAT1_NAMN");
-                              
-                            cbxCategory.addItem(oneCat);
-                        }
-                     }
-                }
-                else if(behorighet == 3)
-                {
-                    ArrayList<HashMap<String, String>> categories = idb.fetchRows("select KAT1_NAMN from KAT1;");
-                    for (int i = 1; i < categories.size(); i++)
-                    {
-                        String oneCat2 = categories.get(i).get("KAT1_NAMN");
-                              
-                        cbxCategory.addItem(oneCat2);
+                    categories.next();
+                    System.out.println(i);
+                    if (i == 0 || i == 2) {
+                        String oneCat = categories.getString("KAT1_NAMN");
+
+                        cbxCategory.addItem(oneCat);
                     }
                 }
-        }
-        catch(InfException ex)
-        {
+            } else if (behorighet == 3) {
+           // ResultSet categories = stmt.executeQuery("select KAT1_NAMN from KAT1;");
+                for (int i = 0; i < countRows; i++) {
+                    categories.next();
+                    if(i>0){
+                    String oneCat2 = categories.getString("KAT1_NAMN");
+
+                    cbxCategory.addItem(oneCat2);
+                    }
+               }
+            }
+        } catch (SQLException e ) {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
     
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        if(Validation. textfieldWithValue(txtTopicName))
-        {
-            try
-            {
-                String topicName = txtTopicName.getText();
+        if (Validation.textfieldWithValue(txtTopicName)) {
+            try {
+
+                String topic = txtTopicName.getText();
                 String kat1 = cbxCategory.getSelectedItem().toString();
                 
-                String kat1ID = idb.fetchSingle("select KAT1_ID from KAT1 where KAT1_NAMN = '" + kat1 + "';");
+                String query = "Select max(Kat2_ID) as Kat2_ID From Kat2;";
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(query);
+                rs.next();
+                int maxKID = rs.getInt("Kat2_ID");
+                int maxInt = maxKID + 1;
                 
-                String maxID = idb.fetchSingle("Select max(Kat2_ID) From Kat2;");
-                int maxIdInt = Integer.parseInt(maxID);
-                int maxInt = maxIdInt + 1;
-                
-                idb.insert("insert into KAT2 values(" + maxInt + ",'" + kat1ID + "', '" + topicName + "');");
-                
-                lblText.setText("The category is now added into the system.");
-            }
-            catch(InfException ex)
-            {
+                query = "select KAT1_ID from KAT1 where KAT1_NAMN = '" + kat1 + "';";
+                rs = stmt.executeQuery(query);
+                rs.next();
+                int kategoriID = rs.getInt("KAT1_ID");                
+                String fraga = "insert into KAT2 values(?,?,?);";
+                PreparedStatement ps = con.prepareStatement(fraga);
+                ps.setInt(1, maxInt);
+                ps.setInt(2, kategoriID);
+                ps.setString(3, topic);
+                ps.executeUpdate();
+                lblText.setText("Topic successfully added.");
+//
+//                String kat1ID = idb.fetchSingle("select KAT1_ID from KAT1 where KAT1_NAMN = '" + kat1 + "';");
+//
+//                String maxID = idb.fetchSingle("Select max(Kat2_ID) From Kat2;");
+//                int maxIdInt = Integer.parseInt(maxID);
+//                int maxInt = maxIdInt + 1;
+//
+//                idb.insert("insert into KAT2 values(" + maxInt + ",'" + kat1ID + "', '" + topicName + "');");
+//
+//                
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
         }

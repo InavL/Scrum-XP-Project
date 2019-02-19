@@ -9,8 +9,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import oru.inf.InfDB;
-import oru.inf.InfException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -126,35 +129,39 @@ public class Validation {
         return elementSelected;
     }
 
-    public static boolean idTesting(JTextField id, InfDB idb) {
-        
+    public static boolean idTesting(JTextField id, Connection con) {
+
         //Kollar så att ID:et finns med i tabellen PERONSER.
-        
         boolean resultat = true;
+        Statement stmt;
 
         try {
+            stmt = con.createStatement();
+
             String personID = id.getText(); //Hämta värdet i fältet.
 
-            String fraga = "select FNAMN from PERSONER where ID = '" + personID + "';";
-            String hamtatFornamn = idb.fetchSingle(fraga); 
+            String fraga = "select FNAMN from PERSONER where ID = ?;";
+            PreparedStatement ps = con.prepareStatement(fraga);
+            ps.setString(1, personID);
+            ResultSet rs = stmt.executeQuery(fraga);
 
             //Försöker att hämta förnamn som matchar ID:et.
-
-            if (hamtatFornamn == null) { 
-            //Kollar om värdet som man vill hämta finns.
-            
-                JOptionPane.showMessageDialog(null, "The ID is incorrect."); 
+            if (!rs.next()) {
+                
+                //Kollar om värdet som man vill hämta finns.
+                JOptionPane.showMessageDialog(null, "The ID is incorrect.");
+                
                 //Om man får null som värde.
-
                 resultat = false;
             }
-        } catch (InfException ex) {
+
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
+        
         return resultat;
     }
-    
-    
+
     //Kollar om man har valt ett värde i en jList
     public static boolean valtVarde(String text){
         boolean resultat=true;
@@ -181,25 +188,30 @@ public class Validation {
         }    
         return ettTal;
     }
-        
-    public static boolean emailExisting(JTextField tf, InfDB idb)
-    {
+
+    public static boolean emailExisting(JTextField tf, Connection con) {
         boolean resultat = true;
         
         String instring = tf.getText();
-        
-        try
-        {
-            String test = idb.fetchSingle("select ID from PERSONER where MAIL = '" + instring + "';");
+        Statement stmt = null;
+
+        try {
+            stmt = con.createStatement();
             
-            if(test == null)
-            {
+            String fraga = "select ID from PERSONER where MAIL = ?;";
+            PreparedStatement ps = con.prepareStatement(fraga);
+            ps.setString(1, instring);
+            ResultSet rs = stmt.executeQuery(fraga);
+            rs.next();
+            
+            String test = rs.getString("ID");
+
+
+            if (test == null) {
                 JOptionPane.showMessageDialog(null, "The email is incorrect");
                 resultat = false;
             }
-        }
-        catch(InfException ex)
-        {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
         return resultat;

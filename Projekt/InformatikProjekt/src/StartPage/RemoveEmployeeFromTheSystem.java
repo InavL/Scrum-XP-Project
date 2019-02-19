@@ -5,9 +5,12 @@
  */
 package StartPage;
 
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
 import javax.swing.JOptionPane;
-import oru.inf.InfDB;
-import oru.inf.InfException;
 
 /**
  *
@@ -15,17 +18,16 @@ import oru.inf.InfException;
  */
 public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
 
-
-    private static InfDB idb;
+    private static Connection con;
     private MethodService methodService;
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public RemoveEmployeeFromTheSystem(InfDB idb) {
+    public RemoveEmployeeFromTheSystem(Connection con) {
         initComponents();
-        this.idb = idb; 
-        methodService = new MethodService(idb);
-        
+        this.con = con;
+        methodService = new MethodService(con);
+
     }
     
     /**
@@ -173,35 +175,45 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtIDActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        if(Validation.textfieldWithValue(txtFirstname) && Validation.textfieldWithValue(txtLastname) && Validation.textfieldWithValue(txtID) && Validation.idTesting(txtID, idb))
-        {
-            try
-            {
+        if (Validation.textfieldWithValue(txtFirstname) && Validation.textfieldWithValue(txtLastname) 
+                && Validation.textfieldWithValue(txtID) && Validation.idTesting(txtID, con)) {
+            try {
+                Statement stmt = null;
+                
                 String id = txtID.getText();
                 String firstname = txtFirstname.getText();
                 String lastname = txtLastname.getText();
                 
                 String fraga1 = "select ENAMN from PERSONER where ID = '" + id + "';";
-                String efternamn = idb.fetchSingle(fraga1);
+                stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(fraga1);
+                rs.next();
+                String efternamn = rs.getString("ENAMN");
                 
+
+
                 String fraga2 = "select FNAMN from PERSONER where ID = '" + id + "';";
-                String fornamn = idb.fetchSingle(fraga2);
+                stmt = con.createStatement();
+                rs = stmt.executeQuery(fraga1);
+                rs.next();
+                String fornamn = rs.getString("FNAMN");
                 
-                if(fornamn.equals(firstname) && efternamn.equals(lastname))
-                {
-                    idb.delete("delete from PERSONER where ID = '" + id + "';");
-                    
+                
+                if (fornamn.equals(firstname) && efternamn.equals(lastname)) {
+                    String fraga ="delete from PERSONER where ID = ? ;";
+                    PreparedStatement ps = con.prepareStatement(fraga);
+                    ps.setString(1, id);
+                    ps.executeUpdate();
+
                     lblRemove.setText("The person is now removed.");
                 }
                 else
                 {
                     JOptionPane.showMessageDialog(null, "The ID did not match the name.");
                 }
-                
-            }
-            catch(InfException ex)
-            {
-                 JOptionPane.showMessageDialog(null, "Something went wrong.");
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
         }
     }//GEN-LAST:event_btnRemoveActionPerformed

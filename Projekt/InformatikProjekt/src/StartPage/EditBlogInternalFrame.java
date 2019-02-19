@@ -6,10 +6,10 @@
 package StartPage;
 
 import com.jidesoft.swing.AutoCompletion;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
-import oru.inf.InfDB;
 import oru.inf.InfException;
 
 /**
@@ -17,18 +17,18 @@ import oru.inf.InfException;
  * @author ellin
  */
 public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
-    
-    private static InfDB idb;
+
+    private static Connection con;
     private MethodService methodService;
     private String blogID;
 
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public EditBlogInternalFrame(InfDB idb) {
+    public EditBlogInternalFrame(Connection con) {
         initComponents();
-        this.idb = idb;
-        methodService = new MethodService(idb);
+        this.con = con;
+        methodService = new MethodService(con);
         blogID = null;
         //Gör listan sökbar.
         AutoCompletion editablePostList = new AutoCompletion(cbPosts);

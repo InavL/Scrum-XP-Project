@@ -5,26 +5,29 @@
  */
 package StartPage;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
-import oru.inf.InfDB;
-import oru.inf.InfException;
 
 /**
  *
  * @author ellin
  */
 public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
-    
-    private static InfDB idb;
+
+    private Connection con;
     private MethodService methodService;
 
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public AddNewCategoryAndTopic(InfDB idb) {
+    public AddNewCategoryAndTopic(Connection con) {
         initComponents();
-        this.idb = idb;
-        methodService = new MethodService(idb);
+        this.con = con;
+        methodService = new MethodService(con);
         methodService.fillComboboxBranchKat1(cBoxKategori);
     }
 
@@ -76,23 +79,33 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
+        jPanel1.add(jPanel2);
+
         lblRubrikCategory.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 18)); // NOI18N
         lblRubrikCategory.setText("Create a new category");
+        jPanel1.add(lblRubrikCategory);
 
         lblRubrikTopic.setFont(new java.awt.Font("Microsoft PhagsPa", 1, 18)); // NOI18N
         lblRubrikTopic.setText("Create a new topic");
+        jPanel1.add(lblRubrikTopic);
 
         lblCategoriName.setText("Write a namne of your category:");
+        jPanel1.add(lblCategoriName);
 
         lblTopicNamn.setText("Write a name of your topic");
+        jPanel1.add(lblTopicNamn);
 
         tflKategori.setColumns(5);
+        jPanel1.add(tflKategori);
 
         tflTopicNamn.setColumns(8);
+        jPanel1.add(tflTopicNamn);
 
         cBoxKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Category" }));
+        jPanel1.add(cBoxKategori);
 
         lblKategori.setText("Choose category:");
+        jPanel1.add(lblKategori);
 
         btnAddKategori.setText("Add");
         btnAddKategori.addActionListener(new java.awt.event.ActionListener() {
@@ -100,6 +113,7 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
                 btnAddKategoriActionPerformed(evt);
             }
         });
+        jPanel1.add(btnAddKategori);
 
         btnAddTopic.setText("Add");
         btnAddTopic.addActionListener(new java.awt.event.ActionListener() {
@@ -107,80 +121,9 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
                 btnAddTopicActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(85, 85, 85)
-                                        .addComponent(lblRubrikCategory))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(52, 52, 52)
-                                        .addComponent(lblCategoriName)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(tflKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(170, 170, 170)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblRubrikTopic)
-                                    .addComponent(lblKategori)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(484, 484, 484)
-                                .addComponent(lblTopicNamn)
-                                .addGap(41, 41, 41)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cBoxKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tflTopicNamn, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(298, 298, 298)
-                            .addComponent(btnAddKategori)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAddTopic)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(lblText, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(74, 74, 74)
-                        .addComponent(lblText2, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(259, 473, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblRubrikCategory)
-                    .addComponent(lblRubrikTopic))
-                .addGap(37, 37, 37)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCategoriName)
-                    .addComponent(tflKategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cBoxKategori, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblKategori))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tflTopicNamn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTopicNamn))
-                .addGap(95, 95, 95)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddTopic)
-                    .addComponent(btnAddKategori))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(lblText, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(lblText2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(426, Short.MAX_VALUE))
-        );
+        jPanel1.add(btnAddTopic);
+        jPanel1.add(lblText);
+        jPanel1.add(lblText2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -197,56 +140,104 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddKategoriActionPerformed
-        if(Validation.textfieldWithValue(tflKategori))
-        {
-            try
-            {
-                String nykategori = tflKategori.getText();
-                
-                String maxID = idb.fetchSingle("Select max(Kat1_ID) From Kat1;");
-                
-                int maxIdInt = Integer.parseInt(maxID);
-                int maxInt = maxIdInt + 1;
-                
-                
-                String fraga = "Insert into Kat1 values (" + maxInt + ", '" + nykategori + "');";
-                idb.insert(fraga);
-             
-                lblText.setText("The new category is now added into the system.");
-            }
-            catch(InfException ex)
-            {
+
+        if (Validation.textfieldWithValue(tflKategori)) {
+
+            Statement stmt = null;
+            String nykategori = tflKategori.getText();
+            methodService.fillComboboxBranchKat1(cBoxKategori);
+
+            try {
+
+                String frcheck = "select * from KAT1 where KAT1_NAMN = " + nykategori; // Added check
+
+                PreparedStatement check = con.prepareStatement(frcheck);
+                check.setString(1, nykategori);
+                ResultSet rscheck = check.executeQuery();
+
+                String befintlig = rscheck.getString("KAT1_NAMN");
+                System.out.println(befintlig); // Stop of check
+
+                if (befintlig != null) {
+
+                    String query = "Select max(Kat1_ID) as Kat1_ID From Kat1;";
+
+                    stmt = con.createStatement();
+
+                    ResultSet rs = stmt.executeQuery(query);
+
+                    rs.next();
+                    int maxKID = rs.getInt("Kat1_ID");
+                    int maxInt = maxKID + 1;
+                    System.out.println(maxInt);
+
+                    String fraga = "insert into Kat1 (KAT1_ID, KAT1_NAMN) VALUES (?,?)";
+
+                    PreparedStatement ps = con.prepareStatement(fraga);
+                    ps.setInt(1, maxInt);
+                    ps.setString(2, nykategori);
+                    ps.executeUpdate();
+
+                    lblText.setText("Category successfully added.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "That category already exists.");
+                }
+
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
         }
     }//GEN-LAST:event_btnAddKategoriActionPerformed
 
     private void btnAddTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTopicActionPerformed
-    if(Validation.textfieldWithValue(tflTopicNamn) && Validation.elementSelectedInCombobox(cBoxKategori, "Select an option from the combobox."))
-    {
-        try
-        {
-            String kategori = cBoxKategori.getSelectedItem().toString();
-            String topic = tflTopicNamn.getText();
-            
-            String kategoriID = idb.fetchSingle("select KAT1_ID from KAT1 where KAT1_NAMN = '" + kategori + "';");
-            System.out.println(kategoriID);
-            String maxID = idb.fetchSingle("Select max(Kat2_ID) From Kat2;");
-             System.out.println(maxID);
-                
-                int maxIdInt = Integer.parseInt(maxID);
-                int maxInt = maxIdInt + 1;
-            
-            String fraga = "insert into KAT2 values(" + maxInt + ", '" + kategoriID + "', '" + topic + "');";
-            idb.insert(fraga);
-            
-            lblText2.setText("The new topic is now added into the system.");
+
+        if (Validation.textfieldWithValue(tflTopicNamn) && Validation.elementSelectedInCombobox(cBoxKategori, "Select an option from the combobox.")) {
+            try {
+
+                String kategori = cBoxKategori.getSelectedItem().toString();
+                String topic = tflTopicNamn.getText();
+                System.out.println(kategori + " " + topic);
+
+                String query = "Select max(Kat2_ID) as Kat2_ID From Kat2;";
+
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(query);
+                rs.next();
+                int maxKID = rs.getInt("Kat2_ID");
+                int maxInt = maxKID + 1;
+
+                String check = "select * from KAT2 where KAT2_NAMN = " + topic; // Checks if there already is a topic with that name
+
+                Statement stmt3 = con.createStatement();
+                ResultSet rs3 = stmt3.executeQuery(check);
+
+                String befintlig = rs3.getString("KAT2_NAMN");
+                System.out.println(befintlig);
+
+                if (befintlig != null) {
+
+                    query = "select KAT1_ID from KAT1 where KAT1_NAMN = '" + kategori + "';";
+
+                    rs = stmt.executeQuery(query);
+                    rs.next();
+                    int kategoriID = rs.getInt("KAT1_ID");
+                    String fraga = "insert into KAT2 values(?,?,?);";
+                    PreparedStatement ps = con.prepareStatement(fraga);
+                    ps.setInt(1, maxInt);
+                    ps.setInt(2, kategoriID);
+                    ps.setString(3, topic);
+                    ps.executeUpdate();
+
+                    lblText2.setText("Topic successfully added.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "That topic already exists.");
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Something went wrong.");
+            }
         }
-        catch(InfException ex)
-        {
-            JOptionPane.showMessageDialog(null, "Something went wrong.......");
-        }
-    }
+
     }//GEN-LAST:event_btnAddTopicActionPerformed
 
 

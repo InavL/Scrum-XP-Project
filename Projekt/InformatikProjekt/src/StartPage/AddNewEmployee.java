@@ -5,17 +5,17 @@
  */
 package StartPage;
 
-import com.jidesoft.swing.AutoCompletion;
-import java.util.ArrayList;
-import java.util.HashMap;
-import javax.swing.JComboBox;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
-import oru.inf.InfDB;
-import oru.inf.InfException;
 
 public class AddNewEmployee extends javax.swing.JInternalFrame {
 
-    private static InfDB idb;
+    private static Connection con;
+
     private MethodService methodService;
     private boolean firstNameFocused = false; // Used in focusGain
     private boolean lastNameFocused = false; // Used in focusGain
@@ -26,10 +26,10 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public AddNewEmployee(InfDB idb) {
+    public AddNewEmployee(Connection con) {
         initComponents();
-        this.idb = idb;
-        methodService = new MethodService(idb);
+        methodService = new MethodService(con);
+        this.con = con;
         //fillCombobox();
         comboboxAlternatives();
 
@@ -109,11 +109,6 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         });
 
         jTextFieldPhone.setText("0X-XX XXX XX");
-        jTextFieldPhone.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTextFieldPhoneFocusGained(evt);
-            }
-        });
 
         jAccessType.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -129,11 +124,6 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         jLabelPassword.setText("Password:");
 
         jPasswordField1.setText("jPasswordField1");
-        jPasswordField1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jPasswordField1FocusGained(evt);
-            }
-        });
 
         jButtonSaveNewEmployee.setText("Save");
         jButtonSaveNewEmployee.addActionListener(new java.awt.event.ActionListener() {
@@ -248,41 +238,48 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         if (Validation.textfieldWithValue(jTextFieldMail) && Validation.isValidEmailAddress(jTextFieldMail.getText()) && Validation.textfieldWithValue(jTextFieldPhone)
                 && Validation.textfaltTal(jTextFieldPhone) && Validation.textfieldWithValue(jTextFieldFirstName) && Validation.textfieldWithValue(jTextFieldLastName)
                 && Validation.textfieldWithValue(jPasswordField1) && Validation.losenordsKrav(jPasswordField1)) {
-            
+
             try {
-                
                 int id = createId();
-                String phonenumber = jTextFieldPhone.getText();
+                int phonenumber = Integer.parseInt(jTextFieldPhone.getText());
                 String mail = jTextFieldMail.getText();
                 String firstname = jTextFieldFirstName.getText();
                 String lastname = jTextFieldLastName.getText();
                 String password = jPasswordField1.getText();
                 String access = jAccessType.getSelectedItem().toString();
-                String sid = getSID(access);
+                System.out.println(access);
+                int sid = getSID(access);
+                String fraga = "select * from personer where Mail=? or TELEFON=?";
 
-                String fraga1 = "select MAIL from PERSONER where MAIL = '" + mail + "';";
-                String checkMail = idb.fetchSingle(fraga1);
+                PreparedStatement ps = con.prepareStatement(fraga);
+                ps.setString(1, mail);
+                ps.setInt(2, phonenumber);
+                ResultSet rs = ps.executeQuery();
+                if (!rs.next()) {
+                    String fraga2 = "insert into personer (ID, MAIL, TELEFON, FNAMN, ENAMN, LOSENORD, SID) values(?,?,?,?,?,?,?)";
 
-                String fraga2 = "select TELEFON from PERSONER where TELEFON = '" + phonenumber + "';";
-                String checkPhonenumber = idb.fetchSingle(fraga2);
-
-                if (!mail.equals(checkMail) && !phonenumber.equals(checkPhonenumber)) {
-                    
-                    String question = "insert into PERSONER (ID,FNAMN,ENAMN,MAIL,TELEFON,SID,LOSENORD) values"
-                            + "(" + id + ",'" + firstname + "','" + lastname + "','" + mail + "'," + phonenumber + "," + sid + ",'" + password + "');";
-                    idb.insert(question);
-
+                    ps = con.prepareStatement(fraga2);
+                    ps.setInt(1, id);
+                    ps.setString(2, mail);
+                    ps.setInt(3, phonenumber);
+                    ps.setString(4, firstname);
+                    ps.setString(5, lastname);
+                    ps.setString(6, password);
+                    ps.setInt(7, sid);
+                    System.out.print(id + " " + firstname + " " + lastname + " " + mail + " " + sid + " " + password);
+                    ps.executeUpdate();
                     lEmployeeAdded.setText("The person is now added to the employee list.");
-                    
-                } else if (mail.equals(checkMail)) {
-                    JOptionPane.showMessageDialog(null, "E-Mail is already in use!");
-                    
                 } else {
-                    JOptionPane.showMessageDialog(null, "Phonenumber is allready in use!");
-                    
-                }
+                    String checkMail = rs.getString("MAIL");
 
-            } catch (InfException ex) {
+                    if (mail.equals(checkMail)) {
+                        JOptionPane.showMessageDialog(null, "E-Mail is already in use!");
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Phonenumber is allready in use!");
+                    }
+                }
+            } catch (SQLException ex) { // Catches an error from a faulty database connection
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
         }
@@ -311,82 +308,35 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
     }
 
     private void fillComboboxEducation() {
+        Statement stmt = null;
+        String query = "select BEHORIGHET from SYSTEMTILLGANG where SID = 3 or SID = 4 or SID = 6";
         try {
-            String fraga = "select BEHORIGHET from SYSTEMTILLGANG where SID = 3 or SID = 4 or SID = 6";
-            ArrayList<String> svar = idb.fetchColumn(fraga);
-            for (String oneBox : svar) {
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                String oneBox = rs.getString("BEHORIGHET");
                 jAccessType.addItem(oneBox);
             }
-        } catch (InfException e) {
-            JOptionPane.showMessageDialog(null, "Something went wrong!");
-            System.out.println("Internt felmeddelande" + e.getMessage());
+        } catch (SQLException e) {
+            //JDBCTutorialUtilities.printSQLException(e);
         }
     }
 
     private void fillComboboxResearch() {
+        Statement stmt = null;
+        String query = "select BEHORIGHET from SYSTEMTILLGANG where SID = 2 or SID = 5";
         try {
-            String fraga = "select BEHORIGHET from SYSTEMTILLGANG where SID = 2 or SID = 5";
-            ArrayList<String> svar = idb.fetchColumn(fraga);
-            for (String oneBox : svar) {
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                String oneBox = rs.getString("BEHORIGHET");
                 jAccessType.addItem(oneBox);
             }
-        } catch (InfException e) {
-            JOptionPane.showMessageDialog(null, "Something went wrong!");
-            System.out.println("Internt felmeddelande" + e.getMessage());
+        } catch (SQLException e) {
+            //JDBCTutorialUtilities.printSQLException(e);
         }
-
     }//GEN-LAST:event_jButtonSaveNewEmployeeActionPerformed
 
-//Metoden kollar igenom databasen och ser över vilket id i person tabellen som är ledigt.
-    private int createId() {
-        try {
-            String svar = "";
-            int id = 0;
-            while (svar != null) {
-                id++;
-                String fraga = "select ID from PERSONER"
-                        + " where ID =" + id;
-                svar = idb.fetchSingle(fraga);
-            }
-            return id;
-        } catch (InfException e) {
-            JOptionPane.showMessageDialog(null, "Something went wrong!");
-            System.out.println("Internt felmeddelande" + e.getMessage());
-            return 0;
-        }
-
-    }
-
-    //Metoden fyller comboboxen vad för användare som finns i databasen.
-    private void fillCombobox() {
-
-        try {
-            String fraga = "select BEHORIGHET from SYSTEMTILLGANG";
-            ArrayList<String> svar = idb.fetchColumn(fraga);
-            for (String oneBox : svar) {
-                jAccessType.addItem(oneBox);
-            }
-        } catch (InfException e) {
-            JOptionPane.showMessageDialog(null, "Something went wrong!");
-            System.out.println("Internt felmeddelande" + e.getMessage());
-        }
-
-    }
-
-    //Metoden jämför namnet den användare man ska skapa och hämtar ut SID och skickar tillbaka det.
-    private String getSID(String access) {
-        try {
-            String fraga = "SELECT SID from SYSTEMTILLGANG where behorighet ='" + access + "'";
-            System.out.println(fraga);
-            String sid = idb.fetchSingle(fraga);
-            System.out.println(sid);
-            return sid;
-        } catch (InfException e) {
-            JOptionPane.showMessageDialog(null, "Something went wrong!");
-            System.out.println("Internt felmeddelande" + e.getMessage());
-        }
-        return "";
-    }
     private void jTextFieldFirstNameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldFirstNameFocusGained
 
         if (firstNameFocused == false) { // If the field is focused the box is cleared
@@ -414,24 +364,75 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jTextFieldMailFocusGained
 
-    private void jTextFieldPhoneFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPhoneFocusGained
-
-        if (phoneFocused == false) { // If the field is focused the box is cleared
-            jTextFieldPhone.setText("");
-            phoneFocused = true;
-        }
-
-    }//GEN-LAST:event_jTextFieldPhoneFocusGained
-
-    private void jPasswordField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPasswordField1FocusGained
+    private void jPasswordField1FocusGained(java.awt.event.FocusEvent evt) {                                            
 
         if (passFocused == false) { // If the field is focused the box is cleared
             jPasswordField1.setText("");
             passFocused = true;
         }
+    }                                           
 
-    }//GEN-LAST:event_jPasswordField1FocusGained
+    private void jTextFieldPhoneFocusGained(java.awt.event.FocusEvent evt) {                                            
 
+        if (phoneFocused == false) { // If the field is focused the box is cleared
+            jTextFieldPhone.setText("");
+            phoneFocused = true;
+        }
+    }                                           
+
+    private int createId() {
+        Statement stmt = null;
+        int id = 0;
+        String fraga = "select ID from PERSONER";
+        try {
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(fraga);
+            while (rs.next()) {
+                id++;
+            }
+            id++;
+            return id;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+            System.out.println("Internt felmeddelande" + e.getMessage());
+            return 0;
+        }
+    }
+
+    //Metoden fyller comboboxen vad för användare som finns i databasen.
+    private void fillCombobox() {
+        Statement stmt = null;
+        String query = "select BEHORIGHET from SYSTEMTILLGANG";
+        try {
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                String oneBox = rs.getString("BEHORIGHET");
+                jAccessType.addItem(oneBox);
+            }
+        } catch (SQLException e) {
+            //JDBCTutorialUtilities.printSQLException(e);
+        }
+    }
+
+    //Metoden jämför namnet den användare man ska skapa och hämtar ut SID och skickar tillbaka det.
+    private int getSID(String access) {
+        Statement stmt = null;
+        try {
+            String fraga = "SELECT SID from SYSTEMTILLGANG where behorighet ='" + access + "'";
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(fraga);
+            while (rs.next()) {
+                int oneBox = rs.getInt("SID");
+                // jAccessType.addItem(oneBox);
+                return oneBox;
+            }
+
+        } catch (SQLException e) {
+            //JDBCTutorialUtilities.printSQLException(e);
+        }
+        return 0;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox jAccessType;

@@ -5,7 +5,6 @@
  */
 package StartPage;
 
-import com.jidesoft.swing.AutoCompletion;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;

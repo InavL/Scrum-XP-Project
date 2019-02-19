@@ -5,6 +5,7 @@
  */
 package StartPage;
 
+import java.sql.Connection;
 import oru.inf.InfDB;
 
 /**
@@ -19,10 +20,10 @@ public class CreateANewCategori extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public CreateANewCategori(InfDB idb) {
+    public CreateANewCategori(Connection con) {
         initComponents();
         this.idb = idb;
-        methodService = new MethodService(idb);
+        methodService = new MethodService(con);
     }
 
     /**

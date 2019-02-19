@@ -6,11 +6,10 @@
 package StartPage;
 
 import com.jidesoft.swing.AutoCompletion;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
-import oru.inf.InfDB;
-import oru.inf.InfException;
 
 /**
  *
@@ -18,16 +17,16 @@ import oru.inf.InfException;
  */
 public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
     
-    private static InfDB idb;
+    private static Connection con;
     private MethodService methodService;
 
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public RemoveBlogInternalFrame(InfDB idb) {
+    public RemoveBlogInternalFrame(Connection con) {
         initComponents();
-        this.idb = idb;
-        methodService = new MethodService(idb);
+        this.con = con;
+        methodService = new MethodService(con);
         //Gör listan sökbar.
         AutoCompletion editablePostList = new AutoCompletion(cbPosts);
         //Fyller listan med aktuella inlägg
@@ -146,7 +145,7 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
                     
             lblRemoveSucceed.setVisible(true);              
         }
-        catch (InfException oneException) {
+        catch (SQLException oneException) {
             oneException.getMessage();
             JOptionPane.showMessageDialog(null, "Something went wrong!");
         }
@@ -168,7 +167,7 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "You haven't written any posts yet.");
             }
-        } catch (InfException oneException) {
+        } catch (SQLException oneException) {
             oneException.getMessage();
             JOptionPane.showMessageDialog(null, "Something went wrong");
         }

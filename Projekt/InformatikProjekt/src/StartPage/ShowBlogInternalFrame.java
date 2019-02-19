@@ -5,6 +5,7 @@
  */
 package StartPage;
 
+import java.sql.Connection;
 import oru.inf.InfDB;
 
 /**
@@ -13,16 +14,17 @@ import oru.inf.InfDB;
  */
 public class ShowBlogInternalFrame extends javax.swing.JInternalFrame {
     
+    private static Connection con;
     private static InfDB idb;
     private MethodService methodService;
 
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public ShowBlogInternalFrame(InfDB idb) {
+    public ShowBlogInternalFrame(Connection con) {
         initComponents();
-        this.idb = idb;
-        methodService = new MethodService(idb);
+        this.con = con;
+        methodService = new MethodService(con);
     }
 
     /**

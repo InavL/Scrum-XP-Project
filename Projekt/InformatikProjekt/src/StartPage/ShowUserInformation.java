@@ -5,12 +5,14 @@
  */
 package StartPage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import oru.inf.InfDB;
-import oru.inf.InfException;
 
 /**
  *
@@ -18,7 +20,7 @@ import oru.inf.InfException;
  */
 public class ShowUserInformation extends javax.swing.JInternalFrame {
     
-    private static InfDB idb;
+    private static Connection con;
     private MethodService methodService;
  
     //private JList listAllUsers;
@@ -26,10 +28,10 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public ShowUserInformation(InfDB idb) {
+    public ShowUserInformation(Connection con) {
         initComponents();
-        this.idb = idb;
-        methodService = new MethodService(idb);
+        this.con = con;
+        methodService = new MethodService(con);
         fillListWithUsers();
         
     }
@@ -111,39 +113,37 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnShowInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowInformationActionPerformed
-        
-        if(Validation.valtVarde(listAllUsers.getSelectedValue())){
-            try{
+
+        if (Validation.valtVarde(listAllUsers.getSelectedValue())) {
+            try {
+                               
                 String personInfo = listAllUsers.getSelectedValue();
                 String id = personInfo.substring(0,2);
                 String fraga = "SELECT PERSONER.MAIL, PERSONER.TELEFON, PERSONER.FNAMN, PERSONER.ENAMN, PERSONER.LOSENORD, SYSTEMTILLGANG.BEHORIGHET from PERSONER"
-                +" join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID"
-                +" where ID ="+id;
-                ArrayList<HashMap<String,String>> resultatLista = idb.fetchRows(fraga);
-                
-                    String rL = "";
-                    for(HashMap rad: resultatLista){
-                        rL+= "Firstname: ";
-                        rL+=rad.get("FNAMN");
-                        rL+= "\n" + "Surname: ";
-                        rL+=rad.get("ENAMN");
-                        rL+= "\n" + "Access type: ";
-                        rL+=rad.get("BEHORIGHET");
-                        rL+= "\n" + "Phone number: ";
-                        rL+=rad.get("TELEFON");
-                        rL+= "\n" + "E-mail: ";
-                        rL+=rad.get("MAIL");
-                        rL+= "\n" +"Password: ";
-                        rL+=rad.get("LOSENORD");
-                        
-                    }
-                        
-                    taInformation.setText(rL);
-                
-            }
-            catch (InfException e){
-                JOptionPane.showMessageDialog(null, "Något gick fel!");
-                System.out.println("Internt felmeddelande"+e.getMessage());  
+                        + " join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID"
+                        + " where ID =" + id;
+              
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(fraga);
+
+                String rL = "";
+                while(rs.next()) {
+                    rL += "\n"+"Firstname: ";
+                    rL += rs.getString("FNAMN");
+                    rL += "\n" + "Surname: ";
+                    rL += rs.getString("ENAMN");
+                    rL += "\n" + "Access type: ";
+                    rL += rs.getString("BEHORIGHET");
+                    rL += "\n" + "Phone number: ";
+                    rL += rs.getString("TELEFON");
+                    rL += "\n" + "E-mail: ";
+                    rL += rs.getString("LOSENORD");
+
+                }
+
+                taInformation.setText(rL);
+            } catch (SQLException ex) {
+                Logger.getLogger(ShowUserInformation.class.getName()).log(Level.SEVERE, null, ex);
             }
       }   
     
@@ -153,24 +153,38 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
         
         try {
             DefaultListModel allUsers = new DefaultListModel();
+            
+                Statement stmt = con.createStatement();
+                ResultSet nameList = stmt.executeQuery("SELECT id, fnamn, enamn FROM personer;");
 
-            ArrayList<HashMap<String, String>> nameList = idb.fetchRows("SELECT id, fnamn, enamn FROM personer;");
+
 
             //Loopar genom listan för att hämta ut alla för- och efternamn
-            for (int i = 0; i < nameList.size(); i++) {
-                String id = nameList.get(i).get("ID");
-                String firstName = nameList.get(i).get("FNAMN");
-                String surName = nameList.get(i).get("ENAMN");
-                String user = (id + " " + firstName + " " + surName + "\n");
-                allUsers.addElement(user); 
-            }
+            while(nameList.next()){
+            String user="";
+            user+=nameList.getString("ID");
+            user+=" ";
+            user+=nameList.getString("FNAMN");
+            user+=" ";
+            user+=nameList.getString("ENAMN");
+            user+="\n";
+             allUsers.addElement(user);       
+                    
             
+            }
+//            for (int i = 0; i < nameList.getFetchSize(); i++) {
+//                String id = nameList.getString(i).get("ID");
+//                String firstName = nameList.get(i).get("FNAMN");
+//                String surName = nameList.get(i).get("ENAMN");
+//                String user = (id + " " + firstName + " " + surName + "\n");
+//                allUsers.addElement(user);
+//            }
+
             listAllUsers.setModel(allUsers);
             listAllUsers.getSelectedValue();
-            
-            
-        } catch (InfException oneException) {
-            oneException.getMessage();
+
+        } catch (SQLException e) {
+         
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }

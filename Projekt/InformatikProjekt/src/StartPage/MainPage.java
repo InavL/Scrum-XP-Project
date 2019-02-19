@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import net.coobird.thumbnailator.Thumbnails;
@@ -22,9 +23,12 @@ import org.seamless.swing.ClosableTabbedPane;
 public class MainPage extends javax.swing.JFrame {
     
     private static InfDB idb;
-    private MethodService methodService;
+    private static Connection con;
+    
+    private final MethodService methodService;
     private final ClosableTabbedPane paneMainPageTabs;
-    private CreateBlogInternalFrame createBlogInternalFrame;
+    private CreateBlogInternalFrame createBlog;
+//    private CreateBlogInternalFrame createBlogInternalFrame;
     private EditBlogInternalFrame editBlogInternalFrame;
     private RemoveBlogInternalFrame removeBlogInternalFrame;
     private FeedBlogInternalFrame feedBlogInternalFrame;
@@ -44,12 +48,14 @@ public class MainPage extends javax.swing.JFrame {
         
     /**
      * Creates new form ColorPage
-     * @param idb
+     *
+     * @param con
      */
-    public MainPage(InfDB idb) {
+    public MainPage(Connection con) {
         initComponents();
         this.setSize(1000, 800);
         this.idb = idb;
+        this.con = con;
         this.setExtendedState(this.MAXIMIZED_BOTH);
         
         try {
@@ -68,7 +74,7 @@ public class MainPage extends javax.swing.JFrame {
         }
         
         //Instansierar ett nytt methodServiceobjekt
-        methodService = new MethodService(idb);
+        methodService = new MethodService(con);
         paneMainPageTabs = new ClosableTabbedPane();
         getContentPane().add(paneMainPageTabs);
         //methodService.setDesign(paneMainPageTabs);
@@ -371,8 +377,8 @@ public class MainPage extends javax.swing.JFrame {
     private void createBlogMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBlogMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Create blog")) {
-            createBlogInternalFrame = new CreateBlogInternalFrame(idb);
-            openTab(createBlogInternalFrame, "Create blog");
+            createBlog = new CreateBlogInternalFrame(con);
+            openTab(createBlog, "Create blog");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else{
@@ -383,7 +389,7 @@ public class MainPage extends javax.swing.JFrame {
     private void editBlogMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBlogMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Edit blog")) {
-            editBlogInternalFrame = new EditBlogInternalFrame(idb);
+            editBlogInternalFrame = new EditBlogInternalFrame(con);
             openTab(editBlogInternalFrame, "Edit blog");
         }  
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
@@ -395,7 +401,7 @@ public class MainPage extends javax.swing.JFrame {
     private void removeBlogMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBlogMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Remove blog")) {
-            removeBlogInternalFrame = new RemoveBlogInternalFrame(idb);
+            removeBlogInternalFrame = new RemoveBlogInternalFrame(con);
             openTab(removeBlogInternalFrame, "Remove blog");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
@@ -424,7 +430,7 @@ public class MainPage extends javax.swing.JFrame {
     private void userInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userInformationActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("User information")) {
-            showUserInformation = new ShowUserInformation(idb);
+            showUserInformation = new ShowUserInformation(con);
             openTab(showUserInformation, "User information");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
@@ -435,8 +441,8 @@ public class MainPage extends javax.swing.JFrame {
 
     private void removeUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeUserActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Remove user")) {
-            removeEmployeeFromTheSystem = new RemoveEmployeeFromTheSystem(idb);
+        if (!tabExists("Remove user")) {
+            removeEmployeeFromTheSystem = new RemoveEmployeeFromTheSystem(con);
             openTab(removeEmployeeFromTheSystem, "Remove user");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
@@ -460,7 +466,7 @@ public class MainPage extends javax.swing.JFrame {
     private void addUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Add user")) {
-            addNewEmployee = new AddNewEmployee(idb);
+            addNewEmployee = new AddNewEmployee(con);
             openTab(addNewEmployee, "Add user");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
@@ -470,45 +476,44 @@ public class MainPage extends javax.swing.JFrame {
     }//GEN-LAST:event_addUserActionPerformed
     //Metoden körs i konstruktorn och kollar om användaren har admin behörighet.
     private void adminFunktions(){
-        loggedInAsAdmin = MethodClass.isAdmin();
+        loggedInAsAdmin = MethodService.isAdmin();
         if(!loggedInAsAdmin){
             user.setVisible(false);
         }
     }
     private void addCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCategoryActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Add category")) {
-            addNewCategoryAndTopic = new AddNewCategoryAndTopic(idb);
-            openTab(addNewCategoryAndTopic, "Add category");
+        if (!tabExists("Add category and topic")) {
+            addNewCategoryAndTopic = new AddNewCategoryAndTopic(con);
+            openTab(addNewCategoryAndTopic, "Add category and topic");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else{
-            moveFocusToTab("Add category");
+            moveFocusToTab("Add category and topic");
         }
     }//GEN-LAST:event_addCategoryActionPerformed
 
     private void logOutMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutMnuItmActionPerformed
         //Skapar ett nytt LoginWindow och gör det synligt och stänger ner MainPage 
-        new LoginWindow(idb).setVisible(true); 
+        new LoginWindow(con).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_logOutMnuItmActionPerformed
 
     private void addTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTopicActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Add topic or category")) {
-            addNewTopic = new AddNewTopic(idb);
-            openTab(addNewTopic, "Add topic or category");
-        }       
-        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else{
-            moveFocusToTab("Add topic or category");
+        if (!tabExists("Add topic")) {
+            addNewTopic = new AddNewTopic(con);
+            openTab(addNewTopic, "Add topic");
+        } //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else {
+            moveFocusToTab("Add topic");
         }
     }//GEN-LAST:event_addTopicActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Create meeting")) {
-            createMeeting = new CreateMeeting(idb);
+        if (!tabExists("Create meeting")) {
+            createMeeting = new CreateMeeting(con);
             openTab(createMeeting, "Create meeting");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.

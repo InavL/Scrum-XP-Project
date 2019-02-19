@@ -6,16 +6,19 @@
 package StartPage;
 
 import javax.swing.JOptionPane;
-import oru.inf.InfDB;
-import oru.inf.InfException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
  * @author ellin
  */
 public class CreateMeeting extends javax.swing.JInternalFrame {
-    
-    private static InfDB idb;
+
+    private static Connection con;
     private MethodService methodService;
     private boolean dateFocused = false; // Used in focusGain
     private boolean startTimeFocused = false; // Used in focusGain
@@ -24,10 +27,10 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public CreateMeeting(InfDB idb) {
+    public CreateMeeting(Connection con) {
         initComponents();
-        this.idb = idb;
-        methodService = new MethodService(idb);
+        this.con = con;
+        methodService = new MethodService(con);
         skapaMote();
         //txtTitle.requestFocusInWindow(true);
         
@@ -282,53 +285,82 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void skapaMote()
-    {
-        try
-        {
-            String hogstaID = idb.fetchSingle("select MAX(MID) from MOTEN");
-            int maxIdInt = Integer.parseInt(hogstaID);
-            int maxInt = maxIdInt + 1;
-            
+    private void skapaMote() {
+        Statement stmt = null;
+        String fraga = "select MAX(MID)as MID from MOTEN";
+        String i = "01-01-01 00:00:00";
+        String y = "test";
+        
+        try {
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(fraga);
+            rs.next();
+            int hogstaID = rs.getInt("MID");
+            int maxInt = hogstaID + 1;
+
             int userID = LoggedUser.getID();
-            System.out.println(userID);
-                
-            idb.insert("insert into MOTEN values(" + maxInt + ", " + userID + ", 'test', '01-01-01 00:00:00', '01-01-01 00:00:00');");
             
-        }
-        catch(InfException ex)
-        {
+            String fraga2 = "insert into MOTEN values(?, ?, ?, ?, ?);";
+            PreparedStatement ps = con.prepareStatement(fraga2);
+            
+            
+            ps.setInt(1, maxInt);
+            ps.setInt(2, userID);
+            ps.setString(3, y);
+            ps.setString(4, i);
+            ps.setString(5, i);
+            ps.executeUpdate();
+
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
     
     private void btnaddDateTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddDateTimeActionPerformed
-        if(Validation.textfieldWithValue(txtDate) && Validation.textfieldWithValue(txtStartTime))
-        {
+        if (Validation.textfieldWithValue(txtDate) && Validation.textfieldWithValue(txtStartTime)) {
+            
             String date = txtDate.getText();
             String startTime = txtStartTime.getText();
             String endTime = txtEndTime.getText();
                 
             txtAreaDateTime.append(date + " " + startTime + " - " + date + " " + endTime + "\n");
             
-            txtStartTime.setText("");
-            txtEndTime.setText(" ");
-            
-            try
-            {
-                String hogstaID = idb.fetchSingle("select MAX(FORSLAGS_ID) from MOTES_FORSLAG");
-                int maxIdInt = Integer.parseInt(hogstaID);
-                int maxInt = maxIdInt + 1;
+            Statement stmt = null;
+            String fraga = "select MAX(FORSLAGS_ID) as FORSLAGS_ID from MOTES_FORSLAG";
+
+            try {
                 
+                stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(fraga);
+                rs.next();
+                int hogstaFID = rs.getInt("FORSLAGS_ID");
+                int maxFInt = hogstaFID + 1;;
+
                 String start = date + " " + startTime + ":00";
                 String end = date + " " + endTime + ":00";
+
+                String fraga2 = "select MAX(MID) as MID from MOTEN";
                 
-                String hamtaID = idb.fetchSingle("select max(MID) from MOTEN");
+                ResultSet rs2 = stmt.executeQuery(fraga2);
+                rs2.next();
+                int hogstaID = rs2.getInt("MID");
                 
-                idb.insert("insert into MOTES_FORSLAG values(" + maxInt + ", '" + hamtaID + "', '" + start + "', '" + end + "', 0);");
-            }
-            catch(InfException ex)
-            {
+                String fraga3 = "insert into MOTES_FORSLAG values(?, ?, ?, ?);";
+                PreparedStatement ps = con.prepareStatement(fraga3);
+                
+                ps.setInt(1, maxFInt);
+                ps.setInt(2, hogstaID);
+                ps.setString(3, start);
+                ps.setString(4, end);
+                
+                ps.executeUpdate();
+                
+                
+               txtStartTime.setText("");
+               txtEndTime.setText("");
+                
+                
+            } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
         }
@@ -339,45 +371,71 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void AddEMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddEMailActionPerformed
-        if(Validation.textfieldWithValue(txtEMail) && Validation.emailExisting(txtEMail, idb))
-        {
+        if (Validation.textfieldWithValue(txtEMail)) { // && Validation.emailExisting(txtEMail, con)
+            
             String eMail = txtEMail.getText();
                 
             txtAreaEMail.append(eMail + "\n");
-            txtEMail.setText("");
             
-            try
-            {
-                String personID = idb.fetchSingle("select ID from PERSONER where MAIL = '" + eMail + "';");
-                String motesID = idb.fetchSingle("select max(MID) from MOTEN");
+            Statement stmt = null;
+
+            try {
                 
-                System.out.println(personID + " " + motesID);
+                stmt = con.createStatement();
                 
-                idb.insert("insert into PERSONER_DELTAR values('" + motesID + "', '" + personID + "');");
+                String fraga1 = "select ID from PERSONER where MAIL = ?;";
+                PreparedStatement ps = con.prepareStatement(fraga1);
+                ps.setString(1, eMail);
+                ResultSet rs = ps.executeQuery();
+                rs.next();
+                int ID = rs.getInt("ID");
                 
-            }
-            catch(InfException ex)
-            {
+                String fraga2 = "select max(MID) as MID from MOTEN;";
+                ResultSet rs2 = stmt.executeQuery(fraga2);
+                rs2.next();
+                int motesID = rs2.getInt("MID");
+                
+
+                String fraga3 = "insert into PERSONER_DELTAR values(?, ?);";
+                PreparedStatement ps1 = con.prepareStatement(fraga3);
+                ps1.setInt(1, motesID);
+                ps1.setInt(2, ID);
+                
+                ps1.executeUpdate();
+                
+                txtEMail.setText("");
+
+            } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
         }
     }//GEN-LAST:event_AddEMailActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        if(Validation.textfieldWithValue(txtTitle))
-        {
-            try
-            {
+        if (Validation.textfieldWithValue(txtTitle)) {
+            
+            Statement stmt = null;
+            
+            try {
+                stmt = con.createStatement();
+
                 String titel = txtTitle.getText();
-                String motesID = idb.fetchSingle("select max(MID) from MOTEN");
                 
-                idb.update("update MOTEN set TYP_AV_MOTE = '" + titel + "' where MID = " + motesID + ";");
+                String fraga1 = "select max(MID) as MID from MOTEN";
+                ResultSet rs = stmt.executeQuery(fraga1);
+                rs.next();
+                String iD = rs.getString("MID"); 
+
+                String fraga2 = "update MOTEN set TYP_AV_MOTE = ? where MID = ?";
+                PreparedStatement ps = con.prepareStatement(fraga2);
+                ps.setString(1, titel);
+                ps.setString(2, iD);
                 
+                ps.executeUpdate();
+
                 lblText.setText("The meeting request has been saved.");
-                
-            }
-            catch(InfException ex)
-            {
+
+            } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
         }

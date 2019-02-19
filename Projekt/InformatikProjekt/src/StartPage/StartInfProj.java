@@ -1,9 +1,9 @@
 package StartPage;
 
-import java.io.File;
-import javax.swing.JOptionPane;
-import oru.inf.InfDB;
-import oru.inf.InfException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -11,29 +11,30 @@ import oru.inf.InfException;
  */
 
 public class StartInfProj { // The program is run through this file
-
-    private static InfDB idb;
+    
+    private static Connection con;
 
     /**
      * @param args the command line arguments
+     * @throws java.sql.SQLException
      */
-    
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws SQLException {
+        
         windowsStil(); // Calls the method for setting up the design
-
+        
         try {
-
-            String file = new File("IP.FDB").getAbsolutePath(); // Tells the program where the database is located
-            System.out.println(file); // Prints the location in the terminal
-            idb = new InfDB(file);
-
-        } catch (InfException ettUndantag) {
-            JOptionPane.showMessageDialog(null, "Error: Failed to establish connection to database. Woops.");
-            System.out.println("Internal error: " + ettUndantag.getMessage());
+            con = DriverManager.
+                    getConnection("jdbc:mysql://10.22.19.163:3306/scrumprojekt",
+                             "Lovisa", "Blue2019");
+            Statement stmt = con.createStatement();
+            System.out.println("Created DB Connection....");
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            
         }
 
-        new LoginWindow(idb).setVisible(true);
+        new LoginWindow(con).setVisible(true);
     }
 
     private static void windowsStil() { // Innehåller designelement för Huvudfönstret
@@ -50,19 +51,7 @@ public class StartInfProj { // The program is run through this file
                 }
             }
 
-        } catch (ClassNotFoundException ex) {
-
-            java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        } catch (InstantiationException ex) {
-
-            java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        } catch (IllegalAccessException ex) {
-
-            java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
 
             java.util.logging.Logger.getLogger(MainPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 

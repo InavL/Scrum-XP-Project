@@ -23,6 +23,7 @@ import java.sql.Statement;
  */
 public class RemoveMeeting extends javax.swing.JInternalFrame {
     
+    private static Connection con;
     private static InfDB idb;
     private MethodService methodService;
     private boolean idFocus = false; // Used in focusGain
@@ -30,10 +31,11 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public RemoveMeeting(InfDB idb) {
+    public RemoveMeeting(Connection con) {
         initComponents();
         this.idb = idb;
-        methodService = new MethodService(idb);
+        this.con = con;
+        methodService = new MethodService(con);
         //txtTitle.requestFocusInWindow(true);
         
        fyllAreaMedMoten();

@@ -4,17 +4,14 @@
  * and open the template in the editor.
  */
 package StartPage;
-
+import java .sql.Connection;
 import com.jidesoft.swing.AutoCompletion;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import oru.inf.InfDB;
 import oru.inf.InfException;
 import javax.swing.JFileChooser;
 import org.apache.commons.io.FileUtils;
@@ -24,7 +21,7 @@ import org.apache.commons.io.FileUtils;
  */
 public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
     
-    private static InfDB idb;
+    private static Connection con;
     private MethodService methodService;
     private String name;
     private File source;
@@ -32,11 +29,12 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form EditBlogInternalFrame
+     * @param con
      */
-    public CreateBlogInternalFrame(InfDB idb) {
+    public CreateBlogInternalFrame(Connection con) {
         initComponents();
-        this.idb = idb;
-        methodService = new MethodService(idb);
+        this.con = con;
+        methodService = new MethodService(con);
         //pnlMainPanel.setVisible(false);
         methodService.fillComboboxBranch(cbBranch);
         methodService.fillComboboxBranchKat1(cbxKat1);

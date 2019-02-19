@@ -5,13 +5,12 @@
  */
 package StartPage;
 
+import java.sql.Connection;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
-import oru.inf.InfException;
-import oru.inf.InfDB;
 
 /**
  *
@@ -19,15 +18,15 @@ import oru.inf.InfDB;
  */
 public class ShowThisCalender extends javax.swing.JInternalFrame {
     
-    private static InfDB idb;
+    private static Connection con;
     private SimpleDateFormat sdf;
 
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public ShowThisCalender(InfDB idb) {
+    public ShowThisCalender(Connection con) {
         initComponents();
-        this.idb = idb;
+        this.con = con;
         sdf = new SimpleDateFormat("yyyy-MM-dd");
     }
 
