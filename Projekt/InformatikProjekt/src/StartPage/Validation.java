@@ -143,12 +143,13 @@ public class Validation {
             String fraga = "select FNAMN from PERSONER where ID = ?;";
             PreparedStatement ps = con.prepareStatement(fraga);
             ps.setString(1, personID);
-            ResultSet rs = stmt.executeQuery(fraga);
-            rs.next();
-            String fornamn = rs.getString("FNAMN");
+            ResultSet rs = ps.executeQuery();
+            //rs.next();
+            //String fornamn = rs.getString("FNAMN");
+            
 
             //Försöker att hämta förnamn som matchar ID:et.
-            if (fornamn == null) {
+            if (!rs.next()) {
                 //Kollar om värdet som man vill hämta finns.
 
                 JOptionPane.showMessageDialog(null, "The ID is incorrect.");
@@ -200,13 +201,12 @@ public class Validation {
             String fraga = "select ID from PERSONER where MAIL = ?;";
             PreparedStatement ps = con.prepareStatement(fraga);
             ps.setString(1, instring);
-            ResultSet rs = stmt.executeQuery(fraga);
-            rs.next();
+            ResultSet rs = ps.executeQuery();
+            //rs.next();
+           // String test = rs.getString("ID");
             
-            String test = rs.getString("ID");
 
-
-            if (test == null) {
+            if (!rs.next()) {
                 JOptionPane.showMessageDialog(null, "The email is incorrect");
                 resultat = false;
             }
