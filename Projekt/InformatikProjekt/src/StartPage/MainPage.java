@@ -5,7 +5,13 @@
  */
 package StartPage;
 
+import java.awt.image.BufferedImage;
 import java.beans.PropertyVetoException;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import net.coobird.thumbnailator.Thumbnails;
 import oru.inf.InfDB;
 import org.seamless.swing.ClosableTabbedPane;
 
@@ -44,6 +50,22 @@ public class MainPage extends javax.swing.JFrame {
         initComponents();
         this.setSize(1000, 800);
         this.idb = idb;
+        
+        try {
+
+            BufferedImage img = ImageIO.read(new File("images/OrUIS-farg.png"));
+
+            BufferedImage thumbnail = Thumbnails.of(img)
+                    .scale(.50)
+                    .asBufferedImage();
+
+            ImageIcon icon = new ImageIcon(thumbnail);
+            this.setIconImage(icon.getImage());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
         //Instansierar ett nytt methodServiceobjekt
         methodService = new MethodService(idb);
         paneMainPageTabs = new ClosableTabbedPane();
