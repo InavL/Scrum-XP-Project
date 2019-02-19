@@ -584,7 +584,9 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     }
 
     private void showImages() {
+        
         try {
+            
             String type = idb.fetchSingle("Select filtyp from blogg_har_filer where blogg_id =" + bid);
             txtImage.setVisible(false);
 
