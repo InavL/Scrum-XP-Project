@@ -5,13 +5,7 @@
  */
 package StartPage;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import net.coobird.thumbnailator.Thumbnails;
 import oru.inf.InfDB;
 import oru.inf.InfException;
 
@@ -34,22 +28,7 @@ public class LoginWindow extends javax.swing.JFrame {
 
         initComponents();
         this.idb = idb;
-        this.setLocationRelativeTo(null); // Opens the window at the centre of the screen   
-        
-        try {
-
-            BufferedImage img = ImageIO.read(new File("images/OrUIS-farg.png"));
-
-            BufferedImage thumbnail = Thumbnails.of(img)
-                    .scale(.75)
-                    .asBufferedImage();
-
-            ImageIcon icon = new ImageIcon(thumbnail);
-            this.setIconImage(icon.getImage());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-}
+        this.setLocationRelativeTo(null); // Opens the window at the centre of the screen
 
     }
     
