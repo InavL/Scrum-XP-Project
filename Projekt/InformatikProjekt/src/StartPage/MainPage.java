@@ -312,7 +312,7 @@ public class MainPage extends javax.swing.JFrame {
         
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Blog feed")) {
-            feedBlogInternalFrame = new FeedBlogInternalFrame(idb);
+            feedBlogInternalFrame = new FeedBlogInternalFrame(con);
             openTab(feedBlogInternalFrame, "Blog feed");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
@@ -418,7 +418,7 @@ public class MainPage extends javax.swing.JFrame {
     private void blogFeedMnuItmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blogFeedMnuItmActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Blog feed")) {
-            feedBlogInternalFrame = new FeedBlogInternalFrame(idb);
+            feedBlogInternalFrame = new FeedBlogInternalFrame(con);
             openTab(feedBlogInternalFrame, "Blog feed");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
@@ -454,7 +454,7 @@ public class MainPage extends javax.swing.JFrame {
     private void editUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Edit user")) {
-            editUserInformation = new EditUserInformation(idb);
+            editUserInformation = new EditUserInformation(con);
             openTab(editUserInformation, "Edit user");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
@@ -537,7 +537,7 @@ public class MainPage extends javax.swing.JFrame {
     private void RemoveMeetingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RemoveMeetingActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Remove meetnig")) {
-            removeMeeting = new RemoveMeeting(idb);
+            removeMeeting = new RemoveMeeting(con);
             openTab(removeMeeting, "Choose meeting time");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
@@ -549,7 +549,7 @@ public class MainPage extends javax.swing.JFrame {
     private void ShowCalenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowCalenderActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Show calender")) {
-            showCalender = new ShowThisCalender(idb);
+            showCalender = new ShowThisCalender(con);
             openTab(showCalender, "Show calender");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
