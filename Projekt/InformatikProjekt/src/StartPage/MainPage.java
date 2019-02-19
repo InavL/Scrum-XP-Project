@@ -472,13 +472,13 @@ public class MainPage extends javax.swing.JFrame {
 
     private void addTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTopicActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Add topic")) {
+        if(!tabExists("Add topic or category")) {
             addNewTopic = new AddNewTopic(idb);
-            openTab(addNewTopic, "Add topiccategory");
+            openTab(addNewTopic, "Add topic or category");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else{
-            moveFocusToTab("Add category");
+            moveFocusToTab("Add topic or category");
         }
     }//GEN-LAST:event_addTopicActionPerformed
 
