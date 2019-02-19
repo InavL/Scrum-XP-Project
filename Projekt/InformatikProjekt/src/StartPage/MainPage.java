@@ -473,7 +473,7 @@ public class MainPage extends javax.swing.JFrame {
     private void addTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTopicActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if (!tabExists("Add topic")) {
-            addNewTopic = new AddNewTopic(idb);
+            addNewTopic = new AddNewTopic(con);
             openTab(addNewTopic, "Add topic");
         } //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else {
