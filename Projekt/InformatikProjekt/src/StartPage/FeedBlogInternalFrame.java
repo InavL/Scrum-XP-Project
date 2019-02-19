@@ -587,7 +587,13 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         
         try {
             
-            String type = idb.fetchSingle("Select filtyp from blogg_har_filer where blogg_id =" + bid);
+            //String type = idb.fetchSingle("Select filtyp from blogg_har_filer where blogg_id =" + bid);
+            Statement stmt = null;
+            String typeQuestion = "Select filtyp from blogg_har_filer where blogg_id =" + bid;
+            ResultSet typeSet = stmt.executeQuery(typeQuestion);
+            typeSet.next();
+            String type = typeSet.getString("filtyp");
+            
             txtImage.setVisible(false);
 
             if (type.equals(".png")) {
