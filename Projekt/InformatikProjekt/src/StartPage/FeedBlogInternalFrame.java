@@ -240,7 +240,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 
                 String bid = id.trim();
 
-                ImageHandling.showImage("src\\images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
+                ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
 
                 taBlogFeed.setText(rL);
 
@@ -269,7 +269,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                     
                     String bid = id.trim();
 
-                    ImageHandling.showImage("src\\images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
+                    ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
 
                         
                     taBlogFeed.setText(rL);
@@ -299,7 +299,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                     
                     String bid = id.trim();
 
-                    ImageHandling.showImage("src\\images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
+                    ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
 
                         
                     taBlogFeed.setText(rL);
