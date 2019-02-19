@@ -28,6 +28,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     private static InfDB idb;
     private MethodService methodService;
     private String id;
+    private String bid;
 
     /**
      * Creates new form EditBlogInternalFrame
@@ -37,6 +38,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         this.idb = idb;
         methodService = new MethodService(idb);
         id = null;
+        bid = null;
         fillListWithSienceBlog();
         fillListWithEducationBlog();
         fillListWithInformalBlog();
@@ -291,9 +293,14 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                         rL+= "\n";     
                     }
                 
-                String bid = id.trim();
+                bid = id.trim();
+                
+                
+                String type = idb.fetchSingle("Select filtyp from blogg_har_filer where blogg_id =" + bid);
 
-                ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
+                //ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
+                
+                showImages();
 
                 taBlogFeed.setText(rL);
 
@@ -320,11 +327,10 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                         rL+= "\n";     
                     }
                     
-                    String bid = id.trim();
+                    bid = id.trim();
 
-                    ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
-
-                        
+                    showImages();    
+                    
                     taBlogFeed.setText(rL);
                 
             }
@@ -350,11 +356,10 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                         rL+= "\n";     
                     }
                     
-                    String bid = id.trim();
-
-                    ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
-
-                        
+                    bid = id.trim();
+                    
+                    showImages();
+    
                     taBlogFeed.setText(rL);
                 
             }
@@ -512,6 +517,31 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             oneException.getMessage();
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
+    }
+    
+    private void showImages() {
+        try {
+        String type = idb.fetchSingle("Select filtyp from blogg_har_filer where blogg_id =" + bid);
+        txtImage.setVisible(false);
+        
+        if ( type.equals(".png")) {
+              
+                ImageHandling.showImage("files\\" + bid + ".png", txtImage, jPanel1, 480, 470);
+                txtImage.setVisible(true);
+        }
+        
+        if ( type.equals(".jpeg")) {
+             
+                ImageHandling.showImage("files\\" + bid + ".jpeg", txtImage, jPanel1, 480, 470);  
+                txtImage.setVisible(true);
+        }
+                
+        } catch (InfException oneException) {
+            oneException.getMessage();
+            JOptionPane.showMessageDialog(null, "Something went wrong.");
+        }
+        
+        
     }
     
     
