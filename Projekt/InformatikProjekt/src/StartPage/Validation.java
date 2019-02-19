@@ -202,7 +202,9 @@ public class Validation {
             ps.setString(1, instring);
             ResultSet rs = stmt.executeQuery(fraga);
             rs.next();
+            
             String test = rs.getString("ID");
+
 
             if (test == null) {
                 JOptionPane.showMessageDialog(null, "The email is incorrect");

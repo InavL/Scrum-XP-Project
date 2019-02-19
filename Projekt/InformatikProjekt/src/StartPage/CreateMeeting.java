@@ -272,6 +272,8 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
     private void skapaMote() {
         Statement stmt = null;
         String fraga = "select MAX(MID)as MID from MOTEN";
+        String i = "01-01-01 00:00:00";
+        String y = "test";
         
         try {
             stmt = con.createStatement();
@@ -282,14 +284,16 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
 
             int userID = LoggedUser.getID();
             
-            String fraga2 = "insert into MOTEN values(?, ?, ?, ?, ?, ?);";
+            String fraga2 = "insert into MOTEN values(?, ?, ?, ?, ?);";
             PreparedStatement ps = con.prepareStatement(fraga2);
+            
             
             ps.setInt(1, maxInt);
             ps.setInt(2, userID);
-            ps.setString(3, "'test'");
-            ps.setString(4, "'01-01-01 00:00:00'");
-            ps.setString(5, "'01-01-01 00:00:00'");
+            ps.setString(3, y);
+            ps.setString(4, i);
+            ps.setString(5, i);
+            ps.executeUpdate();
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
@@ -298,14 +302,12 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
 
     private void btnaddDateTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddDateTimeActionPerformed
         if (Validation.textfieldWithValue(txtDate) && Validation.textfieldWithValue(txtStartTime)) {
+            
             String date = txtDate.getText();
             String startTime = txtStartTime.getText();
             String endTime = txtEndTime.getText();
 
             txtAreaDateTime.append(date + " " + startTime + " - " + date + " " + endTime + "\n");
-
-            txtStartTime.setText("");
-            txtEndTime.setText(" ");
             
             Statement stmt = null;
             String fraga = "select MAX(FORSLAGS_ID) as FORSLAGS_ID from MOTES_FORSLAG";
@@ -316,26 +318,30 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
                 ResultSet rs = stmt.executeQuery(fraga);
                 rs.next();
                 int hogstaFID = rs.getInt("FORSLAGS_ID");
-                int maxFInt = hogstaFID + 1;
+                int maxFInt = hogstaFID + 1;;
 
                 String start = date + " " + startTime + ":00";
                 String end = date + " " + endTime + ":00";
 
-                String fraga2 = "select MAX(MID)as MID from MOTEN";
+                String fraga2 = "select MAX(MID) as MID from MOTEN";
+                
                 ResultSet rs2 = stmt.executeQuery(fraga2);
                 rs2.next();
-                int hogstaID = rs.getInt("MID");
-                int maxInt = hogstaID + 1;
-
+                int hogstaID = rs2.getInt("MID");
+                
                 String fraga3 = "insert into MOTES_FORSLAG values(?, ?, ?, ?);";
                 PreparedStatement ps = con.prepareStatement(fraga3);
                 
                 ps.setInt(1, maxFInt);
-                ps.setInt(2, maxInt);
+                ps.setInt(2, hogstaID);
                 ps.setString(3, start);
                 ps.setString(4, end);
                 
                 ps.executeUpdate();
+                
+                
+               txtStartTime.setText("");
+               txtEndTime.setText("");
                 
                 
             } catch (SQLException ex) {
@@ -349,11 +355,11 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void AddEMailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddEMailActionPerformed
-        if (Validation.textfieldWithValue(txtEMail) && Validation.emailExisting(txtEMail, con)) {
+        if (Validation.textfieldWithValue(txtEMail)) { // && Validation.emailExisting(txtEMail, con)
+            
             String eMail = txtEMail.getText();
 
             txtAreaEMail.append(eMail + "\n");
-            txtEMail.setText("");
             
             Statement stmt = null;
 
@@ -364,14 +370,14 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
                 String fraga1 = "select ID from PERSONER where MAIL = ?;";
                 PreparedStatement ps = con.prepareStatement(fraga1);
                 ps.setString(1, eMail);
-                ResultSet rs = stmt.executeQuery(fraga1);
+                ResultSet rs = ps.executeQuery();
                 rs.next();
                 int ID = rs.getInt("ID");
                 
-                String fraga2 = "select max(MID as MID) from MOTEN;";
+                String fraga2 = "select max(MID) as MID from MOTEN;";
                 ResultSet rs2 = stmt.executeQuery(fraga2);
                 rs2.next();
-                int motesID = rs.getInt("MID");
+                int motesID = rs2.getInt("MID");
                 
 
                 String fraga3 = "insert into PERSONER_DELTAR values(?, ?);";
@@ -379,6 +385,9 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
                 ps1.setInt(1, motesID);
                 ps1.setInt(2, ID);
                 
+                ps1.executeUpdate();
+                
+                txtEMail.setText("");
 
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
@@ -406,7 +415,7 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
                 ps.setString(1, titel);
                 ps.setString(2, iD);
                 
-                
+                ps.executeUpdate();
 
                 lblText.setText("The meeting request has been saved.");
 
