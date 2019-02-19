@@ -7,9 +7,13 @@ package StartPage;
 
 import com.jidesoft.swing.AutoCompletion;
 import java.awt.Color;
-import java.sql.Connection;
-import java.util.HashMap;
 import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -90,7 +94,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(729, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,8 +151,8 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
         pnlMainPanel.setLayout(pnlMainPanelLayout);
         pnlMainPanelLayout.setHorizontalGroup(
             pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainPanelLayout.createSequentialGroup()
-                .addContainerGap(130, Short.MAX_VALUE)
+            .addGroup(pnlMainPanelLayout.createSequentialGroup()
+                .addContainerGap(27, Short.MAX_VALUE)
                 .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblFirstname)
                     .addComponent(jLabel2)
@@ -164,16 +168,16 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
                     .addComponent(tfPhone)
                     .addComponent(tfPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
                     .addComponent(cbAccessType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(130, 130, 130))
+                .addContainerGap(27, Short.MAX_VALUE))
             .addGroup(pnlMainPanelLayout.createSequentialGroup()
-                .addGap(233, 233, 233)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSave)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlMainPanelLayout.setVerticalGroup(
             pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMainPanelLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(27, 27, 27)
                 .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFirstname)
                     .addComponent(tfFirstname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -197,9 +201,9 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
                 .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbAccessType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblAccessType))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSave)
-                .addGap(40, 40, 40))
+                .addGap(27, 27, 27))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -207,32 +211,31 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(220, 220, 220)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(lblSelectToEdit)
-                                .addGap(32, 32, 32)
-                                .addComponent(cbUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnSelect))
-                            .addComponent(pnlMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(0, 20, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSelectToEdit)
+                            .addComponent(cbUsers, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSelect))
+                    .addComponent(pnlMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblSelectToEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbUsers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSelect)
-                    .addComponent(lblSelectToEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                    .addComponent(btnSelect))
+                .addGap(13, 13, 13)
                 .addComponent(pnlMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -257,28 +260,45 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
             String[] user = cbUsers.getSelectedItem().toString().trim().split("\\s+");
             firstname = user[0];
             surname = user[1];
+            
+            Statement stmt = null;
 
             try {
-                HashMap<String, String> resultatLista = idb.fetchRow("SELECT PERSONER.ID, PERSONER.MAIL, PERSONER.TELEFON, PERSONER.LOSENORD, SYSTEMTILLGANG.BEHORIGHET from PERSONER"
+                
+                stmt = con.createStatement();
+                
+                String fraga = "SELECT PERSONER.ID as ID, PERSONER.MAIL as MAIL, PERSONER.TELEFON as TELEFON, "
+                        + "PERSONER.LOSENORD as LOSENORD, SYSTEMTILLGANG.BEHORIGHET as BEHORIGHET "
+                        + "from PERSONER"
                         + " join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID"
-                        + " where FNAMN ='" + firstname + "' and ENAMN='" + surname + "'");
-                ID = resultatLista.get("ID");
+                        + " where FNAMN = ? and ENAMN = ?;";
+                
+                PreparedStatement ps = con.prepareStatement(fraga);
+                ps.setString(1, firstname);
+                ps.setString(2, surname);
+                ResultSet rs = ps.executeQuery();
+                
+                DefaultListModel allScienceBlog = new DefaultListModel();
+                
+                rs.next();
+                
+                int id = rs.getInt("ID");
                 tfFirstname.setText(firstname);
                 tfSurname.setText(surname);
-                String email = resultatLista.get("MAIL");
-                tfEmail.setText(email);
-                String phone = resultatLista.get("TELEFON");
-                tfPhone.setText(phone);
-                String password = resultatLista.get("LOSENORD");
-                tfPassword.setText(password);
-                
+                String mail = rs.getString("MAIL");
+                tfEmail.setText(mail);
+                String tele = rs.getString("TELEFON");
+                tfPhone.setText(tele);
+                String losenord = rs.getString("LOSENORD");
+                tfPassword.setText(losenord);
+                String behorighet = rs.getString("BEHORIGHET");
                 
                 //Tar bort alla tidigare värden i comboboxen
                 cbAccessType.removeAllItems();
 
                 //Lägger in alla behörigheter i comboboxen
                 methodService.fillComboboxAccessTypes(cbAccessType);
-                cbAccessType.setSelectedItem(resultatLista.get("BEHORIGHET"));
+                cbAccessType.setSelectedItem(rs.getString("BEHORIGHET"));
 
                 //Gör panelen synlig
                 pnlMainPanel.setVisible(true);
@@ -311,13 +331,36 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
             String password = tfPassword.getText();
             String access = cbAccessType.getSelectedItem().toString();
             
+            Statement stmt = null;
+            
             try {
+                stmt = con.createStatement();
                 //Hämtar behörighetsID med hjälp av dess namn
-                String accessID = idb.fetchSingle("SELECT sid FROM systemtillgang  WHERE behorighet = \'" + access + "\'");
+                String fraga = "SELECT sid FROM systemtillgang  WHERE behorighet = ?";
+                PreparedStatement ps = con.prepareStatement(fraga);
+                ps.setString(1, access);
+                ResultSet rs = ps.executeQuery();
+                rs.next();
+                int sid = rs.getInt("sid");
                 
                 //Uppdaterar tabellen med de nya värdena
-                idb.update("UPDATE personer SET mail = \'" + email + "\', telefon = \'" + phone +"\', fnamn = \'" + firstname + "\', enamn = \'" + surname +"\', losenord = \'" + password + "\', sid = \'" + accessID + "\' WHERE id = " + ID);
-                 
+                //idb.update("UPDATE personer SET mail = \'" + email + "\', telefon = \'" + phone +"\', fnamn = \'" + firstname + "\', enamn = \'" + surname +"\', losenord = \'" + password + "\', sid = \'" + accessID + "\' WHERE id = " + ID);
+                
+                String fraga2 = "UPDATE personer SET mail = ?, telefon = ?, fnamn = ?, enamn = ?, losenord = ?, sid = ? WHERE id = ?";
+                PreparedStatement ps2 = con.prepareStatement(fraga2);
+                ps.setString(7, ID);
+                ResultSet rs2 = ps2.executeQuery();
+                rs.next();
+                
+                ps.setString(1, email);
+                ps.setString(2, phone);
+                ps.setString(3, firstname);
+                ps.setString(4, surname);
+                ps.setString(5, password);
+                ps.setInt(6, sid);
+                ps2.executeUpdate();
+                
+                
                 //SKirver ut ett meddelande om att ändringarna har sparats
                 JOptionPane.showMessageDialog(null, "The changes have been saved");
                 

@@ -22,11 +22,13 @@ import org.seamless.swing.ClosableTabbedPane;
  */
 public class MainPage extends javax.swing.JFrame {
     
+    private static InfDB idb;
     private static Connection con;
     
     private final MethodService methodService;
     private final ClosableTabbedPane paneMainPageTabs;
     private CreateBlogInternalFrame createBlog;
+//    private CreateBlogInternalFrame createBlogInternalFrame;
     private EditBlogInternalFrame editBlogInternalFrame;
     private RemoveBlogInternalFrame removeBlogInternalFrame;
     private FeedBlogInternalFrame feedBlogInternalFrame;
@@ -52,6 +54,7 @@ public class MainPage extends javax.swing.JFrame {
     public MainPage(Connection con) {
         initComponents();
         this.setSize(1000, 800);
+        this.idb = idb;
         this.con = con;
         this.setExtendedState(this.MAXIMIZED_BOTH);
         
@@ -309,8 +312,8 @@ public class MainPage extends javax.swing.JFrame {
         
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Blog feed")) {
-            //feedBlogInternalFrame = new FeedBlogInternalFrame(con);
-            //openTab(feedBlogInternalFrame, "Blog feed");
+            feedBlogInternalFrame = new FeedBlogInternalFrame(con);
+            openTab(feedBlogInternalFrame, "Blog feed");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else{
@@ -522,7 +525,7 @@ public class MainPage extends javax.swing.JFrame {
     private void ChooseMeetingTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ChooseMeetingTimeActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Choose meeting time")) {
-            chooseMeetingTime = new ChooseMeetingTime(con);
+            chooseMeetingTime = new ChooseMeetingTime(idb);
             openTab(chooseMeetingTime, "Choose meeting time");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
