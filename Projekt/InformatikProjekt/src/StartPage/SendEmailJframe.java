@@ -5,7 +5,9 @@
  */
 package StartPage;
 
-import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
@@ -17,15 +19,15 @@ import oru.inf.InfException;
  */
 public class SendEmailJframe extends javax.swing.JInternalFrame {
 
-    private static InfDB idb;
+    private static Connection con;
     private MethodService methodService;
 
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public SendEmailJframe(InfDB idb) {
+    public SendEmailJframe(Connection con) {
         initComponents();
-        this.idb = idb;
+        this.con = con;
     }
 
     /**

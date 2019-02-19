@@ -189,62 +189,100 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAddKategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddKategoriActionPerformed
-        if (Validation.textfieldWithValue(tflKategori)) { 
+
+        if (Validation.textfieldWithValue(tflKategori)) {
+
             Statement stmt = null;
             String nykategori = tflKategori.getText();
+
             try {
-                
-                String query = "Select max(Kat1_ID) as Kat1_ID From Kat1;";
-                stmt = con.createStatement();
 
-                ResultSet rs = stmt.executeQuery(query);
+                String frcheck = "select * from KAT1 where KAT1_NAMN = " + nykategori; // Added check
 
-                rs.next();
-                int maxKID = rs.getInt("Kat1_ID");
-                int maxInt = maxKID + 1;
-                System.out.println(maxInt);
-                
-                String fraga = "insert into Kat1 (KAT1_ID, KAT1_NAMN) VALUES (?,?)";
-                PreparedStatement ps = con.prepareStatement(fraga);
-                ps.setInt(1, maxInt);
-                ps.setString(2, nykategori);
-                ps.executeUpdate();
+                PreparedStatement check = con.prepareStatement(frcheck);
+                check.setString(1, nykategori);
+                ResultSet rscheck = check.executeQuery();
 
-                lblText.setText("Category successfully added.");
-            }catch (SQLException e ) {
-            
+                String befintlig = rscheck.getString("KAT1_NAMN");
+                System.out.println(befintlig); // Stop of check
+
+                if (befintlig != null) {
+
+                    String query = "Select max(Kat1_ID) as Kat1_ID From Kat1;";
+
+                    stmt = con.createStatement();
+
+                    ResultSet rs = stmt.executeQuery(query);
+
+                    rs.next();
+                    int maxKID = rs.getInt("Kat1_ID");
+                    int maxInt = maxKID + 1;
+                    System.out.println(maxInt);
+
+                    String fraga = "insert into Kat1 (KAT1_ID, KAT1_NAMN) VALUES (?,?)";
+
+                    PreparedStatement ps = con.prepareStatement(fraga);
+                    ps.setInt(1, maxInt);
+                    ps.setString(2, nykategori);
+                    ps.executeUpdate();
+
+                    lblText.setText("Category successfully added.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "That category already exists.");
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
         }
     }//GEN-LAST:event_btnAddKategoriActionPerformed
 
     private void btnAddTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTopicActionPerformed
+
         if (Validation.textfieldWithValue(tflTopicNamn) && Validation.elementSelectedInCombobox(cBoxKategori, "Select an option from the combobox.")) {
             try {
+
                 String kategori = cBoxKategori.getSelectedItem().toString();
                 String topic = tflTopicNamn.getText();
                 System.out.println(kategori + " " + topic);
 
                 String query = "Select max(Kat2_ID) as Kat2_ID From Kat2;";
+
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
                 rs.next();
                 int maxKID = rs.getInt("Kat2_ID");
                 int maxInt = maxKID + 1;
-                
-                query = "select KAT1_ID from KAT1 where KAT1_NAMN = '" + kategori + "';";
-                rs = stmt.executeQuery(query);
-                rs.next();
-                int kategoriID = rs.getInt("KAT1_ID");                
-                String fraga = "insert into KAT2 values(?,?,?);";
-                PreparedStatement ps = con.prepareStatement(fraga);
-                ps.setInt(1, maxInt);
-                ps.setInt(2, kategoriID);
-                ps.setString(3, topic);
-                ps.executeUpdate();
-                
-                lblText2.setText("Topic successfully added.");
+
+                String check = "select * from KAT2 where KAT2_NAMN = " + topic; // Checks if there already is a topic with that name
+
+                Statement stmt3 = con.createStatement();
+                ResultSet rs3 = stmt3.executeQuery(check);
+
+                String befintlig = rs3.getString("KAT2_NAMN");
+                System.out.println(befintlig);
+
+                if (befintlig != null) {
+
+                    query = "select KAT1_ID from KAT1 where KAT1_NAMN = '" + kategori + "';";
+
+                    rs = stmt.executeQuery(query);
+                    rs.next();
+                    int kategoriID = rs.getInt("KAT1_ID");
+                    String fraga = "insert into KAT2 values(?,?,?);";
+                    PreparedStatement ps = con.prepareStatement(fraga);
+                    ps.setInt(1, maxInt);
+                    ps.setInt(2, kategoriID);
+                    ps.setString(3, topic);
+                    ps.executeUpdate();
+
+                    lblText2.setText("Topic successfully added.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "That topic already exists.");
+                }
+
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Something went wrong.......");
+                JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
         }
     }//GEN-LAST:event_btnAddTopicActionPerformed

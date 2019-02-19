@@ -406,7 +406,7 @@ public class MainPage extends javax.swing.JFrame {
     private void userInformationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userInformationActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if (!tabExists("User information")) {
-            showUser = new ShowUser(idb);
+            showUser = new ShowUser(con);
             openTab(showUser, "User information");
         } //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else {
@@ -417,7 +417,7 @@ public class MainPage extends javax.swing.JFrame {
     private void removeUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeUserActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if (!tabExists("Remove user")) {
-            removeEmployeeFromTheSystem = new RemoveEmployeeFromTheSystem(idb);
+            removeEmployeeFromTheSystem = new RemoveEmployeeFromTheSystem(con);
             openTab(removeEmployeeFromTheSystem, "Remove user");
         } //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else {
@@ -484,7 +484,7 @@ public class MainPage extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if (!tabExists("Create meeting")) {
-            createMeeting = new CreateMeeting(idb);
+            createMeeting = new CreateMeeting(con);
             openTab(createMeeting, "Create meeting");
         } //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else {
