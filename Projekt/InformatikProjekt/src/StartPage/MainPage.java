@@ -23,7 +23,7 @@ public class MainPage extends javax.swing.JFrame {
     
     private static InfDB idb;
     private MethodService methodService;
-    private ClosableTabbedPane paneMainPageTabs;
+    private final ClosableTabbedPane paneMainPageTabs;
     private CreateBlogInternalFrame createBlogInternalFrame;
     private EditBlogInternalFrame editBlogInternalFrame;
     private RemoveBlogInternalFrame removeBlogInternalFrame;
