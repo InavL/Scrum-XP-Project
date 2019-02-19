@@ -354,9 +354,6 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
     private void btnDownloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownloadActionPerformed
         try {
-            
-            
-            
             String newID = id.trim();
             Statement stmt = null;
             String typeQuestion = "select FILTYP from BLOGG_HAR_FILER where BLOGG_ID ='" + newID + "'";
