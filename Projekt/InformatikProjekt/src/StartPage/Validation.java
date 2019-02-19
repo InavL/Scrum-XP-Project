@@ -9,6 +9,11 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -124,19 +129,26 @@ public class Validation {
         return elementSelected;
     }
 
-    public static boolean idTesting(JTextField id, InfDB idb) {
+    public static boolean idTesting(JTextField id, Connection con) {
 
         //Kollar så att ID:et finns med i tabellen PERONSER.
         boolean resultat = true;
+        Statement stmt = null;
 
         try {
+            stmt = con.createStatement();
+            
             String personID = id.getText(); //Hämta värdet i fältet.
 
-            String fraga = "select FNAMN from PERSONER where ID = '" + personID + "';";
-            String hamtatFornamn = idb.fetchSingle(fraga);
+            String fraga = "select FNAMN from PERSONER where ID = ?;";
+            PreparedStatement ps = con.prepareStatement(fraga);
+            ps.setString(1, personID);
+            ResultSet rs = stmt.executeQuery(fraga);
+            rs.next();
+            String fornamn = rs.getString("FNAMN");
 
             //Försöker att hämta förnamn som matchar ID:et.
-            if (hamtatFornamn == null) {
+            if (fornamn == null) {
                 //Kollar om värdet som man vill hämta finns.
 
                 JOptionPane.showMessageDialog(null, "The ID is incorrect.");
@@ -144,7 +156,7 @@ public class Validation {
 
                 resultat = false;
             }
-        } catch (InfException ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
         return resultat;
@@ -176,19 +188,27 @@ public class Validation {
         return ettTal;
     }
 
-    public static boolean emailExisting(JTextField tf, InfDB idb) {
+    public static boolean emailExisting(JTextField tf, Connection con) {
         boolean resultat = true;
 
         String instring = tf.getText();
+        Statement stmt = null;
 
         try {
-            String test = idb.fetchSingle("select ID from PERSONER where MAIL = '" + instring + "';");
+            stmt = con.createStatement();
+            
+            String fraga = "select ID from PERSONER where MAIL = ?;";
+            PreparedStatement ps = con.prepareStatement(fraga);
+            ps.setString(1, instring);
+            ResultSet rs = stmt.executeQuery(fraga);
+            rs.next();
+            String test = rs.getString("ID");
 
             if (test == null) {
                 JOptionPane.showMessageDialog(null, "The email is incorrect");
                 resultat = false;
             }
-        } catch (InfException ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
         return resultat;

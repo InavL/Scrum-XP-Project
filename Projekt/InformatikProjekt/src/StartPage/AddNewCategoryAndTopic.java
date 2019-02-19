@@ -194,6 +194,7 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
 
             Statement stmt = null;
             String nykategori = tflKategori.getText();
+            methodService.fillComboboxBranchKat1(cBoxKategori);
 
             try {
 

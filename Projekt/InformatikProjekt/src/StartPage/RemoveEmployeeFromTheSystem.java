@@ -163,7 +163,8 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtIDActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        if (Validation.textfieldWithValue(txtFirstname) && Validation.textfieldWithValue(txtLastname) && Validation.textfieldWithValue(txtID) && Validation.idTesting(txtID, idb)) {
+        if (Validation.textfieldWithValue(txtFirstname) && Validation.textfieldWithValue(txtLastname) 
+                && Validation.textfieldWithValue(txtID) && Validation.idTesting(txtID, con)) {
             try {
                 String id = txtID.getText();
                 String firstname = txtFirstname.getText();
