@@ -302,37 +302,6 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Något gick fel!");
             System.out.println("Internt felmeddelande" + e.getMessage());
         }
-
-//        try {
-//            
-//            String sienceBlogInfo = jListAllScienceBlog.getSelectedValue();
-//            id = sienceBlogInfo.substring(0, 2);
-//            String fraga = "SELECT BLOGGPOST FROM BLOGG"
-//                    + " where BLOGGID =" + id;
-//            ArrayList<HashMap<String, String>> resultatLista = idb.fetchRows(fraga);
-//
-//            String rL = "";
-//            for (HashMap rad : resultatLista) {
-//                
-//                rL += rad.get("BLOGGPOST");
-//                rL += "\n";
-//                
-//            }
-//
-//            bid = id.trim();
-//
-//            String type = idb.fetchSingle("Select filtyp from blogg_har_filer where blogg_id =" + bid);
-//
-//            //ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 480, 470);
-//            showImages();
-//
-//            taBlogFeed.setText(rL);
-//
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Något gick fel!");
-//            System.out.println("Internt felmeddelande" + e.getMessage());
-//        }
-
     }//GEN-LAST:event_jListAllScienceBlogValueChanged
 
     private void JlGetBlogEducationValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_JlGetBlogEducationValueChanged
@@ -358,31 +327,6 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Något gick fel!");
             System.out.println("Internt felmeddelande" + e.getMessage());
         }
-
-//        try {
-//            String sienceBlogInfo = JlGetBlogEducation.getSelectedValue();
-//            id = sienceBlogInfo.substring(0, 2);
-//            String fraga = "SELECT BLOGGPOST FROM BLOGG"
-//                    + " where BLOGGID =" + id;
-//            ArrayList<HashMap<String, String>> resultatLista = idb.fetchRows(fraga);
-//
-//            String rL = "";
-//            for (HashMap rad : resultatLista) {
-//                rL += rad.get("BLOGGPOST");
-//                rL += "\n";
-//            }
-//
-//            bid = id.trim();
-//
-//            showImages();
-//
-//            taBlogFeed.setText(rL);
-//
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Något gick fel!");
-//            System.out.println("Internt felmeddelande" + e.getMessage());
-//        }
-
     }//GEN-LAST:event_JlGetBlogEducationValueChanged
 
     private void JlGetBlogInformalValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_JlGetBlogInformalValueChanged
@@ -408,38 +352,16 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Något gick fel!");
             System.out.println("Internt felmeddelande" + e.getMessage());
         }
-
-//        try {
-//            String sienceBlogInfo = JlGetBlogInformal.getSelectedValue();
-//            id = sienceBlogInfo.substring(0, 2);
-//            String fraga = "SELECT BLOGGPOST FROM BLOGG"
-//                    + " where BLOGGID =" + id;
-//            ArrayList<HashMap<String, String>> resultatLista = idb.fetchRows(fraga);
-//
-//            String rL = "";
-//            for (HashMap rad : resultatLista) {
-//                rL += rad.get("BLOGGPOST");
-//                rL += "\n";
-//            }
-//
-//            bid = id.trim();
-//
-//            showImages();
-//
-//            taBlogFeed.setText(rL);
-//
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Något gick fel!");
-//            System.out.println("Internt felmeddelande" + e.getMessage());
-//        }
-
     }//GEN-LAST:event_JlGetBlogInformalValueChanged
 
     private void btnDownloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownloadActionPerformed
         try {
             String newID = id.trim();
-
-            String type = idb.fetchSingle("select FILTYP from BLOGG_HAR_FILER where BLOGG_ID ='" + newID + "'");
+            Statement stmt = null;
+            String typeQuestion = "select FILTYP from BLOGG_HAR_FILER where BLOGG_ID ='" + newID + "'";
+            ResultSet typeSet = stmt.executeQuery(typeQuestion);
+            typeSet.next();
+            String type = typeSet.getString("filtyp"); 
 
             File file = new File("files\\" + newID + type);
 
