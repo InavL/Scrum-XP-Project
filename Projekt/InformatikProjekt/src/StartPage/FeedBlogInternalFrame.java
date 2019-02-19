@@ -72,9 +72,9 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         JlGetBlogInformal = new javax.swing.JList<>();
         txtImage = new javax.swing.JLabel();
         btnDownload = new javax.swing.JButton();
+        btnGDPR = new javax.swing.JButton();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(51, 153, 255));
 
@@ -88,7 +88,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(729, Short.MAX_VALUE))
+                .addContainerGap(731, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -97,13 +97,9 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, -1));
-
         taBlogFeed.setColumns(20);
         taBlogFeed.setRows(5);
         jScrollPane1.setViewportView(taBlogFeed);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 140, 270, 460));
 
         btnUpdate.setText("Update");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -111,7 +107,6 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 btnUpdateActionPerformed(evt);
             }
         });
-        jPanel1.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 610, -1, -1));
 
         jListAllScienceBlog.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -188,16 +183,63 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("Informal", pnlInformal);
 
-        jPanel1.add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 140, 190, 460));
-        jPanel1.add(txtImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
-
         btnDownload.setText("Download file");
         btnDownload.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDownloadActionPerformed(evt);
             }
         });
-        jPanel1.add(btnDownload, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 610, -1, -1));
+
+        btnGDPR.setText("About GDPR");
+        btnGDPR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGDPRActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 39, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(txtImage)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(500, 500, 500)
+                        .addComponent(btnGDPR, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnDownload)
+                        .addGap(23, 23, 23)
+                        .addComponent(btnUpdate))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(490, 490, 490)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtImage)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDownload)
+                            .addComponent(btnUpdate)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnGDPR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -335,6 +377,19 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     
     }//GEN-LAST:event_btnDownloadActionPerformed
 
+    private void btnGDPRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGDPRActionPerformed
+        // TODO add your handling code here:
+        try {
+            String url = "https://www.oru.se/english/about-us/processing-of-personal-data-at-orebro-university/";
+          
+                java.awt.Desktop.getDesktop().browse(java.net.URI.create(url));
+            } catch (IOException ex) {
+                Logger.getLogger(FeedBlogInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    
+        
+    }//GEN-LAST:event_btnGDPRActionPerformed
+
 
     
     private void educationStart() {
@@ -453,6 +508,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     private javax.swing.JList<String> JlGetBlogEducation;
     private javax.swing.JList<String> JlGetBlogInformal;
     private javax.swing.JButton btnDownload;
+    private javax.swing.JButton btnGDPR;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jListAllScienceBlog;
