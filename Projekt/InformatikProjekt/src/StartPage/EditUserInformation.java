@@ -10,8 +10,6 @@ import java.awt.Color;
 import java.sql.Connection;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
-import oru.inf.InfDB;
-import oru.inf.InfException;
 
 /**
  *
@@ -20,7 +18,6 @@ import oru.inf.InfException;
 public class EditUserInformation extends javax.swing.JInternalFrame {
 
     private static Connection con;
-    private static InfDB idb;
     private MethodService methodService;
     private String firstname;
     private String surname;
@@ -30,9 +27,9 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public EditUserInformation(InfDB idb) {
+    public EditUserInformation(Connection con) {
         initComponents();
-        this.idb = idb;
+        this.con = con;
         ID = null;
         methodService = new MethodService(con);
         //Gör panelen vit som backgrunden
@@ -291,7 +288,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
                 cbUsers.setVisible(false);
                 btnSelect.setVisible(false);
 
-            } catch (InfException oneException) {
+            } catch (SQLException oneException) {
                 oneException.getMessage();
                 JOptionPane.showMessageDialog(null, "Something went wrong");
             }
@@ -333,7 +330,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
                 btnSelect.setVisible(true);
                 
             }
-            catch (InfException oneException) {
+            catch (SQLException oneException) {
                 oneException.getMessage();
                 JOptionPane.showMessageDialog(null, "Something went wrong");
             }
