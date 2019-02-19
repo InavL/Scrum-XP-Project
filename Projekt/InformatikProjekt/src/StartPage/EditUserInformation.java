@@ -7,11 +7,16 @@ package StartPage;
 
 import com.jidesoft.swing.AutoCompletion;
 import java.awt.Color;
-import java.sql.Connection;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 import oru.inf.InfDB;
 import oru.inf.InfException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -20,7 +25,6 @@ import oru.inf.InfException;
 public class EditUserInformation extends javax.swing.JInternalFrame {
 
     private static Connection con;
-    private static InfDB idb;
     private MethodService methodService;
     private String firstname;
     private String surname;
@@ -30,9 +34,9 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
     /**
      * Creates new form EditBlogInternalFrame
      */
-    public EditUserInformation(InfDB idb) {
+    public EditUserInformation(Connection con) {
         initComponents();
-        this.idb = idb;
+        this.con = con;
         ID = null;
         methodService = new MethodService(con);
         //Gör panelen vit som backgrunden
@@ -260,28 +264,45 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
             String[] user = cbUsers.getSelectedItem().toString().trim().split("\\s+");
             firstname = user[0];
             surname = user[1];
+            
+            Statement stmt = null;
 
             try {
-                HashMap<String, String> resultatLista = idb.fetchRow("SELECT PERSONER.ID, PERSONER.MAIL, PERSONER.TELEFON, PERSONER.LOSENORD, SYSTEMTILLGANG.BEHORIGHET from PERSONER"
+                
+                stmt = con.createStatement();
+                
+                String fraga = "SELECT PERSONER.ID as ID, PERSONER.MAIL as MAIL, PERSONER.TELEFON as TELEFON, "
+                        + "PERSONER.LOSENORD as LOSENORD, SYSTEMTILLGANG.BEHORIGHET as BEHORIGHET "
+                        + "from PERSONER"
                         + " join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID"
-                        + " where FNAMN ='" + firstname + "' and ENAMN='" + surname + "'");
-                ID = resultatLista.get("ID");
+                        + " where FNAMN = ? and ENAMN = ?;";
+                
+                PreparedStatement ps = con.prepareStatement(fraga);
+                ps.setString(1, firstname);
+                ps.setString(2, surname);
+                ResultSet rs = ps.executeQuery();
+                
+                DefaultListModel allScienceBlog = new DefaultListModel();
+                
+                rs.next();
+                
+                int id = rs.getInt("ID");
                 tfFirstname.setText(firstname);
                 tfSurname.setText(surname);
-                String email = resultatLista.get("MAIL");
-                tfEmail.setText(email);
-                String phone = resultatLista.get("TELEFON");
-                tfPhone.setText(phone);
-                String password = resultatLista.get("LOSENORD");
-                tfPassword.setText(password);
-                
+                String mail = rs.getString("MAIL");
+                tfEmail.setText(mail);
+                String tele = rs.getString("TELEFON");
+                tfPhone.setText(tele);
+                String losenord = rs.getString("LOSENORD");
+                tfPassword.setText(losenord);
+                String behorighet = rs.getString("BEHORIGHET");
                 
                 //Tar bort alla tidigare värden i comboboxen
                 cbAccessType.removeAllItems();
 
                 //Lägger in alla behörigheter i comboboxen
                 methodService.fillComboboxAccessTypes(cbAccessType);
-                cbAccessType.setSelectedItem(resultatLista.get("BEHORIGHET"));
+                cbAccessType.setSelectedItem(rs.getString("BEHORIGHET"));
 
                 //Gör panelen synlig
                 pnlMainPanel.setVisible(true);
@@ -291,7 +312,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
                 cbUsers.setVisible(false);
                 btnSelect.setVisible(false);
 
-            } catch (InfException oneException) {
+            } catch (SQLException oneException) {
                 oneException.getMessage();
                 JOptionPane.showMessageDialog(null, "Something went wrong");
             }
@@ -314,13 +335,36 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
             String password = tfPassword.getText();
             String access = cbAccessType.getSelectedItem().toString();
             
+            Statement stmt = null;
+            
             try {
+                stmt = con.createStatement();
                 //Hämtar behörighetsID med hjälp av dess namn
-                String accessID = idb.fetchSingle("SELECT sid FROM systemtillgang  WHERE behorighet = \'" + access + "\'");
+                String fraga = "SELECT sid FROM systemtillgang  WHERE behorighet = ?";
+                PreparedStatement ps = con.prepareStatement(fraga);
+                ps.setString(1, access);
+                ResultSet rs = ps.executeQuery();
+                rs.next();
+                int sid = rs.getInt("sid");
                 
                 //Uppdaterar tabellen med de nya värdena
-                idb.update("UPDATE personer SET mail = \'" + email + "\', telefon = \'" + phone +"\', fnamn = \'" + firstname + "\', enamn = \'" + surname +"\', losenord = \'" + password + "\', sid = \'" + accessID + "\' WHERE id = " + ID);
-                 
+                //idb.update("UPDATE personer SET mail = \'" + email + "\', telefon = \'" + phone +"\', fnamn = \'" + firstname + "\', enamn = \'" + surname +"\', losenord = \'" + password + "\', sid = \'" + accessID + "\' WHERE id = " + ID);
+                
+                String fraga2 = "UPDATE personer SET mail = ?, telefon = ?, fnamn = ?, enamn = ?, losenord = ?, sid = ? WHERE id = ?";
+                PreparedStatement ps2 = con.prepareStatement(fraga2);
+                ps.setString(7, ID);
+                ResultSet rs2 = ps2.executeQuery();
+                rs.next();
+                
+                ps.setString(1, email);
+                ps.setString(2, phone);
+                ps.setString(3, firstname);
+                ps.setString(4, surname);
+                ps.setString(5, password);
+                ps.setInt(6, sid);
+                ps2.executeUpdate();
+                
+                
                 //SKirver ut ett meddelande om att ändringarna har sparats
                 JOptionPane.showMessageDialog(null, "The changes have been saved");
                 
@@ -333,7 +377,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
                 btnSelect.setVisible(true);
                 
             }
-            catch (InfException oneException) {
+            catch (SQLException oneException) {
                 oneException.getMessage();
                 JOptionPane.showMessageDialog(null, "Something went wrong");
             }
