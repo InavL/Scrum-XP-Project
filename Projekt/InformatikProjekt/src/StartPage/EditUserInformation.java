@@ -265,17 +265,24 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
             surname = user[1];
 
             try {
-                HashMap<String, String> resultatLista = idb.fetchRow("SELECT PERSONER.ID, PERSONER.MAIL, PERSONER.TELEFON, PERSONER.LOSENORD, SYSTEMTILLGANG.BEHORIGHET from PERSONER"
-                        + " join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID"
-                        + " where FNAMN ='" + firstname + "' and ENAMN='" + surname + "'");
-                ID = resultatLista.get("ID");
+                String fraga = "SELECT PERSONER.ID, PERSONER.MAIL, PERSONER.TELEFON, PERSONER.LOSENORD, "
+                        + "SYSTEMTILLGANG.BEHORIGHET from PERSONER" +
+"                        +  join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID" +
+"                        +  where FNAMN =' + firstname + ' and ENAMN=' + surname + '";
+                
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(fraga);
+                rs.next();
+                
+                
+                ID = rs.getString("ID");
                 tfFirstname.setText(firstname);
                 tfSurname.setText(surname);
-                String email = resultatLista.get("MAIL");
+                String email = rs.getString("MAIL");
                 tfEmail.setText(email);
-                String phone = resultatLista.get("TELEFON");
+                String phone = rs.getString("TELEFON");
                 tfPhone.setText(phone);
-                String password = resultatLista.get("LOSENORD");
+                String password = rs.getString("LOSENORD");
                 tfPassword.setText(password);
                 
                 
@@ -284,7 +291,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
 
                 //Lägger in alla behörigheter i comboboxen
                 methodService.fillComboboxAccessTypes(cbAccessType);
-                cbAccessType.setSelectedItem(resultatLista.get("BEHORIGHET"));
+                cbAccessType.setSelectedItem(rs.getString("BEHORIGHET"));
 
                 //Gör panelen synlig
                 pnlMainPanel.setVisible(true);
