@@ -7,9 +7,12 @@ package StartPage;
 
 import com.jidesoft.swing.AutoCompletion;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.HashMap;
 import javax.swing.JOptionPane;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 
 /**
  *
@@ -59,18 +62,6 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         taText = new javax.swing.JTextArea();
         lblChanges = new javax.swing.JLabel();
-        categoryPanel1 = new javax.swing.JPanel();
-        lblDescription1 = new javax.swing.JLabel();
-        lblBranch = new javax.swing.JLabel();
-        cbMainCategory1 = new javax.swing.JComboBox<>();
-        lblMainCategory1 = new javax.swing.JLabel();
-        cbSubcategory1 = new javax.swing.JComboBox<>();
-        lblTopic = new javax.swing.JLabel();
-        cbSubSubcategory1 = new javax.swing.JComboBox<>();
-        btnSave3 = new javax.swing.JButton();
-        lblChanges2 = new javax.swing.JLabel();
-        btnNext = new javax.swing.JButton();
-        btnBack = new javax.swing.JButton();
         lblChoosepostToEdit = new javax.swing.JLabel();
         btnChooseThisPost = new javax.swing.JButton();
 
@@ -158,44 +149,6 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
 
         mainPanel.addTab("Edit text", textPanel);
 
-        categoryPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        lblDescription1.setText("Choose categories to place your post in another place");
-        categoryPanel1.add(lblDescription1, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 41, -1, -1));
-
-        lblBranch.setText("Branch");
-        categoryPanel1.add(lblBranch, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 294, -1, -1));
-
-        cbMainCategory1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose a category" }));
-        categoryPanel1.add(cbMainCategory1, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 151, -1, -1));
-
-        lblMainCategory1.setText("Category");
-        categoryPanel1.add(lblMainCategory1, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 128, -1, -1));
-
-        cbSubcategory1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose a topic" }));
-        categoryPanel1.add(cbSubcategory1, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 233, 133, -1));
-
-        lblTopic.setText("Topic");
-        categoryPanel1.add(lblTopic, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 210, -1, -1));
-
-        cbSubSubcategory1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose a branch" }));
-        categoryPanel1.add(cbSubSubcategory1, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 317, 133, -1));
-
-        btnSave3.setText("Save");
-        categoryPanel1.add(btnSave3, new org.netbeans.lib.awtextra.AbsoluteConstraints(715, 367, -1, -1));
-
-        lblChanges2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblChanges2.setText("Your changes have been saved!");
-        categoryPanel1.add(lblChanges2, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 370, -1, -1));
-
-        btnNext.setText("Next");
-        categoryPanel1.add(btnNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(646, 367, -1, -1));
-
-        btnBack.setText("Back");
-        categoryPanel1.add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(575, 367, -1, -1));
-
-        mainPanel.addTab("Edit category", categoryPanel1);
-
         lblChoosepostToEdit.setText("Choose a post to edit");
 
         btnChooseThisPost.setText("Choose this post");
@@ -209,9 +162,7 @@ public class EditBlogInternalFrame extends javax.swing.JInternalFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,12 +211,14 @@ private void fillListWithYourPosts(){
     int personID = LoggedUser.getID();
     
     try {
+        Statement stmt = con.createStatement();
+        
             //Hämtar inläggen som användaren har skrivit
-            ArrayList<HashMap<String, String>> posts = idb.fetchRows("SELECT titel FROM blogg WHERE bloggskribent =" + personID + ";");
+            ResultSet rs = stmt.executeQuery("SELECT titel FROM blogg WHERE bloggskribent =" + personID + ";");
             //Loopar igenom listan och lägger till alla namn på inläggen till inläggslistanlistan
-            if (posts != null) {
-            for (int i = 0; i < posts.size(); i++) {
-                String postName = posts.get(i).get("TITEL");
+            if (rs != null) {
+            while (rs.next()) {
+                String postName = rs.getString("TITEL");
                 cbPosts.addItem(postName);
             }    
             }
@@ -291,9 +244,21 @@ private void fillListWithYourPosts(){
             
             
             try {
-                String bloggID = idb.fetchSingle("SELECT bloggid FROM blogg  WHERE titel = \'" + titel + "\'");
+                /*PreparedStatement ps = con.prepareStatement("SELECT ? FROM blogg  WHERE titel = ?");
+                
+                ps.setString(1, "bloggid");
+                ps.setString(2, titel);
+                
+                ResultSet rs = ps.executeQuery();
+                rs.next();
+                String bloggid = rs.getString("bloggid");
+                */
+                
+            
                 //Uppdaterar blogginlägget med den nya titeln och texten
-                idb.update("UPDATE blogg SET titel = \'" + heading + "\', bloggpost = \'" + text + "\' WHERE bloggid = " + bloggID);
+                Statement stmt = con.createStatement();
+                String fraga = "UPDATE blogg SET titel = \'" + heading + "\', bloggpost = \'" + text + "\' WHERE bloggid = " + blogID;
+                stmt.executeUpdate(fraga);
                 
                 lblChanges.setVisible(true);
                 
@@ -309,20 +274,32 @@ private void fillListWithYourPosts(){
         //Kontrollerar att sökfältet inte är tomt.
         if (Validation.elementSelectedInCombobox(cbPosts, "Choose a post")) {  
             String titel = cbPosts.getSelectedItem().toString();
+            
             try {
-             HashMap<String, String> postInfo = idb.fetchRow("SELECT bloggID, bloggpost FROM blogg \n" +
-                    "WHERE titel = \'" + titel + "\'");
+                PreparedStatement ps = con.prepareStatement("SELECT ?, ? FROM blogg WHERE titel = ?");
+               ps.setString(1, "bloggid");
+               ps.setString(2, "bloggpost");
+               ps.setString(3, titel);
+               
+               ResultSet rs = ps.executeQuery();
+               
+               String bloggpost = "";
+              while(rs.next()){
+                  blogID = rs.getString("bloggid");
+                  bloggpost = rs.getString("bloggpost");
+              }
+                       
              
              //Fyller i de hämtade värdena i textrutorna för blogginlägget
             tfHeading.setText(titel);
-            taText.setText(postInfo.get("BLOGGPOST"));
-            blogID = postInfo.get("bloggID");
+            taText.setText(bloggpost);
+
             
             //Gör panelen synlig
             mainPanel.setVisible(true);
             //Döljer texterna med att ändringarna har sparats
             lblChanges.setVisible(false);
-            lblChanges2.setVisible(false);
+
             }
             catch (SQLException ettUndantag) {
                 ettUndantag.getMessage();
@@ -333,28 +310,16 @@ private void fillListWithYourPosts(){
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnChooseThisPost;
-    private javax.swing.JButton btnNext;
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnSave3;
-    private javax.swing.JPanel categoryPanel1;
-    private javax.swing.JComboBox<String> cbMainCategory1;
     private javax.swing.JComboBox<String> cbPosts;
-    private javax.swing.JComboBox<String> cbSubSubcategory1;
-    private javax.swing.JComboBox<String> cbSubcategory1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblBranch;
     private javax.swing.JLabel lblChanges;
-    private javax.swing.JLabel lblChanges2;
     private javax.swing.JLabel lblChoosepostToEdit;
-    private javax.swing.JLabel lblDescription1;
     private javax.swing.JLabel lblHeading;
-    private javax.swing.JLabel lblMainCategory1;
-    private javax.swing.JLabel lblTopic;
     private javax.swing.JTabbedPane mainPanel;
     private javax.swing.JTextArea taText;
     private javax.swing.JPanel textPanel;
