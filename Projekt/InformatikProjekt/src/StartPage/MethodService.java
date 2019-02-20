@@ -102,7 +102,7 @@ public class MethodService {
 
             while (rs.next()) {
                 String firstname = rs.getString("FNAMN");
-                String surname = rs.getString("FNAMN");
+                String surname = rs.getString("ENAMN");
                 enCombobox.addItem(firstname + " " + surname);
             }
 
