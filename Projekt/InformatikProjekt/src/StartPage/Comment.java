@@ -160,6 +160,8 @@ public class Comment extends javax.swing.JFrame {
                 ps.executeUpdate();
                 
 //                idb.insert("insert into KOMMENTARER values(" + maxInt + ", '" + text + "', " + personID + ", " + bloggID + ");");
+
+                this.setVisible(false);
             }
             catch(SQLException ex)
             {
