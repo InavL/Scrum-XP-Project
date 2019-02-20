@@ -8,11 +8,14 @@ import java .sql.Connection;
 import com.jidesoft.swing.AutoCompletion;
 import java.io.File;
 import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
-import oru.inf.InfException;
 import javax.swing.JFileChooser;
 import org.apache.commons.io.FileUtils;
 /**
@@ -292,15 +295,28 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
 
             
             try {
-            String kat3 = idb.fetchSingle("SELECT kat3_ID FROM Kat3 WHERE Kat3_Namn = \'" + namn + "\'");
+           Statement stmt = null;
+           String fraga = "SELECT kat3_ID FROM Kat3 WHERE Kat3_Namn = '" + namn + "'";
+           ResultSet rs = stmt.executeQuery(fraga);
+           rs.next();
+           int kat3 = rs.getInt("kat3");
             
             //Hämtar ett nytt oanvänt bloggID
-            String bloggID = idb.getAutoIncrement("blogg", "bloggid");
+            int bloggID = createBID();
             System.out.println(bloggID);
             
             //Lägger till inlägget i bloggtabellen med de valda värdena
-                idb.insert("INSERT INTO blogg (bloggid, bloggpost, titel, datum, kat3_ID, bloggskribent) \n" +
-                "VALUES (" + bloggID + ", \'" + bloggpost + "\', \'" + titel + "\', \'" + datumet + "\', \'" + kat3 + "\', " + personID + ")");
+           
+            fraga = "INSERT INTO blogg (bloggid, bloggpost, titel, datum, kat3_ID, bloggskribent) values (?,?,?,?,?,?)";
+            PreparedStatement ps = con.prepareStatement(fraga);
+            ps.setInt(1, bloggID);
+            ps.setString(2, bloggpost);
+            ps.setString(3, titel);
+            ps.setString(4, datumet);
+            ps.setInt(5, kat3);
+            ps.setInt(5, personID);
+            ps.executeUpdate();
+            
             
             if (name != null) {
             name = bloggID + type;
@@ -310,34 +326,49 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
 
                 try {
                     FileUtils.copyFile(source, saveAt);
-                    idb.insert("Insert into blogg_har_filer (blogg_id, filtyp) values (" + bloggID + ", '" + type + "')");
+                    String question = "Insert into blogg_har_filer (blogg_id, filtyp) values (" + bloggID + ", '" + type + "')";
+                    stmt = con.createStatement();
+                    stmt.executeUpdate(fraga);
+                    
+                            
                     
 
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(null, "Something went wrong");
                 }
             }
-            
-            //Lägger till inlägget i bloggtabellen med de valda värdena
-               // idb.insert("INSERT INTO blogg (bloggid, bloggpost, titel, datum, kat3_ID, bloggskribent) \n" +
-               // "VALUES (" + bloggID + ", \'" + bloggpost + "\', \'" + titel + "\', \'" + datumet + "\', \'" + kat3 + "\', " + personID + ")");
-                
-                
-                
+                 
                 tfHeading.setText("");
                 taText.setText("");
                 lblAttachment.setVisible(false);
                 //pnlMainPanel.setVisible(false);
             
             }
-            catch (InfException oneException) {
+            catch (SQLException oneException) {
                 oneException.getMessage();
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             } 
             
         }
     }//GEN-LAST:event_btnPublishActionPerformed
-
+   private int createBID() {
+        Statement stmt = null;
+        int id = 0;
+        String fraga = "select BLOGGID from BLOGG";
+        try {
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(fraga);
+            while (rs.next()) {
+                id++;
+            }
+            id++;
+            return id;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+            System.out.println("Internt felmeddelande" + e.getMessage());
+            return 0;
+        }
+    }
     private void cbBranchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbBranchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbBranchActionPerformed
@@ -352,18 +383,19 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
             String kat1 = cbxKat1.getSelectedItem().toString();
             
             try{
-            
+            Statement stmt = con.createStatement();
             String hittaKat2 = "select KAT2_NAMN from KAT2 join KAT1 on KAT2.KAT1_ID = KAT1.KAT1_ID where KAT1_NAMN = '" + kat1 + "';";
+            ResultSet rs = stmt.executeQuery(hittaKat2);
             
-            ArrayList<HashMap<String, String>> kategorier2 = idb.fetchRows(hittaKat2);
             
-            for(int i = 0; i < kategorier2.size(); i ++)
+            
+            while(rs.next())
             {
-                String oneCat = kategorier2.get(i).get("KAT2_NAMN");
+                String oneCat = rs.getString("KAT2_NAMN");
                 cbxKat2.addItem(oneCat);
             }
             }
-            catch(InfException ex)
+            catch(SQLException ex)
             {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
@@ -381,18 +413,17 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
             String kat2 = cbxKat2.getSelectedItem().toString();
             
             try{
-            
+            Statement stmt = con.createStatement();
             String hittaKat3 = "select KAT3_NAMN from KAT3 join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID where KAT2_NAMN = '" + kat2 + "';";
+            ResultSet rs = stmt.executeQuery(hittaKat3);
             
-            ArrayList<HashMap<String, String>> kategorier3 = idb.fetchRows(hittaKat3);
-            
-            for(int i = 0; i < kategorier3.size(); i ++)
+            while(rs.next())
             {
-                String oneCat = kategorier3.get(i).get("KAT3_NAMN");
+                String oneCat = rs.getString("KAT3_NAMN");
                 cbBranch.addItem(oneCat);
             }
             }
-            catch(InfException ex)
+            catch(SQLException ex)
             {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
@@ -404,37 +435,47 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         {
             try
             {
+                Statement stmt = con.createStatement();
                 String nyBranch = txtAdd.getText();
                 String kat2 = cbxKat2.getSelectedItem().toString();
                 
-                String idKat2 = idb.fetchSingle("select KAT2_ID from KAT2 where Kat2_NAMN = '" + kat2 + "';");
+                String idKat2Fraga = "select KAT2_ID from KAT2 where Kat2_NAMN = '" + kat2 + "';";
+                ResultSet rs = stmt.executeQuery(idKat2Fraga);
+                rs.next();
+                int idKat2 = rs.getInt("KAT2_ID");
                 
                 
-                String kat3ID = idb.getAutoIncrement("KAT3", "KAT3_ID");
                 
-                idb.insert("insert into KAT3 values('" + kat3ID + "', '" + idKat2 + "', '" + nyBranch + "');");
+                int kat3ID = createKAT3ID();
                 
+                String fraga = "insert into KAT3 values(?, ?, ?)";
+                PreparedStatement ps = con.prepareStatement(fraga);
+                ps.setInt(1, kat3ID);
+                ps.setInt(2, idKat2);
+                ps.setString(3, nyBranch);
+                ps.executeUpdate();
                 JOptionPane.showMessageDialog(null, "The new branch has now been saved.");
                 
                 txtAdd.setText("");
                 
                 String index = cbBranch.getItemAt(0);
-            cbBranch.removeAllItems();
-            cbBranch.addItem(index);
+                cbBranch.removeAllItems();
+                cbBranch.addItem(index);
             
-            String hittaKat3 = "select KAT3_NAMN from KAT3 join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID where KAT2_NAMN = '" + kat2 + "';";
+                String hittaKat3 = "select KAT3_NAMN from KAT3 join KAT2 on KAT3.KAT2_ID = KAT2.KAT2_ID where KAT2_NAMN = '" + kat2 + "';";
+                rs = stmt.executeQuery(hittaKat3);
             
-            ArrayList<HashMap<String, String>> kategorier3 = idb.fetchRows(hittaKat3);
             
-            for(int i = 0; i < kategorier3.size(); i ++)
+            
+            while(rs.next())
             {
-                String oneCat = kategorier3.get(i).get("KAT3_NAMN");
+                String oneCat = rs.getString("KAT3_NAMN");
                 cbBranch.addItem(oneCat);
             
             }
             }
             
-            catch(InfException ex)
+            catch(SQLException ex)
             {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
@@ -476,7 +517,24 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         lblAttachment.setVisible(true);
     
     }//GEN-LAST:event_btnAttachFileActionPerformed
-
+    private int createKAT3ID() {
+        Statement stmt = null;
+        int id = 0;
+        String fraga = "select KAT3_ID from kat3";
+        try {
+            stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(fraga);
+            while (rs.next()) {
+                id++;
+            }
+            id++;
+            return id;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
+            System.out.println("Internt felmeddelande" + e.getMessage());
+            return 0;
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
