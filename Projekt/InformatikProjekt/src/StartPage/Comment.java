@@ -139,8 +139,9 @@ public class Comment extends javax.swing.JFrame {
                 String text = txtAreaWrite.getText();
                 int personID = LoggedUser.getID();
                 int bloggID = FeedBlogInternalFrame.getBID();
+                System.out.println(bloggID + " " + text);
                 
-                String fraga1 = "select MAX(KOMMENTAR_ID) from KOMMENTARER;";
+                String fraga1 = "select MAX(KOMMENTAR_ID) as KOMMENTAR_ID from KOMMENTARER;";
                 stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(fraga1);
                 rs.next();
@@ -151,8 +152,9 @@ public class Comment extends javax.swing.JFrame {
 //                int maxKomInt = Integer.parseInt(kom);
 //                int maxInt = maxKomInt + 1;
 
-                String fraga2 = "insert into KOMMENTARER values((?, ?, ?, ?);";
+                String fraga2 = "insert into KOMMENTARER values(?, ?, ?, ?);";
                 PreparedStatement ps = con.prepareStatement(fraga2);
+                
                 ps.setInt(1, kommentarsID);
                 ps.setString(2, text);
                 ps.setInt(3, personID);
