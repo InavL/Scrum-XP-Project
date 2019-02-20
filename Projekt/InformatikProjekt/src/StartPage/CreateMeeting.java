@@ -311,7 +311,7 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
                 ResultSet rs = stmt.executeQuery(fraga);
                 rs.next();
                 int hogstaFID = rs.getInt("FORSLAGS_ID");
-                int maxFInt = hogstaFID + 1;;
+                int maxFInt = hogstaFID + 1;
 
                 String start = date + " " + startTime + ":00";
                 String end = date + " " + endTime + ":00";
