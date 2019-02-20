@@ -16,11 +16,15 @@
 
 * 120h inplanerad första sprinten (lite lågt).
 
+---
+
 ## Vad behöver vi göra
 
 Skapa en databas, grund till programmet samt en inloggningsfunktion.
 
 Helt ta bort allt som har med icke-inloggade användare.
+
+---
 
 ## Övrig
 
