@@ -8,6 +8,10 @@ package StartPage;
 import com.jidesoft.swing.AutoCompletion;
 import java.awt.Color;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
 
@@ -111,11 +115,11 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
             }
         });
 
-        lblFirstname.setText("Firstname:");
+        lblFirstname.setText("First name:");
 
         tfFirstname.setColumns(10);
 
-        jLabel2.setText("Surname:");
+        jLabel2.setText("Last name:");
 
         tfSurname.setColumns(15);
 
@@ -147,28 +151,30 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
         pnlMainPanel.setLayout(pnlMainPanelLayout);
         pnlMainPanelLayout.setHorizontalGroup(
             pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainPanelLayout.createSequentialGroup()
+            .addGroup(pnlMainPanelLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblFirstname)
-                    .addComponent(jLabel2)
-                    .addComponent(lblEmail)
-                    .addComponent(lblPhoneNumber)
-                    .addComponent(lblPassword)
-                    .addComponent(lblAccessType))
-                .addGap(40, 40, 40)
-                .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tfFirstname)
-                    .addComponent(tfSurname, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                    .addComponent(tfEmail)
-                    .addComponent(tfPhone)
-                    .addComponent(tfPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addComponent(cbAccessType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(40, 40, 40))
-            .addGroup(pnlMainPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSave)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlMainPanelLayout.createSequentialGroup()
+                        .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblFirstname)
+                            .addComponent(jLabel2)
+                            .addComponent(lblEmail)
+                            .addComponent(lblPhoneNumber)
+                            .addComponent(lblPassword)
+                            .addComponent(lblAccessType))
+                        .addGap(40, 40, 40)
+                        .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tfFirstname)
+                            .addComponent(tfSurname, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                            .addComponent(tfEmail)
+                            .addComponent(tfPhone)
+                            .addComponent(tfPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(cbAccessType, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(40, 40, 40))
+                    .addGroup(pnlMainPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSave)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         pnlMainPanelLayout.setVerticalGroup(
             pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,6 +255,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
+        
         //Kontorllerar att man har valt ett värde i comboboxen
         if (Validation.elementSelectedInCombobox(cbUsers, "Select user")) {
 
@@ -258,17 +265,24 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
             surname = user[1];
 
             try {
-                HashMap<String, String> resultatLista = idb.fetchRow("SELECT PERSONER.ID, PERSONER.MAIL, PERSONER.TELEFON, PERSONER.LOSENORD, SYSTEMTILLGANG.BEHORIGHET from PERSONER"
-                        + " join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID"
-                        + " where FNAMN ='" + firstname + "' and ENAMN='" + surname + "'");
-                ID = resultatLista.get("ID");
+                String fraga = "SELECT PERSONER.ID, PERSONER.MAIL, PERSONER.TELEFON, PERSONER.LOSENORD, "
+                        + "SYSTEMTILLGANG.BEHORIGHET from PERSONER" +
+"                        +  join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID" +
+"                        +  where FNAMN =' + firstname + ' and ENAMN=' + surname + '";
+                
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery(fraga);
+                rs.next();
+                
+                
+                ID = rs.getString("ID");
                 tfFirstname.setText(firstname);
                 tfSurname.setText(surname);
-                String email = resultatLista.get("MAIL");
+                String email = rs.getString("MAIL");
                 tfEmail.setText(email);
-                String phone = resultatLista.get("TELEFON");
+                String phone = rs.getString("TELEFON");
                 tfPhone.setText(phone);
-                String password = resultatLista.get("LOSENORD");
+                String password = rs.getString("LOSENORD");
                 tfPassword.setText(password);
                 
                 
@@ -277,7 +291,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
 
                 //Lägger in alla behörigheter i comboboxen
                 methodService.fillComboboxAccessTypes(cbAccessType);
-                cbAccessType.setSelectedItem(resultatLista.get("BEHORIGHET"));
+                cbAccessType.setSelectedItem(rs.getString("BEHORIGHET"));
 
                 //Gör panelen synlig
                 pnlMainPanel.setVisible(true);
@@ -312,11 +326,25 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
             
             try {
                 //Hämtar behörighetsID med hjälp av dess namn
-                String accessID = idb.fetchSingle("SELECT sid FROM systemtillgang  WHERE behorighet = \'" + access + "\'");
+                Statement stmt = con.createStatement();
+                String query = "SELECT sid FROM systemtillgang  WHERE behorighet = " + access;
+                ResultSet rs = stmt.executeQuery(query);
+                rs.next();
+                int accessID = rs.getInt("sid");
                 
                 //Uppdaterar tabellen med de nya värdena
-                idb.update("UPDATE personer SET mail = \'" + email + "\', telefon = \'" + phone +"\', fnamn = \'" + firstname + "\', enamn = \'" + surname +"\', losenord = \'" + password + "\', sid = \'" + accessID + "\' WHERE id = " + ID);
-                 
+                String fraga = "UPDATE personer SET mail = ?, telefon = ?, "
+                        + "fnamn = ?, enamn = ?, losenord = ?, sid = ? WHERE id = ?";                
+                PreparedStatement ps = con.prepareStatement(fraga);
+                ps.setString(1, email);
+                ps.setString(2, phone);
+                ps.setString(3, firstname);
+                ps.setString(4, surname);
+                ps.setString(5, password);
+                ps.setInt(6, accessID);
+                ps.setString(7, ID);
+                ps.executeUpdate();
+                
                 //SKirver ut ett meddelande om att ändringarna har sparats
                 JOptionPane.showMessageDialog(null, "The changes have been saved");
                 
