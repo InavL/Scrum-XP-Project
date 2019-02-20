@@ -297,20 +297,19 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
             String sienceBlogInfo = jListAllScienceBlog.getSelectedValue();
             String id = sienceBlogInfo.substring(0, 2);
-            
-            System.out.println(id);
+
+            bid = Integer.parseInt(id.trim());
 
             String fraga = "SELECT BLOGGPOST FROM BLOGG where BLOGGID =" + id;
 
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(fraga);
-            
+
             System.out.println(rs);
 
             while (rs.next()) {
                 String post = rs.getString("BLOGGPOST");
                 taBlogFeed.setText(post);
-                bid = Integer.parseInt(id.trim());
 
                 String hasPic = "select filtyp from blogg_har_filer where blogg_id =" + bid;
 
@@ -319,7 +318,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 String filtyp = rs.getString("filtyp");
                 System.out.println(filtyp);
 
-                if ("jpeg".equals(filtyp) || "jpg".equals(filtyp) || "png".equals(filtyp)) {
+                if (".jpeg".equals(filtyp) || ".jpg".equals(filtyp) || ".png".equals(filtyp)) {
 
                     ImageHandling.showImage("files\\" + bid + filtyp, txtImage, jPanel1, 1000, 700);
 
@@ -328,8 +327,9 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Something went wrong!");
-            System.out.println("Internt felmeddelande" + e.getMessage());
+            txtImage.setVisible(false);
+            //JOptionPane.showMessageDialog(null, "Something went wrong!");
+            System.out.println("Internt felmeddelande: " + e.getMessage());
         }
     }//GEN-LAST:event_jListAllScienceBlogValueChanged
 
@@ -340,6 +340,8 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             String sienceBlogInfo = JlGetBlogEducation.getSelectedValue();
             String id = sienceBlogInfo.substring(0, 2);
 
+            bid = Integer.parseInt(id.trim());
+
             String fraga = "SELECT BLOGGPOST FROM BLOGG where BLOGGID =" + id;
 
             Statement stmt = con.createStatement();
@@ -348,7 +350,6 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 String post = rs.getString("BLOGGPOST");
                 taBlogFeed.setText(post);
-                bid = Integer.parseInt(id.trim());
 
                 String hasPic = "select filtyp from blogg_har_filer where blogg_id =" + bid;
 
@@ -356,7 +357,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 rs.next();
                 String filtyp = rs.getString("filtyp");
 
-                if ("jpeg".equals(filtyp) || "jpg".equals(filtyp) || "png".equals(filtyp)) {
+                if (".jpeg".equals(filtyp) || ".jpg".equals(filtyp) || ".png".equals(filtyp)) {
 
                     ImageHandling.showImage("files\\" + bid + filtyp, txtImage, jPanel1, 1000, 700);
 
@@ -364,8 +365,9 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Något gick fel!");
-            System.out.println("Internt felmeddelande" + e.getMessage());
+            txtImage.setVisible(false);
+            //JOptionPane.showMessageDialog(null, "Något gick fel!");
+            System.out.println("Internt felmeddelande: " + e.getMessage());
         }
     }//GEN-LAST:event_JlGetBlogEducationValueChanged
 
@@ -375,7 +377,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
             String sienceBlogInfo = JlGetBlogInformal.getSelectedValue();
             String id = sienceBlogInfo.substring(0, 2);
-            
+
             bid = Integer.parseInt(id.trim());
 
             String fraga = "SELECT BLOGGPOST FROM BLOGG where BLOGGID =" + bid;
@@ -403,8 +405,9 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Något gick fel!");
-            System.out.println("Internt felmeddelande" + e.getMessage());
+            txtImage.setVisible(false);
+            //JOptionPane.showMessageDialog(null, "Något gick fel!");
+            System.out.println("Internt felmeddelande: " + e.getMessage());
         }
     }//GEN-LAST:event_JlGetBlogInformalValueChanged
 
@@ -448,7 +451,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     private void btnCommentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCommentActionPerformed
         Comment comment = new Comment(con);
         comment.setVisible(true);
-        
+
     }//GEN-LAST:event_btnCommentActionPerformed
 
     private void educationStart() {
