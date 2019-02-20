@@ -205,16 +205,17 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
 
             try {
 
-                String frcheck = "select * from KAT1 where KAT1_NAMN = " + nykategori; // Added check
+                String frcheck = "select * from KAT1 where KAT1_NAMN = ?";
 
                 PreparedStatement check = con.prepareStatement(frcheck);
                 check.setString(1, nykategori);
                 ResultSet rscheck = check.executeQuery();
-
-                String befintlig = rscheck.getString("KAT1_NAMN");
+               String befintlig = null;
+                if(rscheck.next()){
+                befintlig = rscheck.getString("KAT1_NAMN");
                 System.out.println(befintlig); // Stop of check
-
-                if (befintlig != null) {
+                }
+                if (befintlig == null) {
 
                     String query = "Select max(Kat1_ID) as Kat1_ID From Kat1;";
 
@@ -235,6 +236,8 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
                     ps.executeUpdate();
 
                     lblText.setText("Category successfully added.");
+                    cBoxKategori.removeAllItems();
+                    methodService.fillComboboxBranchKat1(cBoxKategori);
                 } else {
                     JOptionPane.showMessageDialog(null, "That category already exists.");
                 }
@@ -262,15 +265,16 @@ public class AddNewCategoryAndTopic extends javax.swing.JInternalFrame {
                 int maxKID = rs.getInt("Kat2_ID");
                 int maxInt = maxKID + 1;
 
-                String check = "select * from KAT2 where KAT2_NAMN = " + topic; // Checks if there already is a topic with that name
+                String check = "select * from KAT2 where KAT2_NAMN = '" + topic+"'"; // Checks if there already is a topic with that name
 
                 Statement stmt3 = con.createStatement();
                 ResultSet rs3 = stmt3.executeQuery(check);
-
-                String befintlig = rs3.getString("KAT2_NAMN");
+                String befintlig = null;
+                if(rs3.next()){
+                befintlig = rs3.getString("KAT2_NAMN");
                 System.out.println(befintlig);
-
-                if (befintlig != null) {
+                }
+                if (befintlig == null) {
 
                     query = "select KAT1_ID from KAT1 where KAT1_NAMN = '" + kategori + "';";
 
