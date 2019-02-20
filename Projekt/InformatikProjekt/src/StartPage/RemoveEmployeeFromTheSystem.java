@@ -169,14 +169,14 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
         if (Validation.textfieldWithValue(txtFirstname) && Validation.textfieldWithValue(txtLastname) 
                 && Validation.textfieldWithValue(txtID) && Validation.idTesting(txtID, con)) {
             try {
-                Statement stmt = null;
+                
                 
                 String id = txtID.getText();
                 String firstname = txtFirstname.getText();
                 String lastname = txtLastname.getText();
                 
                 String fraga1 = "select ENAMN from PERSONER where ID = '" + id + "';";
-                stmt = con.createStatement();
+                Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(fraga1);
                 rs.next();
                 String efternamn = rs.getString("ENAMN");
@@ -185,7 +185,7 @@ public class RemoveEmployeeFromTheSystem extends javax.swing.JInternalFrame {
 
                 String fraga2 = "select FNAMN from PERSONER where ID = '" + id + "';";
                 stmt = con.createStatement();
-                rs = stmt.executeQuery(fraga1);
+                rs = stmt.executeQuery(fraga2);
                 rs.next();
                 String fornamn = rs.getString("FNAMN");
                 
