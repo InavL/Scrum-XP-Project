@@ -26,7 +26,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     private Connection con;
     private MethodService methodService;
     private String id;
-    private int bid;
+    private static int bid;
 
     /**
      * Creates new form EditBlogInternalFrame
@@ -535,7 +535,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
     }
 
-    public int getBID() {
+    public static int getBID() {
         return bid;
     }
 

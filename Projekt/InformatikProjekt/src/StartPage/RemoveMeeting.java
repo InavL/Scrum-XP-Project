@@ -182,21 +182,25 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
 
     private void fyllAreaMedMoten()
     {
+        Statement stmt = null;
         try
         {
         String text = "";
-        ArrayList<HashMap<String, String>> motesLista = idb.fetchRows("select MID, TYP_AV_MOTE from MOTEN;");
-        for(HashMap ettMote : motesLista)
+        String fraga = "select MID, TYP_AV_MOTE from MOTEN;";
+        stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery(fraga);
+        
+        while(rs.next())
         {
-            text += ettMote.get("MID");
+            text += rs.getString("MID");
             text += " ";
-            text += ettMote.get("TYP_AV_MOTE");
+            text += rs.getString("TYP_AV_MOTE");
             text += "\n";
             
             txtAreaLista.setText(text);
         }
         }
-        catch(InfException ex)
+        catch(SQLException e)
         {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
@@ -209,32 +213,46 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
     private void btnlRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlRemoveActionPerformed
        if(Validation.textfieldWithValue(txtID))
         {
+            Statement stmt = null;
             try
             {
                 String id = txtID.getText();
                 
-                ArrayList<String> allaForslag = idb.fetchColumn("select FORSLAGS_ID from MOTES_FORSLAG where MID = '" + id + "';");
-                System.out.println(allaForslag);
+               String fraga1 = "select FORSLAGS_ID from MOTES_FORSLAG where MID = ?;";
+               stmt = con.createStatement();
+               ResultSet rs = stmt.executeQuery(fraga1);
                 
-                for(int i = 0; i < allaForslag.size(); i ++)
+                while(rs.next())
                 {
-                    String ettForslag = allaForslag.get(i);
-                    idb.delete("delete from PERSON_ACCEPTERAT where FORSLAGS_ID = '" + ettForslag + "';");
+                    int forslagsID = rs.getInt("FORSLAGS_ID");
+                    
+                    String fraga2 = "delete from PERSON_ACCEPTERAT where FORSLAGS_ID = ?;";
+                    PreparedStatement ps1 = con.prepareStatement(fraga2);
+                    ps1.setInt(1, forslagsID);
+                    ps1.executeUpdate();
+                    
                 }
 
-               
+                String fraga3 = "delete from MOTES_FORSLAG where MID = ?";
+                PreparedStatement ps2 = con.prepareStatement(fraga3);
+                ps2.setString(1, id);
+                ps2.executeUpdate();
                 
-                idb.delete("delete from MOTES_FORSLAG where MID = '" + id + "';");
+                String fraga4 = "delete from PERSONER_DELTAR where MID = ?;";
+                PreparedStatement ps3 = con.prepareStatement(fraga4);
+                ps3.setString(1, id);
+                ps3.executeUpdate();
                 
-                idb.delete("delete from PERSONER_DELTAR where MID = '" + id + "';");
-                
-                idb.delete("Delete from Moten where MID = '" + id + "';");
+                String fraga5 = "Delete from Moten where MID = ?";
+                PreparedStatement ps4 = con.prepareStatement(fraga5);
+                ps4.setString(1, id);
+                ps4.executeUpdate();
                 
                 lblRemove.setText("The meeting is now removed from the system.");
                 
                 
             }
-            catch(InfException ex)
+            catch(SQLException ex)
             {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
