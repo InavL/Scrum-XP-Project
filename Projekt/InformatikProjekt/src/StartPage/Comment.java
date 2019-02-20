@@ -138,7 +138,7 @@ public class Comment extends javax.swing.JFrame {
             {
                 String text = txtAreaWrite.getText();
                 int personID = LoggedUser.getID();
-                int bloggID = 1;
+                int bloggID = FeedBlogInternalFrame.getBID();
                 
                 String fraga1 = "select MAX(KOMMENTAR_ID) from KOMMENTARER;";
                 stmt = con.createStatement();
