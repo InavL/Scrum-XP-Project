@@ -75,10 +75,10 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         pnlInformal = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         JlGetBlogInformal = new javax.swing.JList<>();
-        txtImage = new javax.swing.JLabel();
         btnDownload = new javax.swing.JButton();
         btnGDPR = new javax.swing.JButton();
         btnComment = new javax.swing.JButton();
+        txtImage = new javax.swing.JLabel();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -221,12 +221,12 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap()
                 .addComponent(txtImage)
-                .addGap(10, 10, 10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
                         .addGap(4, 4, 4))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnGDPR, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -248,10 +248,14 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtImage)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jTabbedPane1))
-                .addGap(10, 10, 10)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jTabbedPane1))
+                        .addGap(10, 10, 10))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtImage)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnGDPR, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -293,11 +297,15 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
             String sienceBlogInfo = jListAllScienceBlog.getSelectedValue();
             String id = sienceBlogInfo.substring(0, 2);
+            
+            System.out.println(id);
 
             String fraga = "SELECT BLOGGPOST FROM BLOGG where BLOGGID =" + id;
 
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(fraga);
+            
+            System.out.println(rs);
 
             while (rs.next()) {
                 String post = rs.getString("BLOGGPOST");
@@ -309,6 +317,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 rs = stmt.executeQuery(hasPic);
                 rs.next();
                 String filtyp = rs.getString("filtyp");
+                System.out.println(filtyp);
 
                 if ("jpeg".equals(filtyp) || "jpg".equals(filtyp) || "png".equals(filtyp)) {
 
@@ -319,7 +328,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             }
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Något gick fel!");
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
             System.out.println("Internt felmeddelande" + e.getMessage());
         }
     }//GEN-LAST:event_jListAllScienceBlogValueChanged
@@ -366,8 +375,10 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
             String sienceBlogInfo = JlGetBlogInformal.getSelectedValue();
             String id = sienceBlogInfo.substring(0, 2);
+            
+            bid = Integer.parseInt(id.trim());
 
-            String fraga = "SELECT BLOGGPOST FROM BLOGG where BLOGGID =" + id;
+            String fraga = "SELECT BLOGGPOST FROM BLOGG where BLOGGID =" + bid;
 
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(fraga);
@@ -375,15 +386,15 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 String post = rs.getString("BLOGGPOST");
                 taBlogFeed.setText(post);
-                bid = Integer.parseInt(id.trim());
 
                 String hasPic = "select filtyp from blogg_har_filer where blogg_id =" + bid;
 
                 rs = stmt.executeQuery(hasPic);
                 rs.next();
                 String filtyp = rs.getString("filtyp");
+                System.out.println(filtyp);
 
-                if ("jpeg".equals(filtyp) || "jpg".equals(filtyp) || "png".equals(filtyp)) {
+                if (".jpeg".equals(filtyp) || ".jpg".equals(filtyp) || ".png".equals(filtyp)) {
 
                     ImageHandling.showImage("files\\" + bid + filtyp, txtImage, jPanel1, 1000, 700);
 
