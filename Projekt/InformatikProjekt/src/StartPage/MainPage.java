@@ -13,7 +13,6 @@ import java.sql.Connection;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import net.coobird.thumbnailator.Thumbnails;
-import oru.inf.InfDB;
 import org.seamless.swing.ClosableTabbedPane;
 
 /**
@@ -41,7 +40,7 @@ public class MainPage extends javax.swing.JFrame {
     private CreateMeeting createMeeting;
     private ChooseMeetingTime chooseMeetingTime;
     private RemoveMeeting removeMeeting;
-    private ShowThisCalender showCalender;
+//    private ShowThisCalender showCalender;
         
         
     /**
@@ -545,14 +544,14 @@ public class MainPage extends javax.swing.JFrame {
 
     private void ShowCalenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowCalenderActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-        if(!tabExists("Show calender")) {
-            showCalender = new ShowThisCalender(con);
-            openTab(showCalender, "Show calender");
-        }       
-        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-        else{
-            moveFocusToTab("Show calender");
-        }
+//        if(!tabExists("Show calender")) {
+//            showCalender = new ShowThisCalender(con);
+//            openTab(showCalender, "Show calender");
+//        }       
+//        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+//        else{
+//            moveFocusToTab("Show calender");
+//        }
     }//GEN-LAST:event_ShowCalenderActionPerformed
 
 
