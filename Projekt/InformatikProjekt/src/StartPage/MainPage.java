@@ -308,8 +308,8 @@ public class MainPage extends javax.swing.JFrame {
         
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Blog feed")) {
-            //feedBlogInternalFrame = new FeedBlogInternalFrame(con);
-            //openTab(feedBlogInternalFrame, "Blog feed");
+            feedBlogInternalFrame = new FeedBlogInternalFrame(con);
+            openTab(feedBlogInternalFrame, "Blog feed");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else{
