@@ -219,11 +219,13 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
                 String id = txtID.getText();
                 
                String fraga1 = "select FORSLAGS_ID from MOTES_FORSLAG where MID = ?;";
-               stmt = con.createStatement();
-               ResultSet rs = stmt.executeQuery(fraga1);
+               PreparedStatement ps = con.prepareStatement(fraga1);
+               ps.setString(1, id);
+               ResultSet rs = ps.executeQuery();
                 
                 while(rs.next())
                 {
+                    
                     int forslagsID = rs.getInt("FORSLAGS_ID");
                     
                     String fraga2 = "delete from PERSON_ACCEPTERAT where FORSLAGS_ID = ?;";
