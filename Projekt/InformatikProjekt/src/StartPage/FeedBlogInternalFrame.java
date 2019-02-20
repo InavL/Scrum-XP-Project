@@ -23,10 +23,10 @@ import org.apache.commons.io.FileUtils;
  */
 public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
-    private static Connection con;
+    private Connection con;
     private MethodService methodService;
     private String id;
-    private String bid;
+    private int bid;
 
     /**
      * Creates new form EditBlogInternalFrame
@@ -37,7 +37,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         methodService = new MethodService(con);
 
         id = null;
-        bid = null;
+        bid = 1;
 
         fillListWithSienceBlog();
         fillListWithEducationBlog();
@@ -292,7 +292,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 String post = rs.getString("BLOGGPOST");
                 taBlogFeed.setText(post);
-                String bid = id.trim();
+                bid = Integer.parseInt(id.trim());
                 ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);
             }
 
@@ -317,7 +317,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 String post = rs.getString("BLOGGPOST");
                 taBlogFeed.setText(post);
-                String bid = id.trim();
+                bid = Integer.parseInt(id.trim());
                 ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);
             }
 
@@ -342,7 +342,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             while (rs.next()) {
                 String post = rs.getString("BLOGGPOST");
                 taBlogFeed.setText(post);
-                String bid = id.trim();
+                bid = Integer.parseInt(id.trim());
                 ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);
             }
 
@@ -359,7 +359,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             String typeQuestion = "select FILTYP from BLOGG_HAR_FILER where BLOGG_ID ='" + newID + "'";
             ResultSet typeSet = stmt.executeQuery(typeQuestion);
             typeSet.next();
-            String type = typeSet.getString("filtyp"); 
+            String type = typeSet.getString("filtyp");
 
             File file = new File("files\\" + newID + type);
 
@@ -504,16 +504,16 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     }
 
     private void showImages() {
-        
+
         try {
-            
+
             //String type = idb.fetchSingle("Select filtyp from blogg_har_filer where blogg_id =" + bid);
             Statement stmt = null;
             String typeQuestion = "Select filtyp from blogg_har_filer where blogg_id =" + bid;
             ResultSet typeSet = stmt.executeQuery(typeQuestion);
             typeSet.next();
             String type = typeSet.getString("filtyp");
-            
+
             txtImage.setVisible(false);
 
             if (type.equals(".png")) {
@@ -533,6 +533,10 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
 
+    }
+
+    private int getBID() {
+        return bid;
     }
 
 
