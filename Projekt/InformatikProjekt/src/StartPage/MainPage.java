@@ -534,7 +534,7 @@ public class MainPage extends javax.swing.JFrame {
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
         if(!tabExists("Remove meetnig")) {
             removeMeeting = new RemoveMeeting(con);
-            openTab(removeMeeting, "Choose meeting time");
+            openTab(removeMeeting, "Remove meetnig");
         }       
         //Flyttar fokus till filken, om det redan finns en sådan öppen.
         else{

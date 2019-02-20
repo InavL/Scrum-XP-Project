@@ -6,6 +6,7 @@
 package StartPage;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -181,31 +182,40 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
     
     private void fyllAreaInvited()
     {
+        Statement stmt = null;
+        String lista = "";
+        
         try
         {
+            stmt = con.createStatement();
             int userID = LoggedUser.getID();
-            Statement stmt = con.createStatement();
-            String fraga = "Select MID from PERSONER_DELTAR where ID = " + userID + ";";
-            ResultSet rs = stmt.executeQuery(fraga);
+            
+            String fraga = "Select MID from PERSONER_DELTAR where ID = ?";
+            PreparedStatement ps = con.prepareStatement(fraga);
+            ps.setInt(1, userID);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
             int motesID = rs.getInt("MID");
             
-            fraga = "select FNAMN, ENAMN from PERSONER "
+            
+            String fraga1 = "select FNAMN, ENAMN from PERSONER "
                     + "join PERSONER_DELTAR on PERSONER.ID = PERSONER_DELTAR.ID "
-                    + "where PERSONER_DELTAR.MID ='" + motesID + "';";
-            rs = stmt.executeQuery(fraga);
-                           
-            String lista = "";
+                    + "where PERSONER_DELTAR.MID = ?";
+            
+            PreparedStatement ps2 = con.prepareStatement(fraga1);
+            ps2.setInt(1, motesID);
+            ResultSet rs1 = ps2.executeQuery();
                 
-            while(rs.next())
+            while(rs1.next())
             {
-                lista += rs.getString("FNAMN");
+                lista += rs1.getString("FNAMN");
                 lista += " ";
-                lista += rs.getString("ENAMN");
+                lista += rs1.getString("ENAMN");
                 lista += "\n";    
             }
             txtAreaInvited.setText(lista);     
         }
-        catch(SQLException ex)
+        catch(SQLException ex1)
         {
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
@@ -216,35 +226,41 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
          try{
                 Statement stmt = con.createStatement();
                 int userID = LoggedUser.getID();
-                String fraga = "Select MID from PERSONER_DELTAR where ID = " + userID + ";";                
-                ResultSet rs = stmt.executeQuery(fraga);
+                String lista = "";
+                
+                String fraga = "Select MID from PERSONER_DELTAR where ID = ?;";
+                PreparedStatement ps = con.prepareStatement(fraga);                
+                ps.setInt(1, userID);
+                ResultSet rs = ps.executeQuery();
                 rs.next();
                 int motesID = rs.getInt("MID");
                 
                 String fraga2 = "select FNAMN,ENAMN,START_TID,SLUT_TID from PERSONER"
                                 + " join PERSON_ACCEPTERAT on PERSONER.ID = PERSON_ACCEPTERAT.ID"
                                 + " join MOTES_FORSLAG on PERSON_ACCEPTERAT.FORSLAGS_ID = MOTES_FORSLAG.FORSLAGS_ID"
-                                + " where MOTES_FORSLAG.MID= " + motesID + ";";
+                                + " where MOTES_FORSLAG.MID = ?";
 
-                rs = stmt.executeQuery(fraga2);
-                String lista = "";
+                PreparedStatement ps1 = con.prepareStatement(fraga2);
+                ps1.setInt(1, motesID);
+                ResultSet rs1 = ps1.executeQuery();
                 
-                while (rs.next())
+                
+                while (rs1.next())
                 {
-                    lista += rs.getString("FNAMN");
+                    lista += rs1.getString("FNAMN");
                     lista += " ";
-                    lista += rs.getString("ENAMN");
+                    lista += rs1.getString("ENAMN");
                     lista += " ";    
-                    lista += rs.getString("START_TID");
+                    lista += rs1.getString("START_TID");
                     lista += " ";  
-                    lista += rs.getString("SLUT_TID");
+                    lista += rs1.getString("SLUT_TID");
                     lista += "\n";    
                 }
                 txtAreaAccepterat.setText(lista);
                 
-            } catch(SQLException ex)
+            } catch(SQLException ex2)
             {
-                JOptionPane.showMessageDialog(null, "Something went wrong.");
+                JOptionPane.showMessageDialog(null, "Something went wrong1.");
             }
         
     }
@@ -257,8 +273,11 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
                 Statement stmt = con.createStatement();
                 String tid = cbxOption.getSelectedItem().toString();
                 int userID = LoggedUser.getID();
-                String question = "Select MID from PERSONER_DELTAR where ID = " + userID + ";";                
-                ResultSet rs = stmt.executeQuery(question);
+
+                String fraga = "Select MID from PERSONER_DELTAR where ID = ?;";
+                PreparedStatement ps = con.prepareStatement(fraga);                
+                ps.setInt(1, userID);
+                ResultSet rs = ps.executeQuery();
                 rs.next();
                 int motesID = rs.getInt("MID");
                 
@@ -270,56 +289,74 @@ public class ChooseMeetingTime extends javax.swing.JInternalFrame {
             
                 //Hämtar FORSLAGS_ID, kollar så att slut och starttiden för ett möte är olika,
                 //i och med att det inte ska finnas två exakt samma förslagtider för ett möte
-                String fraga = "select FORSLAGS_ID from MOTES_FORSLAG where START_TID = '" + start + "' and SLUT_TID = '" + end + "' and MID = '" + motesID + "';";
-                rs = stmt.executeQuery(fraga);
-                rs.next();
+                String fraga2 = "select FORSLAGS_ID from MOTES_FORSLAG where START_TID = ? and SLUT_TID = ? and MID = ?;";
+                PreparedStatement ps1 = con.prepareStatement(fraga2);                
+                ps1.setString(1, start);
+                ps1.setString(2, end);
+                ps1.setInt(3, motesID);
+                ResultSet rs1 = ps1.executeQuery();
+                rs1.next();
+                int forslagsID = rs1.getInt("FORSLAGS_ID");
                 
-                int forslagsID = rs.getInt("FORSLAGS_ID");
                
                 
-                String rosterFraga = "select MAX(ROSTER) as ROSTER from MOTES_FORSLAG where FORSLAGS_ID = '" + forslagsID + "';";
-                rs = stmt.executeQuery(rosterFraga);
-                rs.next();
-                int maxRosterInt = rs.getInt("ROSTER");
+                String rosterFraga = "select MAX(ROSTER) as ROSTER from MOTES_FORSLAG where FORSLAGS_ID = ?;";
+                PreparedStatement ps2 = con.prepareStatement(rosterFraga);
+                ps2.setInt(1, forslagsID);
+                ResultSet rs2 = ps2.executeQuery();
+                rs2.next();
+                int maxRosterInt = rs2.getInt("ROSTER");
                 int maxInt = maxRosterInt + 1;
                 
-                fraga = "update MOTES_FORSLAG set ROSTER = " + maxInt + " where FORSLAGS_ID = '" + forslagsID + "';";
-                stmt.executeUpdate(fraga);
+                String fraga3 = "update MOTES_FORSLAG set ROSTER = ? where FORSLAGS_ID = ?;";
+                PreparedStatement ps3 = con.prepareStatement(fraga3);
+                ps3.setInt(1, maxInt);
+                ps3.setInt(2, forslagsID);
+                ps3.executeUpdate();
                 
-                fraga = "insert into PERSON_ACCEPTERAT values('" + forslagsID + "', " + userID + ");";
-                stmt.executeUpdate(fraga);
+                String fraga4 = "insert into PERSON_ACCEPTERAT values(?, ?);";
+                PreparedStatement ps4 = con.prepareStatement(fraga4);
+                ps4.setInt(1, forslagsID);
+                ps4.setInt(2, userID);
+                ps4.executeUpdate();
                 
             }
-            catch(SQLException ex)
+            catch(SQLException ex3)
             {
-                JOptionPane.showMessageDialog(null, "Something went wrong.");
+                JOptionPane.showMessageDialog(null, "Something went wrong.2");
             }
         }
     }//GEN-LAST:event_btnChooseActionPerformed
 
     private void fillComboBox(){
+        Statement stmt = null;
       
             try
             {
                 int id = LoggedUser.getID();
-                Statement stmt = con.createStatement();
-                String fraga = "Select MID from PERSONER_DELTAR where ID = " + id + ";";
-                ResultSet rs = stmt.executeQuery(fraga);
+                
+                stmt = con.createStatement();
+                String fraga = "Select MID from PERSONER_DELTAR where ID = ? ";
+                PreparedStatement ps = con.prepareStatement(fraga);                
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
                 rs.next();
                 int motesID = rs.getInt("MID");
                 
-                String fraga1 = "Select START_TID, SLUT_TID from MOTES_FORSLAG where MID = '" + motesID + "';";
-                rs = stmt.executeQuery(fraga1);
-                while(rs.next())
+                String fraga1 = "Select START_TID, SLUT_TID from MOTES_FORSLAG where MID = ?;";
+                PreparedStatement ps1 = con.prepareStatement(fraga1);                
+                ps1.setInt(1, motesID);
+                ResultSet rs1 = ps1.executeQuery();
+                while(rs1.next())
                 {
-                    String start = rs.getString("START_TID");
-                    String slut = rs.getString("SLUT_TID");
+                    String start = rs1.getString("START_TID");
+                    String slut = rs1.getString("SLUT_TID");
                     cbxOption.addItem(start + " till " + slut);
                 }
             }
-            catch(SQLException ex)
+            catch(SQLException ex4)
             {
-                JOptionPane.showMessageDialog(null, "Something went wrong.");
+                JOptionPane.showMessageDialog(null, "Something went wrong3.");
             }
         
     }
