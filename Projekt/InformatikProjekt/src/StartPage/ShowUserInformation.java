@@ -19,12 +19,11 @@ import javax.swing.JOptionPane;
  * @author ellin
  */
 public class ShowUserInformation extends javax.swing.JInternalFrame {
-    
+
     private static Connection con;
     private MethodService methodService;
- 
+
     //private JList listAllUsers;
-    
     /**
      * Creates new form EditBlogInternalFrame
      */
@@ -33,7 +32,7 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
         this.con = con;
         methodService = new MethodService(con);
         fillListWithUsers();
-        
+
     }
 
     /**
@@ -134,19 +133,19 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
 
         if (Validation.valtVarde(listAllUsers.getSelectedValue())) {
             try {
-                               
+
                 String personInfo = listAllUsers.getSelectedValue();
-                String id = personInfo.substring(0,2);
+                String id = personInfo.substring(0, 2);
                 String fraga = "SELECT PERSONER.MAIL, PERSONER.TELEFON, PERSONER.FNAMN, PERSONER.ENAMN, PERSONER.LOSENORD, SYSTEMTILLGANG.BEHORIGHET from PERSONER"
                         + " join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID"
                         + " where ID =" + id;
-              
+
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(fraga);
 
                 String rL = "";
-                while(rs.next()) {
-                    rL += "\n"+"Firstname: ";
+                while (rs.next()) {
+                    rL += "\n" + "Firstname: ";
                     rL += rs.getString("FNAMN");
                     rL += "\n" + "Surname: ";
                     rL += rs.getString("ENAMN");
@@ -163,43 +162,40 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(ShowUserInformation.class.getName()).log(Level.SEVERE, null, ex);
             }
-      }   
-    
+        }
+
     }//GEN-LAST:event_btnShowInformationActionPerformed
 
     private void fillListWithUsers() {
-        
+
         try {
             DefaultListModel allUsers = new DefaultListModel();
-            
-                Statement stmt = con.createStatement();
-                ResultSet nameList = stmt.executeQuery("SELECT id, fnamn, enamn FROM personer;");
 
-
+            Statement stmt = con.createStatement();
+            ResultSet nameList = stmt.executeQuery("SELECT id, fnamn, enamn FROM personer;");
 
             //Loopar genom listan för att hämta ut alla för- och efternamn
-            while(nameList.next()){
-            String user="";
-            user+=nameList.getString("ID");
-            user+=" ";
-            user+=nameList.getString("FNAMN");
-            user+=" ";
-            user+=nameList.getString("ENAMN");
-            user+="\n";
-             allUsers.addElement(user);       
-                    
-            
+            while (nameList.next()) {
+                String user = "";
+                user += nameList.getString("ID");
+                user += " ";
+                user += nameList.getString("FNAMN");
+                user += " ";
+                user += nameList.getString("ENAMN");
+                user += "\n";
+                allUsers.addElement(user);
+
             }
 
             listAllUsers.setModel(allUsers);
             listAllUsers.getSelectedValue();
 
         } catch (SQLException e) {
-         
+
             JOptionPane.showMessageDialog(null, "Something went wrong.");
         }
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnShowInformation;
