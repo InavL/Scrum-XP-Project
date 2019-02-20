@@ -258,7 +258,7 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
                         JOptionPane.showMessageDialog(null, "E-Mail is already in use!");
 
                     } else {
-                        JOptionPane.showMessageDialog(null, "Phonenumber is allready in use!");
+                        JOptionPane.showMessageDialog(null, "Phonenumber is already in use!");
                     }
                 }
             } catch (SQLException ex) { // Catches an error from a faulty database connection
