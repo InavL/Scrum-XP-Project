@@ -265,10 +265,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
             surname = user[1];
 
             try {
-                String fraga = "SELECT PERSONER.ID, PERSONER.MAIL, PERSONER.TELEFON, PERSONER.LOSENORD, "
-                        + "SYSTEMTILLGANG.BEHORIGHET from PERSONER" +
-"                        +  join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID" +
-"                        +  where FNAMN =' + firstname + ' and ENAMN=' + surname + '";
+                String fraga = "SELECT ID, MAIL, TELEFON, LOSENORD,BEHORIGHET from PERSONER join systemtillgang on SYSTEMTILLGANG.SID = PERSONER.SID where FNAMN ='" + firstname + "'and ENAMN='" + surname + "'";
                 
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(fraga);
@@ -327,7 +324,7 @@ public class EditUserInformation extends javax.swing.JInternalFrame {
             try {
                 //Hämtar behörighetsID med hjälp av dess namn
                 Statement stmt = con.createStatement();
-                String query = "SELECT sid FROM systemtillgang  WHERE behorighet = " + access;
+                String query = "SELECT sid FROM systemtillgang WHERE behorighet = '" + access + "'";
                 ResultSet rs = stmt.executeQuery(query);
                 rs.next();
                 int accessID = rs.getInt("sid");
