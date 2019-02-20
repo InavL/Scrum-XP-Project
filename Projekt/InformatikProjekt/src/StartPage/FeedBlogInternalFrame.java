@@ -293,7 +293,19 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 String post = rs.getString("BLOGGPOST");
                 taBlogFeed.setText(post);
                 bid = Integer.parseInt(id.trim());
-                ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);
+
+                String hasPic = "select filtyp from blogg_har_filer where blogg_id =" + bid;
+
+                rs = stmt.executeQuery(hasPic);
+                rs.next();
+                String filtyp = rs.getString("filtyp");
+
+                if ("jpeg".equals(filtyp) || "jpg".equals(filtyp) || "png".equals(filtyp)) {
+
+                    ImageHandling.showImage("files\\" + bid + filtyp, txtImage, jPanel1, 1000, 700);
+
+                }
+
             }
 
         } catch (SQLException e) {
@@ -318,7 +330,18 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 String post = rs.getString("BLOGGPOST");
                 taBlogFeed.setText(post);
                 bid = Integer.parseInt(id.trim());
-                ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);
+
+                String hasPic = "select filtyp from blogg_har_filer where blogg_id =" + bid;
+
+                rs = stmt.executeQuery(hasPic);
+                rs.next();
+                String filtyp = rs.getString("filtyp");
+
+                if ("jpeg".equals(filtyp) || "jpg".equals(filtyp) || "png".equals(filtyp)) {
+
+                    ImageHandling.showImage("files\\" + bid + filtyp, txtImage, jPanel1, 1000, 700);
+
+                }
             }
 
         } catch (SQLException e) {
@@ -343,7 +366,19 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 String post = rs.getString("BLOGGPOST");
                 taBlogFeed.setText(post);
                 bid = Integer.parseInt(id.trim());
-                ImageHandling.showImage("images\\" + bid + "\\funkar.png", txtImage, jPanel1, 1000, 700);
+
+                String hasPic = "select filtyp from blogg_har_filer where blogg_id =" + bid;
+
+                rs = stmt.executeQuery(hasPic);
+                rs.next();
+                String filtyp = rs.getString("filtyp");
+
+                if ("jpeg".equals(filtyp) || "jpg".equals(filtyp) || "png".equals(filtyp)) {
+
+                    ImageHandling.showImage("files\\" + bid + filtyp, txtImage, jPanel1, 1000, 700);
+
+                }
+
             }
 
         } catch (SQLException e) {
