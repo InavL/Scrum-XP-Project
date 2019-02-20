@@ -6,9 +6,6 @@
 package StartPage;
 
 import com.jidesoft.swing.AutoCompletion;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.HashMap;
 import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +18,7 @@ import java.sql.Statement;
  * @author ellin
  */
 public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
-    
+
     private static Connection con;
     private MethodService methodService;
 
@@ -144,58 +141,49 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-        
+
         String post = cbPosts.getSelectedItem().toString();
-        
+
         Statement stmt = null;
         try {
             String fraga = "DELETE FROM blogg WHERE titel = ?";
-            
-             PreparedStatement ps1 = con.prepareStatement(fraga);
-             
-             ps1.setString(1, post);
-             ps1.executeUpdate();
-            
-            
-                    
-            lblRemoveSucceed.setVisible(true);              
-        }
-        catch (SQLException oneException) {
+
+            PreparedStatement ps1 = con.prepareStatement(fraga);
+
+            ps1.setString(1, post);
+            ps1.executeUpdate();
+
+            lblRemoveSucceed.setVisible(true);
+        } catch (SQLException oneException) {
             oneException.getMessage();
             JOptionPane.showMessageDialog(null, "Something went wrong!");
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
 
-    private void fillListWithYourPosts(){
-    
-    int personID = LoggedUser.getID();
-    
-    Statement stmt = null;
-    
+    private void fillListWithYourPosts() {
+
+        int personID = LoggedUser.getID();
+
+        Statement stmt = null;
+
         try {
-            
+
             String fraga2 = "SELECT titel FROM blogg WHERE bloggskribent = ? ";
             PreparedStatement ps2 = con.prepareStatement(fraga2);
             ps2.setInt(1, personID);
-            
-           ResultSet rs2 = ps2.executeQuery(); 
-           
-          
+
+            ResultSet rs2 = ps2.executeQuery();
+
             if (rs2 != null) {
                 while (rs2.next()) {
-                     
-                    String postName = rs2.getString("Titel");                            
+
+                    String postName = rs2.getString("Titel");
                     cbPosts.addItem(postName);
                 }
-            } 
-            
-            
-            
-            else {
+            } else {
                 JOptionPane.showMessageDialog(null, "You haven't written any posts yet.");
             }
-            
-            
+
         } catch (SQLException oneException) {
             oneException.getMessage();
             JOptionPane.showMessageDialog(null, "Something went wrong");
