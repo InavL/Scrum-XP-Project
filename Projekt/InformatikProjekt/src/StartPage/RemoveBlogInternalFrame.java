@@ -10,6 +10,11 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -141,8 +146,17 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         
         String post = cbPosts.getSelectedItem().toString();
+        
+        Statement stmt = null;
         try {
-            idb.delete("DELETE FROM blogg WHERE titel = \'" + post + "\'");
+            String fraga = "DELETE FROM blogg WHERE titel = ?";
+            
+             PreparedStatement ps1 = con.prepareStatement(fraga);
+             
+             ps1.setString(1, post);
+             ps1.executeUpdate();
+            
+            
                     
             lblRemoveSucceed.setVisible(true);              
         }
@@ -156,18 +170,32 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
     
     int personID = LoggedUser.getID();
     
+    Statement stmt = null;
+    
         try {
-            //Hämtar inläggen som användaren har skrivit
-            ArrayList<HashMap<String, String>> posts = idb.fetchRows("SELECT titel FROM blogg WHERE bloggskribent =" + personID + ";");
-            //Loopar igenom listan och lägger till alla namn på inläggen till inläggslistanlistan
-            if (posts != null) {
-                for (int i = 0; i < posts.size(); i++) {
-                    String postName = posts.get(i).get("TITEL");
+            
+            String fraga2 = "SELECT titel FROM blogg WHERE bloggskribent = ? ";
+            PreparedStatement ps2 = con.prepareStatement(fraga2);
+            ps2.setInt(1, personID);
+            
+           ResultSet rs2 = ps2.executeQuery(); 
+           
+          
+            if (rs2 != null) {
+                while (rs2.next()) {
+                     
+                    String postName = rs2.getString("Titel");                            
                     cbPosts.addItem(postName);
                 }
-            } else {
+            } 
+            
+            
+            
+            else {
                 JOptionPane.showMessageDialog(null, "You haven't written any posts yet.");
             }
+            
+            
         } catch (SQLException oneException) {
             oneException.getMessage();
             JOptionPane.showMessageDialog(null, "Something went wrong");
