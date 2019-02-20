@@ -305,30 +305,39 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(fraga);
 
-            System.out.println(rs);
-
             while (rs.next()) {
                 String post = rs.getString("BLOGGPOST");
                 taBlogFeed.setText(post);
 
-                String hasPic = "select filtyp from blogg_har_filer where blogg_id =" + bid;
+                String hasPic = "select bild from blogg where bloggid =" + bid;
 
                 rs = stmt.executeQuery(hasPic);
                 rs.next();
-                String filtyp = rs.getString("filtyp");
-                System.out.println(filtyp);
 
-                if (".jpeg".equals(filtyp) || ".jpg".equals(filtyp) || ".png".equals(filtyp)) {
+                int harB = rs.getInt("bild");
 
-                    ImageHandling.showImage("files\\" + bid + filtyp, txtImage, jPanel1, 1000, 700);
+                if (harB > 0) {
 
+                    String filtypQ = "select filtyp from blogg_har_filer where blogg_id =" + bid;
+
+                    rs = stmt.executeQuery(filtypQ);
+
+                    while (rs.next()) {
+                        String filtyp = rs.getString("filtyp");
+
+                        if (".jpeg".equals(filtyp) || ".jpg".equals(filtyp) || ".png".equals(filtyp)) {
+
+                            txtImage.setVisible(true);
+                            ImageHandling.showImage("files\\" + bid + filtyp, txtImage, jPanel1, 1000, 700);
+                        }
+                    }
+                } else {
+                    txtImage.setVisible(false);
                 }
-
             }
 
         } catch (SQLException e) {
-            txtImage.setVisible(false);
-            //JOptionPane.showMessageDialog(null, "Something went wrong!");
+            JOptionPane.showMessageDialog(null, "Something went wrong!");
             System.out.println("Internt felmeddelande: " + e.getMessage());
         }
     }//GEN-LAST:event_jListAllScienceBlogValueChanged
@@ -351,22 +360,35 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 String post = rs.getString("BLOGGPOST");
                 taBlogFeed.setText(post);
 
-                String hasPic = "select filtyp from blogg_har_filer where blogg_id =" + bid;
+                String hasPic = "select bild from blogg where bloggid =" + bid;
 
                 rs = stmt.executeQuery(hasPic);
                 rs.next();
-                String filtyp = rs.getString("filtyp");
 
-                if (".jpeg".equals(filtyp) || ".jpg".equals(filtyp) || ".png".equals(filtyp)) {
+                int harB = rs.getInt("bild");
 
-                    ImageHandling.showImage("files\\" + bid + filtyp, txtImage, jPanel1, 1000, 700);
+                if (harB > 0) {
 
+                    String filtypQ = "select filtyp from blogg_har_filer where blogg_id =" + bid;
+
+                    rs = stmt.executeQuery(filtypQ);
+
+                    while (rs.next()) {
+                        String filtyp = rs.getString("filtyp");
+
+                        if (".jpeg".equals(filtyp) || ".jpg".equals(filtyp) || ".png".equals(filtyp)) {
+
+                            txtImage.setVisible(true);
+                            ImageHandling.showImage("files\\" + bid + filtyp, txtImage, jPanel1, 1000, 700);
+                        }
+                    }
+                } else {
+                    txtImage.setVisible(false);
                 }
             }
 
         } catch (SQLException e) {
-            txtImage.setVisible(false);
-            //JOptionPane.showMessageDialog(null, "Något gick fel!");
+            JOptionPane.showMessageDialog(null, "Något gick fel!");
             System.out.println("Internt felmeddelande: " + e.getMessage());
         }
     }//GEN-LAST:event_JlGetBlogEducationValueChanged
@@ -389,24 +411,34 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
                 String post = rs.getString("BLOGGPOST");
                 taBlogFeed.setText(post);
 
-                String hasPic = "select filtyp from blogg_har_filer where blogg_id =" + bid;
+                String hasPic = "select bild from blogg where bloggid =" + bid;
 
                 rs = stmt.executeQuery(hasPic);
                 rs.next();
-                String filtyp = rs.getString("filtyp");
-                System.out.println(filtyp);
 
-                if (".jpeg".equals(filtyp) || ".jpg".equals(filtyp) || ".png".equals(filtyp)) {
+                int harB = rs.getInt("bild");
 
-                    ImageHandling.showImage("files\\" + bid + filtyp, txtImage, jPanel1, 1000, 700);
+                if (harB > 0) {
 
+                    String filtypQ = "select filtyp from blogg_har_filer where blogg_id =" + bid;
+
+                    rs = stmt.executeQuery(filtypQ);
+
+                    while (rs.next()) {
+                        String filtyp = rs.getString("filtyp");
+
+                        if (".jpeg".equals(filtyp) || ".jpg".equals(filtyp) || ".png".equals(filtyp)) {
+
+                            txtImage.setVisible(true);
+                            ImageHandling.showImage("files\\" + bid + filtyp, txtImage, jPanel1, 1000, 700);
+                        }
+                    }
+                } else {
+                    txtImage.setVisible(false);
                 }
-
             }
-
         } catch (SQLException e) {
-            txtImage.setVisible(false);
-            //JOptionPane.showMessageDialog(null, "Något gick fel!");
+            JOptionPane.showMessageDialog(null, "Något gick fel!");
             System.out.println("Internt felmeddelande: " + e.getMessage());
         }
     }//GEN-LAST:event_JlGetBlogInformalValueChanged
