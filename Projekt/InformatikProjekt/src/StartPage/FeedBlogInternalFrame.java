@@ -535,7 +535,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
     }
 
-    private int getBID() {
+    public int getBID() {
         return bid;
     }
 
