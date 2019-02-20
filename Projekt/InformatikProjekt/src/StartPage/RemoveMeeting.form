@@ -43,23 +43,18 @@
               <Group type="102" attributes="0">
                   <EmptySpace pref="27" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                  <Component id="lblText" min="-2" pref="220" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="btnlRemove" min="-2" max="-2" attributes="0"/>
-                                      <Component id="lblRemove" min="-2" pref="220" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Component id="lblID" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="txtID" min="-2" pref="157" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                          <Component id="lblText" min="-2" pref="220" max="-2" attributes="0"/>
+                          <Group type="103" alignment="1" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="btnlRemove" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblRemove" min="-2" pref="220" max="-2" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="lblID" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Component id="txtID" min="-2" pref="157" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="19" pref="19" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>

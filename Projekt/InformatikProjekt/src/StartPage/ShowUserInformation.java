@@ -190,13 +190,6 @@ public class ShowUserInformation extends javax.swing.JInternalFrame {
                     
             
             }
-//            for (int i = 0; i < nameList.getFetchSize(); i++) {
-//                String id = nameList.getString(i).get("ID");
-//                String firstName = nameList.get(i).get("FNAMN");
-//                String surName = nameList.get(i).get("ENAMN");
-//                String user = (id + " " + firstName + " " + surName + "\n");
-//                allUsers.addElement(user);
-//            }
 
             listAllUsers.setModel(allUsers);
             listAllUsers.getSelectedValue();

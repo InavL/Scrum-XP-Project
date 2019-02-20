@@ -8,8 +8,6 @@ package StartPage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
-import oru.inf.InfDB;
-import oru.inf.InfException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +22,6 @@ import java.sql.Statement;
 public class RemoveMeeting extends javax.swing.JInternalFrame {
     
     private static Connection con;
-    private static InfDB idb;
     private MethodService methodService;
     private boolean idFocus = false; // Used in focusGain
     
@@ -33,7 +30,6 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
      */
     public RemoveMeeting(Connection con) {
         initComponents();
-        this.idb = idb;
         this.con = con;
         methodService = new MethodService(con);
         //txtTitle.requestFocusInWindow(true);

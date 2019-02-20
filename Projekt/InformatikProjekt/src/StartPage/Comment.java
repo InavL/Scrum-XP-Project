@@ -5,9 +5,8 @@
  */
 package StartPage;
 
+import java.sql.Connection;
 import javax.swing.JOptionPane;
-import oru.inf.InfDB;
-import oru.inf.InfException;
 
 /**
  *
@@ -15,17 +14,17 @@ import oru.inf.InfException;
  */
 public class Comment extends javax.swing.JFrame {
 
-    private static InfDB idb; // Used to establish a connection to the database
+    private static Connection con;
 
     /**
      * Creates new form ColorPage
      *
      * @param idb
      */
-    public Comment(InfDB idb) {
+    public Comment(Connection con) {
 
         initComponents();
-        this.idb = idb;
+        this.con = con;
         this.setLocationRelativeTo(null); // Opens the window at the centre of the screen
 
     }
