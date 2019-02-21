@@ -261,6 +261,7 @@ private void fillListWithYourPosts(){
                 stmt.executeUpdate(fraga);
                 
                 lblChanges.setVisible(true);
+                fillListWithYourPosts();
                 
             } 
             catch (SQLException oneException) {
@@ -276,17 +277,16 @@ private void fillListWithYourPosts(){
             String titel = cbPosts.getSelectedItem().toString();
             
             try {
-                PreparedStatement ps = con.prepareStatement("SELECT ?, ? FROM blogg WHERE titel = ?");
-               ps.setString(1, "bloggid");
-               ps.setString(2, "bloggpost");
-               ps.setString(3, titel);
+               PreparedStatement ps = con.prepareStatement("SELECT BLOGGID, BLOGGPOST FROM blogg WHERE titel = ?");
+               ps.setString(1, titel);
                
                ResultSet rs = ps.executeQuery();
                
                String bloggpost = "";
-              while(rs.next()){
+              if(rs.next()){
                   blogID = rs.getString("bloggid");
                   bloggpost = rs.getString("bloggpost");
+                  
               }
                        
              

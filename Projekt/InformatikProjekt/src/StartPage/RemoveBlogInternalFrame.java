@@ -29,8 +29,10 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
         initComponents();
         this.con = con;
         methodService = new MethodService(con);
+
         //Gör listan sökbar.
         AutoCompletion editablePostList = new AutoCompletion(cbPosts);
+
         //Fyller listan med aktuella inlägg
         fillListWithYourPosts();
         lblRemoveSucceed.setVisible(false);
@@ -154,7 +156,9 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
             ps1.executeUpdate();
 
             lblRemoveSucceed.setVisible(true);
+
         } catch (SQLException oneException) {
+
             oneException.getMessage();
             JOptionPane.showMessageDialog(null, "Something went wrong!");
         }
@@ -174,14 +178,11 @@ public class RemoveBlogInternalFrame extends javax.swing.JInternalFrame {
 
             ResultSet rs2 = ps2.executeQuery();
 
-            if (rs2 != null) {
-                while (rs2.next()) {
+            while (rs2.next()) {
 
-                    String postName = rs2.getString("Titel");
-                    cbPosts.addItem(postName);
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "You haven't written any posts yet.");
+                String postName = rs2.getString("Titel");
+                cbPosts.addItem(postName);
+
             }
 
         } catch (SQLException oneException) {

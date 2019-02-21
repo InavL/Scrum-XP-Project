@@ -115,7 +115,10 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="tfHeading" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="tfHeading" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lHasBeenPublished" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="1" attributes="0">
                                           <Component id="cbBranch" min="-2" pref="150" max="-2" attributes="0"/>
@@ -156,7 +159,9 @@
                               <Component id="lblHeading" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                               <Component id="tfHeading" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                              <Component id="lHasBeenPublished" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -311,6 +316,11 @@
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="You have attached a file!"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lHasBeenPublished">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Blog has been published!"/>
               </Properties>
             </Component>
           </SubComponents>

@@ -248,7 +248,6 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
                     ps.setString(5, lastname);
                     ps.setString(6, password);
                     ps.setInt(7, sid);
-                    System.out.print(id + " " + firstname + " " + lastname + " " + mail + " " + sid + " " + password);
                     ps.executeUpdate();
                     lEmployeeAdded.setText("The person is now added to the employee list.");
                 } else {
@@ -362,23 +361,28 @@ public class AddNewEmployee extends javax.swing.JInternalFrame {
         }
     }                                           
 
-    private int createId() {
-        Statement stmt = null;
-        int id = 0;
-        String fraga = "select ID from PERSONER";
+    private int createId() {   
+           Statement stmt = null;
+        int id = 1;
+        boolean finns = true;
         try {
-            stmt = con.createStatement();
+           stmt = con.createStatement();
+            while(id<100){
+            String fraga = "select ID from PERSONER where ID ="+id;
             ResultSet rs = stmt.executeQuery(fraga);
-            while (rs.next()) {
-                id++;
+            if(!rs.next()) {
+               return id; 
             }
-            id++;
-            return id;
+            else{id++;
+            }
+            
+           }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Something went wrong!");
             System.out.println("Internt felmeddelande" + e.getMessage());
             return 0;
         }
+        return 0;
     }
 
     //Metoden fyller comboboxen vad för användare som finns i databasen.
