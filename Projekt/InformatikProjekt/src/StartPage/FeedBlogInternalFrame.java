@@ -27,6 +27,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     private MethodService methodService;
     private String id;
     private static int bid;
+    private String personID;
 
     /**
      * Creates new form EditBlogInternalFrame
@@ -38,6 +39,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
         id = null;
         bid = 1;
+        personID = null;
 
         fillListWithSienceBlog();
         fillListWithEducationBlog();
@@ -300,14 +302,28 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
             bid = Integer.parseInt(id.trim());
 
-            String fraga = "SELECT BLOGGPOST FROM BLOGG where BLOGGID =" + id;
+            String fraga = "SELECT BLOGGPOST, BLOGGSKRIBENT FROM BLOGG where BLOGGID =" + id;
 
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(fraga);
 
             while (rs.next()) {
                 String post = rs.getString("BLOGGPOST");
-                taBlogFeed.setText(post);
+                personID = rs.getString("BLOGGSKRIBENT");
+                
+                try { 
+        Statement stmt2 = con.createStatement();
+        String fragan = "select fnamn, enamn from personer where id=" + personID;
+        ResultSet rs2 = stmt2.executeQuery(fragan);
+        while(rs2.next()) {
+            String fornamn = rs2.getString("fnamn");
+            String efternamn = rs2.getString("enamn");
+            taBlogFeed.setText(post + "\n" + "\n" + "Written by: " + fornamn + " " + efternamn);
+        }
+        
+       } catch (SQLException ex) {
+            Logger.getLogger(FeedBlogInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
                 String hasPic = "select bild from blogg where bloggid =" + bid;
 
@@ -351,14 +367,27 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
             bid = Integer.parseInt(id.trim());
 
-            String fraga = "SELECT BLOGGPOST FROM BLOGG where BLOGGID =" + id;
+            String fraga = "SELECT BLOGGPOST, BLOGGSKRIBENT FROM BLOGG where BLOGGID =" + id;
 
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(fraga);
 
             while (rs.next()) {
                 String post = rs.getString("BLOGGPOST");
-                taBlogFeed.setText(post);
+                personID = rs.getString("BLOGGSKRIBENT");
+                try {
+                    Statement stmt2 = con.createStatement();
+                    String fragan = "select fnamn, enamn from personer where id=" + personID;
+                    ResultSet rs2 = stmt2.executeQuery(fragan);
+                    while (rs2.next()) {
+                        String fornamn = rs2.getString("fnamn");
+                        String efternamn = rs2.getString("enamn");
+                        taBlogFeed.setText(post + "\n" + "\n" + "Written by: " + fornamn + " " + efternamn);
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(FeedBlogInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
                 String hasPic = "select bild from blogg where bloggid =" + bid;
 
@@ -402,14 +431,27 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
 
             bid = Integer.parseInt(id.trim());
 
-            String fraga = "SELECT BLOGGPOST FROM BLOGG where BLOGGID =" + bid;
+            String fraga = "SELECT BLOGGPOST, BLOGGSKRIBENT FROM BLOGG where BLOGGID =" + bid;
 
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery(fraga);
 
             while (rs.next()) {
                 String post = rs.getString("BLOGGPOST");
-                taBlogFeed.setText(post);
+                personID = rs.getString("BLOGGSKRIBENT");
+                try {
+                    Statement stmt2 = con.createStatement();
+                    String fragan = "select fnamn, enamn from personer where id=" + personID;
+                    ResultSet rs2 = stmt2.executeQuery(fragan);
+                    while (rs2.next()) {
+                        String fornamn = rs2.getString("fnamn");
+                        String efternamn = rs2.getString("enamn");
+                        taBlogFeed.setText(post + "\n" + "\n" + "Written by: " + fornamn + " " + efternamn);
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(FeedBlogInternalFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
                 String hasPic = "select bild from blogg where bloggid =" + bid;
 
@@ -633,7 +675,7 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
     }
 
     public static int getBID() {
-        return bid;
+        return bid;    
     }
 
 
