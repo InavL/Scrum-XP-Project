@@ -277,6 +277,7 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
             int personID = LoggedUser.getID();
             String namn = cbBranch.getSelectedItem().toString();
             
+            
             Date datum=  new Date();
              int dag = datum.getDate();
              int manad = datum.getMonth();
@@ -290,37 +291,38 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
              String aret = Integer.toString(rattAr);
              
              String datumet = (aret + "-" + manaden + "-" + dagen);
-             
+             System.out.println(namn);
              
 
             
             try {
-           Statement stmt = null;
+           Statement stmt = con.createStatement();
            String fraga = "SELECT kat3_ID FROM Kat3 WHERE Kat3_Namn = '" + namn + "'";
            ResultSet rs = stmt.executeQuery(fraga);
            rs.next();
-           int kat3 = rs.getInt("kat3");
+           int kat3 = rs.getInt("kat3_ID");
             
             //Hämtar ett nytt oanvänt bloggID
             int bloggID = createBID();
-            System.out.println(bloggID);
+            System.out.println(bloggID+" "+bloggpost+" "+titel+" "+datumet+" "+kat3+" "+personID+" "+0);
             
             //Lägger till inlägget i bloggtabellen med de valda värdena
            
-            fraga = "INSERT INTO blogg (bloggid, bloggpost, titel, datum, kat3_ID, bloggskribent) values (?,?,?,?,?,?)";
+            fraga = "INSERT INTO blogg (bloggid, bloggpost, titel, datum, kat3_ID, bloggskribent, bild) values (?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(fraga);
             ps.setInt(1, bloggID);
             ps.setString(2, bloggpost);
             ps.setString(3, titel);
             ps.setString(4, datumet);
             ps.setInt(5, kat3);
-            ps.setInt(5, personID);
+            ps.setInt(6, personID);
+            ps.setInt(7, 0);
             ps.executeUpdate();
             
             
             if (name != null) {
             name = bloggID + type;
-                
+                System.out.println(name);
                 File saveAt = new File("files\\" + name);
                         saveAt.getAbsolutePath();
 
@@ -328,7 +330,9 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
                     FileUtils.copyFile(source, saveAt);
                     String question = "Insert into blogg_har_filer (blogg_id, filtyp) values (" + bloggID + ", '" + type + "')";
                     stmt = con.createStatement();
-                    stmt.executeUpdate(fraga);
+                    stmt.executeUpdate(question);
+                    question = "update blogg Set BILD = 1 where BLOGGID ="+bloggID;
+                    stmt.executeUpdate(question);
                     
                             
                     
@@ -353,21 +357,26 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnPublishActionPerformed
    private int createBID() {
         Statement stmt = null;
-        int id = 0;
-        String fraga = "select BLOGGID from BLOGG";
+        int id = 1;
+        boolean finns = true;
         try {
-            stmt = con.createStatement();
+           stmt = con.createStatement();
+            while(id<100){
+            String fraga = "select BLOGGID from BLOGG where BLOGGID ="+id;
             ResultSet rs = stmt.executeQuery(fraga);
-            while (rs.next()) {
-                id++;
+            if(!rs.next()) {
+               return id; 
             }
-            id++;
-            return id;
+            else{id++;
+            }
+            
+           }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Something went wrong!");
             System.out.println("Internt felmeddelande" + e.getMessage());
             return 0;
         }
+        return 0;
     }
     private void cbBranchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbBranchActionPerformed
         // TODO add your handling code here:
