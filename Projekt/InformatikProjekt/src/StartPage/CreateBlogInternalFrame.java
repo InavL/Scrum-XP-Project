@@ -43,6 +43,7 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         methodService.fillComboboxBranchKat1(cbxKat1);
         //Gör texten ej synlig
         lblAttachment.setVisible(false);
+        lHasBeenPublished.setVisible(false);
         
         //Gör listan sökbar.
         AutoCompletion editableBranchList = new AutoCompletion(cbBranch);
@@ -77,6 +78,7 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         btnAdd = new javax.swing.JButton();
         btnAttachFile = new javax.swing.JButton();
         lblAttachment = new javax.swing.JLabel();
+        lHasBeenPublished = new javax.swing.JLabel();
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -161,6 +163,8 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         lblAttachment.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblAttachment.setText("You have attached a file!");
 
+        lHasBeenPublished.setText("Blog has been published!");
+
         javax.swing.GroupLayout pnlMainPanelLayout = new javax.swing.GroupLayout(pnlMainPanel);
         pnlMainPanel.setLayout(pnlMainPanelLayout);
         pnlMainPanelLayout.setHorizontalGroup(
@@ -178,7 +182,9 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainPanelLayout.createSequentialGroup()
                         .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlMainPanelLayout.createSequentialGroup()
-                                .addComponent(tfHeading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfHeading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lHasBeenPublished))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(cbBranch, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,9 +201,7 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
                             .addComponent(btnAdd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSave2, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnSave1, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlMainPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblChoosePlace)))
+                    .addComponent(lblChoosePlace, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(27, 27, 27))
         );
         pnlMainPanelLayout.setVerticalGroup(
@@ -211,7 +215,9 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
                         .addComponent(lblHeading)
                         .addGap(33, 33, 33)
                         .addComponent(tfHeading, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(67, 67, 67))
+                        .addGap(38, 38, 38)
+                        .addComponent(lHasBeenPublished)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(pnlMainPanelLayout.createSequentialGroup()
                         .addGroup(pnlMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbxKat1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -277,6 +283,7 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
             int personID = LoggedUser.getID();
             String namn = cbBranch.getSelectedItem().toString();
             
+            
             Date datum=  new Date();
              int dag = datum.getDate();
              int manad = datum.getMonth();
@@ -290,37 +297,38 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
              String aret = Integer.toString(rattAr);
              
              String datumet = (aret + "-" + manaden + "-" + dagen);
-             
+             System.out.println(namn);
              
 
             
             try {
-           Statement stmt = null;
+           Statement stmt = con.createStatement();
            String fraga = "SELECT kat3_ID FROM Kat3 WHERE Kat3_Namn = '" + namn + "'";
            ResultSet rs = stmt.executeQuery(fraga);
            rs.next();
-           int kat3 = rs.getInt("kat3");
+           int kat3 = rs.getInt("kat3_ID");
             
             //Hämtar ett nytt oanvänt bloggID
             int bloggID = createBID();
-            System.out.println(bloggID);
+            System.out.println(bloggID+" "+bloggpost+" "+titel+" "+datumet+" "+kat3+" "+personID+" "+0);
             
             //Lägger till inlägget i bloggtabellen med de valda värdena
            
-            fraga = "INSERT INTO blogg (bloggid, bloggpost, titel, datum, kat3_ID, bloggskribent) values (?,?,?,?,?,?)";
+            fraga = "INSERT INTO blogg (bloggid, bloggpost, titel, datum, kat3_ID, bloggskribent, bild) values (?,?,?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(fraga);
             ps.setInt(1, bloggID);
             ps.setString(2, bloggpost);
             ps.setString(3, titel);
             ps.setString(4, datumet);
             ps.setInt(5, kat3);
-            ps.setInt(5, personID);
+            ps.setInt(6, personID);
+            ps.setInt(7, 0);
             ps.executeUpdate();
             
             
             if (name != null) {
             name = bloggID + type;
-                
+                System.out.println(name);
                 File saveAt = new File("files\\" + name);
                         saveAt.getAbsolutePath();
 
@@ -328,7 +336,9 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
                     FileUtils.copyFile(source, saveAt);
                     String question = "Insert into blogg_har_filer (blogg_id, filtyp) values (" + bloggID + ", '" + type + "')";
                     stmt = con.createStatement();
-                    stmt.executeUpdate(fraga);
+                    stmt.executeUpdate(question);
+                    question = "update blogg Set BILD = 1 where BLOGGID ="+bloggID;
+                    stmt.executeUpdate(question);
                     
                             
                     
@@ -348,26 +358,31 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
                 oneException.getMessage();
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             } 
-            
+           lHasBeenPublished.setVisible(true); 
         }
     }//GEN-LAST:event_btnPublishActionPerformed
    private int createBID() {
         Statement stmt = null;
-        int id = 0;
-        String fraga = "select BLOGGID from BLOGG";
+        int id = 1;
+        boolean finns = true;
         try {
-            stmt = con.createStatement();
+           stmt = con.createStatement();
+            while(id<100){
+            String fraga = "select BLOGGID from BLOGG where BLOGGID ="+id;
             ResultSet rs = stmt.executeQuery(fraga);
-            while (rs.next()) {
-                id++;
+            if(!rs.next()) {
+               return id; 
             }
-            id++;
-            return id;
+            else{id++;
+            }
+            
+           }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Something went wrong!");
             System.out.println("Internt felmeddelande" + e.getMessage());
             return 0;
         }
+        return 0;
     }
     private void cbBranchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbBranchActionPerformed
         // TODO add your handling code here:
@@ -552,6 +567,7 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lHasBeenPublished;
     private javax.swing.JLabel lblAttachment;
     private javax.swing.JLabel lblChoosePlace;
     private javax.swing.JLabel lblHeading;
