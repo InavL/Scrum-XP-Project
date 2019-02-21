@@ -544,14 +544,14 @@ public class MainPage extends javax.swing.JFrame {
 
     private void ShowCalenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ShowCalenderActionPerformed
         //Ett fönster instansieras och öppnas i en flik om ett likadant fönster inte redan finns.
-//        if(!tabExists("Show calender")) {
-//            showCalender = new ShowThisCalender(con);
-//            openTab(showCalender, "Show calender");
-//        }       
-//        //Flyttar fokus till filken, om det redan finns en sådan öppen.
-//        else{
-//            moveFocusToTab("Show calender");
-//        }
+        if(!tabExists("Show calender")) {
+            ShowThisCalender showCalender = new ShowThisCalender(con);
+            openTab(showCalender, "Show calender");
+        }       
+        //Flyttar fokus till filken, om det redan finns en sådan öppen.
+        else{
+            moveFocusToTab("Show calender");
+        }
     }//GEN-LAST:event_ShowCalenderActionPerformed
 
 
