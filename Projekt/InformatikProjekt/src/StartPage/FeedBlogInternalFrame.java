@@ -36,8 +36,6 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         this.con = con;
         methodService = new MethodService(con);
 
-        id = null;
-
         fillListWithSienceBlog();
         fillListWithEducationBlog();
         fillListWithInformalBlog();

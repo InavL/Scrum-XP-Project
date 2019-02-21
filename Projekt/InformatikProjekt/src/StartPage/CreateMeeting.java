@@ -322,13 +322,16 @@ public class CreateMeeting extends javax.swing.JInternalFrame {
                 rs2.next();
                 int hogstaID = rs2.getInt("MID");
                 
-                String fraga3 = "insert into MOTES_FORSLAG values(?, ?, ?, ?);";
+                int varde = 0;
+                
+                String fraga3 = "insert into MOTES_FORSLAG values(?, ?, ?, ?, ?);";
                 PreparedStatement ps = con.prepareStatement(fraga3);
                 
                 ps.setInt(1, maxFInt);
                 ps.setInt(2, hogstaID);
                 ps.setString(3, start);
                 ps.setString(4, end);
+                ps.setInt(5, varde);
                 
                 ps.executeUpdate();
                 
