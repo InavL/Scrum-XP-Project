@@ -37,7 +37,6 @@ public class FeedBlogInternalFrame extends javax.swing.JInternalFrame {
         methodService = new MethodService(con);
 
         id = null;
-        bid = 1;
 
         fillListWithSienceBlog();
         fillListWithEducationBlog();
