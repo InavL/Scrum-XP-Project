@@ -24,8 +24,8 @@ public class StartInfProj { // The program is run through this file
         
         try {
             con = DriverManager.
-                    getConnection("jdbc:mysql://localhost:3306/scrumprojekt",
-                             "root", "rundboll");
+                    getConnection("jdbc:mysql://10.22.25.134:3306/scrumprojekt",
+                             "Lovisa", "Blue2019");
             Statement stmt = con.createStatement();
             System.out.println("Created DB Connection....");
             
