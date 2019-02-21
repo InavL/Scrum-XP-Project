@@ -513,6 +513,9 @@ public class CreateBlogInternalFrame extends javax.swing.JInternalFrame {
         if (name.endsWith(".jpeg")) {
             type = ".jpeg";
         }
+        if (name.endsWith(".jpg")) {
+            type = ".jpg";
+        }
         if (name.endsWith(".png")) {
             type = ".png";
         }

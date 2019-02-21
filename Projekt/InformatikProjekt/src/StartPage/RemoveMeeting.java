@@ -213,6 +213,7 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
     private void btnlRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlRemoveActionPerformed
        if(Validation.textfieldWithValue(txtID))
         {
+            
             Statement stmt = null;
             try
             {
@@ -258,6 +259,7 @@ public class RemoveMeeting extends javax.swing.JInternalFrame {
             {
                 JOptionPane.showMessageDialog(null, "Something went wrong.");
             }
+            fyllAreaMedMoten();
         }
                                              
     }//GEN-LAST:event_btnlRemoveActionPerformed

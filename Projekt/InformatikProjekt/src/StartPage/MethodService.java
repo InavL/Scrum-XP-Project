@@ -102,7 +102,7 @@ public class MethodService {
 
             while (rs.next()) {
                 String firstname = rs.getString("FNAMN");
-                String surname = rs.getString("FNAMN");
+                String surname = rs.getString("ENAMN");
                 enCombobox.addItem(firstname + " " + surname);
             }
 
@@ -148,7 +148,6 @@ public class MethodService {
     public static boolean isAdmin() {
 
         int sid = LoggedUser.getBehorighet();
-        System.out.println(sid);
         return sid < 4;
     }
 

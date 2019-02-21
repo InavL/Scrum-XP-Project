@@ -5,7 +5,6 @@
  */
 package StartPage;
 
-import java.sql.Connection;
 import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,6 +30,7 @@ public class Comment extends javax.swing.JFrame {
         initComponents();
         this.con = con;
         this.setLocationRelativeTo(null); // Opens the window at the centre of the screen
+        this.setDefaultCloseOperation(this.DISPOSE_ON_CLOSE);
 
     }
     
@@ -139,28 +139,24 @@ public class Comment extends javax.swing.JFrame {
                 String text = txtAreaWrite.getText();
                 int personID = LoggedUser.getID();
                 int bloggID = FeedBlogInternalFrame.getBID();
+                System.out.println(bloggID + " " + text);
                 
-                String fraga1 = "select MAX(KOMMENTAR_ID) from KOMMENTARER;";
+                String fraga1 = "select MAX(KOMMENTAR_ID) as KOMMENTAR_ID from KOMMENTARER;";
                 stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery(fraga1);
                 rs.next();
                 int maxID = rs.getInt("KOMMENTAR_ID");
                 int kommentarsID = maxID + 1;
-                
-//                String kom = idb.fetchSingle("select MAX(KOMMENTAR_ID) from KOMMENTARER;");
-//                int maxKomInt = Integer.parseInt(kom);
-//                int maxInt = maxKomInt + 1;
 
-                String fraga2 = "insert into KOMMENTARER values((?, ?, ?, ?);";
+                String fraga2 = "insert into KOMMENTARER values(?, ?, ?, ?);";
                 PreparedStatement ps = con.prepareStatement(fraga2);
+                
                 ps.setInt(1, kommentarsID);
                 ps.setString(2, text);
                 ps.setInt(3, personID);
                 ps.setInt(4, bloggID);
                 ps.executeUpdate();
                 
-//                idb.insert("insert into KOMMENTARER values(" + maxInt + ", '" + text + "', " + personID + ", " + bloggID + ");");
-
                 this.setVisible(false);
             }
             catch(SQLException ex)

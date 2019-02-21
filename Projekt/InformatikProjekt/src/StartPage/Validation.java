@@ -133,17 +133,16 @@ public class Validation {
 
         //Kollar så att ID:et finns med i tabellen PERONSER.
         boolean resultat = true;
-        Statement stmt;
 
         try {
-            stmt = con.createStatement();
+            
 
             String personID = id.getText(); //Hämta värdet i fältet.
 
             String fraga = "select FNAMN from PERSONER where ID = ?;";
             PreparedStatement ps = con.prepareStatement(fraga);
             ps.setString(1, personID);
-            ResultSet rs = stmt.executeQuery(fraga);
+            ResultSet rs = ps.executeQuery();
 
             //Försöker att hämta förnamn som matchar ID:et.
             if (!rs.next()) {
